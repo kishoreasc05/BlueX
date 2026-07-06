@@ -9,7 +9,7 @@ export default function PlatformOverview() {
   return (
     <section
       id="platform"
-      className="w-full py-24 md:py-32 px-6 bg-zinc-950 bg-grid-dark rounded-t-[2.5rem] md:rounded-t-[3.5rem] -mt-8 relative z-30 shadow-2xl"
+      className="w-full py-24 md:py-32 px-6 bg-zinc-950 bg-grid-dark relative z-30 shadow-2xl"
     >
       <div className="max-w-[1200px] mx-auto">
         {/* Header (Split Layout) */}

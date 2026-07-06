@@ -2,9 +2,11 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { Play } from "lucide-react";
 import heroBg from "../assets/webp/hero bg.webp";
 import dashboardUi from "../assets/webp/dashboard ui.webp";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function HeroSection() {
   const { scrollY } = useScroll();
+  const isMobile = useIsMobile();
   const rotateX = useTransform(scrollY, [0, 600], [50, 0]);
   const translateY = useTransform(scrollY, [0, 600], [100, 0]);
   const translateZ = useTransform(scrollY, [0, 600], [-300, 0]);
@@ -80,12 +82,16 @@ export default function HeroSection() {
           className="mt-10 w-full max-w-5xl flex justify-center"
         >
           <motion.div
-            style={{
-              rotateX,
-              translateY,
-              translateZ,
-              transformStyle: "preserve-3d",
-            }}
+            style={
+              isMobile
+                ? undefined
+                : {
+                    rotateX,
+                    translateY,
+                    translateZ,
+                    transformStyle: "preserve-3d",
+                  }
+            }
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
