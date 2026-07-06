@@ -21,8 +21,8 @@ const revenueData = [
 function Page() {
   return (
     <div className="space-y-6 pb-12 max-w-[1400px] mx-auto">
-      <PageHeader 
-        title="Reports" 
+      <PageHeader
+        title="Reports"
         description="View and analyze your business metrics."
         action={
           <Button variant="outline" className="rounded-xl gap-2">
@@ -30,28 +30,22 @@ function Page() {
           </Button>
         }
       />
-      
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
           <div className="text-sm font-medium text-slate-500 mb-2">Total Revenue</div>
           <div className="text-3xl font-bold text-slate-900">$0</div>
-          <div className="mt-2 text-sm text-slate-500 font-medium">
-             No data available
-          </div>
+          <div className="mt-2 text-sm text-slate-500 font-medium">No data available</div>
         </div>
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
           <div className="text-sm font-medium text-slate-500 mb-2">Active Projects</div>
           <div className="text-3xl font-bold text-slate-900">0</div>
-          <div className="mt-2 text-sm text-slate-500 font-medium">
-             No data available
-          </div>
+          <div className="mt-2 text-sm text-slate-500 font-medium">No data available</div>
         </div>
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
           <div className="text-sm font-medium text-slate-500 mb-2">Avg. Resolution Time</div>
           <div className="text-3xl font-bold text-slate-900">0 days</div>
-          <div className="mt-2 text-sm text-slate-500 font-medium">
-            No data available
-          </div>
+          <div className="mt-2 text-sm text-slate-500 font-medium">No data available</div>
         </div>
       </div>
 
@@ -70,12 +64,35 @@ function Page() {
                   <stop offset="95%" stopColor="#cbd5e1" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-              <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value}`} />
-              <Tooltip 
-                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+              <XAxis
+                dataKey="name"
+                stroke="#94a3b8"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
               />
-              <Area type="monotone" dataKey="total" stroke="#cbd5e1" strokeWidth={3} fillOpacity={1} fill="url(#colorTotal)" />
+              <YAxis
+                stroke="#94a3b8"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value) => `$${value}`}
+              />
+              <Tooltip
+                contentStyle={{
+                  borderRadius: "12px",
+                  border: "none",
+                  boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                }}
+              />
+              <Area
+                type="monotone"
+                dataKey="total"
+                stroke="#cbd5e1"
+                strokeWidth={3}
+                fillOpacity={1}
+                fill="url(#colorTotal)"
+              />
             </AreaChart>
           </ResponsiveContainer>
         </div>

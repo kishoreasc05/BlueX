@@ -10,17 +10,48 @@ export const Route = createFileRoute("/_authenticated/subscriptions")({
 function Page() {
   return (
     <div className="space-y-6 pb-12 max-w-[1400px] mx-auto">
-      <PageHeader 
-        title="Subscriptions" 
+      <PageHeader
+        title="Subscriptions"
         description="Manage your organization's billing and subscription plan."
       />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-8">
         {[
-          { name: "Basic", price: "$49", period: "/mo", features: ["Up to 5 users", "Basic reporting", "Community support"], current: false },
-          { name: "Pro", price: "$149", period: "/mo", features: ["Up to 20 users", "Advanced analytics", "Priority support", "Custom workflows"], current: true },
-          { name: "Enterprise", price: "Custom", period: "", features: ["Unlimited users", "Dedicated account manager", "Custom integrations", "SLA guarantee"], current: false },
+          {
+            name: "Basic",
+            price: "$49",
+            period: "/mo",
+            features: ["Up to 5 users", "Basic reporting", "Community support"],
+            current: false,
+          },
+          {
+            name: "Pro",
+            price: "$149",
+            period: "/mo",
+            features: [
+              "Up to 20 users",
+              "Advanced analytics",
+              "Priority support",
+              "Custom workflows",
+            ],
+            current: true,
+          },
+          {
+            name: "Enterprise",
+            price: "Custom",
+            period: "",
+            features: [
+              "Unlimited users",
+              "Dedicated account manager",
+              "Custom integrations",
+              "SLA guarantee",
+            ],
+            current: false,
+          },
         ].map((plan, i) => (
-          <div key={i} className={`relative bg-white rounded-2xl border p-8 flex flex-col ${plan.current ? 'border-indigo-500 shadow-md ring-1 ring-indigo-500' : 'border-slate-200 shadow-sm'}`}>
+          <div
+            key={i}
+            className={`relative bg-white rounded-2xl border p-8 flex flex-col ${plan.current ? "border-indigo-500 shadow-md ring-1 ring-indigo-500" : "border-slate-200 shadow-sm"}`}
+          >
             {plan.current && (
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                 Current Plan
@@ -39,7 +70,9 @@ function Page() {
                 </li>
               ))}
             </ul>
-            <Button className={`mt-8 w-full rounded-xl ${plan.current ? 'bg-slate-100 text-slate-900 hover:bg-slate-200' : 'bg-indigo-600 hover:bg-indigo-700 text-white'}`}>
+            <Button
+              className={`mt-8 w-full rounded-xl ${plan.current ? "bg-slate-100 text-slate-900 hover:bg-slate-200" : "bg-indigo-600 hover:bg-indigo-700 text-white"}`}
+            >
               {plan.current ? "Manage Plan" : "Upgrade"}
             </Button>
           </div>

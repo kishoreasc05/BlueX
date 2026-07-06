@@ -14,9 +14,9 @@ export default function HeroSection() {
     <main className="relative z-10 flex flex-col items-center w-full flex-1 overflow-hidden font-body">
       {/* Background Image for Text Section */}
       <div className="absolute top-0 left-0 w-full h-[800px] z-0 pointer-events-none">
-        <img 
-          src={heroBg} 
-          alt="Hero Background" 
+        <img
+          src={heroBg}
+          alt="Hero Background"
           className="w-full h-full object-cover object-center"
         />
         {/* Dark overlay for contrast */}
@@ -27,9 +27,8 @@ export default function HeroSection() {
 
       {/* Content Wrapper */}
       <div className="relative z-10 flex flex-col items-center w-full pt-24 md:pt-36 px-6">
-        
         {/* 1. Badge */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -39,27 +38,29 @@ export default function HeroSection() {
         </motion.div>
 
         {/* 2. Headline */}
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-center font-display text-5xl md:text-6xl lg:text-[5rem] leading-[0.95] tracking-tight text-white max-w-2xl drop-shadow-sm"
         >
-          Run your business. <br className="hidden md:block"/> <span className="italic text-white drop-shadow-md">Intelligently.</span>
+          Run your business. <br className="hidden md:block" />{" "}
+          <span className="italic text-white drop-shadow-md">Intelligently.</span>
         </motion.h1>
 
         {/* 3. Subheadline */}
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-4 text-center text-base md:text-lg text-slate-200 max-w-[650px] leading-relaxed font-medium drop-shadow-sm"
         >
-          BlueX unifies projects, workflows, contracts, documents, approvals, payments, and AI-powered automation into one intelligent workspace.
+          BlueX unifies projects, workflows, contracts, documents, approvals, payments, and
+          AI-powered automation into one intelligent workspace.
         </motion.p>
 
         {/* 4. CTA Buttons */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
@@ -74,39 +75,41 @@ export default function HeroSection() {
         </motion.div>
 
         {/* 5. Dashboard Preview (3D Scroll Effect) */}
-        <div style={{ perspective: "2000px" }} className="mt-10 w-full max-w-5xl flex justify-center">
-          <motion.div 
+        <div
+          style={{ perspective: "2000px" }}
+          className="mt-10 w-full max-w-5xl flex justify-center"
+        >
+          <motion.div
             style={{
               rotateX,
               translateY,
               translateZ,
-              transformStyle: "preserve-3d"
+              transformStyle: "preserve-3d",
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
             className="w-full"
           >
-          <div 
-            className="rounded-2xl overflow-hidden p-3 md:p-4 w-full"
-            style={{
-              background: "rgba(255, 255, 255, 0.4)",
-              border: "1px solid rgba(255, 255, 255, 0.5)",
-              boxShadow: "var(--shadow-dashboard)",
-            }}
-          >
-            {/* Dashboard Image */}
-            <div className="bg-background rounded-xl overflow-hidden border border-border flex flex-col w-full shadow-sm">
-              <img 
-                src={dashboardUi} 
-                alt="BlueX Dashboard UI" 
-                className="w-full h-auto object-cover object-top"
-              />
+            <div
+              className="rounded-2xl overflow-hidden p-3 md:p-4 w-full"
+              style={{
+                background: "rgba(255, 255, 255, 0.4)",
+                border: "1px solid rgba(255, 255, 255, 0.5)",
+                boxShadow: "var(--shadow-dashboard)",
+              }}
+            >
+              {/* Dashboard Image */}
+              <div className="bg-background rounded-xl overflow-hidden border border-border flex flex-col w-full shadow-sm">
+                <img
+                  src={dashboardUi}
+                  alt="BlueX Dashboard UI"
+                  className="w-full h-auto object-cover object-top"
+                />
+              </div>
             </div>
-          </div>
-        </motion.div>
-      </div>
-
+          </motion.div>
+        </div>
       </div>
     </main>
   );

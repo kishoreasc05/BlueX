@@ -80,10 +80,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "BlueX — AI-native Business Operating System" },
-      { name: "description", content: "BlueX is the AI-native business OS for modern teams — manage clients, contractors, projects, tasks, and documents in one calm, enterprise-grade workspace." },
+      {
+        name: "description",
+        content:
+          "BlueX is the AI-native business OS for modern teams — manage clients, contractors, projects, tasks, and documents in one calm, enterprise-grade workspace.",
+      },
       { name: "author", content: "BlueX" },
       { property: "og:title", content: "BlueX — AI-native Business Operating System" },
-      { property: "og:description", content: "Run your business from a single platform. Clients, contractors, projects, tasks, and documents — with an AI assistant built in." },
+      {
+        property: "og:description",
+        content:
+          "Run your business from a single platform. Clients, contractors, projects, tasks, and documents — with an AI assistant built in.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

@@ -31,9 +31,21 @@ function AcceptInvite() {
         .select("*")
         .eq("token", token)
         .maybeSingle();
-      if (error || !invite) { setStatus("error"); setMessage("Invite not found or already used."); return; }
-      if (invite.accepted_at) { setStatus("error"); setMessage("This invite has already been used."); return; }
-      if (new Date(invite.expires_at) < new Date()) { setStatus("error"); setMessage("This invite has expired."); return; }
+      if (error || !invite) {
+        setStatus("error");
+        setMessage("Invite not found or already used.");
+        return;
+      }
+      if (invite.accepted_at) {
+        setStatus("error");
+        setMessage("This invite has already been used.");
+        return;
+      }
+      if (new Date(invite.expires_at) < new Date()) {
+        setStatus("error");
+        setMessage("This invite has expired.");
+        return;
+      }
 
       const { error: memErr } = await supabase.from("organization_members").insert({
         organization_id: invite.organization_id,
@@ -41,9 +53,14 @@ function AcceptInvite() {
         role: invite.role,
       });
       if (memErr && !memErr.message.includes("duplicate")) {
-        setStatus("error"); setMessage(memErr.message); return;
+        setStatus("error");
+        setMessage(memErr.message);
+        return;
       }
-      await supabase.from("organization_invites").update({ accepted_at: new Date().toISOString() }).eq("id", invite.id);
+      await supabase
+        .from("organization_invites")
+        .update({ accepted_at: new Date().toISOString() })
+        .eq("id", invite.id);
       localStorage.setItem("bluex.activeOrgId", invite.organization_id);
       toast.success("Joined workspace");
       setStatus("done");
@@ -62,7 +79,9 @@ function AcceptInvite() {
           {status === "idle" && "Preparing…"}
         </p>
         {status === "error" && (
-          <Button className="mt-4" onClick={() => navigate({ to: "/dashboard" })}>Go to dashboard</Button>
+          <Button className="mt-4" onClick={() => navigate({ to: "/dashboard" })}>
+            Go to dashboard
+          </Button>
         )}
       </div>
     </div>

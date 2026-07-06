@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap");
 @import "tw-animate-css";
 @import "tailwindcss";
 @source "../src";
@@ -22,7 +22,7 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  
+
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
   --color-card: hsl(var(--card));
@@ -43,7 +43,7 @@
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
   --color-ring-offset-background: hsl(var(--background));
-  
+
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --font-sans: var(--font-body);
@@ -80,17 +80,17 @@
   --input: 0 0% 90%;
   --ring: 239 84% 67%;
   --radius: 0.5rem;
-  
-  --font-display: 'Instrument Serif', serif;
-  --font-body: 'Inter', sans-serif;
+
+  --font-display: "Instrument Serif", serif;
+  --font-body: "Inter", sans-serif;
   --shadow-dashboard: 0 25px 80px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06);
 
   /* Premium values */
   --accent-blue: oklch(0.55 0.22 250);
   --accent-indigo: oklch(0.45 0.22 275);
-  --accent-purple: oklch(0.58 0.20 310);
+  --accent-purple: oklch(0.58 0.2 310);
   --glow-blue: oklch(0.55 0.22 250 / 0.2);
-  --glow-purple: oklch(0.58 0.20 310 / 0.2);
+  --glow-purple: oklch(0.58 0.2 310 / 0.2);
   --glass-bg: rgba(255, 255, 255, 0.65);
   --glass-border: rgba(0, 0, 0, 0.06);
 }
@@ -119,18 +119,18 @@
   /* Premium values */
   --accent-blue: oklch(0.65 0.22 250);
   --accent-indigo: oklch(0.55 0.22 275);
-  --accent-purple: oklch(0.68 0.20 310);
+  --accent-purple: oklch(0.68 0.2 310);
   --glow-blue: oklch(0.65 0.22 250 / 0.2);
-  --glow-purple: oklch(0.68 0.20 310 / 0.2);
+  --glow-purple: oklch(0.68 0.2 310 / 0.2);
   --glass-bg: rgba(13, 17, 28, 0.65);
   --glass-border: rgba(255, 255, 255, 0.06);
 }
 
-
 @layer base {
   * {
     border-color: var(--color-border);
-    transition-property: background-color, border-color, text-decoration-color, fill, stroke, box-shadow;
+    transition-property:
+      background-color, border-color, text-decoration-color, fill, stroke, box-shadow;
     transition-duration: 200ms;
     transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -199,9 +199,15 @@
 }
 
 @keyframes gradientMesh {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Custom shimmer utilities for premium skeleton loaders */
@@ -210,7 +216,10 @@
   overflow: hidden;
   &::after {
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     transform: translateX(-100%);
     background-image: linear-gradient(
       90deg,
@@ -220,7 +229,7 @@
       rgba(255, 255, 255, 0) 100%
     );
     animation: shimmerWave 2s infinite;
-    content: '';
+    content: "";
   }
 }
 
@@ -231,8 +240,8 @@
 }
 
 @utility bg-grid-dark {
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 24px 24px;
 }
-

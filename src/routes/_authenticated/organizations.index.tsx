@@ -6,8 +6,21 @@ import { Input } from "@/components/ui/input";
 import { useState, ChangeEvent, MouseEvent } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 
 export const Route = createFileRoute("/_authenticated/organizations/")({
   component: Page,
@@ -17,7 +30,7 @@ function Page() {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
-  
+
   const [selectedOrg, setSelectedOrg] = useState<any>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
 
@@ -35,10 +48,14 @@ function Page() {
 
   const createOrganization = useMutation({
     mutationFn: async () => {
-      const { data, error } = await supabase.from("organizations").insert({
-        name,
-        slug: name.toLowerCase().replace(/[\s_]+/g, '-')
-      }).select().single();
+      const { data, error } = await supabase
+        .from("organizations")
+        .insert({
+          name,
+          slug: name.toLowerCase().replace(/[\s_]+/g, "-"),
+        })
+        .select()
+        .single();
       if (error) throw error;
       return data;
     },
@@ -56,8 +73,8 @@ function Page() {
 
   return (
     <div className="space-y-6 pb-12 max-w-[1400px] mx-auto">
-      <PageHeader 
-        title="Organizations" 
+      <PageHeader
+        title="Organizations"
         description="Manage your workspaces and organizations."
         action={
           <Dialog open={open} onOpenChange={setOpen}>
@@ -73,12 +90,22 @@ function Page() {
               <div className="space-y-4 py-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Organization Name</label>
-                  <Input placeholder="e.g. Acme Corp" value={name} onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)} />
+                  <Input
+                    placeholder="e.g. Acme Corp"
+                    value={name}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                  />
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-                <Button className="bg-indigo-600 text-white hover:bg-indigo-700" onClick={() => createOrganization.mutate()} disabled={!name || createOrganization.isPending}>
+                <Button variant="outline" onClick={() => setOpen(false)}>
+                  Cancel
+                </Button>
+                <Button
+                  className="bg-indigo-600 text-white hover:bg-indigo-700"
+                  onClick={() => createOrganization.mutate()}
+                  disabled={!name || createOrganization.isPending}
+                >
                   {createOrganization.isPending ? "Creating..." : "Create Organization"}
                 </Button>
               </DialogFooter>
@@ -99,11 +126,17 @@ function Page() {
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={4} className="px-6 py-8 text-center text-slate-500">Loading organizations...</td>
+                <td colSpan={4} className="px-6 py-8 text-center text-slate-500">
+                  Loading organizations...
+                </td>
               </tr>
             ) : organizations && organizations.length > 0 ? (
               organizations.map((org: any) => (
-                <tr key={org.id} onClick={() => handleRowClick(org)} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors cursor-pointer">
+                <tr
+                  key={org.id}
+                  onClick={() => handleRowClick(org)}
+                  className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors cursor-pointer"
+                >
                   <td className="px-6 py-4 font-medium text-slate-900 flex items-center gap-3">
                     <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
                       <Building2 className="h-4 w-4" />
@@ -112,12 +145,19 @@ function Page() {
                   </td>
                   <td className="px-6 py-4 text-slate-500 capitalize">{org.plan || "Free"}</td>
                   <td className="px-6 py-4">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700`}>
+                    <span
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700`}
+                    >
                       Active
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-slate-600" onClick={(e: MouseEvent<HTMLButtonElement>) => e.stopPropagation()}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-slate-400 hover:text-slate-600"
+                      onClick={(e: MouseEvent<HTMLButtonElement>) => e.stopPropagation()}
+                    >
                       <MoreHorizontal className="h-4 w-4" />
                     </Button>
                   </td>
@@ -141,9 +181,7 @@ function Page() {
         <SheetContent className="w-[400px] sm:w-[540px]">
           <SheetHeader>
             <SheetTitle>Organization Details</SheetTitle>
-            <SheetDescription>
-              View detailed information about this organization.
-            </SheetDescription>
+            <SheetDescription>View detailed information about this organization.</SheetDescription>
           </SheetHeader>
           {selectedOrg && (
             <div className="mt-6 space-y-6">
@@ -153,12 +191,16 @@ function Page() {
               </div>
               <div>
                 <h3 className="text-sm font-medium text-slate-500">Plan</h3>
-                <p className="mt-1 text-base font-semibold text-slate-900 capitalize">{selectedOrg.plan || "Free"}</p>
+                <p className="mt-1 text-base font-semibold text-slate-900 capitalize">
+                  {selectedOrg.plan || "Free"}
+                </p>
               </div>
               <div>
                 <h3 className="text-sm font-medium text-slate-500">Status</h3>
                 <div className="mt-1">
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700`}>
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700`}
+                  >
                     Active
                   </span>
                 </div>
@@ -167,8 +209,11 @@ function Page() {
                 <h3 className="text-sm font-medium text-slate-500">Created At</h3>
                 <p className="mt-1 text-sm text-slate-900">
                   {new Date(selectedOrg.created_at).toLocaleDateString(undefined, {
-                    year: 'numeric', month: 'long', day: 'numeric',
-                    hour: '2-digit', minute: '2-digit'
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
                   })}
                 </p>
               </div>

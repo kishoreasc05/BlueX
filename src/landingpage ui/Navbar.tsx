@@ -25,9 +25,11 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  let navClasses = "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out font-body py-4 md:py-6";
+  let navClasses =
+    "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out font-body py-4 md:py-6";
 
-  let innerClasses = "flex items-center justify-between transition-all duration-300 mx-auto max-w-[1100px] bg-background/80 backdrop-blur-xl border border-border shadow-lg rounded-full px-6 py-2 ";
+  let innerClasses =
+    "flex items-center justify-between transition-all duration-300 mx-auto max-w-[1100px] bg-background/80 backdrop-blur-xl border border-border shadow-lg rounded-full px-6 py-2 ";
   if (isScrolled) {
     innerClasses += "shadow-xl bg-background/95";
   }
@@ -35,9 +37,11 @@ export default function Navbar() {
   return (
     <header className={navClasses}>
       <div className={innerClasses}>
-        
         {/* Left: Logo */}
-        <a href="/" className="flex items-center gap-2 text-foreground font-semibold text-xl tracking-tight shrink-0">
+        <a
+          href="/"
+          className="flex items-center gap-2 text-foreground font-semibold text-xl tracking-tight shrink-0"
+        >
           ✦ BlueX
         </a>
 
@@ -78,7 +82,6 @@ export default function Navbar() {
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
-
       </div>
 
       {/* Mobile menu dropdown */}
@@ -92,7 +95,10 @@ export default function Navbar() {
           >
             <div className="px-6 py-4 flex flex-col gap-2 max-h-[70vh] overflow-y-auto">
               {navigation.map((nav) => (
-                <div key={nav.name} className="flex flex-col border-b border-border/50 last:border-0 py-2">
+                <div
+                  key={nav.name}
+                  className="flex flex-col border-b border-border/50 last:border-0 py-2"
+                >
                   <a
                     href={nav.href}
                     className="text-foreground font-medium py-2"
@@ -102,7 +108,7 @@ export default function Navbar() {
                   </a>
                 </div>
               ))}
-              
+
               <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-border">
                 <a
                   href="/signin"

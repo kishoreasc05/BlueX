@@ -32,7 +32,9 @@ export function EntityTable<T extends { id: string }>({
           <TableRow className="bg-muted/30 hover:bg-muted/30 border-b border-border/40">
             {columns.map((c) => (
               <TableHead key={c.key} className={c.className}>
-                <span className="mono-label text-[9px] font-mono tracking-widest text-muted-foreground/80">{c.header}</span>
+                <span className="mono-label text-[9px] font-mono tracking-widest text-muted-foreground/80">
+                  {c.header}
+                </span>
               </TableHead>
             ))}
           </TableRow>
@@ -52,7 +54,7 @@ export function EntityTable<T extends { id: string }>({
                     transition={{
                       duration: 0.3,
                       delay: Math.min(index * 0.03, 0.25),
-                      ease: "easeOut"
+                      ease: "easeOut",
                     }}
                   >
                     {c.render(r)}

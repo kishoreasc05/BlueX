@@ -34,13 +34,15 @@ const stories = [
     color: "from-violet-50 to-purple-50",
     textColor: "text-violet-600",
     iconBg: "bg-violet-100",
-  }
+  },
 ];
 
 export default function CustomerStories() {
   return (
-    <section id="stories" className="w-full py-32 md:py-48 px-6 bg-white relative z-20 font-sans border-t border-slate-100 overflow-hidden">
-      
+    <section
+      id="stories"
+      className="w-full py-32 md:py-48 px-6 bg-white relative z-20 font-sans border-t border-slate-100 overflow-hidden"
+    >
       {/* Colorful Background Blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-blue-100/50 blur-[120px] rounded-[100%] pointer-events-none" />
@@ -49,7 +51,6 @@ export default function CustomerStories() {
       </div>
 
       <div className="max-w-[1200px] mx-auto relative z-10">
-        
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -58,14 +59,19 @@ export default function CustomerStories() {
         >
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 shadow-sm">
             <Quote className="w-4 h-4 text-indigo-600" />
-            <span className="text-xs font-semibold tracking-widest uppercase text-slate-600">Success Stories</span>
+            <span className="text-xs font-semibold tracking-widest uppercase text-slate-600">
+              Success Stories
+            </span>
           </div>
           <h2 className="font-display text-5xl md:text-7xl tracking-tight text-slate-900 leading-[1.1] mb-6 font-light">
             Proven by the world's <br className="hidden md:block" />
-            <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 italic">most ambitious teams.</span>
+            <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 italic">
+              most ambitious teams.
+            </span>
           </h2>
           <p className="text-slate-500 text-lg md:text-xl max-w-[700px] mx-auto leading-relaxed">
-            See how industry leaders are using BlueX to eliminate bottlenecks, automate complex workflows, and scale effortlessly.
+            See how industry leaders are using BlueX to eliminate bottlenecks, automate complex
+            workflows, and scale effortlessly.
           </p>
         </motion.div>
 
@@ -80,20 +86,28 @@ export default function CustomerStories() {
               className="group relative flex flex-col p-10 rounded-[2.5rem] bg-white border border-slate-200 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
             >
               {/* Card Gradient Background */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${story.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2.5rem] pointer-events-none`} />
-              
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${story.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2.5rem] pointer-events-none`}
+              />
+
               <Quote className="absolute top-8 right-8 w-16 h-16 text-slate-100 rotate-12 transition-transform duration-500 group-hover:rotate-0 group-hover:scale-110" />
-              
+
               <div className="relative z-10 flex flex-col h-full">
                 <div className="mb-12">
-                  <h3 className="text-2xl font-semibold text-slate-900 mb-6 font-display tracking-tight">{story.org}</h3>
+                  <h3 className="text-2xl font-semibold text-slate-900 mb-6 font-display tracking-tight">
+                    {story.org}
+                  </h3>
                   <div className="space-y-4">
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">The Challenge</p>
+                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">
+                        The Challenge
+                      </p>
                       <p className="text-slate-600 text-sm leading-relaxed">{story.problem}</p>
                     </div>
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">The Solution</p>
+                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">
+                        The Solution
+                      </p>
                       <p className="text-slate-600 text-sm leading-relaxed">{story.solution}</p>
                     </div>
                   </div>
@@ -101,16 +115,18 @@ export default function CustomerStories() {
 
                 <div className="mt-auto pt-8 border-t border-slate-100">
                   <div className="flex items-center gap-4">
-                    <div className={`w-14 h-14 rounded-full flex items-center justify-center border border-slate-200 shadow-sm ${story.iconBg} ${story.textColor}`}>
+                    <div
+                      className={`w-14 h-14 rounded-full flex items-center justify-center border border-slate-200 shadow-sm ${story.iconBg} ${story.textColor}`}
+                    >
                       <story.icon className="w-6 h-6" />
                     </div>
                     <div>
-                      <div className={`text-4xl font-display font-medium tracking-tight mb-1 ${story.textColor}`}>
+                      <div
+                        className={`text-4xl font-display font-medium tracking-tight mb-1 ${story.textColor}`}
+                      >
                         {story.metric}
                       </div>
-                      <div className="text-sm font-medium text-slate-500">
-                        {story.metricLabel}
-                      </div>
+                      <div className="text-sm font-medium text-slate-500">{story.metricLabel}</div>
                     </div>
                   </div>
                 </div>
@@ -125,14 +141,14 @@ export default function CustomerStories() {
           viewport={{ once: true }}
           className="mt-20 text-center"
         >
-          <a 
-            href="/stories" 
+          <a
+            href="/stories"
             className="inline-flex items-center justify-center h-14 px-8 rounded-full bg-slate-900 text-white font-medium hover:bg-slate-800 transition-colors shadow-md group"
           >
-            Read all customer stories <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            Read all customer stories{" "}
+            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </a>
         </motion.div>
-
       </div>
     </section>
   );

@@ -20,7 +20,9 @@ function slugify(v: string) {
     v
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "") + "-" + Math.random().toString(36).slice(2, 8)
+      .replace(/^-+|-+$/g, "") +
+    "-" +
+    Math.random().toString(36).slice(2, 8)
   );
 }
 
@@ -65,7 +67,8 @@ export function CreateOrgDialog({
         <DialogHeader>
           <DialogTitle>Create workspace</DialogTitle>
           <DialogDescription>
-            Workspaces isolate data — members, clients, projects and documents live inside a workspace.
+            Workspaces isolate data — members, clients, projects and documents live inside a
+            workspace.
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-2">

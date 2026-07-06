@@ -28,7 +28,7 @@ import {
   Bot,
   Activity,
   ShieldAlert,
-  ChevronDown
+  ChevronDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
@@ -48,9 +48,7 @@ import { CreateOrgDialog } from "@/components/create-org-dialog";
 
 const navGroups = [
   {
-    items: [
-      { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard }
-    ]
+    items: [{ to: "/dashboard", label: "Dashboard", icon: LayoutDashboard }],
   },
   {
     label: "AI Workspace",
@@ -58,8 +56,8 @@ const navGroups = [
     items: [
       { to: "/ai-assistant", label: "AI Assistant" },
       { to: "/ai-conversations", label: "AI Conversations" },
-      { to: "/ai-automations", label: "AI Automations" }
-    ]
+      { to: "/ai-automations", label: "AI Automations" },
+    ],
   },
   {
     label: "Organizations",
@@ -68,35 +66,33 @@ const navGroups = [
       { to: "/organizations", label: "Organization" },
       { to: "/organizations/members", label: "Members" },
       { to: "/organizations/branding", label: "Branding" },
-      { to: "/organizations/permissions", label: "Permissions" }
-    ]
+      { to: "/organizations/permissions", label: "Permissions" },
+    ],
   },
   {
     items: [
       { to: "/clients", label: "Clients", icon: Users },
-      { to: "/contractors", label: "Contractors", icon: HardHat }
-    ]
+      { to: "/contractors", label: "Contractors", icon: HardHat },
+    ],
   },
   {
     label: "Projects",
     icon: FolderKanban,
     to: "/projects",
-    items: [
-      { to: "/tasks", label: "Tasks" }
-    ]
+    items: [{ to: "/tasks", label: "Tasks" }],
   },
   {
     items: [
       { to: "/jobs", label: "Jobs", icon: Briefcase },
-      { to: "/contracts", label: "Contracts", icon: FileSignature }
-    ]
+      { to: "/contracts", label: "Contracts", icon: FileSignature },
+    ],
   },
   {
     items: [
       { to: "/documents", label: "Documents", icon: FileText },
       { to: "/payments", label: "Payments", icon: CircleDollarSign },
-      { to: "/subscriptions", label: "Subscriptions", icon: CreditCard }
-    ]
+      { to: "/subscriptions", label: "Subscriptions", icon: CreditCard },
+    ],
   },
   {
     items: [
@@ -104,14 +100,12 @@ const navGroups = [
       { to: "/notifications", label: "Notifications", icon: Bell },
       { to: "/reports", label: "Analytics", icon: BarChart3 },
       { to: "/activity-logs", label: "Activity Logs", icon: Activity },
-      { to: "/audit-logs", label: "Audit Logs", icon: ShieldAlert }
-    ]
-  }
+      { to: "/audit-logs", label: "Audit Logs", icon: ShieldAlert },
+    ],
+  },
 ];
 
-const bottomNav = [
-  { to: "/settings", label: "Settings", icon: Settings }
-];
+const bottomNav = [{ to: "/settings", label: "Settings", icon: Settings }];
 
 function initials(name?: string | null) {
   if (!name) return "?";
@@ -124,7 +118,7 @@ function initials(name?: string | null) {
     .toUpperCase();
 }
 
-function NavGroup({ group, location }: { group: any, location: any }) {
+function NavGroup({ group, location }: { group: any; location: any }) {
   const [isOpen, setIsOpen] = useState(true);
 
   if (!group.label) {
@@ -141,10 +135,16 @@ function NavGroup({ group, location }: { group: any, location: any }) {
                   "group flex items-center gap-3.5 px-3 py-2.5 rounded-xl text-[14px] font-medium transition-all relative",
                   isActive
                     ? "text-white bg-slate-800 shadow-sm"
-                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                    : "text-slate-400 hover:text-white hover:bg-white/5",
                 )}
               >
-                <Icon className={cn("h-4 w-4 shrink-0", isActive ? "text-white" : "text-slate-500 group-hover:text-slate-300")} strokeWidth={isActive ? 2 : 1.5} />
+                <Icon
+                  className={cn(
+                    "h-4 w-4 shrink-0",
+                    isActive ? "text-white" : "text-slate-500 group-hover:text-slate-300",
+                  )}
+                  strokeWidth={isActive ? 2 : 1.5}
+                />
                 <span className="flex-1 truncate">{n.label}</span>
               </Link>
             </li>
@@ -155,7 +155,7 @@ function NavGroup({ group, location }: { group: any, location: any }) {
   }
 
   const isParentActive = group.to && location.pathname === group.to;
-  
+
   return (
     <div className="mt-4">
       {group.to ? (
@@ -165,10 +165,18 @@ function NavGroup({ group, location }: { group: any, location: any }) {
             "group flex items-center gap-3.5 px-3 py-2.5 rounded-xl text-[14px] font-medium transition-all relative",
             isParentActive
               ? "text-white bg-slate-800 shadow-sm"
-              : "text-slate-400 hover:text-white hover:bg-white/5"
+              : "text-slate-400 hover:text-white hover:bg-white/5",
           )}
         >
-          {group.icon && <group.icon className={cn("h-4 w-4 shrink-0", isParentActive ? "text-white" : "text-slate-500 group-hover:text-slate-300")} strokeWidth={isParentActive ? 2 : 1.5} />}
+          {group.icon && (
+            <group.icon
+              className={cn(
+                "h-4 w-4 shrink-0",
+                isParentActive ? "text-white" : "text-slate-500 group-hover:text-slate-300",
+              )}
+              strokeWidth={isParentActive ? 2 : 1.5}
+            />
+          )}
           <span className="flex-1 truncate">{group.label}</span>
         </Link>
       ) : (
@@ -177,10 +185,20 @@ function NavGroup({ group, location }: { group: any, location: any }) {
           className="w-full group flex items-center justify-between px-3 py-2 text-[14px] font-medium text-slate-400 hover:text-white transition-all"
         >
           <div className="flex items-center gap-3.5">
-            {group.icon && <group.icon className="h-4 w-4 shrink-0 text-slate-500 group-hover:text-slate-300" strokeWidth={1.5} />}
+            {group.icon && (
+              <group.icon
+                className="h-4 w-4 shrink-0 text-slate-500 group-hover:text-slate-300"
+                strokeWidth={1.5}
+              />
+            )}
             <span className="flex-1 truncate">{group.label}</span>
           </div>
-          <ChevronDown className={cn("h-4 w-4 shrink-0 transition-transform text-slate-500", isOpen ? "" : "-rotate-90")} />
+          <ChevronDown
+            className={cn(
+              "h-4 w-4 shrink-0 transition-transform text-slate-500",
+              isOpen ? "" : "-rotate-90",
+            )}
+          />
         </button>
       )}
 
@@ -196,7 +214,7 @@ function NavGroup({ group, location }: { group: any, location: any }) {
                     "flex items-center pl-10 pr-3 py-2 rounded-xl text-[13px] font-medium transition-all relative",
                     isActive
                       ? "text-white bg-slate-800"
-                      : "text-slate-400 hover:text-white hover:bg-white/5"
+                      : "text-slate-400 hover:text-white hover:bg-white/5",
                   )}
                 >
                   <span className="flex-1 truncate">{n.label}</span>
@@ -221,12 +239,16 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="flex h-screen w-full overflow-hidden bg-background text-foreground">
       {/* Sidebar - Dark blue black theme */}
       <aside className="hidden w-[260px] shrink-0 flex-col bg-slate-950 text-slate-300 md:flex relative z-20 transition-all duration-300 border-r border-slate-900">
-        
         {/* Logo area */}
         <div className="flex h-16 items-center px-6 mt-2">
           <Link to="/dashboard" className="flex items-center gap-3 group">
-            <Atom className="h-7 w-7 text-indigo-400 group-hover:text-indigo-300 transition-colors" strokeWidth={2.5} />
-            <span className="text-xl font-bold tracking-tight text-white group-hover:text-indigo-200 transition-colors duration-300">BlueX</span>
+            <Atom
+              className="h-7 w-7 text-indigo-400 group-hover:text-indigo-300 transition-colors"
+              strokeWidth={2.5}
+            />
+            <span className="text-xl font-bold tracking-tight text-white group-hover:text-indigo-200 transition-colors duration-300">
+              BlueX
+            </span>
           </Link>
         </div>
 
@@ -242,19 +264,24 @@ export function AppShell({ children }: { children: ReactNode }) {
                   <div className="truncate text-sm font-medium text-white">
                     {active?.organization.name ?? "Acme Corporation"}
                   </div>
-                  <div className="truncate text-[11px] text-slate-400">
-                    Enterprise Plan
-                  </div>
+                  <div className="truncate text-[11px] text-slate-400">Enterprise Plan</div>
                 </div>
                 <ChevronsUpDown className="h-4 w-4 shrink-0 text-slate-400" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-56 rounded-xl shadow-lg border-border/40">
+            <DropdownMenuContent
+              align="start"
+              className="w-56 rounded-xl shadow-lg border-border/40"
+            >
               <DropdownMenuLabel className="text-[10px] uppercase font-mono tracking-wider text-muted-foreground">
                 Workspaces
               </DropdownMenuLabel>
               {orgs.map((o) => (
-                <DropdownMenuItem key={o.organization.id} onClick={() => setActiveId(o.organization.id)} className="rounded-lg gap-2 mt-1 cursor-pointer">
+                <DropdownMenuItem
+                  key={o.organization.id}
+                  onClick={() => setActiveId(o.organization.id)}
+                  className="rounded-lg gap-2 mt-1 cursor-pointer"
+                >
                   <div className="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-purple-500 text-white text-[9px] font-semibold">
                     {initials(o.organization.name)}
                   </div>
@@ -265,7 +292,10 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </DropdownMenuItem>
               ))}
               <DropdownMenuSeparator className="bg-border/40" />
-              <DropdownMenuItem onClick={() => setCreateOpen(true)} className="rounded-lg gap-2 text-xs font-medium text-indigo-500 hover:text-indigo-600 mt-0.5 cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => setCreateOpen(true)}
+                className="rounded-lg gap-2 text-xs font-medium text-indigo-500 hover:text-indigo-600 mt-0.5 cursor-pointer"
+              >
                 <Plus className="h-4 w-4" /> New workspace
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -294,10 +324,16 @@ export function AppShell({ children }: { children: ReactNode }) {
                       "group flex items-center gap-3.5 px-3 py-2.5 rounded-xl text-[14px] font-medium transition-all relative",
                       isActive
                         ? "text-white bg-slate-800 shadow-sm"
-                        : "text-slate-400 hover:text-white hover:bg-white/5"
+                        : "text-slate-400 hover:text-white hover:bg-white/5",
                     )}
                   >
-                    <Icon className={cn("h-4 w-4 shrink-0", isActive ? "text-white" : "text-slate-500 group-hover:text-slate-300")} strokeWidth={isActive ? 2 : 1.5} />
+                    <Icon
+                      className={cn(
+                        "h-4 w-4 shrink-0",
+                        isActive ? "text-white" : "text-slate-500 group-hover:text-slate-300",
+                      )}
+                      strokeWidth={isActive ? 2 : 1.5}
+                    />
                     <span className="flex-1 truncate">{n.label}</span>
                   </Link>
                 </li>
@@ -321,7 +357,10 @@ export function AppShell({ children }: { children: ReactNode }) {
           {/* Center Search Bar */}
           <div className="hidden md:flex flex-1 justify-center max-w-2xl px-8">
             <div className="relative w-full group max-w-xl">
-              <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" strokeWidth={1.5} />
+              <Search
+                className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+                strokeWidth={1.5}
+              />
               <Input
                 placeholder="Search anything..."
                 className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-12 text-sm focus-visible:ring-1 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all placeholder:text-slate-400 shadow-sm"
@@ -333,17 +372,25 @@ export function AppShell({ children }: { children: ReactNode }) {
               </div>
             </div>
           </div>
-          
+
           {/* Right Actions */}
           <div className="flex items-center gap-4 md:gap-5 ml-auto">
-            <Button asChild size="sm" variant="secondary" className="h-9 gap-2 rounded-xl bg-indigo-50/80 text-indigo-700 hover:bg-indigo-100/80 border-0 text-xs font-semibold shadow-none cursor-pointer">
+            <Button
+              asChild
+              size="sm"
+              variant="secondary"
+              className="h-9 gap-2 rounded-xl bg-indigo-50/80 text-indigo-700 hover:bg-indigo-100/80 border-0 text-xs font-semibold shadow-none cursor-pointer"
+            >
               <Link to="/ai-assistant">
                 <Sparkles className="h-3.5 w-3.5 text-indigo-500" strokeWidth={2} /> AI Copilot
               </Link>
             </Button>
-            
+
             <div className="flex items-center gap-1.5">
-              <Link to="/notifications" className="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors">
+              <Link
+                to="/notifications"
+                className="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors"
+              >
                 <Bell className="h-5 w-5" strokeWidth={1.5} />
                 <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
               </Link>
@@ -351,7 +398,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <MessageSquare className="h-5 w-5" strokeWidth={1.5} />
               </button>
             </div>
-            
+
             <div className="h-8 w-px bg-slate-200 hidden sm:block"></div>
 
             <DropdownMenu>
@@ -369,17 +416,25 @@ export function AppShell({ children }: { children: ReactNode }) {
               <DropdownMenuContent align="end" className="w-56 rounded-xl">
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none text-slate-900">{user?.user_metadata?.full_name || "User"}</p>
+                    <p className="text-sm font-medium leading-none text-slate-900">
+                      {user?.user_metadata?.full_name || "User"}
+                    </p>
                     <p className="text-xs leading-none text-slate-500">{user?.email}</p>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigate({ to: "/settings" })} className="cursor-pointer">
+                <DropdownMenuItem
+                  onClick={() => navigate({ to: "/settings" })}
+                  className="cursor-pointer"
+                >
                   <Settings className="mr-2 h-4 w-4 text-slate-400" />
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer text-red-600 focus:text-red-600">
+                <DropdownMenuItem
+                  onClick={() => signOut()}
+                  className="cursor-pointer text-red-600 focus:text-red-600"
+                >
                   <LogOut className="mr-2 h-4 w-4" />
                   Log out
                 </DropdownMenuItem>
@@ -391,9 +446,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         {/* Main Content Area */}
         <main className="flex-1 overflow-y-auto relative h-full">
           <div className="absolute inset-0 max-w-full">
-            <div className="h-full w-full p-4 md:p-6 lg:p-8">
-              {children}
-            </div>
+            <div className="h-full w-full p-4 md:p-6 lg:p-8">{children}</div>
           </div>
         </main>
       </div>
@@ -403,11 +456,21 @@ export function AppShell({ children }: { children: ReactNode }) {
   );
 }
 
-export function PageHeader({ title, description, action }: { title: ReactNode, description?: ReactNode, action?: ReactNode }) {
+export function PageHeader({
+  title,
+  description,
+  action,
+}: {
+  title: ReactNode;
+  description?: ReactNode;
+  action?: ReactNode;
+}) {
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center">{title}</h1>
+        <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center">
+          {title}
+        </h1>
         {description && <p className="text-slate-500 mt-1">{description}</p>}
       </div>
       {action && <div>{action}</div>}

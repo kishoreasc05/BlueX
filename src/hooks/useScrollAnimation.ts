@@ -16,7 +16,7 @@ export function useScrollAnimation(threshold = 0.1) {
       },
       {
         threshold,
-      }
+      },
     );
 
     if (ref.current) {

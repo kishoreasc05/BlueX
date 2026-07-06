@@ -9,16 +9,16 @@ export const Route = createFileRoute("/_authenticated/organizations/permissions"
 function Page() {
   return (
     <div className="space-y-6 pb-12 max-w-[1600px] mx-auto text-slate-800">
-      <PageHeader 
+      <PageHeader
         title={
           <div className="flex items-center gap-2 text-slate-900">
-             <ShieldCheck className="h-6 w-6" /> Organization Permissions
+            <ShieldCheck className="h-6 w-6" /> Organization Permissions
           </div>
         }
         description="Configure access controls and default permissions."
       />
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 text-center text-slate-500 py-12">
-         Permissions configuration coming soon.
+        Permissions configuration coming soon.
       </div>
     </div>
   );

@@ -113,7 +113,11 @@ function ClientsPage() {
         <EntityTable
           rows={clients.data}
           columns={[
-            { key: "name", header: "Name", render: (r) => <span className="font-medium">{r.name}</span> },
+            {
+              key: "name",
+              header: "Name",
+              render: (r) => <span className="font-medium">{r.name}</span>,
+            },
             { key: "company", header: "Company", render: (r) => r.company ?? "—" },
             { key: "email", header: "Email", render: (r) => r.email ?? "—" },
             { key: "phone", header: "Phone", render: (r) => r.phone ?? "—" },
@@ -165,30 +169,53 @@ function ClientsPage() {
           <div className="space-y-3">
             <div className="space-y-1.5">
               <Label>Name</Label>
-              <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} autoFocus />
+              <Input
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                autoFocus
+              />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <Label>Company</Label>
-                <Input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} />
+                <Input
+                  value={form.company}
+                  onChange={(e) => setForm({ ...form, company: e.target.value })}
+                />
               </div>
               <div className="space-y-1.5">
                 <Label>Email</Label>
-                <Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                <Input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
               </div>
             </div>
             <div className="space-y-1.5">
               <Label>Phone</Label>
-              <Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+              <Input
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              />
             </div>
             <div className="space-y-1.5">
               <Label>Notes</Label>
-              <Textarea rows={3} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
+              <Textarea
+                rows={3}
+                value={form.notes}
+                onChange={(e) => setForm({ ...form, notes: e.target.value })}
+              />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={() => create.mutate()} disabled={!form.name.trim() || create.isPending}>
+            <Button variant="outline" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              onClick={() => create.mutate()}
+              disabled={!form.name.trim() || create.isPending}
+            >
               {create.isPending ? "Saving…" : "Save client"}
             </Button>
           </DialogFooter>
