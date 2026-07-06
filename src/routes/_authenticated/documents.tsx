@@ -75,15 +75,13 @@ function DocumentsPage() {
           uploaded_by: user.id,
         });
         if (dbErr) throw dbErr;
-        await supabase
-          .from("activity_log")
-          .insert({
-            organization_id: activeId,
-            actor_id: user.id,
-            action: "uploaded",
-            entity_type: "document",
-            metadata: { name: file.name },
-          });
+        await supabase.from("activity_log").insert({
+          organization_id: activeId,
+          actor_id: user.id,
+          action: "uploaded",
+          entity_type: "document",
+          metadata: { name: file.name },
+        });
       }
       toast.success(`${files.length} file${files.length > 1 ? "s" : ""} uploaded`);
       qc.invalidateQueries({ queryKey: ["documents"] });

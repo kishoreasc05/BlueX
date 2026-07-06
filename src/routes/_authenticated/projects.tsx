@@ -113,14 +113,12 @@ function ProjectsPage() {
         created_by: user!.id,
       });
       if (error) throw error;
-      await supabase
-        .from("activity_log")
-        .insert({
-          organization_id: activeId!,
-          actor_id: user!.id,
-          action: "created",
-          entity_type: "project",
-        });
+      await supabase.from("activity_log").insert({
+        organization_id: activeId!,
+        actor_id: user!.id,
+        action: "created",
+        entity_type: "project",
+      });
     },
     onSuccess: () => {
       toast.success("Project created");
