@@ -16,24 +16,47 @@ export default function Footer() {
       </div>
 
       <div className="max-w-[1200px] mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 mb-20">
           {/* Brand & Tagline */}
-          <div className="flex flex-col gap-6 max-w-[400px]">
+          <div className="flex flex-col gap-6 lg:col-span-2">
             <a
               href="#"
               className="flex items-center gap-2 text-white font-semibold text-3xl tracking-tight font-display mb-2 drop-shadow-[0_0_15px_rgba(139,92,246,0.3)]"
             >
               ✦ BlueX
             </a>
-            <p className="text-zinc-400 text-lg leading-relaxed">
-              The AI-native Business Operating System. Unifying workflows, contracts, and payments
-              into one seamless platform.
+            <p className="text-zinc-400 text-lg leading-relaxed max-w-[320px]">
+              The AI-powered marketplace platform for blue-collar services in Switzerland. Connecting clients with verified professionals.
             </p>
           </div>
 
+          {/* Services Column */}
+          <div className="flex flex-col gap-4">
+            <h4 className="font-semibold text-white text-sm uppercase tracking-wider">Services</h4>
+            <ul className="space-y-2 text-zinc-400 text-sm">
+              <li><a href="#" className="hover:text-white transition-colors">Electricians</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Plumbers</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Cleaners</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Gardeners</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Painters</a></li>
+            </ul>
+          </div>
+
+          {/* Business Column */}
+          <div className="flex flex-col gap-4">
+            <h4 className="font-semibold text-white text-sm uppercase tracking-wider">For Partners</h4>
+            <ul className="space-y-2 text-zinc-400 text-sm">
+              <li><a href="/signin?mode=signup&role=provider" className="hover:text-white transition-colors">Become a Provider</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">AI Business Coach</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Public Tenders</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Trust Center</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Swiss Security</a></li>
+            </ul>
+          </div>
+
           {/* Newsletter */}
-          <div className="w-full md:max-w-[400px]">
-            <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">
+          <div className="flex flex-col gap-4">
+            <h4 className="font-semibold text-white text-sm uppercase tracking-wider">
               Stay updated
             </h4>
             <form className="flex gap-2 relative">
@@ -41,13 +64,13 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="relative flex-1 h-12 px-4 rounded-xl border border-white/10 bg-[#0a0715]/80 backdrop-blur-md text-white focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/50 placeholder:text-zinc-500 transition-all shadow-inner"
+                className="relative flex-1 h-12 px-4 rounded-xl border border-white/10 bg-[#0a0715]/80 backdrop-blur-md text-white focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/50 placeholder:text-zinc-500 transition-all shadow-inner w-full min-w-0"
               />
               <button
                 type="submit"
-                className="relative h-12 px-6 rounded-xl bg-white text-slate-900 font-medium hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+                className="relative h-12 px-5 rounded-xl bg-white text-slate-900 font-medium hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] shrink-0 text-sm"
               >
-                Subscribe
+                Join
               </button>
             </form>
           </div>

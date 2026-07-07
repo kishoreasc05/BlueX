@@ -1,7 +1,8 @@
 import { motion, useScroll, useTransform } from "motion/react";
+import { Link } from "@tanstack/react-router";
 import { Play } from "lucide-react";
-import heroBg from "../assets/webp/hero bg.webp";
-import dashboardUi from "../assets/webp/dashboard ui.webp";
+import heroBg from "../assets/hero_real_1783445771452.png";
+import dashboardUi from "../assets/dashboard_mockup.png";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function HeroSection() {
@@ -36,7 +37,7 @@ export default function HeroSection() {
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-4 py-1.5 text-sm text-white font-body mb-6 shadow-sm"
         >
-          AI-Native Business Operating System ✨
+          Switzerland's Premium Service Marketplace ✨
         </motion.div>
 
         {/* 2. Headline */}
@@ -44,10 +45,10 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-center font-display text-5xl md:text-6xl lg:text-[5rem] leading-[0.95] tracking-tight text-white max-w-2xl drop-shadow-sm"
+          className="text-center font-display text-5xl md:text-6xl lg:text-[5rem] leading-[0.95] tracking-tight text-white max-w-3xl drop-shadow-sm"
         >
-          Run your business. <br className="hidden md:block" />{" "}
-          <span className="italic text-white drop-shadow-md">Intelligently.</span>
+          Hire Trusted Professionals. <br className="hidden md:block" />{" "}
+          <span className="italic text-white drop-shadow-md">Instantly.</span>
         </motion.h1>
 
         {/* 3. Subheadline */}
@@ -57,8 +58,7 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-4 text-center text-base md:text-lg text-slate-200 max-w-[650px] leading-relaxed font-medium drop-shadow-sm"
         >
-          BlueX unifies projects, workflows, contracts, documents, approvals, payments, and
-          AI-powered automation into one intelligent workspace.
+          BlueX connects you with top-rated electricians, plumbers, and local service providers in Switzerland—with smart AI matching, real-time chat, and secure payments.
         </motion.p>
 
         {/* 4. CTA Buttons */}
@@ -66,14 +66,22 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-6 flex items-center gap-3"
+          className="mt-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-4"
         >
-          <button className="h-11 px-6 rounded-full bg-white text-slate-900 text-sm font-medium hover:bg-slate-100 transition-colors shadow-lg shadow-black/10">
-            Explore Platform
-          </button>
-          <button className="h-11 w-11 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-colors shadow-lg">
-            <Play className="h-4 w-4 fill-white text-white ml-0.5" />
-          </button>
+          <Link
+            to="/signin"
+            search={{ mode: "signup", role: "client" }}
+            className="h-11 px-8 rounded-full bg-white text-slate-900 text-sm font-medium hover:bg-slate-100 transition-colors shadow-lg shadow-black/10 flex items-center justify-center"
+          >
+            Book a Service
+          </Link>
+          <Link
+            to="/signin"
+            search={{ mode: "signup", role: "provider" }}
+            className="h-11 px-8 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-colors shadow-lg text-sm font-medium"
+          >
+            Become a Provider
+          </Link>
         </motion.div>
 
         {/* 5. Dashboard Preview (3D Scroll Effect) */}

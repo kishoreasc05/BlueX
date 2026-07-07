@@ -13,6 +13,7 @@ import { ArrowLeft, CheckCircle2, Eye, EyeOff } from "lucide-react";
 
 const searchSchema = z.object({
   mode: z.enum(["signin", "signup"]).optional(),
+  role: z.enum(["client", "provider"]).optional(),
 });
 
 export const Route = createFileRoute("/signin")({
@@ -21,8 +22,9 @@ export const Route = createFileRoute("/signin")({
 });
 
 function AuthPage() {
-  const { mode: initial } = Route.useSearch();
+  const { mode: initial, role: initialRole } = Route.useSearch();
   const [mode, setMode] = useState<"signin" | "signup">(initial ?? "signin");
+  const [role, setRole] = useState<"client" | "provider">(initialRole ?? "client");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -45,7 +47,7 @@ function AuthPage() {
           password,
           options: {
             emailRedirectTo: window.location.origin + "/dashboard",
-            data: { full_name: fullName },
+            data: { full_name: fullName, portal_role: role },
           },
         });
         if (error) throw error;
@@ -137,19 +139,51 @@ function AuthPage() {
                     animate={{ opacity: 1, height: "auto", y: 0 }}
                     exit={{ opacity: 0, height: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="space-y-2 overflow-hidden"
+                    className="space-y-5 overflow-hidden"
                   >
-                    <Label htmlFor="name" className="text-sm font-medium text-zinc-300">
-                      Full name
-                    </Label>
-                    <Input
-                      id="name"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      required={mode === "signup"}
-                      placeholder="Jane Doe"
-                      className="bg-zinc-950/50 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-indigo-500"
-                    />
+                    <div className="space-y-2">
+                      <Label htmlFor="name" className="text-sm font-medium text-zinc-300">
+                        Full name
+                      </Label>
+                      <Input
+                        id="name"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        required={mode === "signup"}
+                        placeholder="Jane Doe"
+                        className="bg-zinc-950/50 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-indigo-500"
+                      />
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <Label className="text-sm font-medium text-zinc-300">
+                        I am signing up as a...
+                      </Label>
+                      <div className="grid grid-cols-2 gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setRole("client")}
+                          className={`flex items-center justify-center p-3 rounded-xl border text-sm font-medium transition-all ${
+                            role === "client"
+                              ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-300"
+                              : "bg-zinc-950/50 border-white/10 text-zinc-400 hover:border-white/20 hover:text-zinc-300"
+                          }`}
+                        >
+                          Customer
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setRole("provider")}
+                          className={`flex items-center justify-center p-3 rounded-xl border text-sm font-medium transition-all ${
+                            role === "provider"
+                              ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-300"
+                              : "bg-zinc-950/50 border-white/10 text-zinc-400 hover:border-white/20 hover:text-zinc-300"
+                          }`}
+                        >
+                          Provider
+                        </button>
+                      </div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>

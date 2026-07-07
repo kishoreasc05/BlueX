@@ -3,33 +3,33 @@ import { ArrowRight, Quote, TrendingUp, Activity, ShieldCheck } from "lucide-rea
 
 const stories = [
   {
-    org: "Global Logistics Co.",
-    problem: "Disjointed systems across 40 countries caused 3-day delays in customs clearing.",
-    solution: "BlueX unified their entire pipeline, automating document verification and routing.",
-    metric: "72%",
-    metricLabel: "Reduction in processing time",
+    org: "Sarah M., Zurich (Homeowner)",
+    problem: "Had a sudden pipe leak on a Sunday evening. Couldn't get any local plumber to answer.",
+    solution: "Used BlueX Emergency Booking. A certified plumber accepted the job in 8 minutes and arrived within the hour.",
+    metric: "8 min",
+    metricLabel: "Emergency match time",
     icon: TrendingUp,
     color: "from-blue-50 to-indigo-50",
     textColor: "text-blue-600",
     iconBg: "bg-blue-100",
   },
   {
-    org: "FinTech Innovators",
-    problem: "Manual compliance checks were bottlenecking their customer onboarding flow.",
-    solution: "Implemented BlueX AI Copilot to instantly verify KYC documents and flag anomalies.",
-    metric: "3.5x",
-    metricLabel: "Faster customer onboarding",
+    org: "M. Keller Electrical (Provider)",
+    problem: "Spent too many hours writing quotes, managing invoices, and chasing clients manually.",
+    solution: "Migrated to BlueX. The AI Business Coach now automates quote creation and optimized our pricing model.",
+    metric: "+32%",
+    metricLabel: "Weekly revenue increase",
     icon: Activity,
     color: "from-emerald-50 to-teal-50",
     textColor: "text-emerald-600",
     iconBg: "bg-emerald-100",
   },
   {
-    org: "Enterprise Healthcare",
-    problem: "Needed a strictly compliant way to manage millions of patient records securely.",
-    solution: "Leveraged BlueX's SOC2 compliant infrastructure and advanced RBAC.",
+    org: "David K., Geneva (Homeowner)",
+    problem: "Wanted to paint his apartment but was worried about unlicensed or uncertified contractors.",
+    solution: "Searched on BlueX, verified provider qualifications in the Trust Center, and paid securely via escrow.",
     metric: "100%",
-    metricLabel: "Audit compliance achieved",
+    metricLabel: "Vetted & insured trades",
     icon: ShieldCheck,
     color: "from-violet-50 to-purple-50",
     textColor: "text-violet-600",
@@ -60,18 +60,17 @@ export default function CustomerStories() {
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 shadow-sm">
             <Quote className="w-4 h-4 text-indigo-600" />
             <span className="text-xs font-semibold tracking-widest uppercase text-slate-600">
-              Success Stories
+              Reviews & Feedback
             </span>
           </div>
           <h2 className="font-display text-5xl md:text-7xl tracking-tight text-slate-900 leading-[1.1] mb-6 font-light">
-            Proven by the world's <br className="hidden md:block" />
+            Trusted by homeowners <br className="hidden md:block" />
             <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 italic">
-              most ambitious teams.
+              & trades across Switzerland.
             </span>
           </h2>
           <p className="text-slate-500 text-lg md:text-xl max-w-[700px] mx-auto leading-relaxed">
-            See how industry leaders are using BlueX to eliminate bottlenecks, automate complex
-            workflows, and scale effortlessly.
+            Discover how clients find reliable help and how providers grow their businesses on BlueX.
           </p>
         </motion.div>
 
@@ -142,10 +141,10 @@ export default function CustomerStories() {
           className="mt-20 text-center"
         >
           <a
-            href="/stories"
+            href="/signin"
             className="inline-flex items-center justify-center h-14 px-8 rounded-full bg-slate-900 text-white font-medium hover:bg-slate-800 transition-colors shadow-md group"
           >
-            Read all customer stories{" "}
+            Read all reviews{" "}
             <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </a>
         </motion.div>

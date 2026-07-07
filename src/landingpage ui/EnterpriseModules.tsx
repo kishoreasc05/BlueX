@@ -45,10 +45,10 @@ export default function EnterpriseModules() {
             className="text-6xl md:text-7xl lg:text-[5rem] leading-[1.05] tracking-tight font-light mb-6"
           >
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 font-medium">
-              Accelerate
+              Empower
             </span>
             <br />
-            <span className="text-slate-800">business operations.</span>
+            <span className="text-slate-800">your trade business.</span>
           </motion.h2>
 
           <motion.p
@@ -58,8 +58,7 @@ export default function EnterpriseModules() {
             transition={{ delay: 0.1 }}
             className="text-slate-500 text-lg md:text-xl max-w-[480px] leading-relaxed mb-10"
           >
-            BlueX provides a unified workspace for managing projects, contracts, documents, and
-            workflows—eliminating silos and automating repetitive tasks natively.
+            BlueX equips service professionals with a modern suite of tools: manage your calendar, receive bookings, secure payments, and grow with tailored AI business advice.
           </motion.p>
 
           {/* Small Action Cards at bottom left */}
@@ -76,8 +75,8 @@ export default function EnterpriseModules() {
                 <FolderKanban className="w-5 h-5 text-indigo-600" />
               </div>
               <div>
-                <h4 className="text-slate-900 font-semibold text-sm">Projects & Jobs</h4>
-                <p className="text-slate-500 text-xs">End-to-end lifecycle</p>
+                <h4 className="text-slate-900 font-semibold text-sm">Calendar & Jobs</h4>
+                <p className="text-slate-500 text-xs">Organize your daily schedule</p>
               </div>
             </div>
             {/* Card 2 */}
@@ -86,8 +85,8 @@ export default function EnterpriseModules() {
                 <FileSignature className="w-5 h-5 text-rose-600" />
               </div>
               <div>
-                <h4 className="text-slate-900 font-semibold text-sm">Smart Contracts</h4>
-                <p className="text-slate-500 text-xs">Secure digital agreements</p>
+                <h4 className="text-slate-900 font-semibold text-sm">AI Business Coach</h4>
+                <p className="text-slate-500 text-xs">Price smart & scale earnings</p>
               </div>
             </div>
           </motion.div>
@@ -107,7 +106,7 @@ export default function EnterpriseModules() {
               <div className="p-4 border-b border-slate-100">
                 <div className="w-full h-9 bg-slate-50 border border-slate-200 rounded flex items-center px-3 gap-2">
                   <Search className="w-4 h-4 text-slate-400" />
-                  <span className="text-sm text-slate-400">Search workflows...</span>
+                  <span className="text-sm text-slate-400">Search active jobs...</span>
                 </div>
               </div>
               <div className="p-2 flex flex-col text-sm text-slate-700">
@@ -116,29 +115,29 @@ export default function EnterpriseModules() {
                     <div className="w-2 h-0.5 bg-white rounded-full" />
                   </div>
                   <ChevronDown className="w-4 h-4 text-slate-600" />
-                  <span className="font-medium">Client Onboarding</span>
+                  <span className="font-medium">Active Bookings</span>
                 </div>
                 <div className="flex items-center gap-2 px-2 py-2.5 ml-6 hover:bg-slate-50 rounded">
                   <div className="w-4 h-4 bg-blue-500 rounded-sm flex items-center justify-center">
                     <Check className="w-3 h-3 text-white" />
                   </div>
-                  <span>Verify KYC Documents</span>
+                  <span>Verify Site Layout</span>
                 </div>
                 <div className="flex items-center gap-2 px-2 py-2.5 ml-6 hover:bg-slate-50 rounded">
                   <div className="w-4 h-4 border border-slate-300 rounded-sm" />
-                  <span>Setup Billing Profile</span>
+                  <span>Invoice Client</span>
                 </div>
 
                 <div className="flex items-center gap-2 px-2 py-2.5 hover:bg-slate-50 rounded mt-1">
                   <div className="w-4 h-4 border border-slate-300 rounded-sm" />
                   <ChevronRight className="w-4 h-4 text-slate-400" />
-                  <span>Q3 Marketing Campaign</span>
+                  <span>Kitchen Rewiring Job</span>
                 </div>
 
                 <div className="flex items-center gap-2 px-2 py-2.5 hover:bg-slate-50 rounded mt-1">
                   <div className="w-4 h-4 border border-slate-300 rounded-sm" />
                   <ChevronRight className="w-4 h-4 text-slate-400" />
-                  <span>Annual Vendor Renewals</span>
+                  <span>Emergency Boiler Service</span>
                 </div>
               </div>
               <div className="p-3 border-t border-slate-100 bg-slate-50/50 flex justify-between items-center text-xs">
@@ -162,20 +161,20 @@ export default function EnterpriseModules() {
             >
               <div className="flex items-center gap-6 border-b border-slate-200 pb-3">
                 <div className="flex items-center gap-1.5 relative">
-                  <span className="text-sm font-semibold text-blue-600">Contracts</span>
+                  <span className="text-sm font-semibold text-blue-600">Bookings</span>
                   <span className="text-[10px] font-medium bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full">
-                    124
+                    84
                   </span>
                   <div className="absolute -bottom-[13px] left-0 right-0 h-0.5 bg-blue-600" />
                 </div>
                 <div className="flex items-center gap-1.5 relative">
-                  <span className="text-sm font-medium text-slate-700">Pending</span>
+                  <span className="text-sm font-medium text-slate-700">Quotes</span>
                   <div className="absolute -top-1 -right-2 w-1.5 h-1.5 bg-amber-500 rounded-full" />
                   <span className="text-[10px] font-medium bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full ml-1">
-                    12
+                    5
                   </span>
                 </div>
-                <span className="text-sm font-medium text-slate-700 ml-auto">Drafts</span>
+                <span className="text-sm font-medium text-slate-700 ml-auto">Tenders</span>
               </div>
 
               <div className="flex items-center justify-between mt-2">
@@ -204,17 +203,17 @@ export default function EnterpriseModules() {
               <div className="flex gap-4">
                 <div className="flex-1">
                   <label className="text-[11px] font-semibold text-slate-700 mb-1.5 block">
-                    Contract Name
+                    Job Name
                   </label>
                   <input
                     type="text"
-                    placeholder="Enter a name"
+                    placeholder="Kitchen rewiring"
                     className="w-full border border-slate-200 rounded-md px-3 py-1.5 text-sm outline-none placeholder:text-slate-300 bg-white/50"
                   />
                 </div>
                 <div className="w-24">
                   <label className="text-[11px] font-semibold text-slate-700 mb-1.5 block">
-                    Signatories
+                    Workers
                   </label>
                   <div className="relative">
                     <input
@@ -234,7 +233,7 @@ export default function EnterpriseModules() {
                 <div className="w-9 h-5 bg-blue-500 rounded-full flex items-center px-0.5">
                   <div className="w-4 h-4 bg-white rounded-full shadow-sm ml-auto" />
                 </div>
-                <span className="text-sm text-slate-700">Require E-Signature</span>
+                <span className="text-sm text-slate-700">Require Escrow Deposit</span>
               </div>
 
               <div className="flex gap-4">
@@ -266,7 +265,7 @@ export default function EnterpriseModules() {
                 <Check className="w-3 h-3 text-white" />
               </div>
               <span className="text-emerald-900 text-sm font-medium">
-                Contract sent for signing!
+                Job booked successfully!
               </span>
               <button className="text-[11px] font-bold text-blue-600 ml-auto mr-4 tracking-wider hover:underline">
                 VIEW

@@ -3,11 +3,11 @@ import { Sparkles, ArrowRight, CheckCircle2 } from "lucide-react";
 import aiBg from "../assets/webp/ai_section_bg_1783280902370.webp";
 
 const capabilities = [
-  "Summarize 50-page contracts in seconds",
-  "Draft contextual emails to clients",
-  "Generate financial reports on the fly",
-  "Analyze workflow bottlenecks",
-  "Recommend next best actions",
+  "Smart matches connecting client requirements with verified Swiss professionals",
+  "AI Business Coach providing pricing recommendations based on local market rates",
+  "Automated public tender matching and draft bid proposals",
+  "Smart assistant to help draft customer responses and quotes",
+  "Marketplace insights and performance analytics for business growth",
 ];
 
 export default function AICopilotSection() {
@@ -68,7 +68,7 @@ export default function AICopilotSection() {
                 className="self-end bg-white border border-slate-100 shadow-sm rounded-2xl rounded-tr-sm p-4 max-w-[85%]"
               >
                 <p className="text-[14px] text-slate-700 leading-relaxed">
-                  Can you summarize the Acme Corp MSA and highlight any unusual liability clauses?
+                  What's the average hourly rate for a certified electrician in Zurich right now?
                 </p>
               </motion.div>
 
@@ -83,14 +83,11 @@ export default function AICopilotSection() {
                 <div className="flex items-center gap-2 mb-2">
                   <Sparkles className="w-3.5 h-3.5 text-accent" />
                   <span className="text-[10px] uppercase tracking-wider font-semibold text-zinc-400">
-                    BlueX AI
+                    BlueX AI Coach
                   </span>
                 </div>
                 <p className="text-[14px] text-zinc-200 leading-relaxed">
-                  I've reviewed the 42-page MSA. The liability cap is set at{" "}
-                  <span className="font-semibold text-white bg-white/10 px-1 rounded">3x fees</span>
-                  , which deviates from your standard 1x. I've drafted a revision for the legal
-                  team.
+                  In Zurich, it ranges from <span className="font-semibold text-white bg-white/10 px-1 rounded">CHF 120-145/hr</span>. Given your 5-star rating and safety certifications, I recommend pricing at CHF 135/hr to stay highly competitive.
                 </p>
 
                 {/* Subtle glow behind AI bubble */}
@@ -106,7 +103,7 @@ export default function AICopilotSection() {
                 className="self-end bg-white border border-slate-100 shadow-sm rounded-2xl rounded-tr-sm p-4 max-w-[85%]"
               >
                 <p className="text-[14px] text-slate-700 leading-relaxed">
-                  Perfect. Route it to Sarah for approval and draft an email to the client.
+                  Sounds good, apply that rate and check for any new public electrical tenders.
                 </p>
               </motion.div>
             </div>
@@ -124,7 +121,7 @@ export default function AICopilotSection() {
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
               </div>
               <span className="text-[14px] font-semibold text-slate-800">
-                Automated workflow executed
+                Rate applied & tenders matched
               </span>
             </motion.div>
           </div>
@@ -143,9 +140,9 @@ export default function AICopilotSection() {
             </div>
 
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl tracking-tight text-slate-900 leading-[1.1] mb-6 drop-shadow-sm">
-              Your intelligent agent for{" "}
+              Your intelligent partner for{" "}
               <span className="italic text-accent relative inline-block">
-                deep work.
+                business growth.
                 <svg
                   className="absolute w-full h-3 -bottom-1 left-0 text-accent/30"
                   viewBox="0 0 100 10"
@@ -162,8 +159,7 @@ export default function AICopilotSection() {
             </h2>
 
             <p className="text-slate-800 text-lg md:text-xl mb-10 leading-relaxed max-w-lg font-medium drop-shadow-sm">
-              Automate your busywork with intelligent agents that learn, adapt, and execute—so your
-              team can focus on what matters most.
+              Supercharge your trades business with an AI Coach that optimizes your pricing, automates quotes, and drafts bids for local public tenders.
             </p>
 
             <ul className="space-y-5 mb-10">

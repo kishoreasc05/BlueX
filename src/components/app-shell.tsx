@@ -24,11 +24,23 @@ import {
   Bell,
   MessageSquare,
   Command,
-  Atom,
   Bot,
   Activity,
   ShieldAlert,
   ChevronDown,
+  Heart,
+  Star,
+  MapPin,
+  Wallet,
+  Calendar,
+  Clock,
+  TrendingUp,
+  Shield,
+  BadgeCheck,
+  Eye,
+  Grid3X3,
+  Zap,
+  Image,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
@@ -46,66 +58,101 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CreateOrgDialog } from "@/components/create-org-dialog";
 
-const navGroups = [
+/* ──────────────────────────────────────────────────────
+   CLIENT SIDEBAR NAV — matches Image 1
+   ────────────────────────────────────────────────────── */
+const clientNavGroups = [
   {
-    items: [{ to: "/dashboard", label: "Dashboard", icon: LayoutDashboard }],
-  },
-  {
-    label: "AI Workspace",
-    icon: Bot,
     items: [
-      { to: "/ai-assistant", label: "AI Assistant" },
-      { to: "/ai-conversations", label: "AI Conversations" },
-      { to: "/ai-automations", label: "AI Automations" },
+      { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, highlight: true },
     ],
   },
   {
-    label: "Organizations",
-    icon: Building,
+    label: "CLIENT",
     items: [
-      { to: "/organizations", label: "Organization" },
-      { to: "/organizations/members", label: "Members" },
-      { to: "/organizations/branding", label: "Branding" },
-      { to: "/organizations/permissions", label: "Permissions" },
+      { to: "/client/bookings", label: "My Bookings", icon: Calendar },
+      { to: "/notifications", label: "Messages", icon: MessageSquare, badge: "3" },
+      { to: "/settings", label: "Favorites", icon: Heart },
+      { to: "/payments", label: "Payments", icon: Wallet },
+      { to: "/settings", label: "Reviews", icon: Star },
     ],
   },
   {
+    label: "DISCOVER",
     items: [
-      { to: "/clients", label: "Clients", icon: Users },
-      { to: "/contractors", label: "Contractors", icon: HardHat },
+      { to: "/client/search", label: "Find Services", icon: Search },
     ],
   },
   {
-    label: "Projects",
-    icon: FolderKanban,
-    to: "/projects",
-    items: [{ to: "/tasks", label: "Tasks" }],
-  },
-  {
+    label: "SETTINGS",
     items: [
-      { to: "/jobs", label: "Jobs", icon: Briefcase },
-      { to: "/contracts", label: "Contracts", icon: FileSignature },
-    ],
-  },
-  {
-    items: [
-      { to: "/documents", label: "Documents", icon: FileText },
-      { to: "/payments", label: "Payments", icon: CircleDollarSign },
-      { to: "/subscriptions", label: "Subscriptions", icon: CreditCard },
-    ],
-  },
-  {
-    items: [
-      { to: "/workflows", label: "Workflow Engine", icon: GitMerge },
+      { to: "/settings", label: "Profile", icon: Users },
+      { to: "/settings", label: "Addresses", icon: MapPin },
+      { to: "/payments", label: "Payment Methods", icon: CreditCard },
       { to: "/notifications", label: "Notifications", icon: Bell },
-      { to: "/reports", label: "Analytics", icon: BarChart3 },
-      { to: "/activity-logs", label: "Activity Logs", icon: Activity },
-      { to: "/audit-logs", label: "Audit Logs", icon: ShieldAlert },
+      { to: "/settings", label: "Settings", icon: Settings },
     ],
   },
 ];
 
-const bottomNav = [{ to: "/settings", label: "Settings", icon: Settings }];
+/* ──────────────────────────────────────────────────────
+   PROVIDER SIDEBAR NAV — matches Image 2
+   ────────────────────────────────────────────────────── */
+const providerNavGroups = [
+  {
+    items: [
+      { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, highlight: true },
+    ],
+  },
+  {
+    label: "JOBS",
+    items: [
+      { to: "/jobs", label: "My Jobs", icon: Briefcase, badge: "5" },
+      { to: "/tasks", label: "Calendar", icon: Calendar },
+      { to: "/client/bookings", label: "Bookings", icon: CheckSquare },
+      { to: "/settings", label: "Availability", icon: Clock },
+    ],
+  },
+  {
+    label: "BUSINESS",
+    items: [
+      { to: "/payments", label: "Earnings", icon: CircleDollarSign },
+      { to: "/contracts", label: "Services & Pricing", icon: CreditCard },
+      { to: "/settings", label: "Reviews", icon: Star },
+      { to: "/documents", label: "Portfolio", icon: Image },
+    ],
+  },
+  {
+    label: "GROWTH",
+    items: [
+      { to: "/ai-assistant", label: "AI Coach", icon: Bot, badge: "New", badgeColor: "emerald" },
+      { to: "/client/tenders", label: "Public Tenders", icon: Briefcase, badge: "12" },
+      { to: "/reports", label: "Insights", icon: TrendingUp },
+    ],
+  },
+  {
+    label: "SETTINGS",
+    items: [
+      { to: "/settings", label: "Profile", icon: Users },
+      { to: "/documents", label: "Documents", icon: FileText },
+      { to: "/payments", label: "Payouts", icon: Wallet },
+      { to: "/settings", label: "Settings", icon: Settings },
+    ],
+  },
+];
+
+/* ──────────────────────────────────────────────────────
+   OPERATIONS SIDEBAR NAV
+   ────────────────────────────────────────────────────── */
+const operationsNavGroups = [
+  {
+    items: [
+      { to: "/dashboard", label: "Ops Dashboard", icon: LayoutDashboard },
+      { to: "/ops/bookings", label: "Booking Monitor", icon: Activity },
+      { to: "/ops/users", label: "User Moderation", icon: Users },
+    ],
+  },
+];
 
 function initials(name?: string | null) {
   if (!name) return "?";
@@ -118,116 +165,83 @@ function initials(name?: string | null) {
     .toUpperCase();
 }
 
+/* ──────────────────────────────────────────────────────
+   NAV GROUP COMPONENT — renders labeled or unlabeled groups
+   ────────────────────────────────────────────────────── */
 function NavGroup({ group, location }: { group: any; location: any }) {
-  const [isOpen, setIsOpen] = useState(true);
-
-  if (!group.label) {
-    return (
-      <ul className="space-y-1 mt-4 first:mt-0">
+  return (
+    <div className="mt-5 first:mt-0">
+      {/* Section Label */}
+      {group.label && (
+        <div className="px-3 mb-2 text-[10px] font-bold tracking-widest text-slate-500 uppercase">
+          {group.label}
+        </div>
+      )}
+      <ul className="space-y-0.5">
         {group.items.map((n: any) => {
           const isActive = location.pathname === n.to;
           const Icon = n.icon;
           return (
-            <li key={n.to}>
+            <li key={n.to + n.label}>
               <Link
                 to={n.to}
                 className={cn(
-                  "group flex items-center gap-3.5 px-3 py-2.5 rounded-xl text-[14px] font-medium transition-all relative",
-                  isActive
-                    ? "text-white bg-slate-800 shadow-sm"
-                    : "text-slate-400 hover:text-white hover:bg-white/5",
+                  "group flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13.5px] font-medium transition-all relative",
+                  n.highlight && isActive
+                    ? "text-white bg-blue-600 shadow-md shadow-blue-600/25"
+                    : isActive
+                      ? "text-white bg-slate-800 shadow-sm"
+                      : "text-slate-400 hover:text-white hover:bg-white/5",
                 )}
               >
                 <Icon
                   className={cn(
-                    "h-4 w-4 shrink-0",
-                    isActive ? "text-white" : "text-slate-500 group-hover:text-slate-300",
+                    "h-[18px] w-[18px] shrink-0",
+                    n.highlight && isActive
+                      ? "text-white"
+                      : isActive
+                        ? "text-white"
+                        : "text-slate-500 group-hover:text-slate-300",
                   )}
                   strokeWidth={isActive ? 2 : 1.5}
                 />
                 <span className="flex-1 truncate">{n.label}</span>
+
+                {/* Badge */}
+                {n.badge && (
+                  <span
+                    className={cn(
+                      "text-[10px] font-bold px-1.5 py-0.5 rounded-md",
+                      n.badgeColor === "emerald"
+                        ? "bg-emerald-500/20 text-emerald-400"
+                        : "bg-white/10 text-slate-300",
+                    )}
+                  >
+                    {n.badge}
+                  </span>
+                )}
+
+                {/* Dot indicator (e.g., Emergency) */}
+                {n.dot && (
+                  <span
+                    className={cn(
+                      "h-2 w-2 rounded-full shrink-0",
+                      n.dot === "green" ? "bg-emerald-400" : "bg-red-400",
+                    )}
+                  />
+                )}
               </Link>
             </li>
           );
         })}
       </ul>
-    );
-  }
-
-  const isParentActive = group.to && location.pathname === group.to;
-
-  return (
-    <div className="mt-4">
-      {group.to ? (
-        <Link
-          to={group.to}
-          className={cn(
-            "group flex items-center gap-3.5 px-3 py-2.5 rounded-xl text-[14px] font-medium transition-all relative",
-            isParentActive
-              ? "text-white bg-slate-800 shadow-sm"
-              : "text-slate-400 hover:text-white hover:bg-white/5",
-          )}
-        >
-          {group.icon && (
-            <group.icon
-              className={cn(
-                "h-4 w-4 shrink-0",
-                isParentActive ? "text-white" : "text-slate-500 group-hover:text-slate-300",
-              )}
-              strokeWidth={isParentActive ? 2 : 1.5}
-            />
-          )}
-          <span className="flex-1 truncate">{group.label}</span>
-        </Link>
-      ) : (
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-full group flex items-center justify-between px-3 py-2 text-[14px] font-medium text-slate-400 hover:text-white transition-all"
-        >
-          <div className="flex items-center gap-3.5">
-            {group.icon && (
-              <group.icon
-                className="h-4 w-4 shrink-0 text-slate-500 group-hover:text-slate-300"
-                strokeWidth={1.5}
-              />
-            )}
-            <span className="flex-1 truncate">{group.label}</span>
-          </div>
-          <ChevronDown
-            className={cn(
-              "h-4 w-4 shrink-0 transition-transform text-slate-500",
-              isOpen ? "" : "-rotate-90",
-            )}
-          />
-        </button>
-      )}
-
-      {isOpen && (
-        <ul className="mt-1 space-y-1 relative before:absolute before:left-5 before:top-1 before:bottom-1 before:w-px before:bg-slate-800 ml-0">
-          {group.items.map((n: any) => {
-            const isActive = location.pathname === n.to;
-            return (
-              <li key={n.to}>
-                <Link
-                  to={n.to}
-                  className={cn(
-                    "flex items-center pl-10 pr-3 py-2 rounded-xl text-[13px] font-medium transition-all relative",
-                    isActive
-                      ? "text-white bg-slate-800"
-                      : "text-slate-400 hover:text-white hover:bg-white/5",
-                  )}
-                >
-                  <span className="flex-1 truncate">{n.label}</span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      )}
     </div>
   );
 }
 
+/* ──────────────────────────────────────────────────────
+   APP SHELL — Main Layout
+   ────────────────────────────────────────────────────── */
 export function AppShell({ children }: { children: ReactNode }) {
   const { user, signOut } = useAuth();
   const { active, orgs, setActiveId } = useActiveOrg();
@@ -235,182 +249,144 @@ export function AppShell({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const [createOpen, setCreateOpen] = useState(false);
 
+  const activePortal = user?.user_metadata?.portal_role || "client";
+  const firstName = user?.user_metadata?.full_name?.split(" ")[0] || "User";
+  const fullName = user?.user_metadata?.full_name || "User";
+
+  const navGroups =
+    activePortal === "client"
+      ? clientNavGroups
+      : activePortal === "operations"
+        ? operationsNavGroups
+        : providerNavGroups;
+
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background text-foreground">
-      {/* Sidebar - Dark blue black theme */}
-      <aside className="hidden w-[260px] shrink-0 flex-col bg-slate-950 text-slate-300 md:flex relative z-20 transition-all duration-300 border-r border-slate-900">
-        {/* Logo area */}
-        <div className="flex h-16 items-center px-6 mt-2">
-          <Link to="/dashboard" className="flex items-center gap-3 group">
-            <Atom
-              className="h-7 w-7 text-indigo-400 group-hover:text-indigo-300 transition-colors"
-              strokeWidth={2.5}
-            />
-            <span className="text-xl font-bold tracking-tight text-white group-hover:text-indigo-200 transition-colors duration-300">
-              BlueX
+      {/* ── SIDEBAR ── */}
+      <aside className="hidden w-[260px] shrink-0 flex-col bg-[#0a0e1a] text-slate-300 md:flex relative z-20 transition-all duration-300 border-r border-slate-800/60">
+        {/* Logo */}
+        <div className="flex h-16 items-center px-5 mt-1">
+          <Link to="/dashboard" className="flex items-center gap-2.5 group">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white text-sm font-black">
+              X
+            </div>
+            <span className="text-lg font-bold tracking-tight text-white">
+              BlueX<span className="text-blue-400">.ch</span>
             </span>
           </Link>
         </div>
 
-        {/* Org switcher */}
-        <div className="px-4 py-4">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex w-full items-center gap-3 rounded-xl border border-white/5 bg-white/5 px-3 py-2.5 text-left text-sm hover:bg-white/10 transition-all focus:outline-none">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-purple-500/20 text-purple-300 text-xs font-semibold">
-                  {initials(active?.organization.name)}
+        {/* Provider User Profile Card (top, only for provider) */}
+        {activePortal === "provider" && (
+          <div className="px-4 pb-2 pt-1">
+            <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
+              <Avatar className="h-10 w-10 rounded-full border-2 border-blue-500/50">
+                <AvatarImage src="https://i.pravatar.cc/150?u=provider" />
+                <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
+                  {initials(fullName)}
+                </AvatarFallback>
+              </Avatar>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+                    <BadgeCheck className="h-3 w-3" /> Verified
+                  </span>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <div className="truncate text-sm font-medium text-white">
-                    {active?.organization.name ?? "Acme Corporation"}
-                  </div>
-                  <div className="truncate text-[11px] text-slate-400">Enterprise Plan</div>
+                <div className="text-sm font-semibold text-white truncate mt-0.5">{fullName}</div>
+                <div className="text-[11px] text-slate-400">Plumbing Specialist</div>
+                <div className="flex items-center gap-1 mt-0.5">
+                  <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
+                  <span className="text-[11px] text-slate-300 font-medium">4.8</span>
+                  <span className="text-[10px] text-slate-500">(226 reviews)</span>
                 </div>
-                <ChevronsUpDown className="h-4 w-4 shrink-0 text-slate-400" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="start"
-              className="w-56 rounded-xl shadow-lg border-border/40"
-            >
-              <DropdownMenuLabel className="text-[10px] uppercase font-mono tracking-wider text-muted-foreground">
-                Workspaces
-              </DropdownMenuLabel>
-              {orgs.map((o) => (
-                <DropdownMenuItem
-                  key={o.organization.id}
-                  onClick={() => setActiveId(o.organization.id)}
-                  className="rounded-lg gap-2 mt-1 cursor-pointer"
-                >
-                  <div className="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-indigo-500 to-purple-500 text-white text-[9px] font-semibold">
-                    {initials(o.organization.name)}
-                  </div>
-                  <span className="flex-1 truncate text-xs font-medium">{o.organization.name}</span>
-                  {active?.organization.id === o.organization.id ? (
-                    <Check className="h-3.5 w-3.5 text-indigo-500" />
-                  ) : null}
-                </DropdownMenuItem>
-              ))}
-              <DropdownMenuSeparator className="bg-border/40" />
-              <DropdownMenuItem
-                onClick={() => setCreateOpen(true)}
-                className="rounded-lg gap-2 text-xs font-medium text-indigo-500 hover:text-indigo-600 mt-0.5 cursor-pointer"
-              >
-                <Plus className="h-4 w-4" /> New workspace
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+              </div>
+              <ChevronDown className="h-4 w-4 text-slate-500 shrink-0" />
+            </div>
+          </div>
+        )}
 
-        {/* Main Nav */}
-        <nav className="flex-1 overflow-y-auto px-4 py-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-          {navGroups.map((group, idx) => (
+        {/* Main Navigation */}
+        <nav className="flex-1 overflow-y-auto px-3 py-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          {navGroups.map((group: any, idx: number) => (
             <NavGroup key={idx} group={group} location={location} />
           ))}
-
-          {/* Divider */}
-          <div className="my-6 mx-3 h-px bg-slate-800" />
-
-          {/* Bottom Nav */}
-          <ul className="space-y-1">
-            {bottomNav.map((n) => {
-              const isActive = location.pathname === n.to;
-              const Icon = n.icon;
-              return (
-                <li key={n.to}>
-                  <Link
-                    to={n.to as any}
-                    className={cn(
-                      "group flex items-center gap-3.5 px-3 py-2.5 rounded-xl text-[14px] font-medium transition-all relative",
-                      isActive
-                        ? "text-white bg-slate-800 shadow-sm"
-                        : "text-slate-400 hover:text-white hover:bg-white/5",
-                    )}
-                  >
-                    <Icon
-                      className={cn(
-                        "h-4 w-4 shrink-0",
-                        isActive ? "text-white" : "text-slate-500 group-hover:text-slate-300",
-                      )}
-                      strokeWidth={isActive ? 2 : 1.5}
-                    />
-                    <span className="flex-1 truncate">{n.label}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
         </nav>
+
+        {/* Sidebar Footer */}
+        <div className="px-3 pb-4 mt-auto">
+          {activePortal === "provider" ? (
+            /* View Client Mode button */
+            <button
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
+              onClick={() => navigate({ to: "/settings" })}
+            >
+              <Eye className="h-4 w-4" />
+              View Client Mode
+            </button>
+          ) : (
+            /* Client user profile card (bottom) */
+            <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
+              <Avatar className="h-9 w-9 rounded-full border border-slate-700">
+                <AvatarImage src="https://i.pravatar.cc/150?u=client" />
+                <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
+                  {initials(fullName)}
+                </AvatarFallback>
+              </Avatar>
+              <div className="min-w-0 flex-1">
+                <div className="text-sm font-semibold text-white truncate">{fullName}</div>
+                <div className="text-[11px] text-slate-400 flex items-center gap-1">
+                  <MapPin className="h-3 w-3" /> Zurich, Switzerland
+                </div>
+              </div>
+              <ChevronDown className="h-4 w-4 text-slate-500 shrink-0" />
+            </div>
+          )}
+        </div>
       </aside>
 
-      {/* Main Container */}
-      <div className="flex min-w-0 flex-1 flex-col bg-[#eef2f6]">
+      {/* ── MAIN CONTAINER ── */}
+      <div className="flex min-w-0 flex-1 flex-col bg-[#f0f4f8]">
         {/* Header */}
-        <header className="flex h-16 shrink-0 items-center justify-between border-b border-border/60 bg-white px-6 lg:px-8 relative z-10 shadow-sm">
-          {/* Left side mobile menu trigger (hidden on desktop) */}
+        <header className="flex h-14 shrink-0 items-center justify-between border-b border-slate-200/80 bg-white px-6 lg:px-8 relative z-10 shadow-sm">
+          {/* Left: mobile menu trigger */}
           <div className="flex items-center gap-4 md:hidden">
             <button className="text-slate-500">
               <LayoutDashboard className="h-5 w-5" />
             </button>
           </div>
 
-          {/* Center Search Bar */}
-          <div className="hidden md:flex flex-1 justify-center max-w-2xl px-8">
-            <div className="relative w-full group max-w-xl">
-              <Search
-                className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
-                strokeWidth={1.5}
-              />
-              <Input
-                placeholder="Search anything..."
-                className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-12 text-sm focus-visible:ring-1 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 transition-all placeholder:text-slate-400 shadow-sm"
-              />
-              <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                <kbd className="pointer-events-none inline-flex h-5 items-center gap-1 rounded border border-slate-200 bg-white px-1.5 font-mono text-[10px] font-medium text-slate-500">
-                  <Command className="h-3 w-3" /> K
-                </kbd>
-              </div>
-            </div>
-          </div>
+          {/* Center: spacer for desktop */}
+          <div className="hidden md:flex flex-1" />
 
-          {/* Right Actions */}
-          <div className="flex items-center gap-4 md:gap-5 ml-auto">
-            <Button
-              asChild
-              size="sm"
-              variant="secondary"
-              className="h-9 gap-2 rounded-xl bg-indigo-50/80 text-indigo-700 hover:bg-indigo-100/80 border-0 text-xs font-semibold shadow-none cursor-pointer"
+          {/* Right side */}
+          <div className="flex items-center gap-3 ml-auto">
+            {/* Location Badge */}
+            <div className="hidden sm:flex items-center gap-1.5 text-sm text-slate-600 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5">
+              <MapPin className="h-3.5 w-3.5 text-blue-500" />
+              <span className="font-medium text-xs">Zurich, Switzerland</span>
+            </div>
+
+            {/* Notifications */}
+            <Link
+              to="/notifications"
+              className="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors"
             >
-              <Link to="/ai-assistant">
-                <Sparkles className="h-3.5 w-3.5 text-indigo-500" strokeWidth={2} /> AI Copilot
-              </Link>
-            </Button>
+              <Bell className="h-5 w-5" strokeWidth={1.5} />
+              <span className="absolute top-1 right-1 h-4 w-4 rounded-full bg-red-500 ring-2 ring-white text-[9px] text-white font-bold flex items-center justify-center">
+                2
+              </span>
+            </Link>
 
-            <div className="flex items-center gap-1.5">
-              <Link
-                to="/notifications"
-                className="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors"
-              >
-                <Bell className="h-5 w-5" strokeWidth={1.5} />
-                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
-              </Link>
-              <button className="p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors hidden sm:block">
-                <MessageSquare className="h-5 w-5" strokeWidth={1.5} />
-              </button>
-            </div>
-
-            <div className="h-8 w-px bg-slate-200 hidden sm:block"></div>
-
+            {/* User Avatar */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="focus:outline-none flex items-center gap-2 group">
-                  <Avatar className="h-8 w-8 rounded-full border border-slate-200 shadow-sm transition-transform group-hover:scale-105">
+                  <Avatar className="h-8 w-8 rounded-full border-2 border-slate-200 shadow-sm transition-transform group-hover:scale-105">
                     <AvatarImage src="https://i.pravatar.cc/150?u=jane" />
-                    <AvatarFallback className="bg-indigo-100 text-indigo-700 text-xs font-semibold">
-                      {initials(user?.email || "Jane Doe")}
+                    <AvatarFallback className="bg-blue-100 text-blue-700 text-xs font-semibold">
+                      {initials(user?.email || "User")}
                     </AvatarFallback>
                   </Avatar>
-                  <ChevronDown className="h-4 w-4 text-slate-400 group-hover:text-slate-600 transition-colors" />
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56 rounded-xl">
@@ -443,7 +419,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         </header>
 
-        {/* Main Content Area */}
+        {/* Main Content */}
         <main className="flex-1 overflow-y-auto relative h-full">
           <div className="absolute inset-0 max-w-full">
             <div className="h-full w-full p-4 md:p-6 lg:p-8">{children}</div>

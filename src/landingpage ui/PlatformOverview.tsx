@@ -1,17 +1,30 @@
 import { motion } from "motion/react";
-import photoAnalytics from "../assets/webp/photo_analytics_1783279630573.webp";
-import photoAi from "../assets/webp/photo_ai_assistant_1783279639279.webp";
+import photoAnalytics from "../assets/search_real_1783445781613.png";
+import photoAi from "../assets/ai_coach_ui_1783444699367.png";
 import photoProjects from "../assets/webp/photo_projects_1783279649064.webp";
-import photoDocs from "../assets/webp/photo_documents_1783279659308.webp";
-import photoPayments from "../assets/webp/photo_payments_1783279668786.webp";
+import photoDocs from "../assets/trust_real_1783445803842.png";
+import photoPayments from "../assets/escrow_real_1783445814196.png";
+import sectionBg from "../assets/hero_professionals_group.png";
 
 export default function PlatformOverview() {
   return (
     <section
       id="platform"
-      className="w-full py-24 md:py-32 px-6 bg-zinc-950 bg-grid-dark relative z-30 shadow-2xl"
+      className="w-full py-24 md:py-32 px-6 bg-zinc-950 bg-grid-dark relative z-30 shadow-2xl overflow-hidden"
     >
-      <div className="max-w-[1200px] mx-auto">
+      {/* Background Image with Overlays */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-20 md:opacity-35">
+        <img
+          src={sectionBg}
+          alt="Marketplace Background"
+          className="w-full h-full object-cover object-center"
+        />
+        {/* Dark overlay to ensure text readability */}
+        <div className="absolute inset-0 bg-zinc-950/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-950/50 to-zinc-950" />
+      </div>
+
+      <div className="max-w-[1200px] mx-auto relative z-10">
         {/* Header (Split Layout) */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
           <motion.div
@@ -23,7 +36,7 @@ export default function PlatformOverview() {
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl tracking-tight text-white leading-[1.1]">
               The complete <br />
               <span className="italic bg-gradient-to-r from-white to-zinc-500 bg-clip-text text-transparent drop-shadow-sm">
-                Business Operating System
+                Service Marketplace
               </span>
             </h2>
           </motion.div>
@@ -36,8 +49,7 @@ export default function PlatformOverview() {
             className="md:w-1/2 md:max-w-md"
           >
             <p className="text-zinc-400 text-lg leading-relaxed">
-              BlueX is an AI-native Business OS built to unify your projects, workflows, contracts,
-              and payments into one intelligent, secure enterprise workspace.
+              BlueX is Switzerland's leading AI-powered blue-collar marketplace, connecting you with verified professionals while giving providers the business tools to thrive.
             </p>
           </motion.div>
         </div>
@@ -59,11 +71,10 @@ export default function PlatformOverview() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 p-8 text-white z-10 w-full">
               <h3 className="text-3xl font-display font-medium mb-2">
-                Unified Business Operations
+                Find & Book Service Providers
               </h3>
               <p className="text-white/80 max-w-md">
-                Streamline and orchestrate your entire organization's workflows across teams,
-                clients, and contractors with deep analytical insights.
+                Discover qualified electricians, plumbers, painters, and more. Compare profiles, read reviews, and book instantly.
               </p>
             </div>
           </motion.div>
@@ -83,9 +94,9 @@ export default function PlatformOverview() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
             <div className="absolute bottom-0 left-0 p-6 text-white z-10 w-full">
-              <h3 className="text-xl font-semibold mb-2">AI-Native Automation</h3>
+              <h3 className="text-xl font-semibold mb-2">AI Matchmaking</h3>
               <p className="text-white/70 text-sm">
-                Automate repetitive tasks and summarize business content effortlessly.
+                Describe your project, and our AI matches you with the best available Swiss providers.
               </p>
             </div>
           </motion.div>
@@ -105,9 +116,9 @@ export default function PlatformOverview() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
             <div className="absolute bottom-0 left-0 p-6 text-white z-10 w-full">
-              <h3 className="text-xl font-semibold mb-2">Project Management</h3>
+              <h3 className="text-xl font-semibold mb-2">Manage Bookings</h3>
               <p className="text-white/70 text-sm">
-                Manage complex initiatives and jobs with complete visibility.
+                Track active jobs, communicate via live chat, and view provider progress.
               </p>
             </div>
           </motion.div>
@@ -127,10 +138,9 @@ export default function PlatformOverview() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 p-6 text-white z-10 w-full">
-              <h3 className="text-2xl font-semibold mb-2">Contracts & Documents</h3>
+              <h3 className="text-2xl font-semibold mb-2">Verified Swiss Professionals</h3>
               <p className="text-white/80 text-sm max-w-[400px]">
-                Secure, multi-tenant collaboration on living documents and legally binding
-                agreements.
+                All providers undergo ID verification, certification checks, and are fully insured for your peace of mind.
               </p>
             </div>
           </motion.div>
@@ -150,9 +160,9 @@ export default function PlatformOverview() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
             <div className="absolute bottom-0 left-0 p-6 text-white z-10 w-full">
-              <h3 className="text-xl font-semibold mb-2">Global Payments</h3>
+              <h3 className="text-xl font-semibold mb-2">Secure Escrow</h3>
               <p className="text-white/70 text-sm">
-                Seamless financial transactions and built-in global money movement.
+                Funds are held safely and only released when the job is completed and approved.
               </p>
             </div>
           </motion.div>

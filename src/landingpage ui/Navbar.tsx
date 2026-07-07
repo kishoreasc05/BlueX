@@ -3,11 +3,11 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 const navigation = [
-  { name: "Platform", href: "#platform" },
-  { name: "AI Copilot", href: "#ai" },
-  { name: "Workflows", href: "#workflow" },
-  { name: "Security", href: "#security" },
-  { name: "Customers", href: "#stories" },
+  { name: "Services", href: "#platform" },
+  { name: "AI Coach", href: "#ai" },
+  { name: "For Providers", href: "#providers" },
+  { name: "Trust & Security", href: "#security" },
+  { name: "Reviews", href: "#stories" },
   { name: "Pricing", href: "#pricing" },
 ];
 
@@ -67,10 +67,10 @@ export default function Navbar() {
             Sign In
           </a>
           <a
-            href="/demo"
+            href="/signin?mode=signup&role=provider"
             className="inline-flex items-center justify-center h-10 px-5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm"
           >
-            Book a Demo
+            Become a Provider
           </a>
         </div>
 
@@ -118,11 +118,11 @@ export default function Navbar() {
                   Sign In
                 </a>
                 <a
-                  href="/demo"
+                  href="/signin?mode=signup&role=provider"
                   onClick={() => setMobileOpen(false)}
                   className="text-center font-medium bg-primary text-primary-foreground py-3 rounded-lg"
                 >
-                  Book a Demo
+                  Become a Provider
                 </a>
               </div>
             </div>

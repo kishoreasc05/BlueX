@@ -36,6 +36,11 @@ import { Route as AuthenticatedOrganizationsIndexRouteImport } from './routes/_a
 import { Route as AuthenticatedOrganizationsPermissionsRouteImport } from './routes/_authenticated/organizations.permissions'
 import { Route as AuthenticatedOrganizationsMembersRouteImport } from './routes/_authenticated/organizations.members'
 import { Route as AuthenticatedOrganizationsBrandingRouteImport } from './routes/_authenticated/organizations.branding'
+import { Route as AuthenticatedOpsUsersRouteImport } from './routes/_authenticated/ops.users'
+import { Route as AuthenticatedOpsBookingsRouteImport } from './routes/_authenticated/ops.bookings'
+import { Route as AuthenticatedClientTendersRouteImport } from './routes/_authenticated/client.tenders'
+import { Route as AuthenticatedClientSearchRouteImport } from './routes/_authenticated/client.search'
+import { Route as AuthenticatedClientBookingsRouteImport } from './routes/_authenticated/client.bookings'
 
 const SigninRoute = SigninRouteImport.update({
   id: '/signin',
@@ -182,6 +187,35 @@ const AuthenticatedOrganizationsBrandingRoute =
     path: '/organizations/branding',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedOpsUsersRoute = AuthenticatedOpsUsersRouteImport.update({
+  id: '/ops/users',
+  path: '/ops/users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedOpsBookingsRoute =
+  AuthenticatedOpsBookingsRouteImport.update({
+    id: '/ops/bookings',
+    path: '/ops/bookings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedClientTendersRoute =
+  AuthenticatedClientTendersRouteImport.update({
+    id: '/client/tenders',
+    path: '/client/tenders',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedClientSearchRoute =
+  AuthenticatedClientSearchRouteImport.update({
+    id: '/client/search',
+    path: '/client/search',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedClientBookingsRoute =
+  AuthenticatedClientBookingsRouteImport.update({
+    id: '/client/bookings',
+    path: '/client/bookings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -206,6 +240,11 @@ export interface FileRoutesByFullPath {
   '/tasks': typeof AuthenticatedTasksRoute
   '/workflows': typeof AuthenticatedWorkflowsRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/client/bookings': typeof AuthenticatedClientBookingsRoute
+  '/client/search': typeof AuthenticatedClientSearchRoute
+  '/client/tenders': typeof AuthenticatedClientTendersRoute
+  '/ops/bookings': typeof AuthenticatedOpsBookingsRoute
+  '/ops/users': typeof AuthenticatedOpsUsersRoute
   '/organizations/branding': typeof AuthenticatedOrganizationsBrandingRoute
   '/organizations/members': typeof AuthenticatedOrganizationsMembersRoute
   '/organizations/permissions': typeof AuthenticatedOrganizationsPermissionsRoute
@@ -234,6 +273,11 @@ export interface FileRoutesByTo {
   '/tasks': typeof AuthenticatedTasksRoute
   '/workflows': typeof AuthenticatedWorkflowsRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/client/bookings': typeof AuthenticatedClientBookingsRoute
+  '/client/search': typeof AuthenticatedClientSearchRoute
+  '/client/tenders': typeof AuthenticatedClientTendersRoute
+  '/ops/bookings': typeof AuthenticatedOpsBookingsRoute
+  '/ops/users': typeof AuthenticatedOpsUsersRoute
   '/organizations/branding': typeof AuthenticatedOrganizationsBrandingRoute
   '/organizations/members': typeof AuthenticatedOrganizationsMembersRoute
   '/organizations/permissions': typeof AuthenticatedOrganizationsPermissionsRoute
@@ -264,6 +308,11 @@ export interface FileRoutesById {
   '/_authenticated/tasks': typeof AuthenticatedTasksRoute
   '/_authenticated/workflows': typeof AuthenticatedWorkflowsRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/_authenticated/client/bookings': typeof AuthenticatedClientBookingsRoute
+  '/_authenticated/client/search': typeof AuthenticatedClientSearchRoute
+  '/_authenticated/client/tenders': typeof AuthenticatedClientTendersRoute
+  '/_authenticated/ops/bookings': typeof AuthenticatedOpsBookingsRoute
+  '/_authenticated/ops/users': typeof AuthenticatedOpsUsersRoute
   '/_authenticated/organizations/branding': typeof AuthenticatedOrganizationsBrandingRoute
   '/_authenticated/organizations/members': typeof AuthenticatedOrganizationsMembersRoute
   '/_authenticated/organizations/permissions': typeof AuthenticatedOrganizationsPermissionsRoute
@@ -294,6 +343,11 @@ export interface FileRouteTypes {
     | '/tasks'
     | '/workflows'
     | '/invite/$token'
+    | '/client/bookings'
+    | '/client/search'
+    | '/client/tenders'
+    | '/ops/bookings'
+    | '/ops/users'
     | '/organizations/branding'
     | '/organizations/members'
     | '/organizations/permissions'
@@ -322,6 +376,11 @@ export interface FileRouteTypes {
     | '/tasks'
     | '/workflows'
     | '/invite/$token'
+    | '/client/bookings'
+    | '/client/search'
+    | '/client/tenders'
+    | '/ops/bookings'
+    | '/ops/users'
     | '/organizations/branding'
     | '/organizations/members'
     | '/organizations/permissions'
@@ -351,6 +410,11 @@ export interface FileRouteTypes {
     | '/_authenticated/tasks'
     | '/_authenticated/workflows'
     | '/invite/$token'
+    | '/_authenticated/client/bookings'
+    | '/_authenticated/client/search'
+    | '/_authenticated/client/tenders'
+    | '/_authenticated/ops/bookings'
+    | '/_authenticated/ops/users'
     | '/_authenticated/organizations/branding'
     | '/_authenticated/organizations/members'
     | '/_authenticated/organizations/permissions'
@@ -555,6 +619,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOrganizationsBrandingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/ops/users': {
+      id: '/_authenticated/ops/users'
+      path: '/ops/users'
+      fullPath: '/ops/users'
+      preLoaderRoute: typeof AuthenticatedOpsUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ops/bookings': {
+      id: '/_authenticated/ops/bookings'
+      path: '/ops/bookings'
+      fullPath: '/ops/bookings'
+      preLoaderRoute: typeof AuthenticatedOpsBookingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/client/tenders': {
+      id: '/_authenticated/client/tenders'
+      path: '/client/tenders'
+      fullPath: '/client/tenders'
+      preLoaderRoute: typeof AuthenticatedClientTendersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/client/search': {
+      id: '/_authenticated/client/search'
+      path: '/client/search'
+      fullPath: '/client/search'
+      preLoaderRoute: typeof AuthenticatedClientSearchRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/client/bookings': {
+      id: '/_authenticated/client/bookings'
+      path: '/client/bookings'
+      fullPath: '/client/bookings'
+      preLoaderRoute: typeof AuthenticatedClientBookingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -578,6 +677,11 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedSubscriptionsRoute: typeof AuthenticatedSubscriptionsRoute
   AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
   AuthenticatedWorkflowsRoute: typeof AuthenticatedWorkflowsRoute
+  AuthenticatedClientBookingsRoute: typeof AuthenticatedClientBookingsRoute
+  AuthenticatedClientSearchRoute: typeof AuthenticatedClientSearchRoute
+  AuthenticatedClientTendersRoute: typeof AuthenticatedClientTendersRoute
+  AuthenticatedOpsBookingsRoute: typeof AuthenticatedOpsBookingsRoute
+  AuthenticatedOpsUsersRoute: typeof AuthenticatedOpsUsersRoute
   AuthenticatedOrganizationsBrandingRoute: typeof AuthenticatedOrganizationsBrandingRoute
   AuthenticatedOrganizationsMembersRoute: typeof AuthenticatedOrganizationsMembersRoute
   AuthenticatedOrganizationsPermissionsRoute: typeof AuthenticatedOrganizationsPermissionsRoute
@@ -604,6 +708,11 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSubscriptionsRoute: AuthenticatedSubscriptionsRoute,
   AuthenticatedTasksRoute: AuthenticatedTasksRoute,
   AuthenticatedWorkflowsRoute: AuthenticatedWorkflowsRoute,
+  AuthenticatedClientBookingsRoute: AuthenticatedClientBookingsRoute,
+  AuthenticatedClientSearchRoute: AuthenticatedClientSearchRoute,
+  AuthenticatedClientTendersRoute: AuthenticatedClientTendersRoute,
+  AuthenticatedOpsBookingsRoute: AuthenticatedOpsBookingsRoute,
+  AuthenticatedOpsUsersRoute: AuthenticatedOpsUsersRoute,
   AuthenticatedOrganizationsBrandingRoute:
     AuthenticatedOrganizationsBrandingRoute,
   AuthenticatedOrganizationsMembersRoute:
