@@ -1,28 +1,28 @@
 import { motion } from "motion/react";
-import { Search, Activity, Database, Sparkles } from "lucide-react";
+import { Search, Activity, Briefcase } from "lucide-react";
 
 const features = [
   {
-    title: "Universal AI Search",
+    title: "Client Booking Portal",
     description:
-      "Find any contract, project, or payment instantly across your entire organization using natural language.",
+      "Homeowners and businesses describe projects in plain language, search verified local experts, book instantly, and pay securely via escrow.",
     icon: Search,
     color: "from-blue-500 to-indigo-500",
     shadow: "shadow-blue-500/20",
   },
   {
-    title: "Real-time Sync",
+    title: "Provider Business Hub",
     description:
-      "When a contract is signed, the project is created and billing is scheduled automatically without manual entry.",
-    icon: Activity,
+      "Service professionals receive bookings, manage calendars, track earnings, bid on public tenders, and optimize pricing with the AI Coach.",
+    icon: Briefcase,
     color: "from-indigo-500 to-purple-500",
     shadow: "shadow-indigo-500/20",
   },
   {
-    title: "Single Source of Truth",
+    title: "Operations Dashboard",
     description:
-      "Eliminate data silos. Every department works from the exact same real-time dataset, ensuring perfect alignment.",
-    icon: Database,
+      "Internal administrators oversee marketplace health, monitor provider compliance, audit bookings, configure automation agents, and resolve issues.",
+    icon: Activity,
     color: "from-purple-500 to-fuchsia-500",
     shadow: "shadow-purple-500/20",
   },
@@ -31,7 +31,7 @@ const features = [
 export default function UnifiedWorkspace() {
   return (
     <section
-      id="workspace"
+      id="platform-tools"
       className="w-full py-32 md:py-48 px-6 bg-[#050505] relative z-20 overflow-hidden border-t border-white/5"
     >
       {/* Background ambient lighting */}
@@ -46,21 +46,20 @@ export default function UnifiedWorkspace() {
           className="mb-24 text-center"
         >
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 shadow-[0_0_20px_rgba(79,70,229,0.1)]">
-            <Sparkles className="w-4 h-4 text-indigo-400" />
             <span className="text-xs font-semibold tracking-widest uppercase text-zinc-300">
-              Unified Architecture
+              Platform Tools
             </span>
           </div>
           <h2 className="font-display text-5xl md:text-7xl tracking-tight text-white leading-[1.1] mb-6 font-light">
-            Everything connected.
+            One platform.
             <br />
             <span className="italic font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
-              Nothing lost.
+              Three portals.
             </span>
           </h2>
           <p className="text-zinc-400 text-lg md:text-xl max-w-[700px] mx-auto leading-relaxed">
-            Break down organizational silos. Watch as your data flows seamlessly from project
-            initiation to final reporting.
+            BlueX brings together a client booking portal, a provider business
+            hub, and an operations dashboard — seamlessly connected.
           </p>
         </motion.div>
 
@@ -93,7 +92,9 @@ export default function UnifiedWorkspace() {
                 <h3 className="text-2xl font-semibold text-white mb-4 tracking-tight">
                   {feature.title}
                 </h3>
-                <p className="text-zinc-400 leading-relaxed text-sm">{feature.description}</p>
+                <p className="text-zinc-400 leading-relaxed text-sm">
+                  {feature.description}
+                </p>
               </div>
             </motion.div>
           ))}

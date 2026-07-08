@@ -1,43 +1,57 @@
 import { motion } from "motion/react";
 import { Check, Sparkles } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 const plans = [
   {
-    name: "Starter",
-    desc: "For small teams automating their first workflows.",
-    price: "$49",
-    period: "/mo",
-    features: ["Up to 5 users", "Basic workflows", "100 AI queries/mo", "Community support"],
-    button: "Start Free Trial",
+    name: "Client",
+    desc: "For homeowners and businesses who need trusted help.",
+    price: "Free",
+    period: "",
+    features: [
+      "Search & book any service",
+      "Secure escrow payments",
+      "Real-time live chat",
+      "Emergency 24/7 booking",
+      "Booking history & reviews",
+    ],
+    button: "Book a Service",
+    href: "/signin" as const,
+    role: "client" as const,
     primary: false,
   },
   {
-    name: "Professional",
-    desc: "For growing organizations scaling their operations.",
-    price: "$199",
+    name: "Provider",
+    desc: "For tradespeople ready to grow their business on BlueX.",
+    price: "CHF 29",
     period: "/mo",
     features: [
-      "Up to 20 users",
-      "Advanced logic & approvals",
-      "Unlimited AI Copilot",
-      "Priority 24/7 support",
-      "Custom reporting",
+      "Full provider dashboard",
+      "Calendar & booking management",
+      "AI Business Coach",
+      "Public tender alerts & bids",
+      "Performance analytics",
+      "Trust Center profile badge",
     ],
-    button: "Get Professional",
+    button: "Become a Provider",
+    href: "/signin" as const,
+    role: "provider" as const,
     primary: true,
   },
   {
     name: "Enterprise",
-    desc: "For large scale deployments requiring maximum security.",
+    desc: "For large operators needing a custom marketplace setup.",
     price: "Custom",
     period: "",
     features: [
-      "Unlimited users",
-      "Custom AI training",
-      "Dedicated success manager",
-      "SOC2 compliance reporting",
+      "Dedicated account manager",
+      "Custom service categories",
+      "White-label options",
+      "SLA & compliance support",
     ],
     button: "Contact Sales",
+    href: "/signin" as const,
+    role: "client" as const,
     primary: false,
   },
 ];
@@ -63,7 +77,7 @@ export default function PricingPreview() {
             <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 shadow-[0_0_20px_rgba(79,70,229,0.1)]">
               <Sparkles className="w-4 h-4 text-indigo-400" />
               <span className="text-xs font-semibold tracking-widest uppercase text-zinc-300">
-                Pricing Plans
+                Pricing
               </span>
             </div>
             <h2 className="font-display text-5xl md:text-7xl tracking-tight text-white leading-[1.1] mb-6 font-light">
@@ -73,8 +87,8 @@ export default function PricingPreview() {
               </span>
             </h2>
             <p className="text-zinc-400 text-lg md:text-xl max-w-[600px] mx-auto leading-relaxed">
-              Start small or scale globally. We have a plan designed to fit the exact needs of your
-              organization.
+              Clients book for free. Providers get powerful tools to run and
+              grow their trades business.
             </p>
           </motion.div>
         </div>
@@ -104,8 +118,12 @@ export default function PricingPreview() {
               )}
 
               <div className="relative z-10 mb-8">
-                <h3 className="text-2xl font-semibold text-white mb-3">{plan.name}</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed h-10">{plan.desc}</p>
+                <h3 className="text-2xl font-semibold text-white mb-3">
+                  {plan.name}
+                </h3>
+                <p className="text-zinc-400 text-sm leading-relaxed h-10">
+                  {plan.desc}
+                </p>
               </div>
 
               <div className="relative z-10 mb-10 flex items-baseline gap-1">
@@ -128,7 +146,9 @@ export default function PricingPreview() {
                 ))}
               </ul>
 
-              <button
+              <Link
+                to={plan.href}
+                search={{ mode: "signup", role: plan.role }}
                 className={`relative z-10 w-full h-14 rounded-2xl font-medium transition-all duration-300 flex items-center justify-center ${
                   plan.primary
                     ? "bg-indigo-600 text-white hover:bg-indigo-500 shadow-lg shadow-indigo-600/25 hover:shadow-indigo-600/40"
@@ -136,7 +156,7 @@ export default function PricingPreview() {
                 }`}
               >
                 {plan.button}
-              </button>
+              </Link>
             </motion.div>
           ))}
         </div>

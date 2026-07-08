@@ -1,8 +1,6 @@
 import { motion } from "motion/react";
 import photoAnalytics from "../assets/search_real_1783445781613.png";
-import photoAi from "../assets/ai_coach_ui_1783444699367.png";
-import photoProjects from "../assets/webp/photo_projects_1783279649064.webp";
-import photoDocs from "../assets/trust_real_1783445803842.png";
+import photoAi from "../assets/ai matching.png";
 import photoPayments from "../assets/escrow_real_1783445814196.png";
 import sectionBg from "../assets/hero_professionals_group.png";
 
@@ -10,7 +8,7 @@ export default function PlatformOverview() {
   return (
     <section
       id="platform"
-      className="w-full py-24 md:py-32 px-6 bg-zinc-950 bg-grid-dark relative z-30 shadow-2xl overflow-hidden"
+      className="w-full py-24 md:py-32 px-6 bg-zinc-950 bg-grid-dark relative z-30 shadow-2xl overflow-hidden font-body"
     >
       {/* Background Image with Overlays */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-20 md:opacity-35">
@@ -35,7 +33,7 @@ export default function PlatformOverview() {
           >
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl tracking-tight text-white leading-[1.1]">
               The complete <br />
-              <span className="italic bg-gradient-to-r from-white to-zinc-500 bg-clip-text text-transparent drop-shadow-sm">
+              <span className="italic bg-gradient-to-r from-white to-zinc-500 bg-clip-text text-transparent drop-shadow-sm font-light">
                 Service Marketplace
               </span>
             </h2>
@@ -54,114 +52,76 @@ export default function PlatformOverview() {
           </motion.div>
         </div>
 
-        {/* Bento Box Grid */}
+        {/* Bento Box Grid (3 Cards using 3 Key Images) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[280px]">
-          {/* Card 1: Analytics & Workflows (Spans 2 cols, 2 rows) */}
+          {/* Card 1: Find & Book Service Providers (Spans 2 cols, 2 rows) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="group relative overflow-hidden rounded-3xl md:col-span-2 md:row-span-2 bg-secondary/30"
+            className="group relative overflow-hidden rounded-[2rem] md:col-span-2 md:row-span-2 bg-[#0d0a1b]/40 border border-white/5 shadow-2xl"
           >
             <img
               src={photoAnalytics}
-              alt="Analytics and workflows"
+              alt="Find & Book Service Providers"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            {/* Premium Dark Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#05030a] via-[#05030a]/40 to-transparent z-[1]" />
+            
             <div className="absolute bottom-0 left-0 p-8 text-white z-10 w-full">
-              <h3 className="text-3xl font-display font-medium mb-2">
+              <h3 className="text-3xl font-display font-medium mb-2 tracking-tight">
                 Find & Book Service Providers
               </h3>
-              <p className="text-white/80 max-w-md">
-                Discover qualified electricians, plumbers, painters, and more. Compare profiles, read reviews, and book instantly.
+              <p className="text-zinc-300 max-w-md leading-relaxed text-sm md:text-base">
+                Discover qualified electricians, plumbers, cleaners, and more. Compare profiles, read reviews, and book instantly.
               </p>
             </div>
           </motion.div>
 
-          {/* Card 2: AI Assistant (1 col, 1 row) */}
+          {/* Card 2: AI Matchmaking (1 col, 1 row) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="group relative overflow-hidden rounded-3xl md:col-span-1 md:row-span-1 bg-secondary/30"
+            className="group relative overflow-hidden rounded-[2rem] md:col-span-1 md:row-span-1 bg-[#0d0a1b]/40 border border-white/5 shadow-2xl"
           >
             <img
               src={photoAi}
-              alt="AI Assistant"
+              alt="AI Matchmaking"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+            {/* Premium Dark Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#05030a] via-[#05030a]/60 to-transparent z-[1]" />
+            
             <div className="absolute bottom-0 left-0 p-6 text-white z-10 w-full">
-              <h3 className="text-xl font-semibold mb-2">AI Matchmaking</h3>
-              <p className="text-white/70 text-sm">
+              <h3 className="text-xl font-semibold mb-2 tracking-tight">AI Matchmaking</h3>
+              <p className="text-zinc-300 text-sm leading-relaxed">
                 Describe your project, and our AI matches you with the best available Swiss providers.
               </p>
             </div>
           </motion.div>
 
-          {/* Card 3: Projects (1 col, 1 row) */}
+          {/* Card 3: Secure Escrow (1 col, 1 row) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="group relative overflow-hidden rounded-3xl md:col-span-1 md:row-span-1 bg-secondary/30"
-          >
-            <img
-              src={photoProjects}
-              alt="Project Management"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
-            <div className="absolute bottom-0 left-0 p-6 text-white z-10 w-full">
-              <h3 className="text-xl font-semibold mb-2">Manage Bookings</h3>
-              <p className="text-white/70 text-sm">
-                Track active jobs, communicate via live chat, and view provider progress.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Card 4: Documents (2 cols, 1 row) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="group relative overflow-hidden rounded-3xl md:col-span-2 md:row-span-1 bg-secondary/30"
-          >
-            <img
-              src={photoDocs}
-              alt="Contracts and Documents"
-              className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-6 text-white z-10 w-full">
-              <h3 className="text-2xl font-semibold mb-2">Verified Swiss Professionals</h3>
-              <p className="text-white/80 text-sm max-w-[400px]">
-                All providers undergo ID verification, certification checks, and are fully insured for your peace of mind.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Card 5: Payments (1 col, 1 row) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="group relative overflow-hidden rounded-3xl md:col-span-1 md:row-span-1 bg-secondary/30"
+            className="group relative overflow-hidden rounded-[2rem] md:col-span-1 md:row-span-1 bg-[#0d0a1b]/40 border border-white/5 shadow-2xl"
           >
             <img
               src={photoPayments}
-              alt="Global Payments"
+              alt="Secure Escrow Payments"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+            {/* Premium Dark Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#05030a] via-[#05030a]/60 to-transparent z-[1]" />
+            
             <div className="absolute bottom-0 left-0 p-6 text-white z-10 w-full">
-              <h3 className="text-xl font-semibold mb-2">Secure Escrow</h3>
-              <p className="text-white/70 text-sm">
+              <h3 className="text-xl font-semibold mb-2 tracking-tight">Secure Escrow</h3>
+              <p className="text-zinc-300 text-sm leading-relaxed">
                 Funds are held safely and only released when the job is completed and approved.
               </p>
             </div>

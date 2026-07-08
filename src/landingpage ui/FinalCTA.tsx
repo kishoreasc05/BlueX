@@ -49,9 +49,9 @@ export default function FinalCTA() {
           viewport={{ once: true }}
           className="font-display text-5xl md:text-7xl lg:text-[5.5rem] tracking-tight leading-[0.95] mb-8 text-slate-900 font-light"
         >
-          Ready to run your business{" "}
+          Ready to find your next{" "}
           <span className="italic font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-            intelligently?
+            trusted professional?
           </span>
         </motion.h2>
 
@@ -62,8 +62,8 @@ export default function FinalCTA() {
           transition={{ delay: 0.1 }}
           className="text-xl text-slate-500 mb-12 max-w-[600px] mx-auto leading-relaxed"
         >
-          Join thousands of modern enterprises building their automated, AI-native workflows on
-          BlueX OS today.
+          Join thousands of Swiss homeowners and businesses who trust BlueX to
+          connect them with verified, skilled professionals.
         </motion.p>
 
         <motion.div
@@ -74,17 +74,17 @@ export default function FinalCTA() {
           className="flex flex-col sm:flex-row items-center justify-center gap-5"
         >
           <a
-            href="/demo"
+            href="/signin?mode=signup&role=client"
             className="w-full sm:w-auto inline-flex items-center justify-center h-14 px-8 rounded-full bg-indigo-600 text-white font-medium hover:bg-indigo-500 transition-colors shadow-lg shadow-indigo-600/20 group"
           >
-            Get started for free{" "}
+            Book a Service{" "}
             <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </a>
           <a
-            href="/pricing"
+            href="/signin?mode=signup&role=provider"
             className="w-full sm:w-auto inline-flex items-center justify-center h-14 px-8 rounded-full bg-white text-slate-900 font-medium hover:bg-slate-50 transition-colors shadow-sm border border-slate-200"
           >
-            Contact Sales
+            Become a Provider
           </a>
         </motion.div>
       </div>
