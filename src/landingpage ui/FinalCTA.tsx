@@ -62,8 +62,8 @@ export default function FinalCTA() {
           transition={{ delay: 0.1 }}
           className="text-xl text-slate-500 mb-12 max-w-[600px] mx-auto leading-relaxed"
         >
-          Join thousands of Swiss homeowners and businesses who trust BlueX to
-          connect them with verified, skilled professionals.
+          Join thousands of Swiss homeowners and businesses who trust BlueX to connect them with
+          verified, skilled professionals.
         </motion.p>
 
         <motion.div

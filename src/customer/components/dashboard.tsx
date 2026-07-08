@@ -34,24 +34,41 @@ import { Button } from "@/components/ui/button";
 import { AvatarImage } from "@/components/ui/avatar";
 import { EmptyState } from "@/components/kpi-card";
 import { cn } from "@/lib/utils";
-import {
-  Area,
-  AreaChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 /* ── Service Categories ── */
 const CATEGORIES = [
   { name: "Cleaning", slug: "cleaner", icon: Sparkles, color: "text-sky-600", bg: "bg-sky-50" },
   { name: "Plumbing", slug: "plumber", icon: Droplet, color: "text-blue-600", bg: "bg-blue-50" },
-  { name: "Electrical", slug: "electrician", icon: Zap, color: "text-amber-600", bg: "bg-amber-50" },
+  {
+    name: "Electrical",
+    slug: "electrician",
+    icon: Zap,
+    color: "text-amber-600",
+    bg: "bg-amber-50",
+  },
   { name: "Moving", slug: "movers", icon: Truck, color: "text-rose-600", bg: "bg-rose-50" },
-  { name: "Gardening", slug: "gardener", icon: Leaf, color: "text-emerald-600", bg: "bg-emerald-50" },
-  { name: "Painting", slug: "painter", icon: Paintbrush, color: "text-violet-600", bg: "bg-violet-50" },
-  { name: "Carpentry", slug: "carpenter", icon: Hammer, color: "text-orange-600", bg: "bg-orange-50" },
+  {
+    name: "Gardening",
+    slug: "gardener",
+    icon: Leaf,
+    color: "text-emerald-600",
+    bg: "bg-emerald-50",
+  },
+  {
+    name: "Painting",
+    slug: "painter",
+    icon: Paintbrush,
+    color: "text-violet-600",
+    bg: "bg-violet-50",
+  },
+  {
+    name: "Carpentry",
+    slug: "carpenter",
+    icon: Hammer,
+    color: "text-orange-600",
+    bg: "bg-orange-50",
+  },
   { name: "More", slug: "", icon: MoreHorizontal, color: "text-slate-500", bg: "bg-slate-100" },
 ];
 
@@ -83,7 +100,9 @@ export function ClientDashboard() {
       // Query bookings
       const bookingsQuery = supabase
         .from("bookings")
-        .select("id, status, scheduled_at, total_price, provider:organizations(name), service:provider_services(name)")
+        .select(
+          "id, status, scheduled_at, total_price, provider:organizations(name), service:provider_services(name)",
+        )
         .eq("client_id", user!.id)
         .order("scheduled_at", { ascending: true });
 
@@ -96,10 +115,7 @@ export function ClientDashboard() {
         .limit(5);
 
       // Query real client reviews to calculate Avg. Rating
-      const reviewsQuery = supabase
-        .from("reviews")
-        .select("rating")
-        .eq("client_id", user!.id);
+      const reviewsQuery = supabase.from("reviews").select("rating").eq("client_id", user!.id);
 
       // Query real unread message count
       const messagesQuery = supabase
@@ -142,7 +158,10 @@ export function ClientDashboard() {
       bookings
         .filter((b) => b.status === "completed")
         .forEach((b) => {
-          const dateStr = new Date(b.scheduled_at).toLocaleDateString("en-US", { day: "numeric", month: "short" });
+          const dateStr = new Date(b.scheduled_at).toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "short",
+          });
           chartMap[dateStr] = (chartMap[dateStr] || 0) + Number(b.total_price);
         });
 
@@ -152,7 +171,7 @@ export function ClientDashboard() {
       const upcoming = bookings.find(
         (b) =>
           (b.status === "confirmed" || b.status === "pending") &&
-          new Date(b.scheduled_at).getTime() >= Date.now()
+          new Date(b.scheduled_at).getTime() >= Date.now(),
       );
 
       return {
@@ -194,7 +213,9 @@ export function ClientDashboard() {
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-3 md:gap-4 items-end">
           <div>
-            <label className="text-xs font-semibold text-slate-500 mb-1.5 block">What service do you need?</label>
+            <label className="text-xs font-semibold text-slate-500 mb-1.5 block">
+              What service do you need?
+            </label>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               <input
@@ -250,7 +271,9 @@ export function ClientDashboard() {
           {CATEGORIES.map((cat) => (
             <button
               key={cat.slug || cat.name}
-              onClick={() => cat.slug && navigate({ to: "/client/search", search: { q: cat.slug } as any })}
+              onClick={() =>
+                cat.slug && navigate({ to: "/client/search", search: { q: cat.slug } as any })
+              }
               className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white border border-slate-100 shadow-sm hover:border-blue-200 hover:shadow-md transition-all group cursor-pointer"
             >
               <div className={cn("h-11 w-11 rounded-xl flex items-center justify-center", cat.bg)}>
@@ -280,17 +303,56 @@ export function ClientDashboard() {
               {/* 4 KPIs in a row */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
                 {[
-                  { icon: Briefcase, label: "Bookings", value: bookingCount, change: "Real Stats", up: true, bg: "bg-blue-50", color: "text-blue-600" },
-                  { icon: Wallet, label: "Spent", value: `CHF ${totalSpent}`, change: "Real Stats", up: true, bg: "bg-emerald-50", color: "text-emerald-600" },
-                  { icon: Star, label: "Avg. Rating", value: avgRating > 0 ? `${avgRating}/5` : "N/A", change: "From Reviews", up: true, bg: "bg-amber-50", color: "text-amber-600" },
-                  { icon: MessageSquare, label: "Unread Messages", value: unreadCount, change: "Real-time", up: true, bg: "bg-violet-50", color: "text-violet-600" },
+                  {
+                    icon: Briefcase,
+                    label: "Bookings",
+                    value: bookingCount,
+                    change: "Real Stats",
+                    up: true,
+                    bg: "bg-blue-50",
+                    color: "text-blue-600",
+                  },
+                  {
+                    icon: Wallet,
+                    label: "Spent",
+                    value: `CHF ${totalSpent}`,
+                    change: "Real Stats",
+                    up: true,
+                    bg: "bg-emerald-50",
+                    color: "text-emerald-600",
+                  },
+                  {
+                    icon: Star,
+                    label: "Avg. Rating",
+                    value: avgRating > 0 ? `${avgRating}/5` : "N/A",
+                    change: "From Reviews",
+                    up: true,
+                    bg: "bg-amber-50",
+                    color: "text-amber-600",
+                  },
+                  {
+                    icon: MessageSquare,
+                    label: "Unread Messages",
+                    value: unreadCount,
+                    change: "Real-time",
+                    up: true,
+                    bg: "bg-violet-50",
+                    color: "text-violet-600",
+                  },
                 ].map((kpi) => (
                   <div key={kpi.label} className="flex items-center gap-3">
-                    <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center shrink-0", kpi.bg)}>
+                    <div
+                      className={cn(
+                        "h-10 w-10 rounded-xl flex items-center justify-center shrink-0",
+                        kpi.bg,
+                      )}
+                    >
                       <kpi.icon className={cn("h-5 w-5", kpi.color)} />
                     </div>
                     <div>
-                      <div className="text-lg font-bold text-slate-900 leading-tight">{kpi.value}</div>
+                      <div className="text-lg font-bold text-slate-900 leading-tight">
+                        {kpi.value}
+                      </div>
                       <div className="text-[11px] text-slate-400 font-medium">{kpi.label}</div>
                       <div className="text-[9px] font-bold text-slate-400 mt-0.5">{kpi.change}</div>
                     </div>
@@ -378,16 +440,22 @@ export function ClientDashboard() {
                         </div>
                       </div>
                       <div className="text-right shrink-0">
-                        <span className={cn(
-                          "text-[10px] font-bold px-2 py-0.5 rounded-md",
-                          booking.status === "completed"
-                            ? "bg-emerald-50 text-emerald-600"
-                            : "bg-blue-50 text-blue-600"
-                        )}>
+                        <span
+                          className={cn(
+                            "text-[10px] font-bold px-2 py-0.5 rounded-md",
+                            booking.status === "completed"
+                              ? "bg-emerald-50 text-emerald-600"
+                              : "bg-blue-50 text-blue-600",
+                          )}
+                        >
                           {booking.status}
                         </span>
                         <div className="text-xs text-slate-400 mt-1">
-                          {new Date(booking.scheduled_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                          {new Date(booking.scheduled_at).toLocaleDateString("en-GB", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })}
                         </div>
                       </div>
                       <div className="text-sm font-bold text-slate-800 shrink-0">
@@ -429,11 +497,19 @@ export function ClientDashboard() {
                   </div>
                   <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-2">
                     <Calendar className="h-3.5 w-3.5" />
-                    {new Date(dashboardData.upcoming.scheduled_at).toLocaleDateString("en-US", { weekday: "short", day: "numeric", month: "short", year: "numeric" })}
+                    {new Date(dashboardData.upcoming.scheduled_at).toLocaleDateString("en-US", {
+                      weekday: "short",
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
                   </div>
                   <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
                     <Clock className="h-3.5 w-3.5" />
-                    {new Date(dashboardData.upcoming.scheduled_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                    {new Date(dashboardData.upcoming.scheduled_at).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </div>
                   <span className="inline-block mt-2 text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
                     {dashboardData.upcoming.status}
@@ -452,8 +528,7 @@ export function ClientDashboard() {
               <div className="text-xs text-slate-300 font-medium">Need immediate help?</div>
               <div className="text-base font-bold mt-1">24/7 Emergency Service</div>
               <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-                Connect with available pros in{" "}
-                <span className="text-white font-bold">minutes</span>
+                Connect with available pros in <span className="text-white font-bold">minutes</span>
               </p>
               <button className="mt-4 bg-red-500 hover:bg-red-600 text-white text-sm font-bold px-5 py-2 rounded-xl transition-colors shadow-lg shadow-red-500/25">
                 Request Now

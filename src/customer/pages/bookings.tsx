@@ -7,7 +7,13 @@ import { Calendar, Clock, DollarSign, Star, MessageSquare } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/kpi-card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 
 export function ClientBookingsPage() {
@@ -24,7 +30,8 @@ export function ClientBookingsPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("bookings")
-        .select(`
+        .select(
+          `
           id, 
           status, 
           scheduled_at, 
@@ -34,7 +41,8 @@ export function ClientBookingsPage() {
           provider_id,
           provider:organizations(id, name),
           service:provider_services(name)
-        `)
+        `,
+        )
         .eq("client_id", user!.id)
         .order("scheduled_at", { ascending: false });
 
@@ -119,7 +127,11 @@ export function ClientBookingsPage() {
                     </span>
                     <span className="flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5" />
-                      {new Date(booking.scheduled_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} ({booking.duration_hours}h)
+                      {new Date(booking.scheduled_at).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}{" "}
+                      ({booking.duration_hours}h)
                     </span>
                     <span className="flex items-center gap-0.5">
                       <DollarSign className="w-3.5 h-3.5" />
@@ -134,7 +146,11 @@ export function ClientBookingsPage() {
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
-                  <Button variant="outline" size="sm" className="rounded-xl text-xs gap-1 cursor-pointer">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="rounded-xl text-xs gap-1 cursor-pointer"
+                  >
                     <MessageSquare className="w-3.5 h-3.5" /> Chat
                   </Button>
                   {booking.status === "completed" && (

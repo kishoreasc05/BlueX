@@ -9,6 +9,7 @@ BlueX.ch is the "Fiverr + Uber + Airbnb for blue-collar services" in Switzerland
 The platform enables customers to discover, book, communicate with, and pay trusted service providers, while providers manage their business through AI-powered insights. An internal Operations portal allows BlueX administrators to oversee the entire marketplace.
 
 User Roles
+
 1. Client (Customer)
 
 Customers who want to hire professionals.
@@ -36,8 +37,7 @@ Emergency booking
 Live chat
 Booking history
 Reviews & ratings
-Dashboard
-2. Provider (Offering)
+Dashboard 2. Provider (Offering)
 
 Service professionals who provide physical services.
 
@@ -54,8 +54,7 @@ Pricing management
 Skills & certifications
 Profile management
 Trust Center
-Performance analytics
-3. BlueX Operations (Admin)
+Performance analytics 3. BlueX Operations (Admin)
 
 Internal platform management.
 

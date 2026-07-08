@@ -63,9 +63,7 @@ import { CreateOrgDialog } from "@/components/create-org-dialog";
    ────────────────────────────────────────────────────── */
 const clientNavGroups = [
   {
-    items: [
-      { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, highlight: true },
-    ],
+    items: [{ to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, highlight: true }],
   },
   {
     label: "CLIENT",
@@ -79,9 +77,7 @@ const clientNavGroups = [
   },
   {
     label: "DISCOVER",
-    items: [
-      { to: "/client/search", label: "Find Services", icon: Search },
-    ],
+    items: [{ to: "/client/search", label: "Find Services", icon: Search }],
   },
   {
     label: "SETTINGS",
@@ -100,9 +96,7 @@ const clientNavGroups = [
    ────────────────────────────────────────────────────── */
 const providerNavGroups = [
   {
-    items: [
-      { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, highlight: true },
-    ],
+    items: [{ to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, highlight: true }],
   },
   {
     label: "JOBS",

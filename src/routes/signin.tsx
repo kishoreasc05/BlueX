@@ -154,7 +154,7 @@ function AuthPage() {
                         className="bg-zinc-950/50 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-indigo-500"
                       />
                     </div>
-                    
+
                     <div className="space-y-3">
                       <Label className="text-sm font-medium text-zinc-300">
                         I am signing up as a...

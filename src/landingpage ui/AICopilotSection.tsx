@@ -87,7 +87,12 @@ export default function AICopilotSection() {
                   </span>
                 </div>
                 <p className="text-[14px] text-zinc-200 leading-relaxed">
-                  In Zurich, it ranges from <span className="font-semibold text-white bg-white/10 px-1 rounded">CHF 120-145/hr</span>. Given your 5-star rating and safety certifications, I recommend pricing at CHF 135/hr to stay highly competitive.
+                  In Zurich, it ranges from{" "}
+                  <span className="font-semibold text-white bg-white/10 px-1 rounded">
+                    CHF 120-145/hr
+                  </span>
+                  . Given your 5-star rating and safety certifications, I recommend pricing at CHF
+                  135/hr to stay highly competitive.
                 </p>
 
                 {/* Subtle glow behind AI bubble */}
@@ -159,7 +164,8 @@ export default function AICopilotSection() {
             </h2>
 
             <p className="text-slate-800 text-lg md:text-xl mb-10 leading-relaxed max-w-lg font-medium drop-shadow-sm">
-              Supercharge your trades business with an AI Coach that optimizes your pricing, automates quotes, and drafts bids for local public tenders.
+              Supercharge your trades business with an AI Coach that optimizes your pricing,
+              automates quotes, and drafts bids for local public tenders.
             </p>
 
             <ul className="space-y-5 mb-10">

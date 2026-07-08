@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { 
-  Users, 
-  HardHat, 
-  Activity, 
-  DollarSign, 
-  Calendar, 
-  Briefcase, 
-  Clock, 
+import {
+  Users,
+  HardHat,
+  Activity,
+  DollarSign,
+  Calendar,
+  Briefcase,
+  Clock,
   ArrowRight,
-  ShieldAlert
+  ShieldAlert,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "@tanstack/react-router";
@@ -34,7 +34,9 @@ export function OpsDashboard() {
       // 3. Get bookings data
       const bookingsQuery = await supabase
         .from("bookings")
-        .select("id, status, total_price, scheduled_at, client:profiles(full_name), provider:organizations(name), service:provider_services(name)")
+        .select(
+          "id, status, total_price, scheduled_at, client:profiles(full_name), provider:organizations(name), service:provider_services(name)",
+        )
         .order("created_at", { ascending: false });
 
       // 4. Get active tenders
@@ -44,13 +46,13 @@ export function OpsDashboard() {
         .eq("status", "open");
 
       const bookings = bookingsQuery.data || [];
-      
+
       const totalRevenue = bookings
-        .filter(b => b.status === "completed")
+        .filter((b) => b.status === "completed")
         .reduce((sum, b) => sum + Number(b.total_price), 0);
 
       const liveBookingsCount = bookings.filter(
-        b => b.status === "confirmed" || b.status === "in_progress"
+        (b) => b.status === "confirmed" || b.status === "in_progress",
       ).length;
 
       return {
@@ -60,10 +62,10 @@ export function OpsDashboard() {
           totalProviders: contractorsCount.count ?? 0,
           liveBookings: liveBookingsCount,
           totalRevenue,
-          activeTenders: tendersCount.count ?? 0
-        }
+          activeTenders: tendersCount.count ?? 0,
+        },
       };
-    }
+    },
   });
 
   return (
@@ -74,7 +76,8 @@ export function OpsDashboard() {
         <div>
           <h4 className="font-bold text-sm">Administrative Portal (Operations)</h4>
           <p className="text-xs text-amber-700 mt-0.5">
-            You are currently viewing marketplace analytics and management tools. Actions performed here affect all customers and service providers on BlueX.ch.
+            You are currently viewing marketplace analytics and management tools. Actions performed
+            here affect all customers and service providers on BlueX.ch.
           </p>
         </div>
       </div>
@@ -88,17 +91,17 @@ export function OpsDashboard() {
         />
         <KpiCard
           label="Active Providers"
-          value={isLoading ? "-" : opsData?.stats.totalProviders ?? 0}
+          value={isLoading ? "-" : (opsData?.stats.totalProviders ?? 0)}
           icon={HardHat}
         />
         <KpiCard
           label="Live Bookings"
-          value={isLoading ? "-" : opsData?.stats.liveBookings ?? 0}
+          value={isLoading ? "-" : (opsData?.stats.liveBookings ?? 0)}
           icon={Activity}
         />
         <KpiCard
           label="Active Tenders"
-          value={isLoading ? "-" : opsData?.stats.activeTenders ?? 0}
+          value={isLoading ? "-" : (opsData?.stats.activeTenders ?? 0)}
           icon={Briefcase}
         />
       </div>
@@ -107,7 +110,9 @@ export function OpsDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-slate-900 tracking-tight">Active Bookings Monitor</h2>
+            <h2 className="text-xl font-bold text-slate-900 tracking-tight">
+              Active Bookings Monitor
+            </h2>
             <Button
               variant="ghost"
               size="sm"
@@ -122,34 +127,54 @@ export function OpsDashboard() {
             <table className="w-full text-left text-sm">
               <thead className="bg-slate-50/50 border-b border-slate-100">
                 <tr>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Service</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Client</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Provider</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider text-right">Price</th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                    Service
+                  </th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                    Client
+                  </th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                    Provider
+                  </th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider text-right">
+                    Price
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {isLoading ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-8 text-center text-sm text-slate-500">Loading bookings data...</td>
+                    <td colSpan={5} className="px-6 py-8 text-center text-sm text-slate-500">
+                      Loading bookings data...
+                    </td>
                   </tr>
                 ) : !opsData?.recentBookings || opsData.recentBookings.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-8 text-center text-sm text-slate-500">No bookings available.</td>
+                    <td colSpan={5} className="px-6 py-8 text-center text-sm text-slate-500">
+                      No bookings available.
+                    </td>
                   </tr>
                 ) : (
                   opsData.recentBookings.map((b) => (
                     <tr key={b.id} className="hover:bg-slate-50/50 transition-colors">
                       <td className="px-6 py-4">
-                        <div className="font-medium text-slate-800">{(b.service as any)?.name || "General Service"}</div>
+                        <div className="font-medium text-slate-800">
+                          {(b.service as any)?.name || "General Service"}
+                        </div>
                         <div className="text-[10px] text-slate-400 flex items-center gap-1 mt-0.5">
                           <Clock className="w-3 h-3" />
                           {new Date(b.scheduled_at).toLocaleDateString()}
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-slate-600 text-xs">{(b.client as any)?.full_name || "Unknown"}</td>
-                      <td className="px-6 py-4 text-slate-600 text-xs">{(b.provider as any)?.name || "Independent"}</td>
+                      <td className="px-6 py-4 text-slate-600 text-xs">
+                        {(b.client as any)?.full_name || "Unknown"}
+                      </td>
+                      <td className="px-6 py-4 text-slate-600 text-xs">
+                        {(b.provider as any)?.name || "Independent"}
+                      </td>
                       <td className="px-6 py-4">
                         <span
                           className={`inline-block text-[9px] font-bold px-2 py-0.5 rounded-md border uppercase tracking-wider ${
@@ -187,17 +212,25 @@ export function OpsDashboard() {
               <div className="p-3 bg-emerald-50 border border-emerald-100 rounded-xl flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-emerald-600" />
-                  <span className="text-xs font-semibold text-emerald-800">Database Connection</span>
+                  <span className="text-xs font-semibold text-emerald-800">
+                    Database Connection
+                  </span>
                 </div>
-                <span className="text-[10px] bg-emerald-600 text-white font-bold px-1.5 py-0.5 rounded">ONLINE</span>
+                <span className="text-[10px] bg-emerald-600 text-white font-bold px-1.5 py-0.5 rounded">
+                  ONLINE
+                </span>
               </div>
 
               <div className="p-3 bg-indigo-50 border border-indigo-100 rounded-xl flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Users className="w-4 h-4 text-indigo-600" />
-                  <span className="text-xs font-semibold text-indigo-800">Registered Platform Users</span>
+                  <span className="text-xs font-semibold text-indigo-800">
+                    Registered Platform Users
+                  </span>
                 </div>
-                <span className="text-xs font-bold text-indigo-700">{isLoading ? "-" : opsData?.stats.totalUsers ?? 0}</span>
+                <span className="text-xs font-bold text-indigo-700">
+                  {isLoading ? "-" : (opsData?.stats.totalUsers ?? 0)}
+                </span>
               </div>
 
               <div className="p-3 bg-purple-50 border border-purple-100 rounded-xl flex items-center justify-between">
@@ -205,7 +238,9 @@ export function OpsDashboard() {
                   <Activity className="w-4 h-4 text-purple-600" />
                   <span className="text-xs font-semibold text-purple-800">API Health Checks</span>
                 </div>
-                <span className="text-[10px] bg-purple-600 text-white font-bold px-1.5 py-0.5 rounded">100% PASS</span>
+                <span className="text-[10px] bg-purple-600 text-white font-bold px-1.5 py-0.5 rounded">
+                  100% PASS
+                </span>
               </div>
             </div>
 

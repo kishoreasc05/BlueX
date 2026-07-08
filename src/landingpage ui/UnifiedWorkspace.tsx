@@ -58,8 +58,8 @@ export default function UnifiedWorkspace() {
             </span>
           </h2>
           <p className="text-zinc-400 text-lg md:text-xl max-w-[700px] mx-auto leading-relaxed">
-            BlueX brings together a client booking portal, a provider business
-            hub, and an operations dashboard — seamlessly connected.
+            BlueX brings together a client booking portal, a provider business hub, and an
+            operations dashboard — seamlessly connected.
           </p>
         </motion.div>
 
@@ -92,9 +92,7 @@ export default function UnifiedWorkspace() {
                 <h3 className="text-2xl font-semibold text-white mb-4 tracking-tight">
                   {feature.title}
                 </h3>
-                <p className="text-zinc-400 leading-relaxed text-sm">
-                  {feature.description}
-                </p>
+                <p className="text-zinc-400 leading-relaxed text-sm">{feature.description}</p>
               </div>
             </motion.div>
           ))}

@@ -1,12 +1,5 @@
 import { motion } from "motion/react";
-import {
-  ShieldCheck,
-  BadgeCheck,
-  Fingerprint,
-  Lock,
-  PhoneCall,
-  Star,
-} from "lucide-react";
+import { ShieldCheck, BadgeCheck, Fingerprint, Lock, PhoneCall, Star } from "lucide-react";
 
 export default function SecuritySection() {
   return (
@@ -38,8 +31,8 @@ export default function SecuritySection() {
               </span>
             </h2>
             <p className="text-zinc-400 text-lg md:text-xl leading-relaxed">
-              Every provider on BlueX is vetted, certified, and fully insured.
-              Your payments are protected and your data stays private.
+              Every provider on BlueX is vetted, certified, and fully insured. Your payments are
+              protected and your data stays private.
             </p>
           </motion.div>
         </div>
@@ -61,7 +54,9 @@ export default function SecuritySection() {
                 ID-Verified Swiss Professionals
               </h3>
               <p className="text-zinc-400 max-w-md text-lg leading-relaxed">
-                Every service provider undergoes identity verification, Swiss commercial registry (UID) validation, certification checks, and background screening before appearing on the platform.
+                Every service provider undergoes identity verification, Swiss commercial registry
+                (UID) validation, certification checks, and background screening before appearing on
+                the platform.
               </p>
             </div>
           </motion.div>
@@ -77,12 +72,9 @@ export default function SecuritySection() {
             <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-16 border border-blue-500/20 group-hover:scale-110 transition-transform">
               <Lock className="w-7 h-7 text-blue-400" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">
-              Secure Escrow
-            </h3>
+            <h3 className="text-xl font-semibold text-white mb-2">Secure Escrow</h3>
             <p className="text-zinc-400 text-sm leading-relaxed">
-              Funds are held safely and only released when you approve the
-              completed job.
+              Funds are held safely and only released when you approve the completed job.
             </p>
           </motion.div>
 
@@ -97,12 +89,11 @@ export default function SecuritySection() {
             <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-16 border border-indigo-500/20 group-hover:scale-110 transition-transform">
               <BadgeCheck className="w-7 h-7 text-indigo-400" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">
-              Licensed &amp; Insured
-            </h3>
-             <p className="text-zinc-400 text-sm leading-relaxed">
-              All providers carry proof of Swiss trade licenses, registry validation, and professional liability insurance.
-             </p>
+            <h3 className="text-xl font-semibold text-white mb-2">Licensed &amp; Insured</h3>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              All providers carry proof of Swiss trade licenses, registry validation, and
+              professional liability insurance.
+            </p>
           </motion.div>
 
           {/* Small Card: Ratings */}
@@ -116,12 +107,9 @@ export default function SecuritySection() {
             <div className="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-16 border border-amber-500/20 group-hover:scale-110 transition-transform">
               <Star className="w-7 h-7 text-amber-400" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">
-              Verified Reviews
-            </h3>
+            <h3 className="text-xl font-semibold text-white mb-2">Verified Reviews</h3>
             <p className="text-zinc-400 text-sm leading-relaxed">
-              Reviews are only possible after a completed booking — no fake
-              ratings.
+              Reviews are only possible after a completed booking — no fake ratings.
             </p>
           </motion.div>
 
@@ -136,12 +124,10 @@ export default function SecuritySection() {
             <div className="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center mb-16 border border-rose-500/20 group-hover:scale-110 transition-transform">
               <PhoneCall className="w-7 h-7 text-rose-400" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">
-              24/7 Emergency
-            </h3>
+            <h3 className="text-xl font-semibold text-white mb-2">24/7 Emergency</h3>
             <p className="text-zinc-400 text-sm leading-relaxed">
-              Burst pipe at midnight? Our emergency network connects you to an
-              available professional fast.
+              Burst pipe at midnight? Our emergency network connects you to an available
+              professional fast.
             </p>
           </motion.div>
         </div>

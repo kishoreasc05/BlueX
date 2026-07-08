@@ -15,7 +15,8 @@ export function OpsBookingsPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("bookings")
-        .select(`
+        .select(
+          `
           id, 
           status, 
           scheduled_at, 
@@ -25,7 +26,8 @@ export function OpsBookingsPage() {
           client:profiles(full_name, email),
           provider:organizations(name),
           service:provider_services(name)
-        `)
+        `,
+        )
         .order("scheduled_at", { ascending: false });
 
       if (error) throw error;
@@ -70,26 +72,46 @@ export function OpsBookingsPage() {
           <table className="w-full text-left text-sm">
             <thead className="bg-slate-50/50 border-b border-slate-200">
               <tr>
-                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Service</th>
-                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Client</th>
-                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Provider</th>
-                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Schedule</th>
-                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Status</th>
-                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Total price</th>
-                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider text-right">Actions</th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  Service
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  Client
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  Provider
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  Schedule
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  Total price
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider text-right">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {bookings.map((b: any) => (
                 <tr key={b.id} className="hover:bg-slate-50/50 transition-colors">
                   <td className="px-6 py-4">
-                    <div className="font-semibold text-slate-900">{b.service?.name || "General Service"}</div>
+                    <div className="font-semibold text-slate-900">
+                      {b.service?.name || "General Service"}
+                    </div>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="font-medium text-slate-800 text-xs">{b.client?.full_name || "Unknown"}</div>
+                    <div className="font-medium text-slate-800 text-xs">
+                      {b.client?.full_name || "Unknown"}
+                    </div>
                     <div className="text-[10px] text-slate-400 mt-0.5">{b.client?.email}</div>
                   </td>
-                  <td className="px-6 py-4 text-slate-600 text-xs font-semibold">{b.provider?.name || "Independent"}</td>
+                  <td className="px-6 py-4 text-slate-600 text-xs font-semibold">
+                    {b.provider?.name || "Independent"}
+                  </td>
                   <td className="px-6 py-4 text-slate-600 text-xs">
                     <div className="flex items-center gap-1">
                       <Calendar className="w-3.5 h-3.5" />
@@ -97,7 +119,11 @@ export function OpsBookingsPage() {
                     </div>
                     <div className="flex items-center gap-1 text-[10px] text-slate-400 mt-0.5">
                       <Clock className="w-3.5 h-3.5" />
-                      {new Date(b.scheduled_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} ({b.duration_hours}h)
+                      {new Date(b.scheduled_at).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}{" "}
+                      ({b.duration_hours}h)
                     </div>
                   </td>
                   <td className="px-6 py-4">

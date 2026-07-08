@@ -1,12 +1,5 @@
 import { motion } from "motion/react";
-import {
-  Search,
-  UserCheck,
-  CalendarCheck,
-  MessageSquare,
-  ShieldCheck,
-  Star,
-} from "lucide-react";
+import { Search, UserCheck, CalendarCheck, MessageSquare, ShieldCheck, Star } from "lucide-react";
 
 const steps = [
   {
@@ -30,8 +23,7 @@ const steps = [
   {
     icon: CalendarCheck,
     title: "Book Instantly",
-    description:
-      "Select a date and time that works for you. Bookings are confirmed in seconds.",
+    description: "Select a date and time that works for you. Bookings are confirmed in seconds.",
     color: "bg-violet-500/20",
     iconColor: "text-violet-400",
     border: "border-violet-500/40",
@@ -93,8 +85,7 @@ export default function WorkflowAutomation() {
             </span>
           </h2>
           <p className="text-zinc-400 text-lg md:text-xl max-w-[600px] mx-auto leading-relaxed">
-            From discovery to payment, BlueX handles every step so you can
-            focus on what matters.
+            From discovery to payment, BlueX handles every step so you can focus on what matters.
           </p>
         </motion.div>
 
@@ -120,12 +111,8 @@ export default function WorkflowAutomation() {
                 <step.icon className={`w-6 h-6 ${step.iconColor}`} />
               </div>
 
-              <h3 className="text-xl font-semibold text-white mb-3">
-                {step.title}
-              </h3>
-              <p className="text-zinc-400 text-sm leading-relaxed">
-                {step.description}
-              </p>
+              <h3 className="text-xl font-semibold text-white mb-3">{step.title}</h3>
+              <p className="text-zinc-400 text-sm leading-relaxed">{step.description}</p>
             </motion.div>
           ))}
         </div>

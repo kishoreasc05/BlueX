@@ -75,8 +75,8 @@ export default function IntegrationsSection() {
             </span>
           </h2>
           <p className="text-slate-500 text-lg md:text-xl max-w-[600px] mx-auto leading-relaxed">
-            BlueX covers all the trades you need, with the tools and trust that
-            make every job a great experience.
+            BlueX covers all the trades you need, with the tools and trust that make every job a
+            great experience.
           </p>
         </motion.div>
 
@@ -96,9 +96,7 @@ export default function IntegrationsSection() {
               >
                 <cat.icon className={`w-7 h-7 ${cat.color}`} />
               </div>
-              <span className="text-xs font-medium text-slate-600 text-center">
-                {cat.name}
-              </span>
+              <span className="text-xs font-medium text-slate-600 text-center">{cat.name}</span>
             </motion.div>
           ))}
         </div>

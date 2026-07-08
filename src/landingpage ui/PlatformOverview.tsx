@@ -47,7 +47,8 @@ export default function PlatformOverview() {
             className="md:w-1/2 md:max-w-md"
           >
             <p className="text-zinc-400 text-lg leading-relaxed">
-              BlueX is Switzerland's leading AI-powered blue-collar marketplace, connecting you with verified professionals while giving providers the business tools to thrive.
+              BlueX is Switzerland's leading AI-powered blue-collar marketplace, connecting you with
+              verified professionals while giving providers the business tools to thrive.
             </p>
           </motion.div>
         </div>
@@ -68,13 +69,14 @@ export default function PlatformOverview() {
             />
             {/* Premium Dark Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#05030a] via-[#05030a]/40 to-transparent z-[1]" />
-            
+
             <div className="absolute bottom-0 left-0 p-8 text-white z-10 w-full">
               <h3 className="text-3xl font-display font-medium mb-2 tracking-tight">
                 Find & Book Service Providers
               </h3>
               <p className="text-zinc-300 max-w-md leading-relaxed text-sm md:text-base">
-                Discover qualified electricians, plumbers, cleaners, and more. Compare profiles, read reviews, and book instantly.
+                Discover qualified electricians, plumbers, cleaners, and more. Compare profiles,
+                read reviews, and book instantly.
               </p>
             </div>
           </motion.div>
@@ -94,11 +96,12 @@ export default function PlatformOverview() {
             />
             {/* Premium Dark Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#05030a] via-[#05030a]/60 to-transparent z-[1]" />
-            
+
             <div className="absolute bottom-0 left-0 p-6 text-white z-10 w-full">
               <h3 className="text-xl font-semibold mb-2 tracking-tight">AI Matchmaking</h3>
               <p className="text-zinc-300 text-sm leading-relaxed">
-                Describe your project, and our AI matches you with the best available Swiss providers.
+                Describe your project, and our AI matches you with the best available Swiss
+                providers.
               </p>
             </div>
           </motion.div>
@@ -118,7 +121,7 @@ export default function PlatformOverview() {
             />
             {/* Premium Dark Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#05030a] via-[#05030a]/60 to-transparent z-[1]" />
-            
+
             <div className="absolute bottom-0 left-0 p-6 text-white z-10 w-full">
               <h3 className="text-xl font-semibold mb-2 tracking-tight">Secure Escrow</h3>
               <p className="text-zinc-300 text-sm leading-relaxed">

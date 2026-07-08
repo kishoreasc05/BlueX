@@ -71,9 +71,27 @@ const todaysJobs = [
 ];
 
 const scheduleBlocks = [
-  { name: "Bathroom\nPlumbing Fix", time: "09:00 – 11:00", startHour: 9, endHour: 11, color: "bg-blue-100 border-blue-300 text-blue-700" },
-  { name: "Kitchen Pipe\nInstallation", time: "01:00 – 03:00", startHour: 13, endHour: 15, color: "bg-violet-100 border-violet-300 text-violet-700" },
-  { name: "Water Heater Repair", time: "03:30 – 05:00", startHour: 15.5, endHour: 17, color: "bg-amber-100 border-amber-300 text-amber-700" },
+  {
+    name: "Bathroom\nPlumbing Fix",
+    time: "09:00 – 11:00",
+    startHour: 9,
+    endHour: 11,
+    color: "bg-blue-100 border-blue-300 text-blue-700",
+  },
+  {
+    name: "Kitchen Pipe\nInstallation",
+    time: "01:00 – 03:00",
+    startHour: 13,
+    endHour: 15,
+    color: "bg-violet-100 border-violet-300 text-violet-700",
+  },
+  {
+    name: "Water Heater Repair",
+    time: "03:30 – 05:00",
+    startHour: 15.5,
+    endHour: 17,
+    color: "bg-amber-100 border-amber-300 text-amber-700",
+  },
 ];
 
 const pendingRequests = [
@@ -98,9 +116,30 @@ const pendingRequests = [
 ];
 
 const upcomingJobs = [
-  { day: "THU", date: "8 MAY", title: "Shower Installation", address: "Zollikerstrasse 123, 8008 Zurich", amount: "CHF 250", time: "10:00 AM" },
-  { day: "FRI", date: "9 MAY", title: "Pipe Leakage Fix", address: "Hönggerstrasse 45, 8037 Zurich", amount: "CHF 130", time: "02:00 PM" },
-  { day: "SAT", date: "10 MAY", title: "Bathroom Renovation", address: "Albisstrasse 78, 8134 Adliswil", amount: "CHF 480", time: "09:00 AM" },
+  {
+    day: "THU",
+    date: "8 MAY",
+    title: "Shower Installation",
+    address: "Zollikerstrasse 123, 8008 Zurich",
+    amount: "CHF 250",
+    time: "10:00 AM",
+  },
+  {
+    day: "FRI",
+    date: "9 MAY",
+    title: "Pipe Leakage Fix",
+    address: "Hönggerstrasse 45, 8037 Zurich",
+    amount: "CHF 130",
+    time: "02:00 PM",
+  },
+  {
+    day: "SAT",
+    date: "10 MAY",
+    title: "Bathroom Renovation",
+    address: "Albisstrasse 78, 8134 Adliswil",
+    amount: "CHF 480",
+    time: "09:00 AM",
+  },
 ];
 
 const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -134,23 +173,51 @@ function Dashboard() {
       {/* ── 1. GREETING ── */}
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-          Good morning, {firstName}!
-          <span className="inline-block text-2xl">👋</span>
+          Good morning, {firstName}!<span className="inline-block text-2xl">👋</span>
         </h1>
-        <p className="text-slate-500 mt-1 text-sm">
-          You have 3 jobs today and 2 pending requests.
-        </p>
+        <p className="text-slate-500 mt-1 text-sm">You have 3 jobs today and 2 pending requests.</p>
       </div>
 
       {/* ── 2. TODAY'S OVERVIEW — 4 KPI CARDS ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { icon: Briefcase, label: "Jobs Today", value: "3", link: "View all →", bg: "bg-blue-50", color: "text-blue-600" },
-          { icon: CheckCircle2, label: "Pending Requests", value: "2", link: "View all →", bg: "bg-emerald-50", color: "text-emerald-600" },
-          { icon: DollarSign, label: "Expected Earnings", value: "CHF 320", link: "View details →", bg: "bg-amber-50", color: "text-amber-600" },
-          { icon: Star, label: "Average Rating", value: "4.8", link: "View reviews →", bg: "bg-violet-50", color: "text-violet-600" },
+          {
+            icon: Briefcase,
+            label: "Jobs Today",
+            value: "3",
+            link: "View all →",
+            bg: "bg-blue-50",
+            color: "text-blue-600",
+          },
+          {
+            icon: CheckCircle2,
+            label: "Pending Requests",
+            value: "2",
+            link: "View all →",
+            bg: "bg-emerald-50",
+            color: "text-emerald-600",
+          },
+          {
+            icon: DollarSign,
+            label: "Expected Earnings",
+            value: "CHF 320",
+            link: "View details →",
+            bg: "bg-amber-50",
+            color: "text-amber-600",
+          },
+          {
+            icon: Star,
+            label: "Average Rating",
+            value: "4.8",
+            link: "View reviews →",
+            bg: "bg-violet-50",
+            color: "text-violet-600",
+          },
         ].map((kpi) => (
-          <div key={kpi.label} className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 hover:border-blue-200 transition-colors cursor-pointer">
+          <div
+            key={kpi.label}
+            className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 hover:border-blue-200 transition-colors cursor-pointer"
+          >
             <div className="flex items-center gap-3 mb-3">
               <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center", kpi.bg)}>
                 <kpi.icon className={cn("h-5 w-5", kpi.color)} />
@@ -171,11 +238,16 @@ function Dashboard() {
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between p-5 pb-0">
             <h3 className="text-base font-bold text-slate-900">Today's Jobs</h3>
-            <button className="text-blue-600 text-xs font-semibold hover:text-blue-700">View calendar</button>
+            <button className="text-blue-600 text-xs font-semibold hover:text-blue-700">
+              View calendar
+            </button>
           </div>
           <div className="p-5 space-y-4">
             {todaysJobs.map((job, i) => (
-              <div key={i} className="flex items-start gap-4 pb-4 last:pb-0 last:border-0 border-b border-slate-100">
+              <div
+                key={i}
+                className="flex items-start gap-4 pb-4 last:pb-0 last:border-0 border-b border-slate-100"
+              >
                 {/* Time column */}
                 <div className="shrink-0 text-right w-16">
                   <div className="text-sm font-bold text-slate-900">{job.time}</div>
@@ -184,7 +256,9 @@ function Dashboard() {
                 {/* Dot connector */}
                 <div className="flex flex-col items-center mt-1.5 shrink-0">
                   <div className="h-2.5 w-2.5 rounded-full bg-blue-500 ring-4 ring-blue-50" />
-                  {i < todaysJobs.length - 1 && <div className="w-px h-full bg-slate-200 mt-1 min-h-[40px]" />}
+                  {i < todaysJobs.length - 1 && (
+                    <div className="w-px h-full bg-slate-200 mt-1 min-h-[40px]" />
+                  )}
                 </div>
                 {/* Job info */}
                 <div className="min-w-0 flex-1">
@@ -194,7 +268,12 @@ function Dashboard() {
                       <div className="text-xs text-slate-400 mt-0.5 flex items-center gap-1">
                         <MapPin className="h-3 w-3" /> {job.address}
                       </div>
-                      <span className={cn("inline-block text-[10px] font-bold px-2 py-0.5 rounded mt-1.5", job.categoryColor)}>
+                      <span
+                        className={cn(
+                          "inline-block text-[10px] font-bold px-2 py-0.5 rounded mt-1.5",
+                          job.categoryColor,
+                        )}
+                      >
                         {job.category}
                       </span>
                     </div>
@@ -221,10 +300,16 @@ function Dashboard() {
           <div className="flex items-center justify-between p-5 pb-3">
             <h3 className="text-base font-bold text-slate-900">Schedule</h3>
             <div className="flex items-center gap-2">
-              <button className="p-1 rounded hover:bg-slate-100"><ChevronLeft className="h-4 w-4 text-slate-400" /></button>
+              <button className="p-1 rounded hover:bg-slate-100">
+                <ChevronLeft className="h-4 w-4 text-slate-400" />
+              </button>
               <span className="text-sm font-semibold text-slate-700">May 2026</span>
-              <button className="p-1 rounded hover:bg-slate-100"><ChevronRight className="h-4 w-4 text-slate-400" /></button>
-              <button className="ml-2 text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">Today</button>
+              <button className="p-1 rounded hover:bg-slate-100">
+                <ChevronRight className="h-4 w-4 text-slate-400" />
+              </button>
+              <button className="ml-2 text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">
+                Today
+              </button>
             </div>
           </div>
 
@@ -233,10 +318,12 @@ function Dashboard() {
             {weekDays.map((day, i) => (
               <div key={day} className="text-center">
                 <div className="text-[10px] font-medium text-slate-400 uppercase">{day}</div>
-                <div className={cn(
-                  "text-sm font-semibold mt-1 w-8 h-8 flex items-center justify-center mx-auto rounded-full",
-                  i === todayIdx ? "bg-blue-600 text-white" : "text-slate-600"
-                )}>
+                <div
+                  className={cn(
+                    "text-sm font-semibold mt-1 w-8 h-8 flex items-center justify-center mx-auto rounded-full",
+                    i === todayIdx ? "bg-blue-600 text-white" : "text-slate-600",
+                  )}
+                >
                   {weekDates[i]}
                 </div>
               </div>
@@ -248,7 +335,11 @@ function Dashboard() {
             <div className="relative" style={{ height: `${hours.length * 48}px` }}>
               {/* Hour lines */}
               {hours.map((hour, i) => (
-                <div key={hour} className="absolute left-0 right-0 flex items-start" style={{ top: `${i * 48}px` }}>
+                <div
+                  key={hour}
+                  className="absolute left-0 right-0 flex items-start"
+                  style={{ top: `${i * 48}px` }}
+                >
                   <span className="text-[10px] text-slate-400 font-medium w-12 shrink-0 -mt-1.5">
                     {hour <= 12 ? `${hour} AM` : `${hour - 12} PM`}
                   </span>
@@ -263,10 +354,15 @@ function Dashboard() {
                 return (
                   <div
                     key={i}
-                    className={cn("absolute left-14 right-2 rounded-lg border px-2.5 py-1.5 cursor-pointer hover:opacity-90 transition-opacity", block.color)}
+                    className={cn(
+                      "absolute left-14 right-2 rounded-lg border px-2.5 py-1.5 cursor-pointer hover:opacity-90 transition-opacity",
+                      block.color,
+                    )}
                     style={{ top: `${top}px`, height: `${height}px` }}
                   >
-                    <div className="text-xs font-semibold whitespace-pre-line leading-tight">{block.name}</div>
+                    <div className="text-xs font-semibold whitespace-pre-line leading-tight">
+                      {block.name}
+                    </div>
                     <div className="text-[10px] opacity-70 mt-0.5">{block.time}</div>
                   </div>
                 );
@@ -287,7 +383,9 @@ function Dashboard() {
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-bold text-slate-900">Earnings Overview</h3>
-              <span className="text-xs text-slate-400 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">This Month ▾</span>
+              <span className="text-xs text-slate-400 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
+                This Month ▾
+              </span>
             </div>
             <div className="mb-1">
               <div className="text-xs text-slate-400">Total Earnings</div>
@@ -323,7 +421,9 @@ function Dashboard() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <h3 className="text-sm font-bold text-slate-900">AI Business Coach</h3>
-                <span className="text-[9px] font-bold text-violet-600 bg-violet-50 px-1.5 py-0.5 rounded border border-violet-100">Beta</span>
+                <span className="text-[9px] font-bold text-violet-600 bg-violet-50 px-1.5 py-0.5 rounded border border-violet-100">
+                  Beta
+                </span>
               </div>
               <MoreHorizontal className="h-4 w-4 text-slate-400 cursor-pointer" />
             </div>
@@ -337,7 +437,8 @@ function Dashboard() {
                 <span className="text-xs font-bold text-slate-700">Insight for you</span>
               </div>
               <p className="text-xs text-slate-500 leading-relaxed">
-                You're booked 18% more on weekends. Consider increasing your weekend rates by 10-15%.
+                You're booked 18% more on weekends. Consider increasing your weekend rates by
+                10-15%.
               </p>
               <button className="mt-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
                 View Recommendation
@@ -351,7 +452,10 @@ function Dashboard() {
                 { label: "Pricing Insights", sub: "Optimize your rates" },
                 { label: "Business Tips", sub: "Grow your business" },
               ].map((link) => (
-                <button key={link.label} className="w-full flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-50 transition-colors">
+                <button
+                  key={link.label}
+                  className="w-full flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-50 transition-colors"
+                >
                   <div>
                     <div className="text-xs font-semibold text-slate-800">{link.label}</div>
                     <div className="text-[10px] text-slate-400">{link.sub}</div>
@@ -374,27 +478,68 @@ function Dashboard() {
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-base font-bold text-slate-900">Performance</h3>
-            <span className="text-xs text-slate-400 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">This Month ▾</span>
+            <span className="text-xs text-slate-400 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
+              This Month ▾
+            </span>
           </div>
           <div className="space-y-4">
             {[
-              { icon: Briefcase, label: "Jobs Completed", value: "28", change: "+22%", up: true, color: "text-blue-600", bg: "bg-blue-50" },
-              { icon: MessageSquare, label: "Response Rate", value: "96%", change: "+8%", up: true, color: "text-emerald-600", bg: "bg-emerald-50" },
-              { icon: Timer, label: "On-time Rate", value: "98%", change: "+5%", up: true, color: "text-violet-600", bg: "bg-violet-50" },
-              { icon: Star, label: "Customer Satisfaction", value: "4.8/5", change: "+0.3", up: true, color: "text-amber-600", bg: "bg-amber-50" },
+              {
+                icon: Briefcase,
+                label: "Jobs Completed",
+                value: "28",
+                change: "+22%",
+                up: true,
+                color: "text-blue-600",
+                bg: "bg-blue-50",
+              },
+              {
+                icon: MessageSquare,
+                label: "Response Rate",
+                value: "96%",
+                change: "+8%",
+                up: true,
+                color: "text-emerald-600",
+                bg: "bg-emerald-50",
+              },
+              {
+                icon: Timer,
+                label: "On-time Rate",
+                value: "98%",
+                change: "+5%",
+                up: true,
+                color: "text-violet-600",
+                bg: "bg-violet-50",
+              },
+              {
+                icon: Star,
+                label: "Customer Satisfaction",
+                value: "4.8/5",
+                change: "+0.3",
+                up: true,
+                color: "text-amber-600",
+                bg: "bg-amber-50",
+              },
             ].map((metric) => (
               <div key={metric.label} className="flex items-center gap-3">
-                <div className={cn("h-9 w-9 rounded-lg flex items-center justify-center shrink-0", metric.bg)}>
+                <div
+                  className={cn(
+                    "h-9 w-9 rounded-lg flex items-center justify-center shrink-0",
+                    metric.bg,
+                  )}
+                >
                   <metric.icon className={cn("h-4 w-4", metric.color)} />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="text-xs text-slate-400 font-medium">{metric.label}</div>
                 </div>
                 <div className="text-sm font-bold text-slate-900">{metric.value}</div>
-                <span className={cn(
-                  "text-[10px] font-bold px-1.5 py-0.5 rounded",
-                  metric.up ? "text-emerald-600 bg-emerald-50" : "text-red-600 bg-red-50"
-                )}>
+                <span
+                  className={cn(
+                    "text-[10px] font-bold px-1.5 py-0.5 rounded",
+                    metric.up ? "text-emerald-600 bg-emerald-50" : "text-red-600 bg-red-50",
+                  )}
+                >
                   ▲ {metric.change}
                 </span>
               </div>
@@ -406,11 +551,16 @@ function Dashboard() {
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between p-5 pb-0">
             <h3 className="text-base font-bold text-slate-900">Pending Requests</h3>
-            <button className="text-blue-600 text-xs font-semibold hover:text-blue-700">View all</button>
+            <button className="text-blue-600 text-xs font-semibold hover:text-blue-700">
+              View all
+            </button>
           </div>
           <div className="p-5 space-y-4">
             {pendingRequests.map((req, i) => (
-              <div key={i} className="flex items-start gap-3 pb-4 last:pb-0 last:border-0 border-b border-slate-100">
+              <div
+                key={i}
+                className="flex items-start gap-3 pb-4 last:pb-0 last:border-0 border-b border-slate-100"
+              >
                 <div className="shrink-0">
                   <div className="text-xs font-bold text-slate-500">{req.when}</div>
                   <div className="text-[10px] text-slate-400">{req.time}</div>
@@ -420,7 +570,12 @@ function Dashboard() {
                   <div className="text-xs text-slate-400 mt-0.5 flex items-center gap-1">
                     <MapPin className="h-3 w-3" /> {req.address}
                   </div>
-                  <span className={cn("inline-block text-[10px] font-bold px-2 py-0.5 rounded mt-1.5", req.badgeColor)}>
+                  <span
+                    className={cn(
+                      "inline-block text-[10px] font-bold px-2 py-0.5 rounded mt-1.5",
+                      req.badgeColor,
+                    )}
+                  >
                     {req.badge}
                   </span>
                 </div>
@@ -450,7 +605,10 @@ function Dashboard() {
           </div>
           <div className="p-5 space-y-4">
             {upcomingJobs.map((job, i) => (
-              <div key={i} className="flex items-start gap-3 pb-4 last:pb-0 last:border-0 border-b border-slate-100">
+              <div
+                key={i}
+                className="flex items-start gap-3 pb-4 last:pb-0 last:border-0 border-b border-slate-100"
+              >
                 <div className="shrink-0 text-center w-10">
                   <div className="text-[10px] font-bold text-blue-600 uppercase">{job.day}</div>
                   <div className="text-[10px] text-slate-400">{job.date}</div>

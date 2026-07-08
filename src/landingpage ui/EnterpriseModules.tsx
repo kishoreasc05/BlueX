@@ -56,7 +56,9 @@ export default function EnterpriseModules() {
             transition={{ delay: 0.1 }}
             className="text-slate-500 text-lg md:text-xl max-w-[480px] leading-relaxed mb-10"
           >
-            Every professional on BlueX is fully vetted. Browse transparent profiles showcasing identity verification, Swiss commercial registry credentials, insurance coverage, and verified customer reviews.
+            Every professional on BlueX is fully vetted. Browse transparent profiles showcasing
+            identity verification, Swiss commercial registry credentials, insurance coverage, and
+            verified customer reviews.
           </motion.p>
 
           {/* Small Action Cards at bottom left */}
@@ -92,7 +94,6 @@ export default function EnterpriseModules() {
 
         {/* Right Side: Trust Cards Stack */}
         <div className="w-full lg:w-[55%] flex flex-col items-center justify-center mt-10 lg:mt-0">
-          
           {/* Main Mockup: Verified Provider Profile Card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -141,7 +142,9 @@ export default function EnterpriseModules() {
                   <Check className="w-3 h-3 text-emerald-600 stroke-[3]" />
                 </div>
                 <div>
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide block">Commercial Registry</span>
+                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide block">
+                    Commercial Registry
+                  </span>
                   <span className="text-sm font-medium text-slate-700 flex items-center gap-1.5 mt-0.5">
                     <Building2 className="w-4 h-4 text-slate-400" />
                     CHE-284.912.748 MWST
@@ -155,7 +158,9 @@ export default function EnterpriseModules() {
                   <Check className="w-3 h-3 text-emerald-600 stroke-[3]" />
                 </div>
                 <div>
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide block">AXA Partner Insurance</span>
+                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide block">
+                    AXA Partner Insurance
+                  </span>
                   <span className="text-sm font-medium text-slate-700 mt-0.5 block">
                     Fully Insured (CHF 5,000,000 Cover)
                   </span>
@@ -168,7 +173,9 @@ export default function EnterpriseModules() {
                   <Check className="w-3 h-3 text-emerald-600 stroke-[3]" />
                 </div>
                 <div>
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide block">Trade Qualifications</span>
+                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide block">
+                    Trade Qualifications
+                  </span>
                   <span className="text-sm font-medium text-slate-700 mt-0.5 block">
                     Federal VET Diploma (EFZ Plumber)
                   </span>
@@ -197,7 +204,9 @@ export default function EnterpriseModules() {
                 <ShieldAlert className="w-5 h-5 text-white" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-xs font-semibold uppercase tracking-wider text-emerald-100 text-left">AXA Partner</span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-emerald-100 text-left">
+                  AXA Partner
+                </span>
                 <span className="text-sm font-bold text-left">CHF 5M Cover</span>
               </div>
             </motion.div>
@@ -219,7 +228,8 @@ export default function EnterpriseModules() {
                 </div>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed font-medium">
-                "Marc repaired our plumbing on a Sunday evening. Fast, professional, and fully escrow protected."
+                "Marc repaired our plumbing on a Sunday evening. Fast, professional, and fully
+                escrow protected."
               </p>
               <div className="flex items-center justify-between mt-1 pt-2 border-t border-slate-800">
                 <span className="text-[11px] font-bold text-slate-400">Sarah M.</span>
@@ -227,7 +237,6 @@ export default function EnterpriseModules() {
               </div>
             </motion.div>
           </div>
-
         </div>
       </div>
     </section>

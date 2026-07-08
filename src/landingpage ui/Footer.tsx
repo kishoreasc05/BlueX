@@ -26,7 +26,8 @@ export default function Footer() {
               ✦ BlueX
             </a>
             <p className="text-zinc-400 text-lg leading-relaxed max-w-[320px]">
-              The AI-powered marketplace platform for blue-collar services in Switzerland. Connecting clients with verified professionals.
+              The AI-powered marketplace platform for blue-collar services in Switzerland.
+              Connecting clients with verified professionals.
             </p>
           </div>
 
@@ -34,23 +35,68 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <h4 className="font-semibold text-white text-sm uppercase tracking-wider">Services</h4>
             <ul className="space-y-2 text-zinc-400 text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">Electricians</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Plumbers</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Cleaners</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Gardeners</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Painters</a></li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Electricians
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Plumbers
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Cleaners
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Gardeners
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Painters
+                </a>
+              </li>
             </ul>
           </div>
 
           {/* Business Column */}
           <div className="flex flex-col gap-4">
-            <h4 className="font-semibold text-white text-sm uppercase tracking-wider">For Partners</h4>
+            <h4 className="font-semibold text-white text-sm uppercase tracking-wider">
+              For Partners
+            </h4>
             <ul className="space-y-2 text-zinc-400 text-sm">
-              <li><a href="/signin?mode=signup&role=provider" className="hover:text-white transition-colors">Become a Provider</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">AI Business Coach</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Public Tenders</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Trust Center</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Swiss Security</a></li>
+              <li>
+                <a
+                  href="/signin?mode=signup&role=provider"
+                  className="hover:text-white transition-colors"
+                >
+                  Become a Provider
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  AI Business Coach
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Public Tenders
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Trust Center
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition-colors">
+                  Swiss Security
+                </a>
+              </li>
             </ul>
           </div>
 

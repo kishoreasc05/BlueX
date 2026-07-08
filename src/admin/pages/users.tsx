@@ -11,13 +11,15 @@ export function OpsUsersPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("profiles")
-        .select(`
+        .select(
+          `
           id, 
           full_name, 
           email, 
           avatar_url,
           created_at
-        `)
+        `,
+        )
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -45,11 +47,21 @@ export function OpsUsersPage() {
           <table className="w-full text-left text-sm">
             <thead className="bg-slate-50/50 border-b border-slate-200">
               <tr>
-                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">User</th>
-                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Contact</th>
-                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Created</th>
-                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Role Status</th>
-                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider text-right">Moderation</th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  User
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  Contact
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  Created
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  Role Status
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider text-right">
+                  Moderation
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -60,7 +72,9 @@ export function OpsUsersPage() {
                       {u.full_name ? u.full_name[0].toUpperCase() : "U"}
                     </div>
                     <div>
-                      <div className="font-semibold text-slate-900">{u.full_name || "Anonymous User"}</div>
+                      <div className="font-semibold text-slate-900">
+                        {u.full_name || "Anonymous User"}
+                      </div>
                       <div className="text-[10px] text-slate-400 font-mono">{u.id}</div>
                     </div>
                   </td>

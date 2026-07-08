@@ -36,7 +36,12 @@ export default function Navbar() {
           className="flex items-center gap-2 text-white font-extrabold text-xl tracking-tight shrink-0"
         >
           <div className="flex items-center justify-center w-7 h-7 text-[#1A4BFF] shrink-0">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-full h-full"
+            >
               <path
                 d="M19 4L5 20M5 4L19 20"
                 stroke="currentColor"

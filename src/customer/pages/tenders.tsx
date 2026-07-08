@@ -7,10 +7,23 @@ import { Briefcase, Calendar, DollarSign, Plus, Check } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/kpi-card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function ClientTendersPage() {
   const { user } = useAuth();
@@ -39,7 +52,8 @@ export function ClientTendersPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("public_tenders")
-        .select(`
+        .select(
+          `
           id, 
           title, 
           description, 
@@ -54,7 +68,8 @@ export function ClientTendersPage() {
             status,
             provider:organizations(name)
           )
-        `)
+        `,
+        )
         .eq("client_id", user!.id)
         .order("created_at", { ascending: false });
 
@@ -94,10 +109,7 @@ export function ClientTendersPage() {
   const acceptBid = useMutation({
     mutationFn: async ({ bidId, tenderId }: { bidId: string; tenderId: string }) => {
       // 1. Accept the chosen bid
-      const updateBid = supabase
-        .from("tender_bids")
-        .update({ status: "accepted" })
-        .eq("id", bidId);
+      const updateBid = supabase.from("tender_bids").update({ status: "accepted" }).eq("id", bidId);
 
       // 2. Reject other bids
       const rejectOthers = supabase
@@ -247,17 +259,21 @@ export function ClientTendersPage() {
                   <p className="text-xs text-indigo-600 font-semibold uppercase tracking-wider">
                     {tender.category?.name}
                   </p>
-                  <p className="text-sm text-slate-600 leading-relaxed mt-2">{tender.description}</p>
+                  <p className="text-sm text-slate-600 leading-relaxed mt-2">
+                    {tender.description}
+                  </p>
 
                   <div className="flex flex-wrap gap-4 text-xs text-slate-400 mt-2">
                     {tender.budget && (
                       <span className="flex items-center gap-1 font-semibold text-slate-700">
-                        <DollarSign className="w-3.5 h-3.5" /> Budget: CHF {Number(tender.budget).toLocaleString()}
+                        <DollarSign className="w-3.5 h-3.5" /> Budget: CHF{" "}
+                        {Number(tender.budget).toLocaleString()}
                       </span>
                     )}
                     {tender.due_date && (
                       <span className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5" /> Close Date: {new Date(tender.due_date).toLocaleDateString()}
+                        <Calendar className="w-3.5 h-3.5" /> Close Date:{" "}
+                        {new Date(tender.due_date).toLocaleDateString()}
                       </span>
                     )}
                   </div>
@@ -266,9 +282,13 @@ export function ClientTendersPage() {
 
               {/* Bids list */}
               <div className="border-t border-slate-100 pt-6">
-                <h4 className="font-bold text-sm text-slate-900 mb-4">Received Bids ({tender.bids?.length || 0})</h4>
+                <h4 className="font-bold text-sm text-slate-900 mb-4">
+                  Received Bids ({tender.bids?.length || 0})
+                </h4>
                 {!tender.bids || tender.bids.length === 0 ? (
-                  <p className="text-xs text-slate-400">Waiting for bids from service providers...</p>
+                  <p className="text-xs text-slate-400">
+                    Waiting for bids from service providers...
+                  </p>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {tender.bids.map((bid: any) => (

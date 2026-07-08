@@ -1,15 +1,7 @@
 import { motion } from "motion/react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import {
-  Search,
-  MapPin,
-  ShieldCheck,
-  Lock,
-  MessageSquare,
-  Star,
-  ArrowRight,
-} from "lucide-react";
+import { Search, MapPin, ShieldCheck, Lock, MessageSquare, Star, ArrowRight } from "lucide-react";
 import heroBg from "../assets/webp/hero section bg.webp";
 
 export default function HeroSection() {
@@ -41,7 +33,7 @@ export default function HeroSection() {
         <div className="absolute inset-y-0 left-0 w-[50%] lg:w-[55%] bg-gradient-to-r from-white via-white/80 to-transparent" />
         {/* Bottom fade: blends the very bottom of the hero section */}
         <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-white via-white/40 to-transparent" />
-        
+
         {/* Subtle white overlay on mobile to keep text legible */}
         <div className="absolute inset-0 bg-white/70 lg:hidden" />
       </div>
@@ -51,7 +43,6 @@ export default function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full">
           {/* Left Column (Content) */}
           <div className="lg:col-span-6 xl:col-span-5 flex flex-col items-start text-left lg:pt-10">
-
             {/* Headline */}
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
@@ -72,7 +63,8 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-slate-500 font-medium text-base md:text-lg max-w-[460px] leading-relaxed mb-8"
             >
-              Connect with verified local experts for any job — quickly, safely, and with confidence.
+              Connect with verified local experts for any job — quickly, safely, and with
+              confidence.
             </motion.p>
 
             {/* Search Card Form */}
@@ -100,9 +92,7 @@ export default function HeroSection() {
               </div>
 
               <div className="flex-1 w-full text-left">
-                <label className="text-xs font-bold text-slate-700 mb-1.5 block">
-                  Where?
-                </label>
+                <label className="text-xs font-bold text-slate-700 mb-1.5 block">Where?</label>
                 <div className="relative">
                   <input
                     type="text"
@@ -163,7 +153,9 @@ export default function HeroSection() {
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-900">Verified Professionals</h3>
-              <p className="text-xs text-slate-500 mt-1">Background-checked experts you can trust.</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Background-checked experts you can trust.
+              </p>
             </div>
           </div>
 
@@ -174,7 +166,9 @@ export default function HeroSection() {
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-900">Secure Payments</h3>
-              <p className="text-xs text-slate-500 mt-1">Safe, encrypted payments for complete peace of mind.</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Safe, encrypted payments for complete peace of mind.
+              </p>
             </div>
           </div>
 
@@ -185,7 +179,9 @@ export default function HeroSection() {
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-900">Real-time Chat</h3>
-              <p className="text-xs text-slate-500 mt-1">Connect instantly with providers anytime.</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Connect instantly with providers anytime.
+              </p>
             </div>
           </div>
 

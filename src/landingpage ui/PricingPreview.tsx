@@ -87,8 +87,8 @@ export default function PricingPreview() {
               </span>
             </h2>
             <p className="text-zinc-400 text-lg md:text-xl max-w-[600px] mx-auto leading-relaxed">
-              Clients book for free. Providers get powerful tools to run and
-              grow their trades business.
+              Clients book for free. Providers get powerful tools to run and grow their trades
+              business.
             </p>
           </motion.div>
         </div>
@@ -118,12 +118,8 @@ export default function PricingPreview() {
               )}
 
               <div className="relative z-10 mb-8">
-                <h3 className="text-2xl font-semibold text-white mb-3">
-                  {plan.name}
-                </h3>
-                <p className="text-zinc-400 text-sm leading-relaxed h-10">
-                  {plan.desc}
-                </p>
+                <h3 className="text-2xl font-semibold text-white mb-3">{plan.name}</h3>
+                <p className="text-zinc-400 text-sm leading-relaxed h-10">{plan.desc}</p>
               </div>
 
               <div className="relative z-10 mb-10 flex items-baseline gap-1">

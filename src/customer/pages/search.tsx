@@ -69,7 +69,8 @@ function RealMap({ providers }: { providers: any[] }) {
         }).setView([47.3769, 8.5417], 13);
 
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(mapRef.current);
 
         L.control.zoom({ position: "topright" }).addTo(mapRef.current);
@@ -102,9 +103,7 @@ function RealMap({ providers }: { providers: any[] }) {
           </div>
         `;
 
-        const marker = L.marker([lat, lng])
-          .addTo(mapRef.current)
-          .bindPopup(popupContent);
+        const marker = L.marker([lat, lng]).addTo(mapRef.current).bindPopup(popupContent);
 
         markersRef.current.push(marker);
       });
@@ -130,7 +129,9 @@ function RealMap({ providers }: { providers: any[] }) {
     };
   }, [providers]);
 
-  return <div ref={mapContainerRef} className="w-full h-full rounded-xl z-0 border border-slate-200" />;
+  return (
+    <div ref={mapContainerRef} className="w-full h-full rounded-xl z-0 border border-slate-200" />
+  );
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -149,14 +150,16 @@ export function SearchPage() {
     queryFn: async () => {
       let query = supabase
         .from("contractors")
-        .select(`
+        .select(
+          `
           id, 
           name, 
           specialty, 
           hourly_rate, 
           notes,
           status
-        `)
+        `,
+        )
         .eq("status", "active");
 
       if (selectedCategory) {
@@ -189,7 +192,9 @@ export function SearchPage() {
           <ChevronDown className="h-3 w-3 -rotate-90 text-slate-300" />
           <span className="text-slate-600">Find Services</span>
         </div>
-        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">Find Services</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
+          Find Services
+        </h1>
         <p className="text-slate-500 text-sm">Discover trusted professionals near you.</p>
       </div>
 
@@ -197,7 +202,9 @@ export function SearchPage() {
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-3 md:gap-4 items-end">
           <div>
-            <label className="text-xs font-semibold text-slate-500 mb-1.5 block">What service do you need?</label>
+            <label className="text-xs font-semibold text-slate-500 mb-1.5 block">
+              What service do you need?
+            </label>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               <input
@@ -251,7 +258,7 @@ export function SearchPage() {
                 "flex items-center gap-1.5 px-4.5 py-2 rounded-full border text-xs font-semibold transition-all cursor-pointer",
                 isSelected
                   ? "bg-blue-50 border-blue-200 text-blue-600 shadow-sm"
-                  : "bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                  : "bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50",
               )}
             >
               {Icon && <Icon className={cn("h-3.5 w-3.5", tab.color)} />}
@@ -309,7 +316,9 @@ export function SearchPage() {
           {/* List of cards */}
           <div className="space-y-4">
             {isLoading ? (
-              <div className="py-20 text-center text-sm text-slate-500">Searching for providers...</div>
+              <div className="py-20 text-center text-sm text-slate-500">
+                Searching for providers...
+              </div>
             ) : !providers || providers.length === 0 ? (
               <EmptyState
                 title="No service providers found"
@@ -342,7 +351,9 @@ export function SearchPage() {
                           <BadgeCheck className="h-4 w-4 text-blue-500 fill-blue-500/10" />
                         </span>
                       </div>
-                      <div className="text-xs text-slate-400 font-semibold">{p.specialty || "Contractor"}</div>
+                      <div className="text-xs text-slate-400 font-semibold">
+                        {p.specialty || "Contractor"}
+                      </div>
 
                       {/* Notes / Description */}
                       {p.notes && (
@@ -366,7 +377,9 @@ export function SearchPage() {
                         <div className="text-lg font-black text-slate-900 leading-tight">
                           CHF {p.hourly_rate ? Number(p.hourly_rate).toFixed(0) : "95"}
                         </div>
-                        <div className="text-[10px] text-slate-400 font-semibold uppercase">per hour</div>
+                        <div className="text-[10px] text-slate-400 font-semibold uppercase">
+                          per hour
+                        </div>
                         <span className="inline-block mt-1 text-[9px] font-bold px-2 py-0.5 rounded border uppercase bg-emerald-50 text-emerald-600 border-emerald-100">
                           Available Today
                         </span>
@@ -391,7 +404,7 @@ export function SearchPage() {
                       <Heart
                         className={cn(
                           "h-4.5 w-4.5 transition-colors",
-                          isFav ? "text-red-500 fill-red-500" : "text-slate-300"
+                          isFav ? "text-red-500 fill-red-500" : "text-slate-300",
                         )}
                       />
                     </button>
@@ -408,7 +421,9 @@ export function SearchPage() {
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4.5">
             <div className="flex items-center justify-between mb-3.5">
               <h3 className="text-sm font-bold text-slate-900">Map View</h3>
-              <button className="text-blue-600 text-xs font-semibold hover:text-blue-700">View larger map</button>
+              <button className="text-blue-600 text-xs font-semibold hover:text-blue-700">
+                View larger map
+              </button>
             </div>
             {/* Real OSM Map Widget */}
             <div className="h-72 bg-slate-50 rounded-xl overflow-hidden relative">
@@ -421,13 +436,42 @@ export function SearchPage() {
             <h3 className="text-sm font-bold text-slate-900 mb-4">Why choose BlueX.ch?</h3>
             <div className="space-y-4">
               {[
-                { icon: BadgeCheck, title: "Verified Professionals", desc: "All professionals are background checked", color: "text-blue-500", bg: "bg-blue-50" },
-                { icon: Shield, title: "Secure Payments", desc: "Your payments are safe and protected", color: "text-emerald-500", bg: "bg-emerald-50" },
-                { icon: Star, title: "Satisfaction Guarantee", desc: "We're here to make it right", color: "text-violet-500", bg: "bg-violet-50" },
-                { icon: Headphones, title: "24/7 Customer Support", desc: "Get help anytime you need it", color: "text-amber-500", bg: "bg-amber-50" },
+                {
+                  icon: BadgeCheck,
+                  title: "Verified Professionals",
+                  desc: "All professionals are background checked",
+                  color: "text-blue-500",
+                  bg: "bg-blue-50",
+                },
+                {
+                  icon: Shield,
+                  title: "Secure Payments",
+                  desc: "Your payments are safe and protected",
+                  color: "text-emerald-500",
+                  bg: "bg-emerald-50",
+                },
+                {
+                  icon: Star,
+                  title: "Satisfaction Guarantee",
+                  desc: "We're here to make it right",
+                  color: "text-violet-500",
+                  bg: "bg-violet-50",
+                },
+                {
+                  icon: Headphones,
+                  title: "24/7 Customer Support",
+                  desc: "Get help anytime you need it",
+                  color: "text-amber-500",
+                  bg: "bg-amber-50",
+                },
               ].map((item) => (
                 <div key={item.title} className="flex gap-3">
-                  <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5", item.bg)}>
+                  <div
+                    className={cn(
+                      "h-8 w-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5",
+                      item.bg,
+                    )}
+                  >
                     <item.icon className={cn("h-4.5 w-4.5", item.color)} />
                   </div>
                   <div>

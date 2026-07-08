@@ -4,8 +4,10 @@ import { ArrowRight, Quote, TrendingUp, Activity, ShieldCheck } from "lucide-rea
 const stories = [
   {
     org: "Sarah M., Zurich (Homeowner)",
-    problem: "Had a sudden pipe leak on a Sunday evening. Couldn't get any local plumber to answer.",
-    solution: "Used BlueX Emergency Booking. A certified plumber accepted the job in 8 minutes and arrived within the hour.",
+    problem:
+      "Had a sudden pipe leak on a Sunday evening. Couldn't get any local plumber to answer.",
+    solution:
+      "Used BlueX Emergency Booking. A certified plumber accepted the job in 8 minutes and arrived within the hour.",
     metric: "8 min",
     metricLabel: "Emergency match time",
     icon: TrendingUp,
@@ -15,8 +17,10 @@ const stories = [
   },
   {
     org: "M. Keller Electrical (Provider)",
-    problem: "Spent too many hours writing quotes, managing invoices, and chasing clients manually.",
-    solution: "Migrated to BlueX. The AI Business Coach now automates quote creation and optimized our pricing model.",
+    problem:
+      "Spent too many hours writing quotes, managing invoices, and chasing clients manually.",
+    solution:
+      "Migrated to BlueX. The AI Business Coach now automates quote creation and optimized our pricing model.",
     metric: "+32%",
     metricLabel: "Weekly revenue increase",
     icon: Activity,
@@ -26,8 +30,10 @@ const stories = [
   },
   {
     org: "David K., Geneva (Homeowner)",
-    problem: "Wanted to paint his apartment but was worried about unlicensed or uncertified contractors.",
-    solution: "Searched on BlueX, verified provider qualifications in the Trust Center, and paid securely via escrow.",
+    problem:
+      "Wanted to paint his apartment but was worried about unlicensed or uncertified contractors.",
+    solution:
+      "Searched on BlueX, verified provider qualifications in the Trust Center, and paid securely via escrow.",
     metric: "100%",
     metricLabel: "Vetted & insured trades",
     icon: ShieldCheck,
@@ -70,7 +76,8 @@ export default function CustomerStories() {
             </span>
           </h2>
           <p className="text-slate-500 text-lg md:text-xl max-w-[700px] mx-auto leading-relaxed">
-            Discover how clients find reliable help and how providers grow their businesses on BlueX.
+            Discover how clients find reliable help and how providers grow their businesses on
+            BlueX.
           </p>
         </motion.div>
 
