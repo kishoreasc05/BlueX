@@ -10,7 +10,7 @@ import {
   Star,
   ArrowRight,
 } from "lucide-react";
-import heroBg from "../assets/hero section bg.png";
+import heroBg from "../assets/webp/hero section bg.webp";
 
 export default function HeroSection() {
   const navigate = useNavigate();

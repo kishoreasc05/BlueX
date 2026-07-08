@@ -1,8 +1,8 @@
 import { motion } from "motion/react";
-import photoAnalytics from "../assets/search_real_1783445781613.png";
-import photoAi from "../assets/ai matching.png";
-import photoPayments from "../assets/escrow_real_1783445814196.png";
-import sectionBg from "../assets/hero_professionals_group.png";
+import photoAnalytics from "../assets/webp/search_real_1783445781613.webp";
+import photoAi from "../assets/webp/ai matching.webp";
+import photoPayments from "../assets/webp/escrow_real_1783445814196.webp";
+import sectionBg from "../assets/webp/hero_professionals_group.webp";
 
 export default function PlatformOverview() {
   return (
