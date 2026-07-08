@@ -50,25 +50,7 @@ export default function HeroSection() {
       <div className="relative z-10 flex-grow flex items-center w-full max-w-[1200px] mx-auto px-6 md:px-12 pt-20 lg:pt-24 pb-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full">
           {/* Left Column (Content) */}
-          <div className="lg:col-span-6 xl:col-span-5 flex flex-col items-start text-left">
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-[#EBF2FF] px-4 py-1.5 text-xs md:text-sm font-semibold text-[#1A4BFF] mb-6 shadow-sm"
-            >
-              <ShieldCheck className="w-4 h-4 text-[#1A4BFF] shrink-0" />
-              <span className="flex items-center gap-1.5">
-                Switzerland's Premium Service Marketplace
-                <span className="inline-flex items-center justify-center w-4 h-4 bg-[#FF0000] rounded-[2px] text-white select-none shrink-0" style={{ boxShadow: "0 1px 2px rgba(0,0,0,0.15)" }}>
-                  <svg viewBox="0 0 10 10" className="w-2.5 h-2.5 fill-white">
-                    <rect x="4" y="2" width="2" height="6" />
-                    <rect x="2" y="4" width="6" height="2" />
-                  </svg>
-                </span>
-              </span>
-            </motion.div>
+          <div className="lg:col-span-6 xl:col-span-5 flex flex-col items-start text-left lg:pt-10">
 
             {/* Headline */}
             <motion.h1
