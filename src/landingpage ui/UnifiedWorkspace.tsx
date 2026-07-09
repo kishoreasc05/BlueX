@@ -1,38 +1,38 @@
 import { motion } from "motion/react";
 import { Search, Activity, Briefcase } from "lucide-react";
-
-const features = [
-  {
-    title: "Client Booking Portal",
-    description:
-      "Homeowners and businesses describe projects in plain language, search verified local experts, book instantly, and pay securely via escrow.",
-    icon: Search,
-    color: "from-blue-500 to-indigo-500",
-    shadow: "shadow-blue-500/20",
-  },
-  {
-    title: "Provider Business Hub",
-    description:
-      "Service professionals receive bookings, manage calendars, track earnings, bid on public tenders, and optimize pricing with the AI Coach.",
-    icon: Briefcase,
-    color: "from-indigo-500 to-purple-500",
-    shadow: "shadow-indigo-500/20",
-  },
-  {
-    title: "Operations Dashboard",
-    description:
-      "Internal administrators oversee marketplace health, monitor provider compliance, audit bookings, configure automation agents, and resolve issues.",
-    icon: Activity,
-    color: "from-purple-500 to-fuchsia-500",
-    shadow: "shadow-purple-500/20",
-  },
-];
+import { useLanguage } from "../hooks/use-language";
 
 export default function UnifiedWorkspace() {
+  const { t } = useLanguage();
+
+  const features = [
+    {
+      title: t("workspace.portal1Title"),
+      description: t("workspace.portal1Desc"),
+      icon: Search,
+      color: "from-blue-500 to-indigo-500",
+      shadow: "shadow-blue-500/20",
+    },
+    {
+      title: t("workspace.portal2Title"),
+      description: t("workspace.portal2Desc"),
+      icon: Briefcase,
+      color: "from-indigo-500 to-purple-500",
+      shadow: "shadow-indigo-500/20",
+    },
+    {
+      title: t("workspace.portal3Title"),
+      description: t("workspace.portal3Desc"),
+      icon: Activity,
+      color: "from-purple-500 to-fuchsia-500",
+      shadow: "shadow-purple-500/20",
+    },
+  ];
+
   return (
     <section
       id="platform-tools"
-      className="w-full py-32 md:py-48 px-6 bg-[#050505] relative z-20 overflow-hidden border-t border-white/5"
+      className="w-full py-32 md:py-48 px-6 bg-[#050505] relative z-20 overflow-hidden border-t border-white/5 font-sans"
     >
       {/* Background ambient lighting */}
       <div className="absolute top-0 inset-x-0 h-[500px] bg-gradient-to-b from-indigo-900/10 to-transparent pointer-events-none" />
@@ -47,19 +47,18 @@ export default function UnifiedWorkspace() {
         >
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 shadow-[0_0_20px_rgba(79,70,229,0.1)]">
             <span className="text-xs font-semibold tracking-widest uppercase text-zinc-300">
-              Platform Tools
+              {t("workspace.badge")}
             </span>
           </div>
-          <h2 className="font-display text-5xl md:text-7xl tracking-tight text-white leading-[1.1] mb-6 font-light">
-            One platform.
+          <h2 className="font-display text-5xl md:text-7xl tracking-tight text-white leading-[1.2] mb-6 font-light py-1">
+            {t("workspace.title")}
             <br />
-            <span className="italic font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
-              Three portals.
+            <span className="italic font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 py-1.5 inline-block">
+              {t("workspace.titleItalic")}
             </span>
           </h2>
           <p className="text-zinc-400 text-lg md:text-xl max-w-[700px] mx-auto leading-relaxed">
-            BlueX brings together a client booking portal, a provider business hub, and an
-            operations dashboard — seamlessly connected.
+            {t("workspace.desc")}
           </p>
         </motion.div>
 

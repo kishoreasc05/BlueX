@@ -1,62 +1,62 @@
 import { motion } from "motion/react";
 import { Check, Sparkles } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-
-const plans = [
-  {
-    name: "Client",
-    desc: "For homeowners and businesses who need trusted help.",
-    price: "Free",
-    period: "",
-    features: [
-      "Search & book any service",
-      "Secure escrow payments",
-      "Real-time live chat",
-      "Emergency 24/7 booking",
-      "Booking history & reviews",
-    ],
-    button: "Book a Service",
-    href: "/signin" as const,
-    role: "client" as const,
-    primary: false,
-  },
-  {
-    name: "Provider",
-    desc: "For tradespeople ready to grow their business on BlueX.",
-    price: "CHF 29",
-    period: "/mo",
-    features: [
-      "Full provider dashboard",
-      "Calendar & booking management",
-      "AI Business Coach",
-      "Public tender alerts & bids",
-      "Performance analytics",
-      "Trust Center profile badge",
-    ],
-    button: "Become a Provider",
-    href: "/signin" as const,
-    role: "provider" as const,
-    primary: true,
-  },
-  {
-    name: "Enterprise",
-    desc: "For large operators needing a custom marketplace setup.",
-    price: "Custom",
-    period: "",
-    features: [
-      "Dedicated account manager",
-      "Custom service categories",
-      "White-label options",
-      "SLA & compliance support",
-    ],
-    button: "Contact Sales",
-    href: "/signin" as const,
-    role: "client" as const,
-    primary: false,
-  },
-];
+import { useLanguage } from "../hooks/use-language";
 
 export default function PricingPreview() {
+  const { t } = useLanguage();
+
+  const plans = [
+    {
+      name: t("pricing.clientPlan"),
+      desc: t("pricing.clientDesc"),
+      price: t("pricing.clientPrice"),
+      period: "",
+      features: [
+        t("pricing.clientFeat1"),
+        t("pricing.clientFeat2"),
+        t("pricing.clientFeat3"),
+        t("pricing.clientFeat4"),
+      ],
+      button: t("pricing.ctaClient"),
+      href: "/signin" as const,
+      role: "client" as const,
+      primary: false,
+    },
+    {
+      name: t("pricing.proPlan"),
+      desc: t("pricing.proDesc"),
+      price: t("pricing.proPrice"),
+      period: t("pricing.proPricePeriod"),
+      features: [
+        t("pricing.proFeat1"),
+        t("pricing.proFeat2"),
+        t("pricing.proFeat3"),
+        t("pricing.proFeat4"),
+      ],
+      button: t("pricing.ctaPro"),
+      href: "/signin" as const,
+      role: "provider" as const,
+      primary: true,
+    },
+    {
+      name: t("pricing.teamPlan"),
+      desc: t("pricing.teamDesc"),
+      price: t("pricing.teamPrice"),
+      period: t("pricing.teamPricePeriod"),
+      features: [
+        t("pricing.teamFeat1"),
+        t("pricing.teamFeat2"),
+        t("pricing.teamFeat3"),
+        t("pricing.teamFeat4"),
+      ],
+      button: t("pricing.ctaTeam"),
+      href: "/signin" as const,
+      role: "client" as const,
+      primary: false,
+    },
+  ];
+
   return (
     <section
       className="w-full py-32 md:py-48 px-6 bg-[#030303] relative z-20 font-sans border-t border-white/5"
@@ -77,19 +77,15 @@ export default function PricingPreview() {
             <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 shadow-[0_0_20px_rgba(79,70,229,0.1)]">
               <Sparkles className="w-4 h-4 text-indigo-400" />
               <span className="text-xs font-semibold tracking-widest uppercase text-zinc-300">
-                Pricing
+                {t("pricing.badge")}
               </span>
             </div>
             <h2 className="font-display text-5xl md:text-7xl tracking-tight text-white leading-[1.1] mb-6 font-light">
-              Simple, transparent{" "}
+              {t("pricing.title")}{" "}
               <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 italic">
-                pricing.
+                {t("pricing.desc")}
               </span>
             </h2>
-            <p className="text-zinc-400 text-lg md:text-xl max-w-[600px] mx-auto leading-relaxed">
-              Clients book for free. Providers get powerful tools to run and grow their trades
-              business.
-            </p>
           </motion.div>
         </div>
 
@@ -112,7 +108,7 @@ export default function PricingPreview() {
               )}
 
               {plan.primary && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-indigo-600 text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg shadow-indigo-600/30 flex items-center gap-1.5 border border-indigo-400/30">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-[#1A4BFF] text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg shadow-indigo-600/30 flex items-center gap-1.5 border border-indigo-400/30">
                   <Sparkles className="w-3.5 h-3.5" /> Most Popular
                 </div>
               )}
@@ -133,7 +129,7 @@ export default function PricingPreview() {
                 {plan.features.map((feature, fIdx) => (
                   <li key={fIdx} className="flex items-start gap-3 text-sm text-zinc-300">
                     <div
-                      className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${plan.primary ? "bg-indigo-500/20 text-indigo-400" : "bg-white/10 text-white"}`}
+                      className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${plan.primary ? "bg-[#1A4BFF]/20 text-[#1A4BFF]" : "bg-white/10 text-white"}`}
                     >
                       <Check className="w-3.5 h-3.5" />
                     </div>
@@ -145,9 +141,9 @@ export default function PricingPreview() {
               <Link
                 to={plan.href}
                 search={{ mode: "signup", role: plan.role }}
-                className={`relative z-10 w-full h-14 rounded-2xl font-medium transition-all duration-300 flex items-center justify-center ${
+                className={`relative z-10 w-full h-14 rounded-2xl font-medium transition-all duration-300 flex items-center justify-center text-sm cursor-pointer ${
                   plan.primary
-                    ? "bg-indigo-600 text-white hover:bg-indigo-500 shadow-lg shadow-indigo-600/25 hover:shadow-indigo-600/40"
+                    ? "bg-[#1A4BFF] text-white hover:bg-blue-700 shadow-lg shadow-indigo-600/25 hover:shadow-indigo-600/40"
                     : "bg-white/10 text-white hover:bg-white/20"
                 }`}
               >

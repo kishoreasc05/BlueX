@@ -1,63 +1,61 @@
 import { motion } from "motion/react";
 import { Search, UserCheck, CalendarCheck, MessageSquare, ShieldCheck, Star } from "lucide-react";
-
-const steps = [
-  {
-    icon: Search,
-    title: "Search & Filter",
-    description:
-      "Browse electricians, plumbers, cleaners and more. Filter by rating, location, and availability.",
-    color: "bg-blue-500/20",
-    iconColor: "text-blue-400",
-    border: "border-blue-500/40",
-  },
-  {
-    icon: UserCheck,
-    title: "View Verified Profiles",
-    description:
-      "Compare certifications, reviews, and pricing. Every provider is ID-verified and fully insured.",
-    color: "bg-indigo-500/20",
-    iconColor: "text-indigo-400",
-    border: "border-indigo-500/40",
-  },
-  {
-    icon: CalendarCheck,
-    title: "Book Instantly",
-    description: "Select a date and time that works for you. Bookings are confirmed in seconds.",
-    color: "bg-violet-500/20",
-    iconColor: "text-violet-400",
-    border: "border-violet-500/40",
-  },
-  {
-    icon: MessageSquare,
-    title: "Live Chat",
-    description:
-      "Communicate directly with your provider through real-time chat before and during the job.",
-    color: "bg-cyan-500/20",
-    iconColor: "text-cyan-400",
-    border: "border-cyan-500/40",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Secure Escrow Payment",
-    description:
-      "Funds are held safely and only released to the provider once you approve the completed work.",
-    color: "bg-emerald-500/20",
-    iconColor: "text-emerald-400",
-    border: "border-emerald-500/40",
-  },
-  {
-    icon: Star,
-    title: "Rate & Review",
-    description:
-      "Leave honest feedback to help the community and reward top-quality professionals.",
-    color: "bg-amber-500/20",
-    iconColor: "text-amber-400",
-    border: "border-amber-500/40",
-  },
-];
+import { useLanguage } from "../hooks/use-language";
 
 export default function WorkflowAutomation() {
+  const { t } = useLanguage();
+
+  const steps = [
+    {
+      icon: Search,
+      title: t("howItWorks.step1Title"),
+      description: t("howItWorks.step1Desc"),
+      color: "bg-blue-50/15 dark:bg-blue-500/10",
+      iconColor: "text-blue-600 dark:text-blue-400",
+      border: "border-blue-500/20 dark:border-blue-500/40",
+    },
+    {
+      icon: UserCheck,
+      title: t("howItWorks.step2Title"),
+      description: t("howItWorks.step2Desc"),
+      color: "bg-indigo-50/15 dark:bg-indigo-500/10",
+      iconColor: "text-indigo-600 dark:text-indigo-400",
+      border: "border-indigo-500/20 dark:border-indigo-500/40",
+    },
+    {
+      icon: CalendarCheck,
+      title: t("howItWorks.step3Title"),
+      description: t("howItWorks.step3Desc"),
+      color: "bg-violet-50/15 dark:bg-violet-500/10",
+      iconColor: "text-violet-600 dark:text-violet-400",
+      border: "border-violet-500/20 dark:border-violet-500/40",
+    },
+    {
+      icon: MessageSquare,
+      title: t("howItWorks.step4Title"),
+      description: t("howItWorks.step4Desc"),
+      color: "bg-cyan-50/15 dark:bg-cyan-500/10",
+      iconColor: "text-cyan-600 dark:text-cyan-400",
+      border: "border-cyan-500/20 dark:border-cyan-500/40",
+    },
+    {
+      icon: ShieldCheck,
+      title: t("howItWorks.step5Title"),
+      description: t("howItWorks.step5Desc"),
+      color: "bg-emerald-50/15 dark:bg-emerald-500/10",
+      iconColor: "text-emerald-600 dark:text-emerald-400",
+      border: "border-emerald-500/20 dark:border-emerald-500/40",
+    },
+    {
+      icon: Star,
+      title: t("howItWorks.step6Title"),
+      description: t("howItWorks.step6Desc"),
+      color: "bg-amber-50/15 dark:bg-amber-500/10",
+      iconColor: "text-amber-600 dark:text-amber-400",
+      border: "border-amber-500/20 dark:border-amber-500/40",
+    },
+  ];
+
   return (
     <section
       id="how-it-works"
@@ -75,17 +73,17 @@ export default function WorkflowAutomation() {
         >
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-white/5 border border-white/10">
             <span className="text-xs font-semibold tracking-widest uppercase text-zinc-300">
-              How It Works
+              {t("howItWorks.badge")}
             </span>
           </div>
           <h2 className="font-display text-5xl md:text-7xl tracking-tight text-white leading-[1.1] mb-6 font-light">
-            Book a professional{" "}
+            {t("howItWorks.title")}{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 font-medium italic">
-              in minutes.
+              {t("howItWorks.titleItalic")}
             </span>
           </h2>
           <p className="text-zinc-400 text-lg md:text-xl max-w-[600px] mx-auto leading-relaxed">
-            From discovery to payment, BlueX handles every step so you can focus on what matters.
+            {t("howItWorks.desc")}
           </p>
         </motion.div>
 
@@ -101,7 +99,7 @@ export default function WorkflowAutomation() {
               className={`relative flex flex-col items-start text-left p-8 rounded-2xl border ${step.border} bg-zinc-900/40 backdrop-blur-xl hover:bg-zinc-900/60 transition-all duration-300 group`}
             >
               {/* Step number */}
-              <div className="absolute top-4 right-5 text-[11px] font-bold text-zinc-600 tracking-widest">
+              <div className="absolute top-4 right-5 text-[11px] font-bold text-zinc-600 tracking-widest font-mono">
                 0{idx + 1}
               </div>
 

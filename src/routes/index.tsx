@@ -12,6 +12,7 @@ import CustomerStories from "../landingpage ui/CustomerStories";
 import PricingPreview from "../landingpage ui/PricingPreview";
 import FinalCTA from "../landingpage ui/FinalCTA";
 import Footer from "../landingpage ui/Footer";
+import ServiceTicker from "../landingpage ui/ServiceTicker";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
@@ -21,9 +22,10 @@ function LandingPage() {
   return (
     <div className="min-h-screen w-full flex flex-col bg-background overflow-x-hidden relative font-body text-foreground">
       {/* Content Container */}
-      <div className="relative z-10 flex flex-col w-full h-full pb-32">
+      <div className="relative z-10 flex flex-col w-full h-full pb-0">
         <Navbar />
         <HeroSection />
+        <ServiceTicker />
         <PlatformOverview />
         <AICopilotSection />
         <UnifiedWorkspace />
