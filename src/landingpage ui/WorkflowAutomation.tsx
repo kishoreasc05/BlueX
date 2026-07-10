@@ -10,59 +10,59 @@ export default function WorkflowAutomation() {
       icon: Search,
       title: t("howItWorks.step1Title"),
       description: t("howItWorks.step1Desc"),
-      color: "bg-blue-50/15 dark:bg-blue-500/10",
-      iconColor: "text-blue-600 dark:text-blue-400",
-      border: "border-blue-500/20 dark:border-blue-500/40",
+      color: "bg-emerald-50",
+      iconColor: "text-emerald-700",
+      border: "border-zinc-200 hover:border-emerald-500/20 shadow-md bg-white",
     },
     {
       icon: UserCheck,
       title: t("howItWorks.step2Title"),
       description: t("howItWorks.step2Desc"),
-      color: "bg-indigo-50/15 dark:bg-indigo-500/10",
-      iconColor: "text-indigo-600 dark:text-indigo-400",
-      border: "border-indigo-500/20 dark:border-indigo-500/40",
+      color: "bg-teal-50",
+      iconColor: "text-teal-700",
+      border: "border-zinc-200 hover:border-teal-500/20 shadow-md bg-white",
     },
     {
       icon: CalendarCheck,
       title: t("howItWorks.step3Title"),
       description: t("howItWorks.step3Desc"),
-      color: "bg-violet-50/15 dark:bg-violet-500/10",
-      iconColor: "text-violet-600 dark:text-violet-400",
-      border: "border-violet-500/20 dark:border-violet-500/40",
+      color: "bg-cyan-50",
+      iconColor: "text-cyan-700",
+      border: "border-zinc-200 hover:border-cyan-500/20 shadow-md bg-white",
     },
     {
       icon: MessageSquare,
       title: t("howItWorks.step4Title"),
       description: t("howItWorks.step4Desc"),
-      color: "bg-cyan-50/15 dark:bg-cyan-500/10",
-      iconColor: "text-cyan-600 dark:text-cyan-400",
-      border: "border-cyan-500/20 dark:border-cyan-500/40",
+      color: "bg-emerald-50",
+      iconColor: "text-emerald-700",
+      border: "border-zinc-200 hover:border-emerald-500/20 shadow-md bg-white",
     },
     {
       icon: ShieldCheck,
       title: t("howItWorks.step5Title"),
       description: t("howItWorks.step5Desc"),
-      color: "bg-emerald-50/15 dark:bg-emerald-500/10",
-      iconColor: "text-emerald-600 dark:text-emerald-400",
-      border: "border-emerald-500/20 dark:border-emerald-500/40",
+      color: "bg-teal-50",
+      iconColor: "text-teal-700",
+      border: "border-zinc-200 hover:border-teal-500/20 shadow-md bg-white",
     },
     {
       icon: Star,
       title: t("howItWorks.step6Title"),
       description: t("howItWorks.step6Desc"),
-      color: "bg-amber-50/15 dark:bg-amber-500/10",
-      iconColor: "text-amber-600 dark:text-amber-400",
-      border: "border-amber-500/20 dark:border-amber-500/40",
+      color: "bg-amber-50",
+      iconColor: "text-amber-700",
+      border: "border-zinc-200 hover:border-amber-500/20 shadow-md bg-white",
     },
   ];
 
   return (
     <section
       id="how-it-works"
-      className="w-full py-32 md:py-48 px-6 bg-[#050505] relative z-20 overflow-hidden font-sans"
+      className="w-full py-32 md:py-48 px-6 bg-white relative z-20 overflow-hidden font-sans border-t border-zinc-200/50"
     >
       {/* Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(79,70,229,0.15),transparent_100%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(16,185,129,0.05),transparent_100%)] pointer-events-none" />
 
       <div className="max-w-[1200px] mx-auto text-center relative z-10">
         <motion.div
@@ -71,18 +71,18 @@ export default function WorkflowAutomation() {
           viewport={{ once: true }}
           className="mb-20 md:mb-32"
         >
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-white/5 border border-white/10">
-            <span className="text-xs font-semibold tracking-widest uppercase text-zinc-300">
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-emerald-55 border border-emerald-200 shadow-sm">
+            <span className="text-xs font-semibold tracking-widest uppercase text-emerald-700">
               {t("howItWorks.badge")}
             </span>
           </div>
-          <h2 className="font-display text-5xl md:text-7xl tracking-tight text-white leading-[1.1] mb-6 font-light">
+          <h2 className="font-display text-5xl md:text-7xl tracking-tight text-zinc-900 leading-[1.1] mb-6 font-light">
             {t("howItWorks.title")}{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 font-medium italic">
+            <span className="text-emerald-600 font-medium italic">
               {t("howItWorks.titleItalic")}
             </span>
           </h2>
-          <p className="text-zinc-400 text-lg md:text-xl max-w-[600px] mx-auto leading-relaxed">
+          <p className="text-zinc-600 text-lg md:text-xl max-w-[600px] mx-auto leading-relaxed">
             {t("howItWorks.desc")}
           </p>
         </motion.div>
@@ -96,10 +96,10 @@ export default function WorkflowAutomation() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className={`relative flex flex-col items-start text-left p-8 rounded-2xl border ${step.border} bg-zinc-900/40 backdrop-blur-xl hover:bg-zinc-900/60 transition-all duration-300 group`}
+              className={`relative flex flex-col items-start text-left p-8 rounded-2xl border transition-all duration-300 group ${step.border}`}
             >
               {/* Step number */}
-              <div className="absolute top-4 right-5 text-[11px] font-bold text-zinc-600 tracking-widest font-mono">
+              <div className="absolute top-4 right-5 text-[11px] font-bold text-zinc-400 tracking-widest font-mono">
                 0{idx + 1}
               </div>
 
@@ -109,8 +109,8 @@ export default function WorkflowAutomation() {
                 <step.icon className={`w-6 h-6 ${step.iconColor}`} />
               </div>
 
-              <h3 className="text-xl font-semibold text-white mb-3">{step.title}</h3>
-              <p className="text-zinc-400 text-sm leading-relaxed">{step.description}</p>
+              <h3 className="text-xl font-semibold text-zinc-800 mb-3">{step.title}</h3>
+              <p className="text-zinc-600 text-sm leading-relaxed">{step.description}</p>
             </motion.div>
           ))}
         </div>

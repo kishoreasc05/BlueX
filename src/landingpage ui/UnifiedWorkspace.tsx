@@ -10,54 +10,49 @@ export default function UnifiedWorkspace() {
       title: t("workspace.portal1Title"),
       description: t("workspace.portal1Desc"),
       icon: Search,
-      color: "from-blue-500 to-indigo-500",
-      shadow: "shadow-blue-500/20",
+      color: "from-emerald-500 to-teal-500",
+      shadow: "shadow-emerald-500/5",
     },
     {
       title: t("workspace.portal2Title"),
       description: t("workspace.portal2Desc"),
       icon: Briefcase,
-      color: "from-indigo-500 to-purple-500",
-      shadow: "shadow-indigo-500/20",
+      color: "from-teal-500 to-cyan-500",
+      shadow: "shadow-teal-500/5",
     },
     {
       title: t("workspace.portal3Title"),
       description: t("workspace.portal3Desc"),
       icon: Activity,
-      color: "from-purple-500 to-fuchsia-500",
-      shadow: "shadow-purple-500/20",
+      color: "from-emerald-600 to-emerald-400",
+      shadow: "shadow-emerald-600/5",
     },
   ];
 
   return (
     <section
       id="platform-tools"
-      className="w-full py-32 md:py-48 px-6 bg-[#050505] relative z-20 overflow-hidden border-t border-white/5 font-sans"
+      className="w-full py-28 md:py-36 px-6 bg-white relative z-20 overflow-hidden border-t border-zinc-200 font-sans"
     >
-      {/* Background ambient lighting */}
-      <div className="absolute top-0 inset-x-0 h-[500px] bg-gradient-to-b from-indigo-900/10 to-transparent pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none" />
-
       <div className="max-w-[1200px] mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-24 text-center"
+          className="mb-20 text-center"
         >
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 shadow-[0_0_20px_rgba(79,70,229,0.1)]">
-            <span className="text-xs font-semibold tracking-widest uppercase text-zinc-300">
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-green-50 border border-green-200">
+            <span className="text-xs font-bold tracking-widest uppercase text-[#14a800]">
               {t("workspace.badge")}
             </span>
           </div>
-          <h2 className="font-display text-5xl md:text-7xl tracking-tight text-white leading-[1.2] mb-6 font-light py-1">
-            {t("workspace.title")}
-            <br />
-            <span className="italic font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 py-1.5 inline-block">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900 leading-tight mb-6">
+            {t("workspace.title")}{" "}
+            <span className="text-[#14a800] block mt-1.5 font-bold">
               {t("workspace.titleItalic")}
             </span>
           </h2>
-          <p className="text-zinc-400 text-lg md:text-xl max-w-[700px] mx-auto leading-relaxed">
+          <p className="text-zinc-650 text-base md:text-lg max-w-xl mx-auto leading-relaxed font-semibold">
             {t("workspace.desc")}
           </p>
         </motion.div>
@@ -67,31 +62,23 @@ export default function UnifiedWorkspace() {
           {features.map((feature, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.15 }}
-              className="group relative flex flex-col p-10 rounded-[2.5rem] bg-zinc-900/40 bg-grid-dark border border-white/10 backdrop-blur-xl hover:bg-zinc-900/60 hover:border-white/20 transition-all duration-500"
+              transition={{ delay: idx * 0.1 }}
+              className="group relative flex flex-col p-8 rounded-2xl bg-white border border-zinc-200 shadow-sm hover:border-[#14a800] hover:shadow-md transition-all duration-300"
             >
-              {/* Hover Glow */}
               <div
-                className={`absolute inset-0 bg-gradient-to-b ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-[2.5rem] pointer-events-none`}
-              />
-
-              <div
-                className={`w-16 h-16 rounded-2xl flex items-center justify-center bg-zinc-900 border border-white/10 mb-8 relative z-10 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 shadow-lg ${feature.shadow}`}
+                className="w-14 h-14 rounded-xl flex items-center justify-center bg-green-50 border border-green-100 mb-8 relative z-10 group-hover:scale-105 transition-transform duration-300 shadow-sm text-[#14a800]"
               >
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-20 rounded-2xl`}
-                />
-                <feature.icon className="w-8 h-8 text-white relative z-10" />
+                <feature.icon className="w-7 h-7 stroke-[1.75] relative z-10" />
               </div>
 
-              <div className="relative z-10">
-                <h3 className="text-2xl font-semibold text-white mb-4 tracking-tight">
+              <div className="relative z-10 text-left">
+                <h3 className="text-xl font-bold text-zinc-800 mb-3 tracking-tight">
                   {feature.title}
                 </h3>
-                <p className="text-zinc-400 leading-relaxed text-sm">{feature.description}</p>
+                <p className="text-zinc-600 leading-relaxed text-sm font-semibold">{feature.description}</p>
               </div>
             </motion.div>
           ))}

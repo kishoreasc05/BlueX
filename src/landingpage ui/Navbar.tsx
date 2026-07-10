@@ -8,6 +8,10 @@ const languages: { code: Language; label: string }[] = [
   { code: "fr", label: "FR" },
   { code: "it", label: "IT" },
   { code: "en", label: "EN" },
+  { code: "pt", label: "PT" },
+  { code: "es", label: "ES" },
+  { code: "sq", label: "SQ" },
+  { code: "sr", label: "SR" },
 ];
 
 export default function Navbar() {
@@ -20,7 +24,7 @@ export default function Navbar() {
   const navigation = [
     { name: t("nav.services"), href: "#platform" },
     { name: t("nav.providers"), href: "#platform" },
-    { name: t("nav.trust"), href: "#trust" },
+    { name: t("nav.trust"), href: "#trust-and-process" },
     { name: t("nav.pricing"), href: "#pricing" },
   ];
 
@@ -32,7 +36,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close language dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -43,9 +46,9 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const headerClasses = isScrolled
-    ? "fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-body py-3 bg-[#05030a] border-b border-white/5 shadow-md shadow-black/25"
-    : "fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-body py-5 bg-[#05030a] border-b border-white/5 shadow-sm";
+  const headerClasses = (isScrolled || mobileOpen)
+    ? "fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-body py-3.5 bg-white border-b border-zinc-200 shadow-sm"
+    : "fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-body py-5 bg-transparent border-b border-transparent shadow-none";
 
   return (
     <header className={headerClasses}>
@@ -53,9 +56,11 @@ export default function Navbar() {
         {/* Left: Logo */}
         <a
           href="/"
-          className="flex items-center gap-2 text-white font-extrabold text-xl tracking-tight shrink-0"
+          className={`flex items-center gap-2 font-extrabold text-2xl tracking-tight shrink-0 font-sans transition-colors duration-300 ${
+            (isScrolled || mobileOpen) ? "text-[#001e00]" : "text-white"
+          }`}
         >
-          <div className="flex items-center justify-center w-7 h-7 text-[#1A4BFF] shrink-0">
+          <div className="flex items-center justify-center w-7 h-7 text-[#14a800] shrink-0">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -72,17 +77,21 @@ export default function Navbar() {
             </svg>
           </div>
           <span className="flex items-baseline">
-            BlueX<span className="text-zinc-500 font-normal text-sm">.ch</span>
+            BlueX<span className={`transition-colors duration-300 ${
+              (isScrolled || mobileOpen) ? "text-zinc-500" : "text-white/60"
+            } font-normal text-sm`}>.ch</span>
           </span>
         </a>
 
         {/* Center: Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-4 xl:gap-6">
+        <div className="hidden lg:flex items-center gap-4 xl:gap-8">
           {navigation.map((nav) => (
             <a
               key={nav.name}
               href={nav.href}
-              className="text-[11px] font-semibold text-zinc-400 hover:text-white transition-colors px-2.5 py-1.5 whitespace-nowrap uppercase tracking-wider"
+              className={`text-[15px] font-semibold transition-colors duration-300 px-2 py-1 whitespace-nowrap font-sans ${
+                (isScrolled || mobileOpen) ? "text-zinc-700 hover:text-[#14a800]" : "text-white/90 hover:text-green-400"
+              }`}
             >
               {nav.name}
             </a>
@@ -90,19 +99,23 @@ export default function Navbar() {
         </div>
 
         {/* Right: CTAs & Language Switcher */}
-        <div className="hidden md:flex items-center gap-5 shrink-0">
+        <div className="hidden md:flex items-center gap-6 shrink-0">
           {/* Desktop Language Switcher */}
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setLangOpen(!langOpen)}
-              className="flex items-center gap-1.5 text-[11px] font-semibold text-zinc-400 hover:text-white transition-colors px-2 py-1.5 rounded-lg hover:bg-white/5 uppercase tracking-wider"
+              className={`flex items-center gap-1.5 text-sm font-semibold transition-all duration-300 px-2 py-1.5 rounded-lg font-sans ${
+                (isScrolled || mobileOpen)
+                  ? "text-zinc-650 hover:text-zinc-900 hover:bg-zinc-50"
+                  : "text-white/90 hover:text-white hover:bg-white/10"
+              }`}
               aria-expanded={langOpen}
               aria-haspopup="true"
             >
-              <Globe className="w-3.5 h-3.5 text-zinc-400" />
+              <Globe className={`w-4 h-4 transition-colors duration-300 ${(isScrolled || mobileOpen) ? "text-zinc-500" : "text-white/80"}`} />
               <span>{languages.find((l) => l.code === language)?.label || "DE"}</span>
               <ChevronDown
-                className={`w-3 h-3 transition-transform duration-300 ${langOpen ? "rotate-180" : ""}`}
+                className={`w-3.5 h-3.5 transition-all duration-300 ${(isScrolled || mobileOpen) ? "text-zinc-500" : "text-white/80"} ${langOpen ? "rotate-180" : ""}`}
               />
             </button>
 
@@ -113,7 +126,7 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 8, scale: 0.95 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute right-0 mt-2 w-32 rounded-xl bg-[#0d0a1b]/95 border border-white/10 backdrop-blur-xl shadow-2xl p-1.5 z-50 flex flex-col gap-0.5"
+                  className="absolute right-0 mt-2 w-36 rounded-xl bg-white border border-zinc-200 shadow-xl p-1.5 z-50 flex flex-col gap-0.5"
                 >
                   {languages.map((lang) => (
                     <button
@@ -124,20 +137,28 @@ export default function Navbar() {
                       }}
                       className={`w-full text-left text-xs font-semibold px-3 py-2 rounded-lg transition-colors flex items-center justify-between ${
                         language === lang.code
-                          ? "bg-[#1A4BFF] text-white"
-                          : "text-zinc-400 hover:text-white hover:bg-white/5"
+                          ? "bg-[#14a800] text-white"
+                          : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
                       }`}
                     >
                       <span>
-                        {lang.label === "DE"
+                        {lang.code === "de"
                           ? "Deutsch"
-                          : lang.label === "FR"
+                          : lang.code === "fr"
                             ? "Français"
-                            : lang.label === "IT"
+                            : lang.code === "it"
                               ? "Italiano"
-                              : "English"}
+                              : lang.code === "en"
+                                ? "English"
+                                : lang.code === "pt"
+                                  ? "Português"
+                                  : lang.code === "es"
+                                    ? "Español"
+                                    : lang.code === "sq"
+                                      ? "Shqip"
+                                      : "Srpski"}
                       </span>
-                      <span className="text-[10px] opacity-60">{lang.label}</span>
+                      <span className={`text-[10px] ${language === lang.code ? "text-white/80" : "text-zinc-400"}`}>{lang.label}</span>
                     </button>
                   ))}
                 </motion.div>
@@ -147,13 +168,15 @@ export default function Navbar() {
 
           <a
             href="/signin"
-            className="text-[11px] font-semibold text-zinc-400 hover:text-white transition-colors mr-1 uppercase tracking-wider"
+            className={`text-[15px] font-semibold transition-colors duration-300 font-sans ${
+              (isScrolled || mobileOpen) ? "text-zinc-700 hover:text-[#14a800]" : "text-white/90 hover:text-green-400"
+            }`}
           >
             {t("nav.logIn")}
           </a>
           <a
             href="/signin?mode=signup&role=provider"
-            className="inline-flex items-center justify-center h-8 px-4 rounded-full bg-[#1A4BFF] hover:bg-blue-700 text-white text-[10px] font-bold transition-colors shadow-sm uppercase tracking-wider"
+            className="inline-flex items-center justify-center h-10 px-6 rounded-full bg-[#14a800] hover:bg-[#108a00] text-white text-[14px] font-bold transition-colors font-sans"
           >
             {t("nav.becomeProvider")}
           </a>
@@ -161,7 +184,9 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="lg:hidden p-2 text-zinc-400 hover:text-white"
+          className={`lg:hidden p-2 transition-colors duration-300 ${
+            (isScrolled || mobileOpen) ? "text-zinc-550 hover:text-zinc-900" : "text-white/90 hover:text-white"
+          }`}
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
@@ -176,17 +201,17 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-[#05030a] border-b border-white/5 shadow-lg absolute top-full left-0 w-full overflow-hidden"
+            className="lg:hidden bg-white border-b border-zinc-200 shadow-lg absolute top-full left-0 w-full overflow-hidden"
           >
             <div className="px-6 py-4 flex flex-col gap-2 max-h-[80vh] overflow-y-auto">
               {navigation.map((nav) => (
                 <div
                   key={nav.name}
-                  className="flex flex-col border-b border-white/5 last:border-0 py-1"
+                  className="flex flex-col border-b border-zinc-150 last:border-0 py-1"
                 >
                   <a
                     href={nav.href}
-                    className="text-zinc-300 font-medium py-2 hover:text-white"
+                    className="text-zinc-700 font-medium py-2 hover:text-[#14a800]"
                     onClick={() => setMobileOpen(false)}
                   >
                     {nav.name}
@@ -194,7 +219,7 @@ export default function Navbar() {
                 </div>
               ))}
 
-              <div className="flex flex-col gap-4 mt-4 pt-4 border-t border-white/5">
+              <div className="flex flex-col gap-4 mt-4 pt-4 border-t border-zinc-150">
                 {/* Mobile Language Selector */}
                 <div className="flex flex-col gap-2">
                   <span className="text-xs font-bold text-zinc-500 px-1 uppercase tracking-wider">
@@ -209,8 +234,8 @@ export default function Navbar() {
                         }}
                         className={`text-xs font-bold py-2 rounded-xl border transition-all ${
                           language === lang.code
-                            ? "bg-[#1A4BFF] border-[#1A4BFF] text-white"
-                            : "bg-white/5 border-white/5 text-zinc-400 hover:text-white"
+                            ? "bg-[#14a800] border-[#14a800] text-white"
+                            : "bg-zinc-50 border-zinc-200 text-zinc-650 hover:bg-zinc-100"
                         }`}
                       >
                         {lang.label}
@@ -222,14 +247,14 @@ export default function Navbar() {
                 <a
                   href="/signin"
                   onClick={() => setMobileOpen(false)}
-                  className="text-center font-medium text-zinc-300 py-2.5 hover:text-white border border-white/10 rounded-xl bg-white/5"
+                  className="text-center font-medium text-zinc-700 py-2.5 hover:text-zinc-950 border border-zinc-200 rounded-xl bg-zinc-50"
                 >
                   {t("nav.logIn")}
                 </a>
                 <a
                   href="/signin?mode=signup&role=provider"
                   onClick={() => setMobileOpen(false)}
-                  className="text-center font-medium bg-[#1A4BFF] hover:bg-blue-700 text-white py-3 rounded-xl"
+                  className="text-center font-medium bg-[#14a800] hover:bg-[#108a00] text-white py-3 rounded-xl"
                 >
                   {t("nav.becomeProvider")}
                 </a>

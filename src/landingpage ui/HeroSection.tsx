@@ -1,15 +1,15 @@
 import { motion } from "motion/react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Search, MapPin, ShieldCheck, Lock, MessageSquare, Star, ArrowRight } from "lucide-react";
+import { MapPin, ShieldCheck, Lock, Star, ArrowRight, Calendar, Play, Headphones, CheckCircle, Wrench } from "lucide-react";
 import { useLanguage } from "../hooks/use-language";
-import heroBg from "../assets/webp/hero section bg.webp";
 
 export default function HeroSection() {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const [serviceQuery, setServiceQuery] = useState("");
-  const [locationQuery, setLocationQuery] = useState("Zurich, Switzerland");
+  const [locationQuery, setLocationQuery] = useState("");
+  const [dateQuery, setDateQuery] = useState("");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,50 +20,54 @@ export default function HeroSection() {
   };
 
   return (
-    <main className="relative min-h-[780px] lg:min-h-[720px] w-full flex flex-col justify-between overflow-hidden bg-[#05030a] font-body text-white">
-      {/* Background Image Container */}
+    <main className="relative min-h-[980px] lg:min-h-[940px] w-full flex flex-col justify-between overflow-hidden bg-[#020617] font-sans text-white">
+      {/* Background Video Container */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <img
-          src={heroBg}
-          alt="Hero Background"
-          className="w-full h-full object-cover object-right scale-[0.85] translate-x-[3%] -translate-y-[3%] origin-right opacity-30 md:opacity-40"
-          style={{
-            maskImage: "linear-gradient(to right, transparent 20%, black 55%)",
-            WebkitMaskImage: "linear-gradient(to right, transparent 20%, black 55%)",
-          }}
-        />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover opacity-80"
+        >
+          <source src="/hero_section_video.mp4" type="video/mp4" />
+        </video>
       </div>
 
-      {/* Global Background Gradient Fades to blend the image edges */}
-      <div className="absolute inset-0 z-[1] pointer-events-none">
-        {/* Left fade: blends the left edge of the image into background */}
-        <div className="absolute inset-y-0 left-0 w-[50%] lg:w-[55%] bg-gradient-to-r from-[#05030a] via-[#05030a]/90 to-transparent" />
-        {/* Bottom fade: blends the very bottom of the hero section */}
-        <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#05030a] via-[#05030a]/40 to-transparent" />
-
-        {/* Subtle dark overlay on mobile to keep text legible */}
-        <div className="absolute inset-0 bg-[#05030a]/75 lg:hidden" />
+      {/* Global Background Gradient Fades to blend the video edges */}
+      <div className="absolute inset-0 z-[1] pointer-events-none bg-black/40">
+        {/* Left/Center overlay: ensures text readability on dark video */}
+        <div className="absolute inset-y-0 left-0 w-[55%] lg:w-[60%] bg-gradient-to-r from-black/85 via-black/55 to-transparent" />
+        {/* Bottom fade: blends the bottom of the hero section */}
+        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-black/60 to-transparent" />
+        {/* Mobile dark overlay: subtle to keep text readable without washing out video */}
+        <div className="absolute inset-0 bg-black/45 lg:hidden" />
+        {/* Corner overlay to hide the video watermark sparkle (Gemini logo) */}
+        <div className="absolute bottom-[18%] right-[-20px] w-48 h-72 bg-[#020617] blur-3xl rounded-full opacity-95 pointer-events-none" />
       </div>
 
       {/* Content Wrapper */}
-      <div className="relative z-10 flex-grow flex items-center w-full max-w-[1200px] mx-auto px-6 md:px-12 pt-28 lg:pt-36 pb-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full">
+      <div className="relative z-10 flex-grow flex flex-col justify-start w-full max-w-[1600px] mx-auto px-4 md:px-5 pt-32 lg:pt-40 pb-28">
+        
+        {/* Main Columns Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full items-center mb-10">
           {/* Left Column (Content) */}
-          <div className="lg:col-span-7 xl:col-span-6 flex flex-col items-start text-left lg:pt-6">
+          <div className="lg:col-span-7 flex flex-col items-start text-left lg:pl-8">
             {/* Headline */}
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-display text-4xl md:text-5xl lg:text-[2.75rem] xl:text-[3.25rem] leading-[1.15] tracking-tight text-white mb-6 font-light"
+              className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.15] tracking-tight text-white mb-6 font-extrabold text-left flex flex-col gap-2"
             >
-              {t("hero.title1")} <br />
-              <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-400">
-                {t("hero.title2")}
-              </span>{" "}
-              <br />
-              <span className="text-[#1A4BFF] font-bold">{t("hero.title3")}</span> <br />
-              <span className="text-zinc-300 font-medium italic">{t("hero.title4")}</span>
+              <span className="block">
+                {t("hero.title1")}{" "}
+                <span className="text-[#22c55e]">{t("hero.title2")}</span>
+              </span>
+              <span className="block text-zinc-300 font-bold text-2xl sm:text-3xl md:text-[2.25rem] mt-1">
+                {t("hero.title3")}{" "}{t("hero.title4")}
+              </span>
             </motion.h1>
 
             {/* Subheadline */}
@@ -71,137 +75,201 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-zinc-400 font-medium text-base md:text-lg max-w-[480px] leading-relaxed mb-8"
+              className="text-zinc-300 font-medium text-base md:text-lg max-w-[490px] leading-relaxed mb-8"
             >
               {t("hero.subtitle")}
             </motion.p>
-
-            {/* Search Card Form (Glassmorphic) */}
-            <motion.form
-              onSubmit={handleSearch}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="w-full max-w-[560px] bg-zinc-900/50 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-4 flex flex-col md:flex-row items-end gap-3.5"
-            >
-              <div className="flex-1 w-full text-left">
-                <label className="text-xs font-bold text-zinc-400 mb-1.5 block uppercase tracking-wider">
-                  {t("hero.searchLabel")}
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder={t("hero.searchPlaceholder")}
-                    value={serviceQuery}
-                    onChange={(e) => setServiceQuery(e.target.value)}
-                    className="w-full h-11 pl-4 pr-10 rounded-xl border border-white/10 bg-white/5 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#1A4BFF] focus:border-transparent transition-all"
-                  />
-                  <Search className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 pointer-events-none" />
-                </div>
-              </div>
-
-              <div className="flex-1 w-full text-left">
-                <label className="text-xs font-bold text-zinc-400 mb-1.5 block uppercase tracking-wider">
-                  {t("hero.locationLabel")}
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder={t("hero.locationPlaceholder")}
-                    value={locationQuery}
-                    onChange={(e) => setLocationQuery(e.target.value)}
-                    className="w-full h-11 pl-4 pr-10 rounded-xl border border-white/10 bg-white/5 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#1A4BFF] focus:border-transparent transition-all"
-                  />
-                  <MapPin className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 pointer-events-none" />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full md:w-auto h-11 px-6 rounded-xl bg-[#1A4BFF] hover:bg-blue-700 text-white font-bold text-sm transition-colors flex items-center justify-center shrink-0 shadow-lg shadow-blue-600/10 cursor-pointer"
-              >
-                {t("hero.findButton")}
-              </button>
-            </motion.form>
 
             {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-8 flex flex-row items-center gap-4 w-full"
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-row items-center gap-4 w-full"
             >
               <Link
                 to="/signin"
                 search={{ mode: "signup", role: "client" }}
-                className="h-11 px-6 rounded-full bg-[#1A4BFF] hover:bg-blue-700 text-white text-sm font-semibold flex items-center gap-2 transition-colors shadow-md shadow-blue-500/15"
+                className="h-12 px-7 rounded-full bg-[#14a800] hover:bg-[#108a00] text-white text-sm font-bold flex items-center gap-2 transition-colors font-sans shadow-lg shadow-green-900/20"
               >
                 <span>{t("hero.bookBtn")}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link
-                to="/signin"
-                search={{ mode: "signup", role: "provider" }}
-                className="h-11 px-6 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-white text-sm font-semibold flex items-center justify-center transition-colors"
+              <a
+                href="#trust-and-process"
+                className="h-12 px-7 rounded-full border border-white/30 bg-white/5 hover:bg-white/15 text-white text-sm font-bold flex items-center gap-2.5 transition-colors font-sans"
               >
-                {t("hero.becomeBtn")}
-              </Link>
+                <Play className="w-3.5 h-3.5 fill-white text-white" />
+                <span>{t("howItWorks.badge")}</span>
+              </a>
             </motion.div>
           </div>
 
-          {/* Right Column (Empty to let background professionals be visible) */}
-          <div className="hidden lg:col-span-5 xl:col-span-6 lg:block" />
+          {/* Right Column (Floating Reviews Card) */}
+          <div className="hidden lg:col-span-5 lg:flex justify-end relative h-full min-h-[300px]">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-zinc-950/60 border border-white/10 backdrop-blur-md rounded-2xl p-5 w-[250px] shadow-2xl flex flex-col items-start text-left"
+            >
+              {/* Overlapping Avatars */}
+              <div className="flex items-center -space-x-2.5 mb-4">
+                <img
+                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80"
+                  alt="Customer"
+                  className="w-8 h-8 rounded-full border border-zinc-900 object-cover"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&h=80&q=80"
+                  alt="Customer"
+                  className="w-8 h-8 rounded-full border border-zinc-900 object-cover"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&h=80&q=80"
+                  alt="Customer"
+                  className="w-8 h-8 rounded-full border border-zinc-900 object-cover"
+                />
+              </div>
+
+              {/* Trusted Text */}
+              <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider">
+                Trusted by
+              </span>
+              
+              {/* Number */}
+              <span className="text-2xl text-[#22c55e] font-black mt-0.5">
+                10,000+
+              </span>
+
+              {/* Label */}
+              <span className="text-xs text-white font-bold mb-3.5">
+                Happy Customers
+              </span>
+
+              {/* Rating stars */}
+              <div className="flex items-center gap-0.5 text-yellow-400 mb-1">
+                <Star className="w-3.5 h-3.5 fill-current" />
+                <Star className="w-3.5 h-3.5 fill-current" />
+                <Star className="w-3.5 h-3.5 fill-current" />
+                <Star className="w-3.5 h-3.5 fill-current" />
+                <Star className="w-3.5 h-3.5 fill-current" />
+              </div>
+
+              {/* Score text */}
+              <span className="text-[11px] text-zinc-350 font-semibold">
+                4.8/5 (2.5k reviews)
+              </span>
+            </motion.div>
+          </div>
         </div>
+
+        {/* Glassmorphism Booking Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="w-full bg-zinc-950/45 border border-white/10 backdrop-blur-md rounded-3xl p-5 md:p-6 shadow-2xl mt-16 mb-4 z-[5]"
+        >
+          <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 items-center w-full">
+            {/* Input 1: What service */}
+            <div className="lg:col-span-4 bg-white rounded-2xl p-4 flex items-center gap-4 w-full h-20 shadow-inner text-left">
+              <Wrench className="w-6 h-6 text-[#22c55e] shrink-0" />
+              <div className="flex-grow flex flex-col min-w-0">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider leading-none mb-1">
+                  {t("hero.searchLabel")}
+                </label>
+                <input
+                  type="text"
+                  placeholder={t("hero.searchPlaceholder")}
+                  value={serviceQuery}
+                  onChange={(e) => setServiceQuery(e.target.value)}
+                  className="w-full text-[15px] font-bold text-zinc-800 placeholder-zinc-400 focus:outline-none bg-transparent"
+                />
+              </div>
+            </div>
+
+            {/* Input 2: Where */}
+            <div className="lg:col-span-3 bg-white rounded-2xl p-4 flex items-center gap-4 w-full h-20 shadow-inner text-left">
+              <MapPin className="w-6 h-6 text-[#22c55e] shrink-0" />
+              <div className="flex-grow flex flex-col min-w-0">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider leading-none mb-1">
+                  {t("hero.locationLabel")}
+                </label>
+                <input
+                  type="text"
+                  placeholder={t("hero.locationPlaceholder")}
+                  value={locationQuery}
+                  onChange={(e) => setLocationQuery(e.target.value)}
+                  className="w-full text-[15px] font-bold text-zinc-800 placeholder-zinc-400 focus:outline-none bg-transparent"
+                />
+              </div>
+            </div>
+
+            {/* Input 3: When */}
+            <div className="lg:col-span-3 bg-white rounded-2xl p-4 flex items-center gap-4 w-full h-20 shadow-inner text-left">
+              <Calendar className="w-6 h-6 text-[#22c55e] shrink-0" />
+              <div className="flex-grow flex flex-col min-w-0">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider leading-none mb-1">
+                  {t("hero.whenLabel")}
+                </label>
+                <input
+                  type="text"
+                  placeholder={t("hero.whenPlaceholder")}
+                  value={dateQuery}
+                  onChange={(e) => setDateQuery(e.target.value)}
+                  onFocus={(e) => (e.target.type = "date")}
+                  onBlur={(e) => {
+                    if (!dateQuery) e.target.type = "text";
+                  }}
+                  className="w-full text-[15px] font-bold text-zinc-800 placeholder-zinc-400 focus:outline-none bg-transparent"
+                />
+              </div>
+            </div>
+
+            {/* Find Button */}
+            <div className="lg:col-span-2 w-full h-full flex items-center">
+              <button
+                type="submit"
+                className="w-full h-20 bg-[#14a800] hover:bg-[#108a00] text-white font-bold rounded-2xl transition-all shadow-md flex items-center justify-center shrink-0 cursor-pointer text-base font-sans"
+              >
+                {t("hero.findButton")}
+              </button>
+            </div>
+          </form>
+        </motion.div>
+
+        {/* Bottom Trust Features Row */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="w-full flex flex-wrap items-center justify-center gap-x-8 gap-y-3 mt-2 text-xs font-semibold text-white/90 z-10"
+        >
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-[#22c55e] shrink-0" />
+            <span>{t("hero.feature1Title")}</span>
+          </div>
+          <div className="w-px h-3 bg-white/20 hidden md:block" />
+          <div className="flex items-center gap-2">
+            <Lock className="w-4 h-4 text-[#22c55e] shrink-0" />
+            <span>{t("hero.feature2Title")}</span>
+          </div>
+          <div className="w-px h-3 bg-white/20 hidden md:block" />
+          <div className="flex items-center gap-2">
+            <CheckCircle className="w-4 h-4 text-[#22c55e] shrink-0" />
+            <span>{t("hero.feature4Title")}</span>
+          </div>
+          <div className="w-px h-3 bg-white/20 hidden md:block" />
+          <div className="flex items-center gap-2">
+            <Headphones className="w-4 h-4 text-[#22c55e] shrink-0" />
+            <span>{t("hero.feature3Title")}</span>
+          </div>
+        </motion.div>
       </div>
 
-      {/* Bottom Features Bar */}
-      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-12 mb-8 mt-auto">
-        <div className="bg-zinc-900/40 backdrop-blur-md rounded-2xl border border-white/5 shadow-2xl p-5 md:py-6 md:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {/* Feature 1 */}
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 border border-blue-500/20 shrink-0">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-white">{t("hero.feature1Title")}</h3>
-              <p className="text-xs text-zinc-400 mt-1 leading-relaxed">{t("hero.feature1Desc")}</p>
-            </div>
-          </div>
-
-          {/* Feature 2 */}
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20 shrink-0">
-              <Lock className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-white">{t("hero.feature2Title")}</h3>
-              <p className="text-xs text-zinc-400 mt-1 leading-relaxed">{t("hero.feature2Desc")}</p>
-            </div>
-          </div>
-
-          {/* Feature 3 */}
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 border border-indigo-500/20 shrink-0">
-              <MessageSquare className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-white">{t("hero.feature3Title")}</h3>
-              <p className="text-xs text-zinc-400 mt-1 leading-relaxed">{t("hero.feature3Desc")}</p>
-            </div>
-          </div>
-
-          {/* Feature 4 */}
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 border border-amber-500/20 shrink-0">
-              <Star className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-white">{t("hero.feature4Title")}</h3>
-              <p className="text-xs text-zinc-400 mt-1 leading-relaxed">{t("hero.feature4Desc")}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Sharp transition to white background */}
+      <div className="absolute bottom-0 left-0 right-0 h-10 md:h-12 bg-white z-[2]" />
     </main>
   );
 }

@@ -80,18 +80,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "BlueX — AI-native Business Operating System" },
+      { title: "BlueX — On-Demand Gig Marketplace for Swiss Trades & Services" },
       {
         name: "description",
         content:
-          "BlueX is the AI-native business OS for modern teams — manage clients, contractors, projects, tasks, and documents in one calm, enterprise-grade workspace.",
+          "Find, book, and pay vetted local Swiss tradespeople and service experts. Escrow protection, instant matchmaking, and AI-powered business tools.",
       },
       { name: "author", content: "BlueX" },
-      { property: "og:title", content: "BlueX — AI-native Business Operating System" },
+      { property: "og:title", content: "BlueX — On-Demand Gig Marketplace for Swiss Trades & Services" },
       {
         property: "og:description",
         content:
-          "Run your business from a single platform. Clients, contractors, projects, tasks, and documents — with an AI assistant built in.",
+          "Switzerland's leading gig marketplace for local trades and home services. Book verified experts on-demand with secure escrow protection.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

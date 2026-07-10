@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { translations } from "../lib/translations";
 
-export type Language = "de" | "fr" | "it" | "en";
+export type Language = "de" | "fr" | "it" | "en" | "es" | "pt" | "sq" | "sr";
 
 interface LanguageContextType {
   language: Language;
@@ -19,12 +19,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     setIsMounted(true);
     // Safe client-side execution
     const savedLang = localStorage.getItem("bluex_pref_lang") as Language;
-    if (savedLang && ["de", "fr", "it", "en"].includes(savedLang)) {
+    if (savedLang && ["de", "fr", "it", "en", "es", "pt", "sq", "sr"].includes(savedLang)) {
       setLanguageState(savedLang);
     } else {
       // Detect browser language
       const browserLang = navigator.language.split("-")[0] as Language;
-      if (["de", "fr", "it", "en"].includes(browserLang)) {
+      if (["de", "fr", "it", "en", "es", "pt", "sq", "sr"].includes(browserLang)) {
         setLanguageState(browserLang);
       }
     }
