@@ -41,20 +41,20 @@ export default function HeroSection() {
           loop
           playsInline
           preload="auto"
-          className="w-full h-full object-cover opacity-80"
+          className="w-full h-full object-cover opacity-95 lg:opacity-85"
         >
-          <source src="/hero_section_video.mp4" type="video/mp4" />
+          <source src="/hero_section_video_1.mp4" type="video/mp4" />
         </video>
       </div>
 
       {/* Global Background Gradient Fades to blend the video edges */}
-      <div className="absolute inset-0 z-[1] pointer-events-none bg-black/40">
-        {/* Left/Center overlay: ensures text readability on dark video */}
-        <div className="absolute inset-y-0 left-0 w-[55%] lg:w-[60%] bg-gradient-to-r from-black/85 via-black/55 to-transparent" />
+      <div className="absolute inset-0 z-[1] pointer-events-none bg-black/15 lg:bg-black/30">
+        {/* Left/Center overlay: ensures text readability on dark video (Desktop only) */}
+        <div className="absolute inset-y-0 left-0 w-[55%] lg:w-[60%] bg-gradient-to-r from-black/85 via-black/55 to-transparent hidden lg:block" />
         {/* Bottom fade: blends the bottom of the hero section */}
         <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-black/60 to-transparent" />
-        {/* Mobile dark overlay: subtle to keep text readable without washing out video */}
-        <div className="absolute inset-0 bg-black/45 lg:hidden" />
+        {/* Mobile dark overlay: gradient to keep text readable while keeping the video/woman's face bright and clear */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/35 to-transparent lg:hidden" />
         {/* Corner overlay to hide the video watermark sparkle (Gemini logo) */}
         <div className="absolute bottom-[18%] right-[-20px] w-48 h-72 bg-[#020617] blur-3xl rounded-full opacity-95 pointer-events-none" />
       </div>
