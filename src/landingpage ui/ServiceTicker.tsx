@@ -55,10 +55,10 @@ export default function ServiceTicker() {
               key={idx}
               className="flex items-center gap-2.5 md:gap-3 shrink-0 whitespace-nowrap"
             >
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
-                <item.icon className="w-5 h-5 text-emerald-600" />
+              <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0">
+                <item.icon className="w-5 h-5 text-blue-600" />
               </div>
-              <span className="text-sm md:text-base font-extrabold text-emerald-700 uppercase tracking-wider font-sans">
+              <span className="text-sm md:text-base font-extrabold text-blue-700 uppercase tracking-wider font-sans">
                 {item.name}
               </span>
             </div>

@@ -71,15 +71,15 @@ export default function PricingPreview() {
             viewport={{ once: true }}
             className="relative animate-fade-in"
           >
-            <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
-              <Sparkles className="w-4 h-4 text-[#22c55e]" />
-              <span className="text-xs font-bold tracking-widest uppercase text-[#22c55e] font-sans">
+            <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20">
+              <Sparkles className="w-4 h-4 text-[#3b82f6]" />
+              <span className="text-xs font-bold tracking-widest uppercase text-[#3b82f6] font-sans">
                 {t("pricing.badge")}
               </span>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-6">
               {t("pricing.title")} <br className="hidden md:block" />
-              <span className="text-[#22c55e] block mt-1 font-bold">{t("pricing.desc")}</span>
+              <span className="text-[#3b82f6] block mt-1 font-bold">{t("pricing.desc")}</span>
             </h2>
           </motion.div>
         </div>
@@ -95,12 +95,12 @@ export default function PricingPreview() {
               transition={{ delay: idx * 0.1 }}
               className={`relative flex flex-col p-10 rounded-[2.5rem] transition-all duration-300 ${
                 plan.primary
-                  ? "bg-[#030712] border-2 border-[#14a800] shadow-2xl md:-translate-y-4 md:scale-105 z-10 shadow-green-950/20"
+                  ? "bg-[#030712] border-2 border-[#2563eb] shadow-2xl md:-translate-y-4 md:scale-105 z-10 shadow-blue-950/20"
                   : "bg-[#030712] border border-white/10 hover:border-zinc-700 shadow-sm z-0"
               }`}
             >
               {plan.primary && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-[#14a800] text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-md flex items-center gap-1.5 border border-[#22c55e]">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-[#2563eb] text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-md flex items-center gap-1.5 border border-[#3b82f6]">
                   <Sparkles className="w-3.5 h-3.5" /> Most Popular
                 </div>
               )}
@@ -128,7 +128,7 @@ export default function PricingPreview() {
                     <div
                       className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 border ${
                         plan.primary
-                          ? "bg-green-500/10 text-[#22c55e] border-green-500/20"
+                          ? "bg-blue-500/10 text-[#3b82f6] border-blue-500/20"
                           : "bg-white/5 text-zinc-400 border-white/10"
                       }`}
                     >
@@ -144,7 +144,7 @@ export default function PricingPreview() {
                 search={{ mode: "signup", role: plan.role }}
                 className={`relative z-10 w-full h-14 rounded-2xl font-bold transition-all duration-300 flex items-center justify-center text-sm cursor-pointer ${
                   plan.primary
-                    ? "bg-[#14a800] text-white hover:bg-[#108a00] shadow-sm shadow-green-900/20"
+                    ? "bg-[#2563eb] text-white hover:bg-[#1d4ed8] shadow-sm shadow-blue-900/20"
                     : "bg-white/5 border border-white/10 text-white hover:bg-white/10"
                 }`}
               >

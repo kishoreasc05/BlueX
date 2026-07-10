@@ -84,10 +84,10 @@ export default function Navbar() {
         <a
           href="/"
           className={`flex items-center gap-2 font-extrabold text-2xl tracking-tight shrink-0 font-sans transition-colors duration-300 absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 z-10 ${
-            isScrolled || mobileOpen ? "text-[#001e00]" : "text-white"
+            isScrolled || mobileOpen ? "text-[#0f172a]" : "text-white"
           }`}
         >
-          <div className="flex items-center justify-center w-7 h-7 text-[#14a800] shrink-0">
+          <div className="flex items-center justify-center w-7 h-7 text-[#2563eb] shrink-0">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -123,8 +123,8 @@ export default function Navbar() {
               href={nav.href}
               className={`text-[15px] font-semibold transition-colors duration-300 px-2 py-1 whitespace-nowrap font-sans ${
                 isScrolled || mobileOpen
-                  ? "text-zinc-700 hover:text-[#14a800]"
-                  : "text-white/90 hover:text-green-400"
+                  ? "text-zinc-700 hover:text-[#2563eb]"
+                  : "text-white/90 hover:text-blue-400"
               }`}
             >
               {nav.name}
@@ -187,7 +187,7 @@ export default function Navbar() {
                         }}
                         className={`w-full text-left text-xs font-semibold px-3 py-2 rounded-lg transition-colors flex items-center justify-between ${
                           language === lang.code
-                            ? "bg-[#14a800] text-white"
+                            ? "bg-[#2563eb] text-white"
                             : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
                         }`}
                       >
@@ -224,15 +224,15 @@ export default function Navbar() {
               href="/signin"
               className={`text-[15px] font-semibold transition-colors duration-300 font-sans ${
                 isScrolled || mobileOpen
-                  ? "text-zinc-700 hover:text-[#14a800]"
-                  : "text-white/90 hover:text-green-400"
+                  ? "text-zinc-700 hover:text-[#2563eb]"
+                  : "text-white/90 hover:text-blue-400"
               }`}
             >
               {t("nav.logIn")}
             </a>
             <a
               href="/signin?mode=signup&role=provider"
-              className="inline-flex items-center justify-center h-10 px-6 rounded-full bg-[#14a800] hover:bg-[#108a00] text-white text-[14px] font-bold transition-colors font-sans"
+              className="inline-flex items-center justify-center h-10 px-6 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-[14px] font-bold transition-colors font-sans"
             >
               {t("nav.becomeProvider")}
             </a>
@@ -257,7 +257,7 @@ export default function Navbar() {
                 >
                   <a
                     href={nav.href}
-                    className="text-zinc-700 font-medium py-2 hover:text-[#14a800]"
+                    className="text-zinc-700 font-medium py-2 hover:text-[#2563eb]"
                     onClick={() => setMobileOpen(false)}
                   >
                     {nav.name}
@@ -280,7 +280,7 @@ export default function Navbar() {
                         }}
                         className={`text-xs font-bold py-2 rounded-xl border transition-all ${
                           language === lang.code
-                            ? "bg-[#14a800] border-[#14a800] text-white"
+                            ? "bg-[#2563eb] border-[#2563eb] text-white"
                             : "bg-zinc-50 border-zinc-200 text-zinc-650 hover:bg-zinc-100"
                         }`}
                       >
@@ -300,7 +300,7 @@ export default function Navbar() {
                 <a
                   href="/signin?mode=signup&role=provider"
                   onClick={() => setMobileOpen(false)}
-                  className="text-center font-medium bg-[#14a800] hover:bg-[#108a00] text-white py-3 rounded-xl"
+                  className="text-center font-medium bg-[#2563eb] hover:bg-[#1d4ed8] text-white py-3 rounded-xl"
                 >
                   {t("nav.becomeProvider")}
                 </a>

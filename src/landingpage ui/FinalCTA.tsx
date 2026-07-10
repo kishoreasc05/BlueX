@@ -8,9 +8,9 @@ export default function FinalCTA() {
   return (
     <section className="w-full relative bg-white text-slate-900 overflow-hidden py-24 md:py-32 z-20 font-sans border-t border-slate-100">
       {/* Glow Blobs optimized for White Theme */}
-      <div className="absolute top-[-20%] left-[-10%] w-[350px] h-[350px] bg-green-200/40 blur-[100px] rounded-full z-10 pointer-events-none" />
+      <div className="absolute top-[-20%] left-[-10%] w-[350px] h-[350px] bg-blue-200/40 blur-[100px] rounded-full z-10 pointer-events-none" />
       <div className="absolute bottom-[-20%] right-[-10%] w-[400px] h-[400px] bg-blue-200/30 blur-[110px] rounded-full z-10 pointer-events-none" />
-      <div className="absolute top-[30%] left-[50%] -translate-x-1/2 w-[300px] h-[300px] bg-emerald-200/30 blur-[100px] rounded-full z-10 pointer-events-none" />
+      <div className="absolute top-[30%] left-[50%] -translate-x-1/2 w-[300px] h-[300px] bg-blue-200/30 blur-[100px] rounded-full z-10 pointer-events-none" />
 
       <div className="relative z-20 max-w-[800px] mx-auto text-center px-6">
         <motion.h2
@@ -20,7 +20,7 @@ export default function FinalCTA() {
           className="font-sans text-4xl md:text-5xl lg:text-6xl tracking-tight leading-tight mb-6 text-slate-900 font-bold"
         >
           {t("cta.title1")}{" "}
-          <span className="text-[#14a800] block mt-1 font-bold">{t("cta.title2")}</span>
+          <span className="text-[#2563eb] block mt-1 font-bold">{t("cta.title2")}</span>
         </motion.h2>
 
         <motion.p
@@ -42,7 +42,7 @@ export default function FinalCTA() {
         >
           <a
             href="/signin?mode=signup&role=client"
-            className="w-full sm:w-auto inline-flex items-center justify-center h-14 px-8 rounded-full bg-[#14a800] hover:bg-[#129400] text-white font-bold transition-all duration-300 group text-sm cursor-pointer shadow-lg shadow-green-200/50"
+            className="w-full sm:w-auto inline-flex items-center justify-center h-14 px-8 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold transition-all duration-300 group text-sm cursor-pointer shadow-lg shadow-blue-200/50"
           >
             {t("cta.btnClient")}{" "}
             <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform text-white" />

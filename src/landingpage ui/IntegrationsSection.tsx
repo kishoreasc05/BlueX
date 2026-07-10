@@ -66,7 +66,7 @@ export default function IntegrationsSection() {
         >
           <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 tracking-tight mb-4">
             {t("categories.title")}{" "}
-            <span className="text-[#14a800]">{t("categories.titleItalic")}</span>
+            <span className="text-[#2563eb]">{t("categories.titleItalic")}</span>
           </h2>
           <p className="text-zinc-600 text-base md:text-lg max-w-2xl leading-relaxed">
             {t("categories.desc")}
@@ -82,10 +82,10 @@ export default function IntegrationsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.04 }}
-              className="bg-white border border-zinc-200 hover:border-[#14a800] rounded-2xl p-6 flex flex-col items-start justify-between min-h-[160px] text-left transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer group"
+              className="bg-white border border-zinc-200 hover:border-[#2563eb] rounded-2xl p-6 flex flex-col items-start justify-between min-h-[160px] text-left transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer group"
             >
-              <cat.icon className="w-9 h-9 text-[#14a800] stroke-[1.75]" />
-              <span className="text-[17px] font-semibold text-zinc-800 group-hover:text-[#14a800] transition-colors mt-6 leading-tight">
+              <cat.icon className="w-9 h-9 text-[#2563eb] stroke-[1.75]" />
+              <span className="text-[17px] font-semibold text-zinc-800 group-hover:text-[#2563eb] transition-colors mt-6 leading-tight">
                 {cat.name}
               </span>
             </motion.div>
@@ -101,9 +101,9 @@ export default function IntegrationsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.08 }}
-              className="bg-zinc-50 border border-zinc-200/80 rounded-2xl p-6 shadow-sm hover:border-[#14a800] transition-all duration-300"
+              className="bg-zinc-50 border border-zinc-200/80 rounded-2xl p-6 shadow-sm hover:border-[#2563eb] transition-all duration-300"
             >
-              <div className="w-10 h-10 rounded-xl bg-green-50 border border-green-100 text-[#14a800] flex items-center justify-center mb-4 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 text-[#2563eb] flex items-center justify-center mb-4 shrink-0">
                 <item.icon className="w-5 h-5 stroke-[2]" />
               </div>
               <h4 className="font-bold text-zinc-800 mb-2 tracking-tight">{item.title}</h4>

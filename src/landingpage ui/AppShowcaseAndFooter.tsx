@@ -131,7 +131,7 @@ export default function AppShowcaseAndFooter() {
     <section className="w-full bg-[#f8fafc]/40 py-16 md:py-24 px-6 font-sans relative z-20 border-t border-zinc-150 overflow-hidden text-center">
       <div className="max-w-[1200px] mx-auto flex flex-col items-center">
         {/* Stats Title */}
-        <span className="text-[#14a800] text-[11px] font-bold uppercase tracking-[0.2em] mb-2 leading-none">
+        <span className="text-[#2563eb] text-[11px] font-bold uppercase tracking-[0.2em] mb-2 leading-none">
           {t("landingNew.stats.title") || "TRUSTED BY THOUSANDS. PROVEN BY RESULTS."}
         </span>
         <p className="text-zinc-550 text-xs font-bold mb-10 text-center leading-none">
@@ -151,7 +151,7 @@ export default function AppShowcaseAndFooter() {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 className="bg-white border border-zinc-200/80 rounded-2xl p-5 flex items-center gap-4 shadow-sm hover:shadow-md transition-all duration-300"
               >
-                <div className="w-10 h-10 rounded-xl bg-green-50 border border-green-100 flex items-center justify-center text-[#14a800] shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563eb] shrink-0">
                   <Icon className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col">
@@ -192,7 +192,7 @@ export default function AppShowcaseAndFooter() {
             {/* Arrow Left */}
             <button
               onClick={prevTestimonial}
-              className="absolute left-[-20px] md:left-0 z-10 w-10 h-10 rounded-full border border-zinc-200 bg-white hover:border-[#14a800] text-zinc-650 hover:text-[#14a800] flex items-center justify-center shadow-md transition-colors cursor-pointer"
+              className="absolute left-[-20px] md:left-0 z-10 w-10 h-10 rounded-full border border-zinc-200 bg-white hover:border-[#2563eb] text-zinc-650 hover:text-[#2563eb] flex items-center justify-center shadow-md transition-colors cursor-pointer"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -210,7 +210,7 @@ export default function AppShowcaseAndFooter() {
                   >
                     <div>
                       {/* Quote bubble mark */}
-                      <span className="text-[#14a800] font-serif text-5xl leading-none block h-5">
+                      <span className="text-[#2563eb] font-serif text-5xl leading-none block h-5">
                         “
                       </span>
                       <p className="text-zinc-700 text-sm font-semibold leading-relaxed mt-2 mb-6">
@@ -250,7 +250,7 @@ export default function AppShowcaseAndFooter() {
             {/* Arrow Right */}
             <button
               onClick={nextTestimonial}
-              className="absolute right-[-20px] md:right-0 z-10 w-10 h-10 rounded-full border border-zinc-200 bg-white hover:border-[#14a800] text-zinc-650 hover:text-[#14a800] flex items-center justify-center shadow-md transition-colors cursor-pointer"
+              className="absolute right-[-20px] md:right-0 z-10 w-10 h-10 rounded-full border border-zinc-200 bg-white hover:border-[#2563eb] text-zinc-650 hover:text-[#2563eb] flex items-center justify-center shadow-md transition-colors cursor-pointer"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -289,22 +289,22 @@ export default function AppShowcaseAndFooter() {
               <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-16 h-4.5 bg-zinc-900 rounded-full z-20" />
 
               {/* Star sparkles decorations */}
-              <div className="absolute top-12 left-8 text-[#22c55e]/30">
+              <div className="absolute top-12 left-8 text-[#3b82f6]/30">
                 <Star className="w-4 h-4 fill-current animate-pulse" />
               </div>
-              <div className="absolute bottom-16 right-8 text-[#22c55e]/20">
+              <div className="absolute bottom-16 right-8 text-[#3b82f6]/20">
                 <Star className="w-5 h-5 fill-current animate-pulse [animation-delay:1s]" />
               </div>
 
               {/* Floating glass content */}
               <div className="bg-white/5 border border-white/10 backdrop-blur-md p-5 rounded-2xl flex flex-col items-center shadow-lg transform -rotate-3 hover:rotate-0 transition-transform duration-300 w-11/12 text-center">
-                <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#22c55e] mb-1.5 block">
+                <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#3b82f6] mb-1.5 block">
                   Mobile App
                 </span>
                 <h3 className="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-400 tracking-tight leading-none">
                   {t("landingNew.app.comingSoon") || "Coming Soon"}
                 </h3>
-                <div className="w-8 h-0.5 bg-gradient-to-r from-[#22c55e] to-emerald-400 rounded-full mt-3.5" />
+                <div className="w-8 h-0.5 bg-gradient-to-r from-[#3b82f6] to-indigo-400 rounded-full mt-3.5" />
               </div>
             </motion.div>
 
@@ -316,7 +316,7 @@ export default function AppShowcaseAndFooter() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="bg-zinc-900/60 border border-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full text-[10px] font-bold text-zinc-300 absolute top-16 left-2 sm:left-8 rotate-[-8deg] z-20 shadow-md flex items-center gap-1.5"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-ping" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] animate-ping" />
               <span>iOS & Android</span>
             </motion.div>
 
@@ -334,12 +334,12 @@ export default function AppShowcaseAndFooter() {
 
           {/* Right: Copywriting & checklist */}
           <div className="flex flex-col flex-grow">
-            <span className="text-[9px] font-black bg-[#14a800]/10 border border-[#14a800]/20 text-[#22c55e] px-2.5 py-0.5 rounded-lg mb-3 uppercase tracking-wider self-start leading-none">
+            <span className="text-[9px] font-black bg-[#2563eb]/10 border border-[#2563eb]/20 text-[#3b82f6] px-2.5 py-0.5 rounded-lg mb-3 uppercase tracking-wider self-start leading-none">
               {t("landingNew.app.badge") || "NEW"}
             </span>
             <h2 className="text-2xl md:text-3xl font-extrabold text-white leading-tight mb-4 tracking-tight">
               {t("landingNew.app.title1") || "The BlueX.ch App."} <br />
-              <span className="text-[#22c55e]">
+              <span className="text-[#3b82f6]">
                 {t("landingNew.app.title2") || "Jobs on the go, anytime!"}
               </span>
             </h2>
@@ -403,7 +403,7 @@ export default function AppShowcaseAndFooter() {
                 const Icon = ben.icon;
                 return (
                   <div key={ben.title} className="flex gap-3">
-                    <div className="w-5 h-5 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center text-[#22c55e] shrink-0 mt-0.5">
+                    <div className="w-5 h-5 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-[#3b82f6] shrink-0 mt-0.5">
                       <Icon className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex flex-col">

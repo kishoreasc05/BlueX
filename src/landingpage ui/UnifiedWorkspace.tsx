@@ -10,8 +10,8 @@ export default function UnifiedWorkspace() {
       title: t("workspace.portal1Title"),
       description: t("workspace.portal1Desc"),
       icon: Search,
-      color: "from-emerald-500 to-teal-500",
-      shadow: "shadow-emerald-500/5",
+      color: "from-blue-500 to-indigo-500",
+      shadow: "shadow-blue-500/5",
     },
     {
       title: t("workspace.portal2Title"),
@@ -24,8 +24,8 @@ export default function UnifiedWorkspace() {
       title: t("workspace.portal3Title"),
       description: t("workspace.portal3Desc"),
       icon: Activity,
-      color: "from-emerald-600 to-emerald-400",
-      shadow: "shadow-emerald-600/5",
+      color: "from-blue-600 to-indigo-400",
+      shadow: "shadow-blue-600/5",
     },
   ];
 
@@ -41,14 +41,14 @@ export default function UnifiedWorkspace() {
           viewport={{ once: true }}
           className="mb-20 text-center"
         >
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-green-50 border border-green-200">
-            <span className="text-xs font-bold tracking-widest uppercase text-[#14a800]">
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200">
+            <span className="text-xs font-bold tracking-widest uppercase text-[#2563eb]">
               {t("workspace.badge")}
             </span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900 leading-tight mb-6">
             {t("workspace.title")}{" "}
-            <span className="text-[#14a800] block mt-1.5 font-bold">
+            <span className="text-[#2563eb] block mt-1.5 font-bold">
               {t("workspace.titleItalic")}
             </span>
           </h2>
@@ -66,9 +66,9 @@ export default function UnifiedWorkspace() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="group relative flex flex-col p-8 rounded-2xl bg-white border border-zinc-200 shadow-sm hover:border-[#14a800] hover:shadow-md transition-all duration-300"
+              className="group relative flex flex-col p-8 rounded-2xl bg-white border border-zinc-200 shadow-sm hover:border-[#2563eb] hover:shadow-md transition-all duration-300"
             >
-              <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-green-50 border border-green-100 mb-8 relative z-10 group-hover:scale-105 transition-transform duration-300 shadow-sm text-[#14a800]">
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-blue-50 border border-blue-100 mb-8 relative z-10 group-hover:scale-105 transition-transform duration-300 shadow-sm text-[#2563eb]">
                 <feature.icon className="w-7 h-7 stroke-[1.75] relative z-10" />
               </div>
 

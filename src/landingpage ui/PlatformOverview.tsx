@@ -23,7 +23,7 @@ export default function PlatformOverview() {
           >
             <h2 className="text-3xl md:text-4xl lg:text-5xl tracking-tight text-zinc-900 leading-tight font-bold">
               {t("overview.title")} <br />
-              <span className="text-[#14a800]">{t("overview.subtitle")}</span>
+              <span className="text-[#2563eb]">{t("overview.subtitle")}</span>
             </h2>
           </motion.div>
 
@@ -47,7 +47,7 @@ export default function PlatformOverview() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="group relative overflow-hidden rounded-2xl md:col-span-2 md:row-span-2 bg-white border border-zinc-200 shadow-sm hover:border-[#14a800] transition-all"
+            className="group relative overflow-hidden rounded-2xl md:col-span-2 md:row-span-2 bg-white border border-zinc-200 shadow-sm hover:border-[#2563eb] transition-all"
           >
             <img
               src={photoAnalytics}
@@ -71,7 +71,7 @@ export default function PlatformOverview() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="group relative overflow-hidden rounded-2xl md:col-span-1 md:row-span-1 bg-white border border-zinc-200 shadow-sm hover:border-[#14a800] transition-all"
+            className="group relative overflow-hidden rounded-2xl md:col-span-1 md:row-span-1 bg-white border border-zinc-200 shadow-sm hover:border-[#2563eb] transition-all"
           >
             <img
               src={photoAi}
@@ -97,7 +97,7 @@ export default function PlatformOverview() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="group relative overflow-hidden rounded-2xl md:col-span-1 md:row-span-1 bg-white border border-zinc-200 shadow-sm hover:border-[#14a800] transition-all"
+            className="group relative overflow-hidden rounded-2xl md:col-span-1 md:row-span-1 bg-white border border-zinc-200 shadow-sm hover:border-[#2563eb] transition-all"
           >
             <img
               src={photoPayments}
@@ -127,7 +127,7 @@ export default function PlatformOverview() {
           >
             {/* Text details */}
             <div className="flex-1 text-left relative z-10">
-              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-[#14a800] text-xs font-semibold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-[#2563eb] text-xs font-semibold uppercase tracking-wider">
                 Platform Control
               </div>
               <h3 className="text-2xl md:text-3xl font-bold text-zinc-900 mb-3 tracking-tight">
@@ -145,12 +145,12 @@ export default function PlatformOverview() {
                 <div className="flex items-center gap-1.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-rose-500" />
                   <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#14a800]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#2563eb]" />
                   <span className="text-[10px] text-zinc-400 ml-2">bluex-ops-panel.ch</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#14a800] animate-ping" />
-                  <span className="text-[10px] text-[#14a800] font-semibold uppercase tracking-wider">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#2563eb] animate-ping" />
+                  <span className="text-[10px] text-[#2563eb] font-semibold uppercase tracking-wider">
                     Live System
                   </span>
                 </div>
@@ -163,7 +163,7 @@ export default function PlatformOverview() {
                     Marketplace Volume
                   </span>
                   <div className="text-sm font-bold text-zinc-800 mt-1">CHF 248,510.80</div>
-                  <span className="text-[9px] text-[#14a800] mt-0.5 block font-semibold">
+                  <span className="text-[9px] text-[#2563eb] mt-0.5 block font-semibold">
                     +18.4% this week
                   </span>
                 </div>
@@ -172,7 +172,7 @@ export default function PlatformOverview() {
                     Stripe Split Flow
                   </span>
                   <div className="text-sm font-bold text-zinc-800 mt-1">Direct Connect</div>
-                  <span className="text-[9px] text-[#14a800] mt-0.5 block font-semibold">
+                  <span className="text-[9px] text-[#2563eb] mt-0.5 block font-semibold">
                     100% Compliant
                   </span>
                 </div>

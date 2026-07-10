@@ -10,9 +10,9 @@ export default function WorkflowAutomation() {
       icon: Search,
       title: t("howItWorks.step1Title"),
       description: t("howItWorks.step1Desc"),
-      color: "bg-emerald-50",
-      iconColor: "text-emerald-700",
-      border: "border-zinc-200 hover:border-emerald-500/20 shadow-md bg-white",
+      color: "bg-blue-50",
+      iconColor: "text-blue-700",
+      border: "border-zinc-200 hover:border-blue-500/20 shadow-md bg-white",
     },
     {
       icon: UserCheck,
@@ -34,9 +34,9 @@ export default function WorkflowAutomation() {
       icon: MessageSquare,
       title: t("howItWorks.step4Title"),
       description: t("howItWorks.step4Desc"),
-      color: "bg-emerald-50",
-      iconColor: "text-emerald-700",
-      border: "border-zinc-200 hover:border-emerald-500/20 shadow-md bg-white",
+      color: "bg-blue-50",
+      iconColor: "text-blue-700",
+      border: "border-zinc-200 hover:border-blue-500/20 shadow-md bg-white",
     },
     {
       icon: ShieldCheck,
@@ -62,7 +62,7 @@ export default function WorkflowAutomation() {
       className="w-full py-32 md:py-48 px-6 bg-white relative z-20 overflow-hidden font-sans border-t border-zinc-200/50"
     >
       {/* Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(16,185,129,0.05),transparent_100%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(37,99,235,0.05),transparent_100%)] pointer-events-none" />
 
       <div className="max-w-[1200px] mx-auto text-center relative z-10">
         <motion.div
@@ -71,14 +71,14 @@ export default function WorkflowAutomation() {
           viewport={{ once: true }}
           className="mb-20 md:mb-32"
         >
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-emerald-55 border border-emerald-200 shadow-sm">
-            <span className="text-xs font-semibold tracking-widest uppercase text-emerald-700">
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 shadow-sm">
+            <span className="text-xs font-semibold tracking-widest uppercase text-blue-700">
               {t("howItWorks.badge")}
             </span>
           </div>
           <h2 className="font-display text-5xl md:text-7xl tracking-tight text-zinc-900 leading-[1.1] mb-6 font-light">
             {t("howItWorks.title")}{" "}
-            <span className="text-emerald-600 font-medium italic">
+            <span className="text-blue-600 font-medium italic">
               {t("howItWorks.titleItalic")}
             </span>
           </h2>

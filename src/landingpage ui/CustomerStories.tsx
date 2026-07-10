@@ -35,7 +35,7 @@ export default function CustomerStories() {
       className="w-full py-16 px-6 bg-zinc-50 border-t border-zinc-200 relative z-20 font-sans"
     >
       <div className="max-w-[1200px] mx-auto text-center">
-        <h3 className="text-sm font-bold tracking-wider uppercase text-[#14a800] mb-2">
+        <h3 className="text-sm font-bold tracking-wider uppercase text-[#2563eb] mb-2">
           {t("stories.badge") || "Testimonials"}
         </h3>
         <h2 className="text-2xl md:text-3xl font-bold text-zinc-900 mb-8 tracking-tight font-sans">
@@ -51,9 +51,9 @@ export default function CustomerStories() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-white border border-zinc-200 rounded-2xl p-5 shadow-sm flex items-start gap-4 hover:border-[#14a800] hover:shadow-md transition-all duration-300 text-left"
+              className="bg-white border border-zinc-200 rounded-2xl p-5 shadow-sm flex items-start gap-4 hover:border-[#2563eb] hover:shadow-md transition-all duration-300 text-left"
             >
-              <div className="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center text-[#14a800] font-bold text-xs shrink-0 border border-green-100 font-sans">
+              <div className="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center text-[#2563eb] font-bold text-xs shrink-0 border border-blue-100 font-sans">
                 {rev.initials}
               </div>
               <div className="flex-grow font-sans">

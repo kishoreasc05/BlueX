@@ -12,7 +12,7 @@ export default function Footer() {
               href="#"
               className="flex items-center gap-2 text-white font-extrabold text-2xl tracking-tight mb-4"
             >
-              <span className="text-[#14a800] font-black">X</span> BlueX
+              <span className="text-[#2563eb] font-black">X</span> BlueX
               <span className="text-zinc-500">.ch</span>
             </a>
 
@@ -160,7 +160,7 @@ export default function Footer() {
 
             {/* Secure Payments Badge */}
             <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 flex gap-3 items-start">
-              <ShieldCheck className="w-5 h-5 text-[#22c55e] shrink-0 mt-0.5" />
+              <ShieldCheck className="w-5 h-5 text-[#3b82f6] shrink-0 mt-0.5" />
               <div className="flex flex-col">
                 <span className="text-[10px] font-extrabold text-white leading-none mb-1">
                   Secure. Safe. Trusted.

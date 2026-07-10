@@ -73,7 +73,7 @@ export default function HeroSection() {
               className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.15] tracking-tight text-white mb-6 font-extrabold text-center lg:text-left flex flex-col gap-2 w-full"
             >
               <span className="block">
-                {t("hero.title1")} <span className="text-[#22c55e]">{t("hero.title2")}</span>
+                {t("hero.title1")} <span className="text-[#38bdf8]">{t("hero.title2")}</span>
               </span>
               <span className="block text-zinc-300 font-bold text-2xl sm:text-3xl md:text-[2.25rem] mt-1">
                 {t("hero.title3")} {t("hero.title4")}
@@ -100,7 +100,7 @@ export default function HeroSection() {
               <Link
                 to="/signin"
                 search={{ mode: "signup", role: "client" }}
-                className="h-12 px-7 rounded-full bg-[#14a800] hover:bg-[#108a00] text-white text-sm font-bold flex items-center gap-2 transition-colors font-sans shadow-lg shadow-green-900/20"
+                className="h-12 px-7 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-bold flex items-center gap-2 transition-colors font-sans shadow-lg shadow-blue-900/20"
               >
                 <span>{t("hero.bookBtn")}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -148,7 +148,7 @@ export default function HeroSection() {
               </span>
 
               {/* Number */}
-              <span className="text-2xl text-[#22c55e] font-black mt-0.5">10,000+</span>
+              <span className="text-2xl text-[#38bdf8] font-black mt-0.5">10,000+</span>
 
               {/* Label */}
               <span className="text-xs text-white font-bold mb-3.5">Happy Customers</span>
@@ -189,7 +189,7 @@ export default function HeroSection() {
             />
             <button
               type="submit"
-              className="w-11 h-11 rounded-xl bg-[#14a800] hover:bg-[#108a00] text-white flex items-center justify-center transition-colors cursor-pointer shrink-0"
+              className="w-11 h-11 rounded-xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center transition-colors cursor-pointer shrink-0"
               aria-label="Search"
             >
               <Search className="w-5 h-5" />
@@ -203,7 +203,7 @@ export default function HeroSection() {
           >
             {/* Input 1: What service */}
             <div className="lg:col-span-4 bg-white rounded-2xl p-4 flex items-center gap-4 w-full h-20 shadow-inner text-left">
-              <Wrench className="w-6 h-6 text-[#22c55e] shrink-0" />
+              <Wrench className="w-6 h-6 text-[#3b82f6] shrink-0" />
               <div className="flex-grow flex flex-col min-w-0">
                 <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider leading-none mb-1">
                   {t("hero.searchLabel")}
@@ -220,7 +220,7 @@ export default function HeroSection() {
 
             {/* Input 2: Where */}
             <div className="lg:col-span-3 bg-white rounded-2xl p-4 flex items-center gap-4 w-full h-20 shadow-inner text-left">
-              <MapPin className="w-6 h-6 text-[#22c55e] shrink-0" />
+              <MapPin className="w-6 h-6 text-[#3b82f6] shrink-0" />
               <div className="flex-grow flex flex-col min-w-0">
                 <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider leading-none mb-1">
                   {t("hero.locationLabel")}
@@ -237,7 +237,7 @@ export default function HeroSection() {
 
             {/* Input 3: When */}
             <div className="lg:col-span-3 bg-white rounded-2xl p-4 flex items-center gap-4 w-full h-20 shadow-inner text-left">
-              <Calendar className="w-6 h-6 text-[#22c55e] shrink-0" />
+              <Calendar className="w-6 h-6 text-[#3b82f6] shrink-0" />
               <div className="flex-grow flex flex-col min-w-0">
                 <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider leading-none mb-1">
                   {t("hero.whenLabel")}
@@ -260,7 +260,7 @@ export default function HeroSection() {
             <div className="lg:col-span-2 w-full h-full flex items-center">
               <button
                 type="submit"
-                className="w-full h-20 bg-[#14a800] hover:bg-[#108a00] text-white font-bold rounded-2xl transition-all shadow-md flex items-center justify-center shrink-0 cursor-pointer text-base font-sans"
+                className="w-full h-20 bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold rounded-2xl transition-all shadow-md flex items-center justify-center shrink-0 cursor-pointer text-base font-sans"
               >
                 {t("hero.findButton")}
               </button>
@@ -276,22 +276,22 @@ export default function HeroSection() {
           className="w-full flex flex-wrap items-center justify-center gap-x-8 gap-y-3 mt-2 text-xs font-semibold text-white/90 z-10"
         >
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#22c55e] shrink-0" />
+            <ShieldCheck className="w-4 h-4 text-[#38bdf8] shrink-0" />
             <span>{t("hero.feature1Title")}</span>
           </div>
           <div className="w-px h-3 bg-white/20 hidden md:block" />
           <div className="flex items-center gap-2">
-            <Lock className="w-4 h-4 text-[#22c55e] shrink-0" />
+            <Lock className="w-4 h-4 text-[#38bdf8] shrink-0" />
             <span>{t("hero.feature2Title")}</span>
           </div>
           <div className="w-px h-3 bg-white/20 hidden md:block" />
           <div className="flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-[#22c55e] shrink-0" />
+            <CheckCircle className="w-4 h-4 text-[#38bdf8] shrink-0" />
             <span>{t("hero.feature4Title")}</span>
           </div>
           <div className="w-px h-3 bg-white/20 hidden md:block" />
           <div className="flex items-center gap-2">
-            <Headphones className="w-4 h-4 text-[#22c55e] shrink-0" />
+            <Headphones className="w-4 h-4 text-[#38bdf8] shrink-0" />
             <span>{t("hero.feature3Title")}</span>
           </div>
         </motion.div>

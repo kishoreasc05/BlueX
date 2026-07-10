@@ -105,7 +105,7 @@ export default function CategoriesAndProcess() {
     <section className="w-full bg-white py-16 md:py-24 px-6 font-sans relative z-20 overflow-hidden text-center">
       <div className="max-w-[1200px] mx-auto flex flex-col items-center">
         {/* Popular Categories Heading */}
-        <span className="text-[#14a800] text-[11px] font-bold uppercase tracking-[0.2em] mb-2 leading-none">
+        <span className="text-[#2563eb] text-[11px] font-bold uppercase tracking-[0.2em] mb-2 leading-none">
           {t("landingNew.categoriesList.popularCategoriesBadge") || "POPULAR CATEGORIES"}
         </span>
         <h2 className="text-2xl md:text-3xl font-extrabold text-zinc-900 leading-tight mb-2 tracking-tight">
@@ -127,9 +127,9 @@ export default function CategoriesAndProcess() {
                 className="bg-white border border-zinc-950 rounded-2xl p-4 flex flex-col items-center justify-center text-center transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer group relative overflow-hidden"
               >
                 {/* Top Green Accent Line on Hover */}
-                <div className="absolute top-0 left-0 right-0 h-[4px] bg-[#14a800] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute top-0 left-0 right-0 h-[4px] bg-[#2563eb] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                <div className="w-10 h-10 rounded-full bg-green-50 border border-green-100 flex items-center justify-center text-[#14a800] mb-3 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563eb] mb-3 group-hover:scale-110 transition-transform duration-300">
                   <Icon className="w-5 h-5" />
                 </div>
                 <span className="text-xs font-extrabold text-zinc-800 tracking-tight block">
@@ -137,7 +137,7 @@ export default function CategoriesAndProcess() {
                 </span>
 
                 {/* Job Count Badge */}
-                <span className="text-[9px] text-[#14a800] font-black bg-[#f4fbf4] border border-green-100 px-2 py-0.5 rounded-lg mt-2 block">
+                <span className="text-[9px] text-[#2563eb] font-black bg-[#f4f7fb] border border-blue-100 px-2 py-0.5 rounded-lg mt-2 block">
                   {cat.jobs}
                 </span>
               </div>
@@ -150,7 +150,7 @@ export default function CategoriesAndProcess() {
           {/* Arrow Left */}
           <button
             onClick={prevSlide}
-            className="absolute left-[-20px] z-10 w-10 h-10 rounded-full border border-zinc-200 bg-white hover:border-[#14a800] text-zinc-650 hover:text-[#14a800] flex items-center justify-center shadow-md transition-colors cursor-pointer hidden md:flex"
+            className="absolute left-[-20px] z-10 w-10 h-10 rounded-full border border-zinc-200 bg-white hover:border-[#2563eb] text-zinc-650 hover:text-[#2563eb] flex items-center justify-center shadow-md transition-colors cursor-pointer hidden md:flex"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -169,9 +169,9 @@ export default function CategoriesAndProcess() {
                     className="flex-shrink-0 w-full sm:w-[calc(50%-12px)] md:w-[calc(16.666%-17px)] bg-white border border-zinc-950 rounded-2xl p-5 flex flex-col items-center justify-center text-center transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer group relative overflow-hidden"
                   >
                     {/* Top Green Accent Line on Hover */}
-                    <div className="absolute top-0 left-0 right-0 h-[4px] bg-[#14a800] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute top-0 left-0 right-0 h-[4px] bg-[#2563eb] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                    <div className="w-12 h-12 rounded-full bg-green-50 border border-green-100 flex items-center justify-center text-[#14a800] mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563eb] mb-4 group-hover:scale-110 transition-transform duration-300">
                       <Icon className="w-6 h-6" />
                     </div>
                     <span className="text-sm font-extrabold text-zinc-800 tracking-tight block">
@@ -182,7 +182,7 @@ export default function CategoriesAndProcess() {
                     </span>
 
                     {/* Job Count Badge */}
-                    <span className="text-[9px] text-[#14a800] font-black bg-[#f4fbf4] border border-green-100 px-2 py-0.5 rounded-lg mt-3 block">
+                    <span className="text-[9px] text-[#2563eb] font-black bg-[#f4f7fb] border border-blue-100 px-2 py-0.5 rounded-lg mt-3 block">
                       {cat.jobs}
                     </span>
                   </div>
@@ -194,7 +194,7 @@ export default function CategoriesAndProcess() {
           {/* Arrow Right */}
           <button
             onClick={nextSlide}
-            className="absolute right-[-20px] z-10 w-10 h-10 rounded-full border border-zinc-200 bg-white hover:border-[#14a800] text-zinc-650 hover:text-[#14a800] flex items-center justify-center shadow-md transition-colors cursor-pointer hidden md:flex"
+            className="absolute right-[-20px] z-10 w-10 h-10 rounded-full border border-zinc-200 bg-white hover:border-[#2563eb] text-zinc-650 hover:text-[#2563eb] flex items-center justify-center shadow-md transition-colors cursor-pointer hidden md:flex"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -203,17 +203,17 @@ export default function CategoriesAndProcess() {
         {/* Explore Categories Button */}
         <a
           href="/signin"
-          className="h-10 px-6 rounded-full border border-zinc-200 hover:border-[#14a800] bg-white hover:bg-zinc-50 text-zinc-700 text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer mb-16"
+          className="h-10 px-6 rounded-full border border-zinc-200 hover:border-[#2563eb] bg-white hover:bg-zinc-50 text-zinc-700 text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer mb-16"
         >
           <span>
             {t("landingNew.categoriesList.exploreCategories") || "Explore All Categories"}
           </span>
-          <ArrowRight className="w-3.5 h-3.5 text-[#14a800]" />
+          <ArrowRight className="w-3.5 h-3.5 text-[#2563eb]" />
         </a>
 
         {/* How It Works Container */}
         <div className="w-full bg-[#030712] border border-white/5 rounded-3xl p-8 text-left mb-16 shadow-2xl relative overflow-hidden text-white">
-          <span className="text-[#22c55e] text-[10px] font-bold uppercase tracking-wider mb-2 block text-center sm:text-left">
+          <span className="text-[#3b82f6] text-[10px] font-bold uppercase tracking-wider mb-2 block text-center sm:text-left">
             {t("landingNew.categoriesList.howItWorksBadge") || "HOW IT WORKS"}
           </span>
           <h2 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight mb-10 text-center sm:text-left">
@@ -237,11 +237,11 @@ export default function CategoriesAndProcess() {
                 >
                   {/* Icon Bubble with badge */}
                   <div className="relative shrink-0 sm:mb-4">
-                    <div className="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center text-[#22c55e] hover:scale-105 transition-transform duration-300">
+                    <div className="w-16 h-16 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-[#3b82f6] hover:scale-105 transition-transform duration-300">
                       <Icon className="w-6 h-6" />
                     </div>
                     {/* Number Badge */}
-                    <span className="absolute top-0 right-0 w-5 h-5 rounded-full bg-[#14a800] text-white flex items-center justify-center text-[10px] font-extrabold shadow-sm border border-[#030712]">
+                    <span className="absolute top-0 right-0 w-5 h-5 rounded-full bg-[#2563eb] text-white flex items-center justify-center text-[10px] font-extrabold shadow-sm border border-[#030712]">
                       {step.number}
                     </span>
                   </div>
@@ -273,7 +273,7 @@ export default function CategoriesAndProcess() {
             <div className="lg:col-span-5 flex flex-col items-start pr-0 lg:pr-8">
               <h2 className="text-3xl font-extrabold leading-tight tracking-tight mb-3">
                 {t("landingNew.providerBanner.title1") || "Earn on Your Skills."} <br />
-                <span className="text-[#22c55e]">
+                <span className="text-[#3b82f6]">
                   {t("landingNew.providerBanner.title2") || "Be Your Own Boss."}
                 </span>
               </h2>
@@ -284,7 +284,7 @@ export default function CategoriesAndProcess() {
 
               <a
                 href="/signin?role=provider"
-                className="h-11 px-6 rounded-xl bg-[#14a800] hover:bg-[#108a00] text-white text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer shadow-lg shadow-green-900/20"
+                className="h-11 px-6 rounded-xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer shadow-lg shadow-blue-900/20"
               >
                 <span>{t("landingNew.providerBanner.btnText") || "Become a Provider"}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -295,7 +295,7 @@ export default function CategoriesAndProcess() {
             <div className="lg:col-span-5 grid grid-cols-2 gap-6">
               {/* Benefit 1 */}
               <div className="flex flex-col items-start text-left">
-                <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#22c55e] mb-3 shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#3b82f6] mb-3 shrink-0">
                   <Shield className="w-4 h-4" />
                 </div>
                 <h4 className="text-xs font-extrabold text-white leading-snug">
@@ -309,7 +309,7 @@ export default function CategoriesAndProcess() {
 
               {/* Benefit 2 */}
               <div className="flex flex-col items-start text-left">
-                <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#22c55e] mb-3 shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#3b82f6] mb-3 shrink-0">
                   <Calendar className="w-4 h-4" />
                 </div>
                 <h4 className="text-xs font-extrabold text-white leading-snug">
@@ -323,7 +323,7 @@ export default function CategoriesAndProcess() {
 
               {/* Benefit 3 */}
               <div className="flex flex-col items-start text-left">
-                <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#22c55e] mb-3 shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#3b82f6] mb-3 shrink-0">
                   <CreditCard className="w-4 h-4" />
                 </div>
                 <h4 className="text-xs font-extrabold text-white leading-snug">
@@ -337,7 +337,7 @@ export default function CategoriesAndProcess() {
 
               {/* Benefit 4 */}
               <div className="flex flex-col items-start text-left">
-                <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#22c55e] mb-3 shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#3b82f6] mb-3 shrink-0">
                   <BarChart2 className="w-4 h-4" />
                 </div>
                 <h4 className="text-xs font-extrabold text-white leading-snug">
@@ -384,15 +384,15 @@ export default function CategoriesAndProcess() {
             {/* Right list checks */}
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[10px] font-extrabold text-zinc-700">
               <div className="flex items-center gap-1.5">
-                <Check className="w-3.5 h-3.5 text-[#14a800] stroke-[3]" />
+                <Check className="w-3.5 h-3.5 text-[#2563eb] stroke-[3]" />
                 <span>{t("landingNew.providerBanner.check1") || "Free to Join"}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Check className="w-3.5 h-3.5 text-[#14a800] stroke-[3]" />
+                <Check className="w-3.5 h-3.5 text-[#2563eb] stroke-[3]" />
                 <span>{t("landingNew.providerBanner.check2") || "No Monthly Fees"}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Check className="w-3.5 h-3.5 text-[#14a800] stroke-[3]" />
+                <Check className="w-3.5 h-3.5 text-[#2563eb] stroke-[3]" />
                 <span>{t("landingNew.providerBanner.check3") || "100% Secure"}</span>
               </div>
             </div>

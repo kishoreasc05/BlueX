@@ -18,15 +18,15 @@ export default function SecuritySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-green-50 border border-green-200">
-              <ShieldCheck className="w-4 h-4 text-[#14a800]" />
-              <span className="text-xs font-bold tracking-widest uppercase text-[#14a800]">
+            <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200">
+              <ShieldCheck className="w-4 h-4 text-[#2563eb]" />
+              <span className="text-xs font-bold tracking-widest uppercase text-[#2563eb]">
                 {t("security.badge")}
               </span>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900 leading-tight mb-6">
               {t("security.title")}{" "}
-              <span className="text-[#14a800] block mt-1.5 font-bold">
+              <span className="text-[#2563eb] block mt-1.5 font-bold">
                 {t("security.titleItalic")}
               </span>
             </h2>
@@ -43,10 +43,10 @@ export default function SecuritySection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="md:col-span-2 bg-zinc-50 border border-zinc-200 rounded-3xl p-8 md:p-12 relative overflow-hidden group hover:border-[#14a800] transition-colors"
+            className="md:col-span-2 bg-zinc-50 border border-zinc-200 rounded-3xl p-8 md:p-12 relative overflow-hidden group hover:border-[#2563eb] transition-colors"
           >
             {/* Swiss Vetted Badge */}
-            <div className="absolute top-6 right-6 px-3.5 py-1 rounded-full bg-green-50 border border-green-250 text-[#14a800] text-xs font-bold uppercase tracking-wider">
+            <div className="absolute top-6 right-6 px-3.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-[#2563eb] text-xs font-bold uppercase tracking-wider">
               {t("security.badgeUid")}
             </div>
 
@@ -66,14 +66,14 @@ export default function SecuritySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="bg-white border border-zinc-200 rounded-3xl p-8 relative overflow-hidden group hover:border-[#14a800] transition-colors text-left shadow-sm"
+            className="bg-white border border-zinc-200 rounded-3xl p-8 relative overflow-hidden group hover:border-[#2563eb] transition-colors text-left shadow-sm"
           >
             {/* Stripe Badge */}
-            <div className="absolute top-6 right-6 px-2.5 py-0.5 rounded-full bg-green-50 border border-green-200 text-[#14a800] text-[10px] font-bold uppercase tracking-wider">
+            <div className="absolute top-6 right-6 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-[#2563eb] text-[10px] font-bold uppercase tracking-wider">
               {t("security.badgeStripe")}
             </div>
 
-            <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 border border-green-100 group-hover:scale-105 transition-transform text-[#14a800]">
+            <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 border border-blue-100 group-hover:scale-105 transition-transform text-[#2563eb]">
               <Lock className="w-7 h-7 stroke-[1.75]" />
             </div>
             <h3 className="text-lg font-bold text-zinc-800 mb-2">{t("security.card2Title")}</h3>
@@ -88,14 +88,14 @@ export default function SecuritySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="bg-white border border-zinc-200 rounded-3xl p-8 relative overflow-hidden group hover:border-[#14a800] transition-colors text-left shadow-sm"
+            className="bg-white border border-zinc-200 rounded-3xl p-8 relative overflow-hidden group hover:border-[#2563eb] transition-colors text-left shadow-sm"
           >
             {/* Swiss Flag Badge */}
-            <div className="absolute top-6 right-6 px-2.5 py-0.5 rounded-full bg-green-50 border border-green-200 text-[#14a800] text-[10px] font-bold uppercase tracking-wider">
+            <div className="absolute top-6 right-6 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-[#2563eb] text-[10px] font-bold uppercase tracking-wider">
               {t("security.badgeSwiss")}
             </div>
 
-            <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 border border-green-100 group-hover:scale-105 transition-transform text-[#14a800]">
+            <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 border border-blue-100 group-hover:scale-105 transition-transform text-[#2563eb]">
               <BadgeCheck className="w-7 h-7 stroke-[1.75]" />
             </div>
             <h3 className="text-lg font-bold text-zinc-800 mb-2">{t("security.card3Title")}</h3>
@@ -110,7 +110,7 @@ export default function SecuritySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="bg-white border border-zinc-200 rounded-3xl p-8 relative overflow-hidden group hover:border-[#14a800] transition-colors text-left shadow-sm"
+            className="bg-white border border-zinc-200 rounded-3xl p-8 relative overflow-hidden group hover:border-[#2563eb] transition-colors text-left shadow-sm"
           >
             <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 border border-amber-100 group-hover:scale-105 transition-transform text-amber-500">
               <Star className="w-7 h-7 stroke-[1.75] fill-amber-50" />
@@ -127,7 +127,7 @@ export default function SecuritySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="bg-white border border-zinc-200 rounded-3xl p-8 relative overflow-hidden group hover:border-[#14a800] transition-colors text-left shadow-sm"
+            className="bg-white border border-zinc-200 rounded-3xl p-8 relative overflow-hidden group hover:border-[#2563eb] transition-colors text-left shadow-sm"
           >
             <div className="w-14 h-14 bg-rose-50 rounded-2xl flex items-center justify-center mb-6 border border-rose-100 group-hover:scale-105 transition-transform text-rose-500">
               <PhoneCall className="w-7 h-7 stroke-[1.75]" />
