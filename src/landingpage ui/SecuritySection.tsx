@@ -30,7 +30,9 @@ export default function SecuritySection() {
                 {t("security.titleItalic")}
               </span>
             </h2>
-            <p className="text-zinc-650 text-base md:text-lg leading-relaxed font-semibold">{t("security.desc")}</p>
+            <p className="text-zinc-650 text-base md:text-lg leading-relaxed font-semibold">
+              {t("security.desc")}
+            </p>
           </motion.div>
         </div>
 
@@ -49,7 +51,9 @@ export default function SecuritySection() {
             </div>
 
             <div className="relative z-10 w-full h-full flex flex-col justify-end min-h-[220px] text-left">
-              <h3 className="text-2xl md:text-3xl font-bold text-zinc-900 mb-4">{t("security.card1Title")}</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-zinc-900 mb-4">
+                {t("security.card1Title")}
+              </h3>
               <p className="text-zinc-600 text-sm md:text-base leading-relaxed font-semibold">
                 {t("security.card1Desc")}
               </p>
@@ -73,7 +77,9 @@ export default function SecuritySection() {
               <Lock className="w-7 h-7 stroke-[1.75]" />
             </div>
             <h3 className="text-lg font-bold text-zinc-800 mb-2">{t("security.card2Title")}</h3>
-            <p className="text-zinc-600 text-xs md:text-sm leading-relaxed font-semibold">{t("security.card2Desc")}</p>
+            <p className="text-zinc-600 text-xs md:text-sm leading-relaxed font-semibold">
+              {t("security.card2Desc")}
+            </p>
           </motion.div>
 
           {/* Small Card: Certifications */}
@@ -93,7 +99,9 @@ export default function SecuritySection() {
               <BadgeCheck className="w-7 h-7 stroke-[1.75]" />
             </div>
             <h3 className="text-lg font-bold text-zinc-800 mb-2">{t("security.card3Title")}</h3>
-            <p className="text-zinc-600 text-xs md:text-sm leading-relaxed font-semibold">{t("security.card3Desc")}</p>
+            <p className="text-zinc-600 text-xs md:text-sm leading-relaxed font-semibold">
+              {t("security.card3Desc")}
+            </p>
           </motion.div>
 
           {/* Small Card: Ratings */}
@@ -108,7 +116,9 @@ export default function SecuritySection() {
               <Star className="w-7 h-7 stroke-[1.75] fill-amber-50" />
             </div>
             <h3 className="text-lg font-bold text-zinc-800 mb-2">{t("security.card4Title")}</h3>
-            <p className="text-zinc-600 text-xs md:text-sm leading-relaxed font-semibold">{t("security.card4Desc")}</p>
+            <p className="text-zinc-600 text-xs md:text-sm leading-relaxed font-semibold">
+              {t("security.card4Desc")}
+            </p>
           </motion.div>
 
           {/* Small Card: 24/7 Emergency */}
@@ -123,7 +133,9 @@ export default function SecuritySection() {
               <PhoneCall className="w-7 h-7 stroke-[1.75]" />
             </div>
             <h3 className="text-lg font-bold text-zinc-800 mb-2">{t("security.card5Title")}</h3>
-            <p className="text-zinc-600 text-xs md:text-sm leading-relaxed font-semibold">{t("security.card5Desc")}</p>
+            <p className="text-zinc-600 text-xs md:text-sm leading-relaxed font-semibold">
+              {t("security.card5Desc")}
+            </p>
           </motion.div>
         </div>
       </div>

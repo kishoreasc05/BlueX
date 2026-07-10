@@ -78,11 +78,8 @@ export default function PricingPreview() {
               </span>
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-6">
-              {t("pricing.title")}{" "}
-              <br className="hidden md:block" />
-              <span className="text-[#22c55e] block mt-1 font-bold">
-                {t("pricing.desc")}
-              </span>
+              {t("pricing.title")} <br className="hidden md:block" />
+              <span className="text-[#22c55e] block mt-1 font-bold">{t("pricing.desc")}</span>
             </h2>
           </motion.div>
         </div>
@@ -110,7 +107,9 @@ export default function PricingPreview() {
 
               <div className="relative z-10 mb-8 text-left">
                 <h3 className="text-2xl font-bold text-white mb-3">{plan.name}</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed h-10 font-semibold">{plan.desc}</p>
+                <p className="text-zinc-400 text-sm leading-relaxed h-10 font-semibold">
+                  {plan.desc}
+                </p>
               </div>
 
               <div className="relative z-10 mb-10 flex items-baseline gap-1 justify-start">
@@ -122,7 +121,10 @@ export default function PricingPreview() {
 
               <ul className="relative z-10 flex flex-col gap-5 mb-10 flex-1 text-left">
                 {plan.features.map((feature, fIdx) => (
-                  <li key={fIdx} className="flex items-start gap-3 text-sm text-zinc-300 font-semibold">
+                  <li
+                    key={fIdx}
+                    className="flex items-start gap-3 text-sm text-zinc-300 font-semibold"
+                  >
                     <div
                       className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 border ${
                         plan.primary

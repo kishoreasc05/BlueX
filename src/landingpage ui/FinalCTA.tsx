@@ -20,9 +20,7 @@ export default function FinalCTA() {
           className="font-sans text-4xl md:text-5xl lg:text-6xl tracking-tight leading-tight mb-6 text-slate-900 font-bold"
         >
           {t("cta.title1")}{" "}
-          <span className="text-[#14a800] block mt-1 font-bold">
-            {t("cta.title2")}
-          </span>
+          <span className="text-[#14a800] block mt-1 font-bold">{t("cta.title2")}</span>
         </motion.h2>
 
         <motion.p

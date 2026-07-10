@@ -23,9 +23,7 @@ export default function PlatformOverview() {
           >
             <h2 className="text-3xl md:text-4xl lg:text-5xl tracking-tight text-zinc-900 leading-tight font-bold">
               {t("overview.title")} <br />
-              <span className="text-[#14a800]">
-                {t("overview.subtitle")}
-              </span>
+              <span className="text-[#14a800]">{t("overview.subtitle")}</span>
             </h2>
           </motion.div>
 
@@ -60,9 +58,7 @@ export default function PlatformOverview() {
             <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent z-[1]" />
 
             <div className="absolute bottom-0 left-0 p-8 text-zinc-900 z-10 w-full text-left">
-              <h3 className="text-2xl font-bold mb-2 tracking-tight">
-                {t("overview.card1Title")}
-              </h3>
+              <h3 className="text-2xl font-bold mb-2 tracking-tight">{t("overview.card1Title")}</h3>
               <p className="text-zinc-650 max-w-md leading-relaxed text-sm md:text-base font-semibold">
                 {t("overview.card1Desc")}
               </p>
@@ -89,7 +85,9 @@ export default function PlatformOverview() {
               <h3 className="text-lg font-bold mb-1.5 tracking-tight">
                 {t("overview.card2Title")}
               </h3>
-              <p className="text-zinc-650 text-xs leading-relaxed font-semibold">{t("overview.card2Desc")}</p>
+              <p className="text-zinc-650 text-xs leading-relaxed font-semibold">
+                {t("overview.card2Desc")}
+              </p>
             </div>
           </motion.div>
 
@@ -113,7 +111,9 @@ export default function PlatformOverview() {
               <h3 className="text-lg font-bold mb-1.5 tracking-tight">
                 {t("overview.card3Title")}
               </h3>
-              <p className="text-zinc-650 text-xs leading-relaxed font-semibold">{t("overview.card3Desc")}</p>
+              <p className="text-zinc-650 text-xs leading-relaxed font-semibold">
+                {t("overview.card3Desc")}
+              </p>
             </div>
           </motion.div>
 

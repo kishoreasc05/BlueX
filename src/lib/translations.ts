@@ -39,7 +39,8 @@ export const translations: Record<string, any> = {
       subtitle: "Swiss Trade Jobs",
       desc: "Switzerland's marketplace for trade work. Book vetted pros, pay safely, get the job done.",
       card1Title: "Find & Book Any Trade",
-      card1Desc: "Plumbers, electricians, cleaners, builders and more. Verified profiles, real reviews.",
+      card1Desc:
+        "Plumbers, electricians, cleaners, builders and more. Verified profiles, real reviews.",
       card2Title: "Smart Job Matching",
       card2Desc: "Describe what needs doing — we find the right tradesperson near you.",
       card3Title: "Your Money is Safe",
@@ -58,7 +59,8 @@ export const translations: Record<string, any> = {
       cap4: "Writes quotes and customer replies for you in seconds",
       cap5: "Shows how your business is performing and where to grow",
       chatUser1: "What should I charge per hour as an electrician in Zurich?",
-      chatAi1: "Electricians in Zurich earn CHF 120–145/hr. With your 5-star rating, I'd set CHF 135/hr to stay competitive.",
+      chatAi1:
+        "Electricians in Zurich earn CHF 120–145/hr. With your 5-star rating, I'd set CHF 135/hr to stay competitive.",
       chatUser2: "Perfect. Apply that rate and find new electrical tenders nearby.",
       actionChip: "Rate updated & 3 tenders matched",
       btn: "See how it works",
@@ -94,7 +96,8 @@ export const translations: Record<string, any> = {
       btnBook: "Book Marc",
       axaBadge: "AXA Partner",
       axaCover: "CHF 5M Cover",
-      quote: '"Marc fixed our burst pipe on a Sunday night. Fast, professional, and fully protected."',
+      quote:
+        '"Marc fixed our burst pipe on a Sunday night. Fast, professional, and fully protected."',
       reviewerRole: "Zurich Homeowner",
     },
     howItWorks: {
@@ -146,15 +149,19 @@ export const translations: Record<string, any> = {
       titleItalic: "comes first.",
       desc: "Every tradesperson is vetted, insured, and compliant before taking a single job.",
       card1Title: "Vetted Tradespeople",
-      card1Desc: "ID checks, Swiss registry validation, qualification checks, and background screening — before any job.",
+      card1Desc:
+        "ID checks, Swiss registry validation, qualification checks, and background screening — before any job.",
       card2Title: "Safe, Regulated Payments",
-      card2Desc: "Payments via Stripe. Money only moves to the pro once you confirm the job is done.",
+      card2Desc:
+        "Payments via Stripe. Money only moves to the pro once you confirm the job is done.",
       card3Title: "Licensed & Insured",
-      card3Desc: "Every pro holds a valid Swiss trade licence and professional liability insurance.",
+      card3Desc:
+        "Every pro holds a valid Swiss trade licence and professional liability insurance.",
       card4Title: "Real Reviews Only",
       card4Desc: "Reviews only after a completed job — no fake ratings.",
       card5Title: "Emergency Help, Any Time",
-      card5Desc: "Burst pipe at midnight? Our emergency network gets you a qualified tradesperson fast.",
+      card5Desc:
+        "Burst pipe at midnight? Our emergency network gets you a qualified tradesperson fast.",
       badgeSwiss: "Swiss-Regulated",
       badgeStripe: "Stripe Connect",
       badgeUid: "UID Vetted",
@@ -167,7 +174,8 @@ export const translations: Record<string, any> = {
       solution: "How BlueX Helped",
       story1Org: "Sarah M., Zurich (Homeowner)",
       story1Problem: "Pipe burst on a Sunday night. Nobody picked up.",
-      story1Solution: "Found a certified plumber on BlueX. Job accepted in 8 minutes, arrived within the hour.",
+      story1Solution:
+        "Found a certified plumber on BlueX. Job accepted in 8 minutes, arrived within the hour.",
       story1Metric: "8 min",
       story1MetricLabel: "Emergency match time",
       story2Org: "M. Keller, Electrician",
@@ -177,7 +185,8 @@ export const translations: Record<string, any> = {
       story2MetricLabel: "More earnings each week",
       story3Org: "David K., Geneva (Homeowner)",
       story3Problem: "Needed a painter but didn't know who to trust.",
-      story3Solution: "Found a verified painter, checked reviews, booked, and paid safely. Perfect job.",
+      story3Solution:
+        "Found a verified painter, checked reviews, booked, and paid safely. Perfect job.",
       story3Metric: "100%",
       story3MetricLabel: "Vetted & insured tradespeople",
       btn: "See more reviews",
@@ -243,7 +252,7 @@ export const translations: Record<string, any> = {
         book: "Book",
         bookDesc: "Lock in a time, pay safely",
         done: "Done",
-        doneDesc: "Job done, money released"
+        doneDesc: "Job done, money released",
       },
       whyChoose: {
         title: "WHY USE BLUEX.CH",
@@ -258,7 +267,7 @@ export const translations: Record<string, any> = {
         point3Desc: "Money released only when you're satisfied.",
         point4Title: "No Job, No Pay",
         point4Desc: "Not happy with the work? We make it right.",
-        learnMore: "Learn More"
+        learnMore: "Learn More",
       },
       stats: {
         title: "Thousands trust us to get the job done.",
@@ -276,26 +285,28 @@ export const translations: Record<string, any> = {
         stat4Desc: "Protected until job is done",
         stat5Num: "24/7",
         stat5Title: "Support",
-        stat5Desc: "Always here when you need us"
+        stat5Desc: "Always here when you need us",
       },
       professionals: {
         title: "Top Rated Tradespeople",
-        viewAllLink: "See all"
+        viewAllLink: "See all",
       },
       ctaBanner: {
         title: "Need someone for your",
         titleGreen: "next job?",
         desc: "Post your job free and get quotes from vetted tradespeople near you.",
         btnText: "Post a Job — It's Free",
-        joinText: "Join 5,000+ happy customers"
+        joinText: "Join 5,000+ happy customers",
       },
       testimonials: {
         title: "What Customers Are Saying",
         subtitle: "Honest reviews from people who got work done through BlueX.",
         reviewsCount: "4.8/5 from 2,500+ reviews",
-        quote1: "Got a plumber in minutes. On time, fixed it properly, paid only when done. Brilliant!",
+        quote1:
+          "Got a plumber in minutes. On time, fixed it properly, paid only when done. Brilliant!",
         quote2: "Booked a cleaner for my flat — fantastic job. Payment was completely safe.",
-        quote3: "Needed an electrician fast. Found one the same day. Knew exactly what he was doing.",
+        quote3:
+          "Needed an electrician fast. Found one the same day. Knew exactly what he was doing.",
       },
       categoriesList: {
         plumbingDesc: "Leaks, installs & pipe work",
@@ -374,7 +385,7 @@ export const translations: Record<string, any> = {
         placeholder: "Enter your email address",
         btnText: "Get Started — It's Free",
         joinText: "Join 8,000+ customers who trust BlueX.ch",
-      }
+      },
     },
   },
   de: {
@@ -393,8 +404,7 @@ export const translations: Record<string, any> = {
       title2: "Handwerker buchen.",
       title3: "Aufträge erledigen.",
       title4: "Sofort.",
-      subtitle:
-        "Buchen Sie geprüfte Schweizer Handwerker mit sicherem Treuhand-Käuferschutz.",
+      subtitle: "Buchen Sie geprüfte Schweizer Handwerker mit sicherem Treuhand-Käuferschutz.",
       searchPlaceholder: "z.B. Sanitär, Elektriker",
       locationPlaceholder: "Ort oder PLZ",
       searchLabel: "Welchen Service benötigen Sie?",
@@ -649,7 +659,7 @@ export const translations: Record<string, any> = {
         book: "Buchen",
         bookDesc: "Termin vereinbaren und sicher bezahlen",
         done: "Erledigt",
-        doneDesc: "Auftrag erfolgreich abgeschlossen"
+        doneDesc: "Auftrag erfolgreich abgeschlossen",
       },
       whyChoose: {
         title: "WARUM BLUEX.CH WÄHLEN",
@@ -664,7 +674,7 @@ export const translations: Record<string, any> = {
         point3Desc: "Sicher bezahlen. Das Geld wird erst freigegeben, wenn Sie zufrieden sind.",
         point4Title: "Zufriedenheitsgarantie",
         point4Desc: "Nicht zufrieden? Wir arbeiten mit Ihnen zusammen, um es richtig zu machen.",
-        learnMore: "Erfahren Sie mehr über uns"
+        learnMore: "Erfahren Sie mehr über uns",
       },
       stats: {
         title: "Von Tausenden vertraut. Für jeden gebaut.",
@@ -682,26 +692,29 @@ export const translations: Record<string, any> = {
         stat4Desc: "Durch Treuhand geschützt",
         stat5Num: "24/7",
         stat5Title: "Kundensupport",
-        stat5Desc: "Wir sind hier, um zu helfen"
+        stat5Desc: "Wir sind hier, um zu helfen",
       },
       professionals: {
         title: "Top-bewertete Profis",
-        viewAllLink: "Alle anzeigen"
+        viewAllLink: "Alle anzeigen",
       },
       ctaBanner: {
         title: "Benötigen Sie einen Profi für Ihr",
         titleGreen: "nächstes Projekt?",
         desc: "Erstellen Sie Ihren Auftrag kostenlos und erhalten Sie Angebote von verifizierten Experten.",
         btnText: "Kostenlos Auftrag erstellen",
-        joinText: "Schließen Sie sich über 5'000 zufriedenen Kunden an"
+        joinText: "Schließen Sie sich über 5'000 zufriedenen Kunden an",
       },
       testimonials: {
         title: "Was unsere Kunden sagen",
         subtitle: "Echte Bewertungen von echten Menschen, die ihre Aufträge erledigt haben.",
         reviewsCount: "4.8/5 aus 2.500+ Bewertungen",
-        quote1: "Habe innert Minuten einen Sanitär gefunden. Er war professionell, pünktlich und hat das Problem perfekt behoben. Sehr zu empfehlen!",
-        quote2: "Die Plattform ist super einfach zu bedienen. Ich habe eine Reinigungskraft für meine Wohnung gebucht und sie hat einen tollen Job gemacht!",
-        quote3: "Tolle Erfahrung! Der Elektriker war sehr kompetent und hat die Arbeit schnell erledigt. Gerne wieder.",
+        quote1:
+          "Habe innert Minuten einen Sanitär gefunden. Er war professionell, pünktlich und hat das Problem perfekt behoben. Sehr zu empfehlen!",
+        quote2:
+          "Die Plattform ist super einfach zu bedienen. Ich habe eine Reinigungskraft für meine Wohnung gebucht und sie hat einen tollen Job gemacht!",
+        quote3:
+          "Tolle Erfahrung! Der Elektriker war sehr kompetent und hat die Arbeit schnell erledigt. Gerne wieder.",
       },
       categoriesList: {
         plumbingDesc: "Lecks beheben, Installationen & mehr",
@@ -719,7 +732,8 @@ export const translations: Record<string, any> = {
         applianceRepairJobs: "670+ Aufträge",
         popularCategoriesBadge: "BELIEBTE KATEGORIEN",
         popularCategoriesTitle: "Finden Sie den richtigen Profi für jeden Job",
-        popularCategoriesDesc: "Von Reparaturen im Haus bis hin zu alltäglichen Aufgaben - wir haben alles für Sie abgedeckt.",
+        popularCategoriesDesc:
+          "Von Reparaturen im Haus bis hin zu alltäglichen Aufgaben - wir haben alles für Sie abgedeckt.",
         exploreCategories: "Alle Kategorien durchsuchen",
         howItWorksBadge: "SO FUNKTIONIERT'S",
         howItWorksTitle: "Erledigen Sie Ihren Job in 4 einfachen Schritten",
@@ -732,7 +746,8 @@ export const translations: Record<string, any> = {
         feat1Title: "Ihr Geschäft ausbauen",
         feat1Desc: "Gewinnen Sie mehr Kunden und bauen Sie Ihren Ruf auf.",
         feat2Title: "Flexibler Zeitplan",
-        feat2Desc: "Arbeiten Sie nach Ihrem eigenen Zeitplan und wählen Sie Jobs, die Ihnen gefallen.",
+        feat2Desc:
+          "Arbeiten Sie nach Ihrem eigenen Zeitplan und wählen Sie Jobs, die Ihnen gefallen.",
         feat3Title: "Sichere Zahlungen",
         feat3Desc: "Sicher und pünktlich bezahlt werden, jedes Mal.",
         feat4Title: "Mehr Einnahmen",
@@ -780,7 +795,7 @@ export const translations: Record<string, any> = {
         placeholder: "Geben Sie Ihre E-Mail-Adresse ein",
         btnText: "Loslegen",
         joinText: "Schliessen Sie sich über 8'000 Kunden an, die BlueX.ch vertrauen",
-      }
+      },
     },
   },
   fr: {
@@ -1054,7 +1069,7 @@ export const translations: Record<string, any> = {
         book: "Réserver",
         bookDesc: "Planifiez et payez en toute sécurité",
         done: "Terminé",
-        doneDesc: "Travail terminé avec succès"
+        doneDesc: "Travail terminé avec succès",
       },
       whyChoose: {
         title: "POURQUOI CHOISIR BLUEX.CH",
@@ -1069,7 +1084,7 @@ export const translations: Record<string, any> = {
         point3Desc: "Payez en toute sécurité. Les fonds sont libérés après satisfaction.",
         point4Title: "Satisfaction Garantie",
         point4Desc: "Pas satisfait? Nous travaillerons pour corriger le tir.",
-        learnMore: "En savoir plus sur nous"
+        learnMore: "En savoir plus sur nous",
       },
       stats: {
         title: "Approuvé par des milliers. Conçu pour tous.",
@@ -1087,27 +1102,30 @@ export const translations: Record<string, any> = {
         stat4Desc: "Séquestre sécurisé Stripe",
         stat5Num: "24/7",
         stat5Title: "Support client",
-        stat5Desc: "Nous sommes là pour vous aider"
+        stat5Desc: "Nous sommes là pour vous aider",
       },
       professionals: {
         title: "Professionnels les mieux notés",
-        viewAllLink: "Voir tout"
+        viewAllLink: "Voir tout",
       },
       ctaBanner: {
         title: "Besoin d'un professionnel pour votre",
         titleGreen: "prochain projet?",
         desc: "Publiez votre projet gratuitement et recevez des devis compétitifs de pros vérifiés.",
         btnText: "Publier un projet gratuit",
-        joinText: "Rejoignez plus de 5 000 clients satisfaits"
+        joinText: "Rejoignez plus de 5 000 clients satisfaits",
       },
       testimonials: {
         title: "Ce que disent nos clients",
         subtitle: "Ce que disent nos clients",
         subtitle2: "De vrais avis de vraies personnes qui ont réalisé leurs travaux.",
         reviewsCount: "Note de 4.8/5 sur plus de 2'500 avis",
-        quote1: "Trouvé un plombier en quelques minutes. Il était professionnel, à l'heure et a parfaitement résolu le problème. Fortement recommandé!",
-        quote2: "La plateforme est super simple à utiliser. J'ai réservé une nettoyeuse pour mon appartement et elle a fait un travail fantastique!",
-        quote3: "Excellente expérience! L'électricien était très compétent et a terminé le travail rapidement. Je ferai à nouveau appel à lui.",
+        quote1:
+          "Trouvé un plombier en quelques minutes. Il était professionnel, à l'heure et a parfaitement résolu le problème. Fortement recommandé!",
+        quote2:
+          "La plateforme est super simple à utiliser. J'ai réservé une nettoyeuse pour mon appartement et elle a fait un travail fantastique!",
+        quote3:
+          "Excellente expérience! L'électricien était très compétent et a terminé le travail rapidement. Je ferai à nouveau appel à lui.",
       },
       categoriesList: {
         plumbingDesc: "Réparation de fuites, installations & plus",
@@ -1125,7 +1143,8 @@ export const translations: Record<string, any> = {
         applianceRepairJobs: "Plus de 670 chantiers",
         popularCategoriesBadge: "CATÉGORIES POPULAIRES",
         popularCategoriesTitle: "Trouvez le professionnel idéal pour vos travaux",
-        popularCategoriesDesc: "Des petites réparations aux grands travaux, nous avons tout ce qu'il vous faut.",
+        popularCategoriesDesc:
+          "Des petites réparations aux grands travaux, nous avons tout ce qu'il vous faut.",
         exploreCategories: "Découvrir toutes les catégories",
         howItWorksBadge: "COMMENT ÇA MARCHE",
         howItWorksTitle: "Réalisez vos travaux en 4 étapes simples",
@@ -1186,7 +1205,7 @@ export const translations: Record<string, any> = {
         placeholder: "Saisissez votre adresse e-mail",
         btnText: "Démarrer",
         joinText: "Rejoignez plus de 8'000 clients qui font confiance à BlueX.ch",
-      }
+      },
     },
   },
   it: {
@@ -1461,7 +1480,7 @@ export const translations: Record<string, any> = {
         book: "Prenota",
         bookDesc: "Pianifica e paga in sicurezza",
         done: "Fatto",
-        doneDesc: "Lavoro completato con successo"
+        doneDesc: "Lavoro completato con successo",
       },
       whyChoose: {
         title: "PERCHÉ SCEGLIERE BLUEX.CH",
@@ -1471,12 +1490,14 @@ export const translations: Record<string, any> = {
         point1Title: "Verificato & Affidabile",
         point1Desc: "Ogni professionista è sottoposto a controllo dei precedenti e verificato.",
         point2Title: "Prenotazione Facile & Veloce",
-        point2Desc: "Pubblica un lavoro in pochi minuti e ricevi preventivi da professionisti vicini.",
+        point2Desc:
+          "Pubblica un lavoro in pochi minuti e ricevi preventivi da professionisti vicini.",
         point3Title: "Pagamenti Sicuri Escrow",
-        point3Desc: "Paga in tutta sicurezza. Il denaro viene rilasciato solo quando sei soddisfatto.",
+        point3Desc:
+          "Paga in tutta sicurezza. Il denaro viene rilasciato solo quando sei soddisfatto.",
         point4Title: "Soddisfazione Garantita",
         point4Desc: "Non sei soddisfatto? Lavoreremo con te per sistemare le cose.",
-        learnMore: "Scopri di più su di noi"
+        learnMore: "Scopri di più su di noi",
       },
       stats: {
         title: "Scelto da migliaia. Costruito per tutti.",
@@ -1494,26 +1515,29 @@ export const translations: Record<string, any> = {
         stat4Desc: "Protetti da Escrow",
         stat5Num: "24/7",
         stat5Title: "Supporto Clienti",
-        stat5Desc: "Siamo qui per aiutarti"
+        stat5Desc: "Siamo qui per aiutarti",
       },
       professionals: {
         title: "Professionisti più Votati",
-        viewAllLink: "Vedi tutti"
+        viewAllLink: "Vedi tutti",
       },
       ctaBanner: {
         title: "Hai bisogno di un professionista per il tuo",
         titleGreen: "prossimo progetto?",
         desc: "Pubblica il tuo lavoro gratuitamente e ricevi preventivi competitivi da professionisti verificati nella tua zona.",
         btnText: "Pubblica un Lavoro Gratis",
-        joinText: "Unisciti a oltre 5.000 clienti soddisfatti"
+        joinText: "Unisciti a oltre 5.000 clienti soddisfatti",
       },
       testimonials: {
         title: "Cosa dicono i nostri clienti",
         subtitle: "Recensioni reali da persone reali che hanno completato i loro lavori.",
         reviewsCount: "4.8/5 da oltre 2'500 recensioni",
-        quote1: "Ho trovato un idraulico in pochi minuti. Era professionale, puntuale e ha risolto il problema perfettamente. Altamente consigliato!",
-        quote2: "La piattaforma è semplicissima da usare. Ho prenotato una addetta alle pulizie per il mio appartamento ed è stata bravissima!",
-        quote3: "Ottima esperienza! L'elettricista era molto preparato e ha finito il lavoro rapidamente. Lo userò di nuovo.",
+        quote1:
+          "Ho trovato un idraulico in pochi minuti. Era professionale, puntuale e ha risolto il problema perfettamente. Altamente consigliato!",
+        quote2:
+          "La piattaforma è semplicissima da usare. Ho prenotato una addetta alle pulizie per il mio appartamento ed è stata bravissima!",
+        quote3:
+          "Ottima esperienza! L'elettricista era molto preparato e ha finito il lavoro rapidamente. Lo userò di nuovo.",
       },
       categoriesList: {
         plumbingDesc: "Riparazione perdite, installazioni & altro",
@@ -1531,7 +1555,8 @@ export const translations: Record<string, any> = {
         applianceRepairJobs: "Oltre 670 lavori",
         popularCategoriesBadge: "CATEGORIE POPOLARI",
         popularCategoriesTitle: "Trova il Professionista Giusto per Qualsiasi Lavoro",
-        popularCategoriesDesc: "Dalle riparazioni domestiche alle attività quotidiane, ti copriamo noi.",
+        popularCategoriesDesc:
+          "Dalle riparazioni domestiche alle attività quotidiane, ti copriamo noi.",
         exploreCategories: "Esplora Tutte le Categorie",
         howItWorksBadge: "COME FUNZIONA",
         howItWorksTitle: "Completa il Tuo Lavoro in 4 Semplici Passaggi",
@@ -1592,7 +1617,7 @@ export const translations: Record<string, any> = {
         placeholder: "Inserisci il tuo indirizzo email",
         btnText: "Inizia",
         joinText: "Unisciti a oltre 8'000 clienti che si fidano di BlueX.ch",
-      }
+      },
     },
   },
 };
@@ -1617,7 +1642,8 @@ translations.pt = {
     title2: "de confiança.",
     title3: "Trabalho feito.",
     title4: "Imediatamente.",
-    subtitle: "O principal mercado de serviços sob demanda para profissionais locais na Suíça. Reserve especialistas com pagamentos seguros em garantia.",
+    subtitle:
+      "O principal mercado de serviços sob demanda para profissionais locais na Suíça. Reserve especialistas com pagamentos seguros em garantia.",
     searchPlaceholder: "ex: Encanador, Limpeza, Eletricista",
     locationPlaceholder: "Zurique, Suíça",
     searchLabel: "Que serviço você precisa?",
@@ -1636,7 +1662,8 @@ translations.pt = {
     subtitle: "Profissionais de Serviços",
     desc: "BlueX é o mercado de serviços líder na Suíça, conectando clientes diretamente com eletricistas, encanadores e pintores locais.",
     card1Title: "Encontre & Reserve Profissionais",
-    card1Desc: "Descubra eletricistas, encanadores, limpadores qualificados e muito mais. Compare e reserve instantaneamente.",
+    card1Desc:
+      "Descubra eletricistas, encanadores, limpadores qualificados e muito mais. Compare e reserve instantaneamente.",
     card2Title: "Combinação por IA",
     card3Title: "Garantia Segura",
     card4Title: "Painel Operacional",
@@ -1656,7 +1683,7 @@ translations.pt = {
     company: "Empresa",
     legal: "Jurídico",
     security: "Segurança",
-  }
+  },
 };
 
 // Add translation overrides for Spanish (es)
@@ -1679,7 +1706,8 @@ translations.es = {
     title2: "de confianza.",
     title3: "Haga su trabajo.",
     title4: "Al instante.",
-    subtitle: "El principal mercado de servicios por demanda para oficios locales en Suiza. Reserve expertos verificados con protección de depósito seguro.",
+    subtitle:
+      "El principal mercado de servicios por demanda para oficios locales en Suiza. Reserve expertos verificados con protección de depósito seguro.",
     searchPlaceholder: "ej: Fontanería, Limpieza, Electricidad",
     locationPlaceholder: "Zúrich, Suiza",
     searchLabel: "¿Qué servicio necesita?",
@@ -1698,7 +1726,8 @@ translations.es = {
     subtitle: "Oficios en Suiza",
     desc: "BlueX es el mercado de servicios por demanda líder en Suiza, que conecta directamente a clientes con profesionales y especialistas locales.",
     card1Title: "Buscar y Reservar Profesionales",
-    card1Desc: "Descubra electricistas, fontaneros, personal de limpieza y más. Compare perfiles y reserve al instante.",
+    card1Desc:
+      "Descubra electricistas, fontaneros, personal de limpieza y más. Compare perfiles y reserve al instante.",
     card2Title: "Emparejamiento por IA",
     card3Title: "Depósito Seguro",
     card4Title: "Panel de Control de Operaciones",
@@ -1718,7 +1747,7 @@ translations.es = {
     company: "Compañía",
     legal: "Avisos Legales",
     security: "Seguridad",
-  }
+  },
 };
 
 // Add translation overrides for Albanian (sq)
@@ -1741,7 +1770,8 @@ translations.sq = {
     title2: "të besuar.",
     title3: "Kryej punët.",
     title4: "Menjëherë.",
-    subtitle: "Tregu kryesor i shërbimeve sipas kërkesës për zanate lokale dhe shërbime shtëpiake në Zvicër. Rezervo ekspertë të verifikuar me pagesë të sigurt.",
+    subtitle:
+      "Tregu kryesor i shërbimeve sipas kërkesës për zanate lokale dhe shërbime shtëpiake në Zvicër. Rezervo ekspertë të verifikuar me pagesë të sigurt.",
     searchPlaceholder: "p.sh. Hidraulik, Pastrim, Elektrik",
     locationPlaceholder: "Zurih, Zvicër",
     searchLabel: "Çfarë shërbimi ju nevojitet?",
@@ -1760,7 +1790,8 @@ translations.sq = {
     subtitle: "Zanatet në Zvicër",
     desc: "BlueX është tregu lider i shërbimeve sipas kërkesës në Zvicër, duke lidhur klientët drejtpërdrejt me profesionistë dhe hidraulikë lokalë.",
     card1Title: "Gjej & Rezervo Profesionistë",
-    card1Desc: "Zbuloni elektrikë, hidraulikë, pastrues të kualifikuar dhe më shumë. Krahasoni dhe rezervoni menjëherë.",
+    card1Desc:
+      "Zbuloni elektrikë, hidraulikë, pastrues të kualifikuar dhe më shumë. Krahasoni dhe rezervoni menjëherë.",
     card2Title: "Përputhje me AI",
     card3Title: "Pagesë e Siguruar Escrow",
     card4Title: "Paneli i Operacioneve",
@@ -1780,7 +1811,7 @@ translations.sq = {
     company: "Kompania",
     legal: "Ligjore",
     security: "Siguria",
-  }
+  },
 };
 
 // Add translation overrides for Serbian (sr)
@@ -1803,7 +1834,8 @@ translations.sr = {
     title2: "majstore.",
     title3: "Završite posao.",
     title4: "Odmah.",
-    subtitle: "Vodeća on-demand platforma za lokalne zanatske i kućne usluge u Švajcarskoj. Rezervišite proverene stručnjake uz sigurnu escrow zaštitu.",
+    subtitle:
+      "Vodeća on-demand platforma za lokalne zanatske i kućne usluge u Švajcarskoj. Rezervišite proverene stručnjake uz sigurnu escrow zaštitu.",
     searchPlaceholder: "npr. Vodoinstalater, Čišćenje, Električar",
     locationPlaceholder: "Cirih, Švajcarska",
     searchLabel: "Koja usluga vam je potrebna?",
@@ -1822,7 +1854,8 @@ translations.sr = {
     subtitle: "Zanatske usluge u Švajcarskoj",
     desc: "BlueX je vodeći on-demand market za usluge u Švajcarskoj, koji direktno povezuje klijente sa lokalnim majstorima i električarima.",
     card1Title: "Pronađi i Rezerviši Majstore",
-    card1Desc: "Otkrijte kvalifikovane električare, vodoinstalatere, čistače i druge. Uporedite profile i rezervišite odmah.",
+    card1Desc:
+      "Otkrijte kvalifikovane električare, vodoinstalatere, čistače i druge. Uporedite profile i rezervišite odmah.",
     card2Title: "AI Spajanje",
     card3Title: "Siguran Escrow",
     card4Title: "Operativni Panel",
@@ -1842,6 +1875,5 @@ translations.sr = {
     company: "Kompanija",
     legal: "Pravni Aspekti",
     security: "Bezbednost",
-  }
+  },
 };
-

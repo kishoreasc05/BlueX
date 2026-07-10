@@ -67,7 +67,9 @@ export default function AICopilotSection() {
                     BlueX AI Coach
                   </span>
                 </div>
-                <p className="text-[13px] text-zinc-700 leading-relaxed font-semibold">{t("ai.chatAi1")}</p>
+                <p className="text-[13px] text-zinc-700 leading-relaxed font-semibold">
+                  {t("ai.chatAi1")}
+                </p>
               </motion.div>
 
               {/* User Message 2 */}
@@ -114,10 +116,7 @@ export default function AICopilotSection() {
             </div>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900 leading-tight mb-6">
-              {t("ai.title")}{" "}
-              <span className="text-[#14a800]">
-                {t("ai.titleItalic")}
-              </span>
+              {t("ai.title")} <span className="text-[#14a800]">{t("ai.titleItalic")}</span>
             </h2>
 
             <p className="text-zinc-650 text-base md:text-lg mb-10 leading-relaxed font-semibold">

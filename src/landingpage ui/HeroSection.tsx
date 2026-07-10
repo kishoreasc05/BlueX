@@ -1,7 +1,19 @@
 import { motion } from "motion/react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { MapPin, ShieldCheck, Lock, Star, ArrowRight, Calendar, Play, Headphones, CheckCircle, Wrench, Search } from "lucide-react";
+import {
+  MapPin,
+  ShieldCheck,
+  Lock,
+  Star,
+  ArrowRight,
+  Calendar,
+  Play,
+  Headphones,
+  CheckCircle,
+  Wrench,
+  Search,
+} from "lucide-react";
 import { useLanguage } from "../hooks/use-language";
 
 export default function HeroSection() {
@@ -49,7 +61,6 @@ export default function HeroSection() {
 
       {/* Content Wrapper */}
       <div className="relative z-10 flex-grow flex flex-col justify-start w-full max-w-[1600px] mx-auto px-4 md:px-5 pt-32 lg:pt-40 pb-28">
-        
         {/* Main Columns Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full items-center mb-10">
           {/* Left Column (Content) */}
@@ -62,11 +73,10 @@ export default function HeroSection() {
               className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.15] tracking-tight text-white mb-6 font-extrabold text-center lg:text-left flex flex-col gap-2 w-full"
             >
               <span className="block">
-                {t("hero.title1")}{" "}
-                <span className="text-[#22c55e]">{t("hero.title2")}</span>
+                {t("hero.title1")} <span className="text-[#22c55e]">{t("hero.title2")}</span>
               </span>
               <span className="block text-zinc-300 font-bold text-2xl sm:text-3xl md:text-[2.25rem] mt-1">
-                {t("hero.title3")}{" "}{t("hero.title4")}
+                {t("hero.title3")} {t("hero.title4")}
               </span>
             </motion.h1>
 
@@ -136,16 +146,12 @@ export default function HeroSection() {
               <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider">
                 Trusted by
               </span>
-              
+
               {/* Number */}
-              <span className="text-2xl text-[#22c55e] font-black mt-0.5">
-                10,000+
-              </span>
+              <span className="text-2xl text-[#22c55e] font-black mt-0.5">10,000+</span>
 
               {/* Label */}
-              <span className="text-xs text-white font-bold mb-3.5">
-                Happy Customers
-              </span>
+              <span className="text-xs text-white font-bold mb-3.5">Happy Customers</span>
 
               {/* Rating stars */}
               <div className="flex items-center gap-0.5 text-yellow-400 mb-1">
@@ -157,9 +163,7 @@ export default function HeroSection() {
               </div>
 
               {/* Score text */}
-              <span className="text-[11px] text-zinc-350 font-semibold">
-                4.8/5 (2.5k reviews)
-              </span>
+              <span className="text-[11px] text-zinc-350 font-semibold">4.8/5 (2.5k reviews)</span>
             </motion.div>
           </div>
         </div>
@@ -172,7 +176,10 @@ export default function HeroSection() {
           className="w-full bg-zinc-950/45 border border-white/10 backdrop-blur-md rounded-3xl p-5 md:p-6 shadow-2xl mt-16 mb-4 z-[5]"
         >
           {/* Mobile Simplified Search Bar (Fiverr mobile layout style) */}
-          <form onSubmit={handleSearch} className="md:hidden flex items-center bg-white rounded-2xl p-1.5 w-full shadow-inner border border-zinc-200">
+          <form
+            onSubmit={handleSearch}
+            className="md:hidden flex items-center bg-white rounded-2xl p-1.5 w-full shadow-inner border border-zinc-200"
+          >
             <input
               type="text"
               placeholder={t("hero.searchPlaceholder") || "Search for any service..."}
@@ -190,7 +197,10 @@ export default function HeroSection() {
           </form>
 
           {/* Desktop Full Booking Bar */}
-          <form onSubmit={handleSearch} className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 items-center w-full">
+          <form
+            onSubmit={handleSearch}
+            className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 items-center w-full"
+          >
             {/* Input 1: What service */}
             <div className="lg:col-span-4 bg-white rounded-2xl p-4 flex items-center gap-4 w-full h-20 shadow-inner text-left">
               <Wrench className="w-6 h-6 text-[#22c55e] shrink-0" />

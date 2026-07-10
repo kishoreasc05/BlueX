@@ -9,19 +9,22 @@ export default function CustomerStories() {
     {
       name: "Sarah M.",
       location: "Zurich",
-      review: "Found a verified electrician within 15 minutes. Secure payments through escrow gave me complete peace of mind.",
+      review:
+        "Found a verified electrician within 15 minutes. Secure payments through escrow gave me complete peace of mind.",
       initials: "SM",
     },
     {
       name: "Marc K.",
       location: "Bern",
-      review: "Very easy to book local trade professionals. All credentials and UID checks are already verified by BlueX.",
+      review:
+        "Very easy to book local trade professionals. All credentials and UID checks are already verified by BlueX.",
       initials: "MK",
     },
     {
       name: "Eleni S.",
       location: "Geneva",
-      review: "Highly recommend for anyone looking for reliable blue-collar services. The pricing is transparent and fair.",
+      review:
+        "Highly recommend for anyone looking for reliable blue-collar services. The pricing is transparent and fair.",
       initials: "ES",
     },
   ];
@@ -55,7 +58,9 @@ export default function CustomerStories() {
               </div>
               <div className="flex-grow font-sans">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-bold text-zinc-800">{rev.name} — {rev.location}</span>
+                  <span className="text-xs font-bold text-zinc-800">
+                    {rev.name} — {rev.location}
+                  </span>
                   <div className="flex gap-0.5">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-3 h-3 text-amber-500 fill-amber-500" />

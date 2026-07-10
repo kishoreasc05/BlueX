@@ -87,9 +87,7 @@ export default function EnterpriseModules() {
               className="text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6 text-zinc-900 font-bold leading-tight"
             >
               {t("trustProfile.title") && (
-                <span className="text-zinc-900 block mb-1">
-                  {t("trustProfile.title")}
-                </span>
+                <span className="text-zinc-900 block mb-1">{t("trustProfile.title")}</span>
               )}
               <span className="text-[#14a800]">{t("trustProfile.titleItalic")}</span>
             </motion.h2>
@@ -118,7 +116,9 @@ export default function EnterpriseModules() {
                   <ShieldCheck className="w-5 h-5 stroke-[2]" />
                 </div>
                 <div>
-                  <h4 className="text-zinc-800 font-bold text-sm">{t("trustProfile.card1Title")}</h4>
+                  <h4 className="text-zinc-800 font-bold text-sm">
+                    {t("trustProfile.card1Title")}
+                  </h4>
                   <p className="text-zinc-500 text-xs mt-0.5">{t("trustProfile.card1Desc")}</p>
                 </div>
               </div>
@@ -128,7 +128,9 @@ export default function EnterpriseModules() {
                   <Lock className="w-5 h-5 stroke-[2]" />
                 </div>
                 <div>
-                  <h4 className="text-zinc-800 font-bold text-sm">{t("trustProfile.card2Title")}</h4>
+                  <h4 className="text-zinc-800 font-bold text-sm">
+                    {t("trustProfile.card2Title")}
+                  </h4>
                   <p className="text-zinc-500 text-xs mt-0.5">{t("trustProfile.card2Desc")}</p>
                 </div>
               </div>
@@ -152,15 +154,15 @@ export default function EnterpriseModules() {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <h3 className="text-lg font-bold text-zinc-900 tracking-tight">
-                      Marc Keller
-                    </h3>
+                    <h3 className="text-lg font-bold text-zinc-900 tracking-tight">Marc Keller</h3>
                     <span className="text-[10px] font-bold text-[#14a800] bg-green-50 px-2 py-0.5 rounded-full border border-green-200 flex items-center gap-0.5">
                       <ShieldCheck className="w-3 h-3 text-[#14a800] fill-green-50" />
                       {t("trustProfile.badgeVerified")}
                     </span>
                   </div>
-                  <p className="text-xs text-zinc-500 font-semibold">Keller Plumbers &amp; Heating</p>
+                  <p className="text-xs text-zinc-500 font-semibold">
+                    Keller Plumbers &amp; Heating
+                  </p>
                   <div className="flex items-center gap-1 mt-1 text-zinc-400">
                     <MapPin className="w-3.5 h-3.5 text-zinc-400" />
                     <span className="text-xs font-semibold">
@@ -340,7 +342,9 @@ export default function EnterpriseModules() {
                 </div>
 
                 <h3 className="text-xl font-bold text-zinc-800 mb-3">{step.title}</h3>
-                <p className="text-zinc-600 text-sm leading-relaxed font-semibold">{step.description}</p>
+                <p className="text-zinc-600 text-sm leading-relaxed font-semibold">
+                  {step.description}
+                </p>
               </motion.div>
             ))}
           </div>

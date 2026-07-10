@@ -65,7 +65,8 @@ export default function IntegrationsSection() {
           className="text-left w-full mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 tracking-tight mb-4">
-            {t("categories.title")} <span className="text-[#14a800]">{t("categories.titleItalic")}</span>
+            {t("categories.title")}{" "}
+            <span className="text-[#14a800]">{t("categories.titleItalic")}</span>
           </h2>
           <p className="text-zinc-600 text-base md:text-lg max-w-2xl leading-relaxed">
             {t("categories.desc")}
@@ -105,9 +106,7 @@ export default function IntegrationsSection() {
               <div className="w-10 h-10 rounded-xl bg-green-50 border border-green-100 text-[#14a800] flex items-center justify-center mb-4 shrink-0">
                 <item.icon className="w-5 h-5 stroke-[2]" />
               </div>
-              <h4 className="font-bold text-zinc-800 mb-2 tracking-tight">
-                {item.title}
-              </h4>
+              <h4 className="font-bold text-zinc-800 mb-2 tracking-tight">{item.title}</h4>
               <p className="text-sm text-zinc-600 leading-relaxed">{item.desc}</p>
             </motion.div>
           ))}

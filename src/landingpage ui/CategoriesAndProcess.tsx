@@ -18,7 +18,7 @@ import {
   BarChart2,
   Check,
   ArrowRight,
-  Tv
+  Tv,
 } from "lucide-react";
 
 export default function CategoriesAndProcess() {
@@ -30,38 +30,38 @@ export default function CategoriesAndProcess() {
       icon: Wrench,
       name: t("categories.plumbing") || "Plumbing",
       desc: t("landingNew.categoriesList.plumbingDesc") || "Fix leaks, installs & more",
-      jobs: t("landingNew.categoriesList.plumbingJobs") || "1,250+ jobs"
+      jobs: t("landingNew.categoriesList.plumbingJobs") || "1,250+ jobs",
     },
     {
       icon: Zap,
       name: t("categories.electrical") || "Electrical",
       desc: t("landingNew.categoriesList.electricalDesc") || "Wiring, repairs & installs",
-      jobs: t("landingNew.categoriesList.electricalJobs") || "1,180+ jobs"
+      jobs: t("landingNew.categoriesList.electricalJobs") || "1,180+ jobs",
     },
     {
       icon: Paintbrush,
       name: t("categories.painting") || "Painting",
       desc: t("landingNew.categoriesList.paintingDesc") || "Interior & exterior painting",
-      jobs: t("landingNew.categoriesList.paintingJobs") || "980+ jobs"
+      jobs: t("landingNew.categoriesList.paintingJobs") || "980+ jobs",
     },
     {
       icon: Hammer,
       name: t("categories.carpentry") || "Carpentry",
       desc: t("landingNew.categoriesList.carpentryDesc") || "Woodwork & furniture",
-      jobs: t("landingNew.categoriesList.carpentryJobs") || "860+ jobs"
+      jobs: t("landingNew.categoriesList.carpentryJobs") || "860+ jobs",
     },
     {
       icon: Sparkles,
       name: t("categories.cleaning") || "Cleaning",
       desc: t("landingNew.categoriesList.cleaningDesc") || "Home & office cleaning",
-      jobs: t("landingNew.categoriesList.cleaningJobs") || "1,540+ jobs"
+      jobs: t("landingNew.categoriesList.cleaningJobs") || "1,540+ jobs",
     },
     {
       icon: Tv,
       name: t("landingNew.categoriesList.applianceRepair") || "Appliance Repair",
       desc: t("landingNew.categoriesList.applianceRepairDesc") || "Repair & maintenance",
-      jobs: t("landingNew.categoriesList.applianceRepairJobs") || "670+ jobs"
-    }
+      jobs: t("landingNew.categoriesList.applianceRepairJobs") || "670+ jobs",
+    },
   ];
 
   const steps = [
@@ -69,26 +69,28 @@ export default function CategoriesAndProcess() {
       number: "1",
       icon: Search,
       title: t("landingNew.steps.search") || "Search",
-      desc: t("landingNew.steps.searchDesc") || "Tell us what you need done in just a few clicks."
+      desc: t("landingNew.steps.searchDesc") || "Tell us what you need done in just a few clicks.",
     },
     {
       number: "2",
       icon: UserCheck,
       title: t("landingNew.steps.choose") || "Choose",
-      desc: t("landingNew.steps.chooseDesc") || "Compare profiles, reviews and prices. Pick the best fit."
+      desc:
+        t("landingNew.steps.chooseDesc") ||
+        "Compare profiles, reviews and prices. Pick the best fit.",
     },
     {
       number: "3",
       icon: Calendar,
       title: t("landingNew.steps.book") || "Book",
-      desc: t("landingNew.steps.bookDesc") || "Schedule a time that works for you."
+      desc: t("landingNew.steps.bookDesc") || "Schedule a time that works for you.",
     },
     {
       number: "4",
       icon: CheckCircle,
       title: t("landingNew.steps.done") || "Done",
-      desc: t("landingNew.steps.doneDesc") || "Relax while the job gets done right."
-    }
+      desc: t("landingNew.steps.doneDesc") || "Relax while the job gets done right.",
+    },
   ];
 
   const nextSlide = () => {
@@ -102,16 +104,17 @@ export default function CategoriesAndProcess() {
   return (
     <section className="w-full bg-white py-16 md:py-24 px-6 font-sans relative z-20 overflow-hidden text-center">
       <div className="max-w-[1200px] mx-auto flex flex-col items-center">
-        
         {/* Popular Categories Heading */}
         <span className="text-[#14a800] text-[11px] font-bold uppercase tracking-[0.2em] mb-2 leading-none">
           {t("landingNew.categoriesList.popularCategoriesBadge") || "POPULAR CATEGORIES"}
         </span>
         <h2 className="text-2xl md:text-3xl font-extrabold text-zinc-900 leading-tight mb-2 tracking-tight">
-          {t("landingNew.categoriesList.popularCategoriesTitle") || "Find the Right Professional for Any Job"}
+          {t("landingNew.categoriesList.popularCategoriesTitle") ||
+            "Find the Right Professional for Any Job"}
         </h2>
         <p className="text-zinc-500 text-xs font-semibold mb-8 max-w-[420px] leading-relaxed">
-          {t("landingNew.categoriesList.popularCategoriesDesc") || "From home repairs to everyday tasks, we've got you covered."}
+          {t("landingNew.categoriesList.popularCategoriesDesc") ||
+            "From home repairs to everyday tasks, we've got you covered."}
         </p>
 
         {/* Categories Grid (Mobile Only - 3x2 Layout like Fiverr mobile screenshot) */}
@@ -132,7 +135,7 @@ export default function CategoriesAndProcess() {
                 <span className="text-xs font-extrabold text-zinc-800 tracking-tight block">
                   {cat.name}
                 </span>
-                
+
                 {/* Job Count Badge */}
                 <span className="text-[9px] text-[#14a800] font-black bg-[#f4fbf4] border border-green-100 px-2 py-0.5 rounded-lg mt-2 block">
                   {cat.jobs}
@@ -177,7 +180,7 @@ export default function CategoriesAndProcess() {
                     <span className="text-[10px] text-zinc-400 font-bold block mt-1 leading-snug">
                       {cat.desc}
                     </span>
-                    
+
                     {/* Job Count Badge */}
                     <span className="text-[9px] text-[#14a800] font-black bg-[#f4fbf4] border border-green-100 px-2 py-0.5 rounded-lg mt-3 block">
                       {cat.jobs}
@@ -202,7 +205,9 @@ export default function CategoriesAndProcess() {
           href="/signin"
           className="h-10 px-6 rounded-full border border-zinc-200 hover:border-[#14a800] bg-white hover:bg-zinc-50 text-zinc-700 text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer mb-16"
         >
-          <span>{t("landingNew.categoriesList.exploreCategories") || "Explore All Categories"}</span>
+          <span>
+            {t("landingNew.categoriesList.exploreCategories") || "Explore All Categories"}
+          </span>
           <ArrowRight className="w-3.5 h-3.5 text-[#14a800]" />
         </a>
 
@@ -212,13 +217,14 @@ export default function CategoriesAndProcess() {
             {t("landingNew.categoriesList.howItWorksBadge") || "HOW IT WORKS"}
           </span>
           <h2 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight mb-10 text-center sm:text-left">
-            {t("landingNew.categoriesList.howItWorksTitle") || "Get Your Job Done in 4 Simple Steps"}
+            {t("landingNew.categoriesList.howItWorksTitle") ||
+              "Get Your Job Done in 4 Simple Steps"}
           </h2>
 
           <div className="relative flex flex-col sm:flex-row justify-between items-start gap-8 sm:gap-4 w-full">
             {/* Horizontal dotted connector line */}
             <div className="absolute top-8 left-12 right-12 border-t border-dashed border-white/10 z-0 hidden sm:block" />
-            
+
             {/* Vertical dotted connector line */}
             <div className="absolute top-10 bottom-10 left-8 border-l border-dashed border-white/10 z-0 block sm:hidden" />
 
@@ -242,9 +248,7 @@ export default function CategoriesAndProcess() {
 
                   {/* Step Description */}
                   <div className="flex flex-col sm:items-center">
-                    <span className="text-sm font-extrabold text-white block">
-                      {step.title}
-                    </span>
+                    <span className="text-sm font-extrabold text-white block">{step.title}</span>
                     <p className="text-[11px] text-zinc-400 mt-1 leading-relaxed sm:max-w-[130px] font-medium">
                       {step.desc}
                     </p>
@@ -269,12 +273,15 @@ export default function CategoriesAndProcess() {
             <div className="lg:col-span-5 flex flex-col items-start pr-0 lg:pr-8">
               <h2 className="text-3xl font-extrabold leading-tight tracking-tight mb-3">
                 {t("landingNew.providerBanner.title1") || "Earn on Your Skills."} <br />
-                <span className="text-[#22c55e]">{t("landingNew.providerBanner.title2") || "Be Your Own Boss."}</span>
+                <span className="text-[#22c55e]">
+                  {t("landingNew.providerBanner.title2") || "Be Your Own Boss."}
+                </span>
               </h2>
               <p className="text-zinc-400 text-xs font-semibold leading-relaxed mb-6 max-w-[360px]">
-                {t("landingNew.providerBanner.desc") || "Join thousands of verified professionals earning on their terms. Work when you want, where you want."}
+                {t("landingNew.providerBanner.desc") ||
+                  "Join thousands of verified professionals earning on their terms. Work when you want, where you want."}
               </p>
-              
+
               <a
                 href="/signin?role=provider"
                 className="h-11 px-6 rounded-xl bg-[#14a800] hover:bg-[#108a00] text-white text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer shadow-lg shadow-green-900/20"
@@ -295,7 +302,8 @@ export default function CategoriesAndProcess() {
                   {t("landingNew.providerBanner.feat1Title") || "Grow Your Business"}
                 </h4>
                 <p className="text-[10px] text-zinc-400 mt-1 leading-normal font-medium">
-                  {t("landingNew.providerBanner.feat1Desc") || "Get more customers and build your reputation."}
+                  {t("landingNew.providerBanner.feat1Desc") ||
+                    "Get more customers and build your reputation."}
                 </p>
               </div>
 
@@ -308,7 +316,8 @@ export default function CategoriesAndProcess() {
                   {t("landingNew.providerBanner.feat2Title") || "Flexible Schedule"}
                 </h4>
                 <p className="text-[10px] text-zinc-400 mt-1 leading-normal font-medium">
-                  {t("landingNew.providerBanner.feat2Desc") || "Work on your own time and choose jobs you like."}
+                  {t("landingNew.providerBanner.feat2Desc") ||
+                    "Work on your own time and choose jobs you like."}
                 </p>
               </div>
 
@@ -321,7 +330,8 @@ export default function CategoriesAndProcess() {
                   {t("landingNew.providerBanner.feat3Title") || "Secure Payments"}
                 </h4>
                 <p className="text-[10px] text-zinc-400 mt-1 leading-normal font-medium">
-                  {t("landingNew.providerBanner.feat3Desc") || "Get paid safely and on time, every time."}
+                  {t("landingNew.providerBanner.feat3Desc") ||
+                    "Get paid safely and on time, every time."}
                 </p>
               </div>
 
@@ -334,11 +344,12 @@ export default function CategoriesAndProcess() {
                   {t("landingNew.providerBanner.feat4Title") || "More Earnings"}
                 </h4>
                 <p className="text-[10px] text-zinc-400 mt-1 leading-normal font-medium">
-                  {t("landingNew.providerBanner.feat4Desc") || "Set your own rates and increase your income."}
+                  {t("landingNew.providerBanner.feat4Desc") ||
+                    "Set your own rates and increase your income."}
                 </p>
               </div>
             </div>
-            
+
             {/* Blank gap to keep space for overlapping absolute image */}
             <div className="hidden lg:block lg:col-span-2" />
           </div>
@@ -365,7 +376,8 @@ export default function CategoriesAndProcess() {
                 />
               </div>
               <span className="text-[10px] text-zinc-550 font-bold tracking-tight text-left">
-                {t("landingNew.providerBanner.joinText") || "Join 8,000+ professionals already growing with BlueX.ch"}
+                {t("landingNew.providerBanner.joinText") ||
+                  "Join 8,000+ professionals already growing with BlueX.ch"}
               </span>
             </div>
 
@@ -386,7 +398,6 @@ export default function CategoriesAndProcess() {
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );

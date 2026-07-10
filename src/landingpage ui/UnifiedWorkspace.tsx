@@ -68,9 +68,7 @@ export default function UnifiedWorkspace() {
               transition={{ delay: idx * 0.1 }}
               className="group relative flex flex-col p-8 rounded-2xl bg-white border border-zinc-200 shadow-sm hover:border-[#14a800] hover:shadow-md transition-all duration-300"
             >
-              <div
-                className="w-14 h-14 rounded-xl flex items-center justify-center bg-green-50 border border-green-100 mb-8 relative z-10 group-hover:scale-105 transition-transform duration-300 shadow-sm text-[#14a800]"
-              >
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-green-50 border border-green-100 mb-8 relative z-10 group-hover:scale-105 transition-transform duration-300 shadow-sm text-[#14a800]">
                 <feature.icon className="w-7 h-7 stroke-[1.75] relative z-10" />
               </div>
 
@@ -78,7 +76,9 @@ export default function UnifiedWorkspace() {
                 <h3 className="text-xl font-bold text-zinc-800 mb-3 tracking-tight">
                   {feature.title}
                 </h3>
-                <p className="text-zinc-600 leading-relaxed text-sm font-semibold">{feature.description}</p>
+                <p className="text-zinc-600 leading-relaxed text-sm font-semibold">
+                  {feature.description}
+                </p>
               </div>
             </motion.div>
           ))}

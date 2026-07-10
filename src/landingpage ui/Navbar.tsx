@@ -27,7 +27,7 @@ export default function Navbar() {
     es: "Unirse",
     sq: "Bashkohu",
     sr: "Pridruži se",
-    en: "Join"
+    en: "Join",
   };
   const joinText = joinTexts[language] || "Join";
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -59,9 +59,10 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const headerClasses = (isScrolled || mobileOpen)
-    ? "fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-body py-3.5 bg-white border-b border-zinc-200 shadow-sm"
-    : "fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-body py-5 bg-transparent border-b border-transparent shadow-none";
+  const headerClasses =
+    isScrolled || mobileOpen
+      ? "fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-body py-3.5 bg-white border-b border-zinc-200 shadow-sm"
+      : "fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-body py-5 bg-transparent border-b border-transparent shadow-none";
 
   return (
     <header className={headerClasses}>
@@ -69,7 +70,9 @@ export default function Navbar() {
         {/* Mobile toggle (Hamburger on Left) */}
         <button
           className={`lg:hidden p-2 transition-colors duration-300 relative z-10 ${
-            (isScrolled || mobileOpen) ? "text-zinc-550 hover:text-zinc-900" : "text-white/90 hover:text-white"
+            isScrolled || mobileOpen
+              ? "text-zinc-550 hover:text-zinc-900"
+              : "text-white/90 hover:text-white"
           }`}
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
@@ -81,7 +84,7 @@ export default function Navbar() {
         <a
           href="/"
           className={`flex items-center gap-2 font-extrabold text-2xl tracking-tight shrink-0 font-sans transition-colors duration-300 absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 z-10 ${
-            (isScrolled || mobileOpen) ? "text-[#001e00]" : "text-white"
+            isScrolled || mobileOpen ? "text-[#001e00]" : "text-white"
           }`}
         >
           <div className="flex items-center justify-center w-7 h-7 text-[#14a800] shrink-0">
@@ -101,9 +104,14 @@ export default function Navbar() {
             </svg>
           </div>
           <span className="flex items-baseline">
-            BlueX<span className={`transition-colors duration-300 ${
-              (isScrolled || mobileOpen) ? "text-zinc-500" : "text-white/60"
-            } font-normal text-sm`}>.ch</span>
+            BlueX
+            <span
+              className={`transition-colors duration-300 ${
+                isScrolled || mobileOpen ? "text-zinc-500" : "text-white/60"
+              } font-normal text-sm`}
+            >
+              .ch
+            </span>
           </span>
         </a>
 
@@ -114,7 +122,9 @@ export default function Navbar() {
               key={nav.name}
               href={nav.href}
               className={`text-[15px] font-semibold transition-colors duration-300 px-2 py-1 whitespace-nowrap font-sans ${
-                (isScrolled || mobileOpen) ? "text-zinc-700 hover:text-[#14a800]" : "text-white/90 hover:text-green-400"
+                isScrolled || mobileOpen
+                  ? "text-zinc-700 hover:text-[#14a800]"
+                  : "text-white/90 hover:text-green-400"
               }`}
             >
               {nav.name}
@@ -128,7 +138,7 @@ export default function Navbar() {
           <a
             href="/signin?role=client&mode=signup"
             className={`lg:hidden px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 border ${
-              (isScrolled || mobileOpen)
+              isScrolled || mobileOpen
                 ? "bg-zinc-950 border-zinc-950 text-white hover:bg-zinc-900"
                 : "bg-white/10 border-white/30 text-white hover:bg-white/20"
             }`}
@@ -143,17 +153,19 @@ export default function Navbar() {
               <button
                 onClick={() => setLangOpen(!langOpen)}
                 className={`flex items-center gap-1.5 text-sm font-semibold transition-all duration-300 px-2 py-1.5 rounded-lg font-sans ${
-                  (isScrolled || mobileOpen)
+                  isScrolled || mobileOpen
                     ? "text-zinc-650 hover:text-zinc-900 hover:bg-zinc-50"
                     : "text-white/90 hover:text-white hover:bg-white/10"
                 }`}
                 aria-expanded={langOpen}
                 aria-haspopup="true"
               >
-                <Globe className={`w-4 h-4 transition-colors duration-300 ${(isScrolled || mobileOpen) ? "text-zinc-500" : "text-white/80"}`} />
+                <Globe
+                  className={`w-4 h-4 transition-colors duration-300 ${isScrolled || mobileOpen ? "text-zinc-500" : "text-white/80"}`}
+                />
                 <span>{languages.find((l) => l.code === language)?.label || "DE"}</span>
                 <ChevronDown
-                  className={`w-3.5 h-3.5 transition-all duration-300 ${(isScrolled || mobileOpen) ? "text-zinc-500" : "text-white/80"} ${langOpen ? "rotate-180" : ""}`}
+                  className={`w-3.5 h-3.5 transition-all duration-300 ${isScrolled || mobileOpen ? "text-zinc-500" : "text-white/80"} ${langOpen ? "rotate-180" : ""}`}
                 />
               </button>
 
@@ -196,7 +208,11 @@ export default function Navbar() {
                                         ? "Shqip"
                                         : "Srpski"}
                         </span>
-                        <span className={`text-[10px] ${language === lang.code ? "text-white/80" : "text-zinc-400"}`}>{lang.label}</span>
+                        <span
+                          className={`text-[10px] ${language === lang.code ? "text-white/80" : "text-zinc-400"}`}
+                        >
+                          {lang.label}
+                        </span>
                       </button>
                     ))}
                   </motion.div>
@@ -207,7 +223,9 @@ export default function Navbar() {
             <a
               href="/signin"
               className={`text-[15px] font-semibold transition-colors duration-300 font-sans ${
-                (isScrolled || mobileOpen) ? "text-zinc-700 hover:text-[#14a800]" : "text-white/90 hover:text-green-400"
+                isScrolled || mobileOpen
+                  ? "text-zinc-700 hover:text-[#14a800]"
+                  : "text-white/90 hover:text-green-400"
               }`}
             >
               {t("nav.logIn")}

@@ -87,7 +87,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Find, book, and pay vetted local Swiss tradespeople and service experts. Escrow protection, instant matchmaking, and AI-powered business tools.",
       },
       { name: "author", content: "BlueX" },
-      { property: "og:title", content: "BlueX — On-Demand Gig Marketplace for Swiss Trades & Services" },
+      {
+        property: "og:title",
+        content: "BlueX — On-Demand Gig Marketplace for Swiss Trades & Services",
+      },
       {
         property: "og:description",
         content:
