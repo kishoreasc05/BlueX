@@ -78,9 +78,7 @@ export default function WorkflowAutomation() {
           </div>
           <h2 className="font-display text-5xl md:text-7xl tracking-tight text-zinc-900 leading-[1.1] mb-6 font-light">
             {t("howItWorks.title")}{" "}
-            <span className="text-blue-600 font-medium italic">
-              {t("howItWorks.titleItalic")}
-            </span>
+            <span className="text-blue-600 font-medium italic">{t("howItWorks.titleItalic")}</span>
           </h2>
           <p className="text-zinc-600 text-lg md:text-xl max-w-[600px] mx-auto leading-relaxed">
             {t("howItWorks.desc")}
