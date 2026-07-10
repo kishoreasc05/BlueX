@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { MapPin, ShieldCheck, Lock, Star, ArrowRight, Calendar, Play, Headphones, CheckCircle, Wrench } from "lucide-react";
+import { MapPin, ShieldCheck, Lock, Star, ArrowRight, Calendar, Play, Headphones, CheckCircle, Wrench, Search } from "lucide-react";
 import { useLanguage } from "../hooks/use-language";
 
 export default function HeroSection() {
@@ -53,13 +53,13 @@ export default function HeroSection() {
         {/* Main Columns Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full items-center mb-10">
           {/* Left Column (Content) */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left lg:pl-8">
+          <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left lg:pl-8 w-full">
             {/* Headline */}
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.15] tracking-tight text-white mb-6 font-extrabold text-left flex flex-col gap-2"
+              className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.15] tracking-tight text-white mb-6 font-extrabold text-center lg:text-left flex flex-col gap-2 w-full"
             >
               <span className="block">
                 {t("hero.title1")}{" "}
@@ -75,7 +75,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-zinc-300 font-medium text-base md:text-lg max-w-[490px] leading-relaxed mb-8"
+              className="text-zinc-300 font-medium text-base md:text-lg max-w-[490px] leading-relaxed mb-8 text-center lg:text-left mx-auto lg:mx-0"
             >
               {t("hero.subtitle")}
             </motion.p>
@@ -85,7 +85,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-row items-center gap-4 w-full"
+              className="flex flex-row items-center justify-center lg:justify-start gap-4 w-full"
             >
               <Link
                 to="/signin"
@@ -171,7 +171,26 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="w-full bg-zinc-950/45 border border-white/10 backdrop-blur-md rounded-3xl p-5 md:p-6 shadow-2xl mt-16 mb-4 z-[5]"
         >
-          <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 items-center w-full">
+          {/* Mobile Simplified Search Bar (Fiverr mobile layout style) */}
+          <form onSubmit={handleSearch} className="md:hidden flex items-center bg-white rounded-2xl p-1.5 w-full shadow-inner border border-zinc-200">
+            <input
+              type="text"
+              placeholder={t("hero.searchPlaceholder") || "Search for any service..."}
+              value={serviceQuery}
+              onChange={(e) => setServiceQuery(e.target.value)}
+              className="flex-grow pl-3 text-[14px] font-bold text-zinc-800 placeholder-zinc-400 focus:outline-none bg-transparent"
+            />
+            <button
+              type="submit"
+              className="w-11 h-11 rounded-xl bg-[#14a800] hover:bg-[#108a00] text-white flex items-center justify-center transition-colors cursor-pointer shrink-0"
+              aria-label="Search"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+          </form>
+
+          {/* Desktop Full Booking Bar */}
+          <form onSubmit={handleSearch} className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 items-center w-full">
             {/* Input 1: What service */}
             <div className="lg:col-span-4 bg-white rounded-2xl p-4 flex items-center gap-4 w-full h-20 shadow-inner text-left">
               <Wrench className="w-6 h-6 text-[#22c55e] shrink-0" />
