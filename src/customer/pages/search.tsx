@@ -20,11 +20,15 @@ import {
   Calendar,
   AlertTriangle,
   BadgeCheck,
+  Building,
+  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/kpi-card";
-import { getRouteApi } from "@tanstack/react-router";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import { MOCK_PROVIDERS } from "@/customer/mockData";
+import { EmergencyDialog } from "@/customer/components/emergency-dialog";
 
 const routeApi = getRouteApi("/_authenticated/client/search");
 
@@ -138,17 +142,40 @@ function RealMap({ providers }: { providers: any[] }) {
    SEARCH PAGE COMPONENT — Real Data & Real Map View
    ═══════════════════════════════════════════════════════ */
 export function SearchPage() {
+  const navigate = useNavigate();
   const { q } = routeApi.useSearch();
   const [searchTerm, setSearchTerm] = useState(q || "");
   const [whereTerm, setWhereTerm] = useState("Zurich, Switzerland");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(q || null);
+  const [providerType, setProviderType] = useState<string>("all");
   const [favorites, setFavorites] = useState<Record<string, boolean>>({});
+  const [emergencyOpen, setEmergencyOpen] = useState(false);
+
+  // Sync router search query with local state
+  useEffect(() => {
+    setSearchTerm(q || "");
+    if (q) {
+      const matchCategory = ["plumber", "electrician", "cleaner", "gardener"].find(
+        (slug) => slug === q.toLowerCase(),
+      );
+      if (matchCategory) {
+        setSelectedCategory(matchCategory);
+      }
+    } else {
+      setSelectedCategory(null);
+    }
+  }, [q]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate({ to: "/client/search", search: { q: searchTerm || undefined } as any });
+  };
 
   // Query Real Providers (Contractors) from DB
   const { data: providers, isLoading } = useQuery({
     queryKey: ["searchProviders", selectedCategory, searchTerm],
     queryFn: async () => {
-      let query = supabase
+      const query = supabase
         .from("contractors")
         .select(
           `
@@ -162,13 +189,6 @@ export function SearchPage() {
         )
         .eq("status", "active");
 
-      if (selectedCategory) {
-        query = query.ilike("specialty", `%${selectedCategory}%`);
-      }
-      if (searchTerm) {
-        query = query.ilike("name", `%${searchTerm}%`);
-      }
-
       const { data, error } = await query;
       if (error) throw error;
       return data || [];
@@ -180,7 +200,61 @@ export function SearchPage() {
     setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const totalResults = providers?.length || 0;
+  // Convert and merge database records with premium local mock providers
+  const dbProvidersConverted = (providers || []).map((p: any) => ({
+    id: p.id,
+    name: p.name,
+    type: "private" as const,
+    specialty: (p.specialty || "").toLowerCase(),
+    specialtyLabel: p.specialty || "Contractor",
+    rating: 4.8,
+    reviewsCount: 12,
+    hourlyRate: Number(p.hourly_rate || 90),
+    responseTime: "30 min",
+    completionRate: "95%",
+    jobsCompleted: 45,
+    languages: "DE, EN",
+    avatar: `https://i.pravatar.cc/150?u=${p.name.replace(/\s+/g, "").toLowerCase()}`,
+    about: p.notes || "Professional blue-collar service provider registered on BlueX.",
+    services: [p.specialty || "General Contractor Services"],
+    reviews: [],
+    faqs: [],
+  }));
+
+  const allProvidersList = [...dbProvidersConverted, ...Object.values(MOCK_PROVIDERS)];
+
+  // Apply filters locally for rapid interactive testing
+  const filteredProviders = allProvidersList.filter((p) => {
+    // 1. Specialty Category filter
+    if (selectedCategory) {
+      // Check if provider specialty matches category slug
+      if (!p.specialty.toLowerCase().includes(selectedCategory.toLowerCase())) {
+        return false;
+      }
+    }
+
+    // 2. Search term filter (name, notes/about, or specialty label)
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      const matchesName = p.name.toLowerCase().includes(term);
+      const matchesAbout = p.about.toLowerCase().includes(term);
+      const matchesSpecialty = p.specialtyLabel.toLowerCase().includes(term);
+      if (!matchesName && !matchesAbout && !matchesSpecialty) {
+        return false;
+      }
+    }
+
+    // 3. Provider Type filter (Company vs Private)
+    if (providerType !== "all") {
+      if (p.type !== providerType) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+
+  const totalResults = filteredProviders.length;
   const resultNoun = selectedCategory === "plumber" ? "plumbers" : "professionals";
 
   return (
@@ -199,7 +273,10 @@ export function SearchPage() {
       </div>
 
       {/* ── 2. SEARCH BAR CARD ── */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5">
+      <form
+        onSubmit={handleSearchSubmit}
+        className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5"
+      >
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-3 md:gap-4 items-end">
           <div>
             <label className="text-xs font-semibold text-slate-500 mb-1.5 block">
@@ -239,11 +316,14 @@ export function SearchPage() {
               />
             </div>
           </div>
-          <Button className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-md shadow-blue-600/20">
+          <Button
+            type="submit"
+            className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-md shadow-blue-600/20"
+          >
             Search
           </Button>
         </div>
-      </div>
+      </form>
 
       {/* ── 3. CATEGORY PILLS ── */}
       <div className="flex flex-wrap items-center gap-2">
@@ -253,7 +333,10 @@ export function SearchPage() {
           return (
             <button
               key={tab.name}
-              onClick={() => setSelectedCategory(tab.slug)}
+              onClick={() => {
+                setSelectedCategory(tab.slug);
+                navigate({ to: "/client/search", search: { q: tab.slug || undefined } as any });
+              }}
               className={cn(
                 "flex items-center gap-1.5 px-4.5 py-2 rounded-full border text-xs font-semibold transition-all cursor-pointer",
                 isSelected
@@ -288,6 +371,21 @@ export function SearchPage() {
             <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
           </button>
         ))}
+
+        {/* Interactive Provider Type Filter */}
+        <div className="relative">
+          <select
+            value={providerType}
+            onChange={(e) => setProviderType(e.target.value)}
+            className="appearance-none flex items-center gap-2 pl-4 pr-10 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
+          >
+            <option value="all">Provider Type: All</option>
+            <option value="company">🏢 Companies Only</option>
+            <option value="private">👤 Private Individuals Only</option>
+          </select>
+          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
+        </div>
+
         <button className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors ml-auto cursor-pointer">
           <SlidersHorizontal className="h-3.5 w-3.5 text-slate-500" />
           Filters
@@ -306,6 +404,7 @@ export function SearchPage() {
               onClick={() => {
                 setSearchTerm("");
                 setSelectedCategory(null);
+                setProviderType("all");
               }}
               className="text-xs text-blue-600 font-semibold hover:text-blue-700"
             >
@@ -319,16 +418,15 @@ export function SearchPage() {
               <div className="py-20 text-center text-sm text-slate-500">
                 Searching for providers...
               </div>
-            ) : !providers || providers.length === 0 ? (
+            ) : !filteredProviders || filteredProviders.length === 0 ? (
               <EmptyState
                 title="No service providers found"
-                description="We couldn't find any active contractors matching your query in the database. Open the Provider portal to register contractors."
+                description="We couldn't find any active providers matching your filter criteria. Try expanding your filters or search term."
                 icon={Search}
               />
             ) : (
-              providers.map((p) => {
+              filteredProviders.map((p) => {
                 const isFav = !!favorites[p.id];
-                const avatarSeed = p.name.replace(/\s+/g, "").toLowerCase();
                 return (
                   <div
                     key={p.id}
@@ -336,29 +434,34 @@ export function SearchPage() {
                   >
                     {/* Photo */}
                     <div className="h-24 w-24 rounded-2xl overflow-hidden bg-slate-100 shrink-0 relative mx-auto md:mx-0">
-                      <img
-                        src={`https://i.pravatar.cc/150?u=${avatarSeed}`}
-                        alt={p.name}
-                        className="h-full w-full object-cover"
-                      />
+                      <img src={p.avatar} alt={p.name} className="h-full w-full object-cover" />
                     </div>
 
                     {/* Main Details */}
                     <div className="flex-1 space-y-1.5 text-center md:text-left">
-                      <div className="flex flex-col md:flex-row md:items-center gap-1.5 justify-center md:justify-start">
-                        <span className="text-sm font-bold text-slate-900 flex items-center gap-1.5 justify-center md:justify-start">
+                      <div className="flex flex-col md:flex-row md:items-center gap-2 justify-center md:justify-start">
+                        <span className="text-sm font-bold text-slate-900 flex items-center gap-1 justify-center md:justify-start">
                           {p.name}
                           <BadgeCheck className="h-4 w-4 text-blue-500 fill-blue-500/10" />
                         </span>
+
+                        {/* Provider Type Badge */}
+                        {p.type === "company" ? (
+                          <span className="inline-flex items-center gap-1 text-[9px] font-bold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100/50 uppercase tracking-wider">
+                            <Building className="h-2.5 w-2.5" /> Company
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-[9px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100/50 uppercase tracking-wider">
+                            <User className="h-2.5 w-2.5" /> Private
+                          </span>
+                        )}
                       </div>
-                      <div className="text-xs text-slate-400 font-semibold">
-                        {p.specialty || "Contractor"}
-                      </div>
+                      <div className="text-xs text-slate-400 font-semibold">{p.specialtyLabel}</div>
 
                       {/* Notes / Description */}
-                      {p.notes && (
+                      {p.about && (
                         <p className="text-xs text-slate-500 line-clamp-2 mt-1 leading-relaxed">
-                          {p.notes}
+                          {p.about}
                         </p>
                       )}
 
@@ -367,6 +470,11 @@ export function SearchPage() {
                         <span className="flex items-center gap-1">💼 Swiss Certified</span>
                         <span className="flex items-center gap-1 text-blue-600">✓ Verified</span>
                         <span className="flex items-center gap-1 text-emerald-600">🛡️ Insured</span>
+                        {p.type === "private" && (
+                          <span className="flex items-center gap-1 text-violet-600 font-bold">
+                            ⚖️ Payroll Automated
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -375,7 +483,7 @@ export function SearchPage() {
                       {/* Price */}
                       <div>
                         <div className="text-lg font-black text-slate-900 leading-tight">
-                          CHF {p.hourly_rate ? Number(p.hourly_rate).toFixed(0) : "95"}
+                          CHF {Number(p.hourlyRate).toFixed(0)}
                         </div>
                         <div className="text-[10px] text-slate-400 font-semibold uppercase">
                           per hour
@@ -387,10 +495,16 @@ export function SearchPage() {
 
                       {/* Action buttons */}
                       <div className="flex flex-col gap-2 w-full sm:w-auto md:w-36">
-                        <button className="h-9 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition-colors shadow-sm cursor-pointer">
+                        <button
+                          onClick={() => navigate({ to: `/client/providers/${p.id}` as any })}
+                          className="h-9 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition-colors shadow-sm cursor-pointer"
+                        >
                           View Profile
                         </button>
-                        <button className="h-9 px-4 rounded-xl border border-blue-200 bg-white hover:bg-blue-50 text-blue-600 text-xs font-semibold transition-colors cursor-pointer">
+                        <button
+                          onClick={() => navigate({ to: `/client/book/${p.id}` as any })}
+                          className="h-9 px-4 rounded-xl border border-blue-200 bg-white hover:bg-blue-50 text-blue-600 text-xs font-semibold transition-colors shadow-sm cursor-pointer"
+                        >
                           Book Now
                         </button>
                       </div>
@@ -427,59 +541,7 @@ export function SearchPage() {
             </div>
             {/* Real OSM Map Widget */}
             <div className="h-72 bg-slate-50 rounded-xl overflow-hidden relative">
-              <RealMap providers={providers || []} />
-            </div>
-          </div>
-
-          {/* Why choose BlueX.ch */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
-            <h3 className="text-sm font-bold text-slate-900 mb-4">Why choose BlueX.ch?</h3>
-            <div className="space-y-4">
-              {[
-                {
-                  icon: BadgeCheck,
-                  title: "Verified Professionals",
-                  desc: "All professionals are background checked",
-                  color: "text-blue-500",
-                  bg: "bg-blue-50",
-                },
-                {
-                  icon: Shield,
-                  title: "Secure Payments",
-                  desc: "Your payments are safe and protected",
-                  color: "text-emerald-500",
-                  bg: "bg-emerald-50",
-                },
-                {
-                  icon: Star,
-                  title: "Satisfaction Guarantee",
-                  desc: "We're here to make it right",
-                  color: "text-violet-500",
-                  bg: "bg-violet-50",
-                },
-                {
-                  icon: Headphones,
-                  title: "24/7 Customer Support",
-                  desc: "Get help anytime you need it",
-                  color: "text-amber-500",
-                  bg: "bg-amber-50",
-                },
-              ].map((item) => (
-                <div key={item.title} className="flex gap-3">
-                  <div
-                    className={cn(
-                      "h-8 w-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5",
-                      item.bg,
-                    )}
-                  >
-                    <item.icon className={cn("h-4.5 w-4.5", item.color)} />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-800">{item.title}</div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">{item.desc}</div>
-                  </div>
-                </div>
-              ))}
+              <RealMap providers={filteredProviders} />
             </div>
           </div>
 
@@ -491,7 +553,10 @@ export function SearchPage() {
                 <p className="text-[11px] text-slate-400 leading-relaxed">
                   Our emergency service is available 24/7
                 </p>
-                <button className="mt-3 flex items-center gap-1.5 text-red-600 text-xs font-bold px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 transition-colors cursor-pointer">
+                <button
+                  onClick={() => setEmergencyOpen(true)}
+                  className="mt-3 flex items-center gap-1.5 text-red-600 text-xs font-bold px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 transition-colors cursor-pointer"
+                >
                   <AlertTriangle className="h-3.5 w-3.5 text-red-500" />
                   Emergency Service
                 </button>
@@ -505,6 +570,7 @@ export function SearchPage() {
           </div>
         </div>
       </div>
+      <EmergencyDialog open={emergencyOpen} onOpenChange={setEmergencyOpen} />
     </div>
   );
 }

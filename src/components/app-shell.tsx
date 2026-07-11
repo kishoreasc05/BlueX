@@ -63,30 +63,18 @@ import { CreateOrgDialog } from "@/components/create-org-dialog";
    ────────────────────────────────────────────────────── */
 const clientNavGroups = [
   {
-    items: [{ to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, highlight: true }],
-  },
-  {
-    label: "CLIENT",
     items: [
-      { to: "/client/bookings", label: "My Bookings", icon: Calendar },
-      { to: "/notifications", label: "Messages", icon: MessageSquare, badge: "3" },
-      { to: "/settings", label: "Favorites", icon: Heart },
-      { to: "/payments", label: "Payments", icon: Wallet },
-      { to: "/settings", label: "Reviews", icon: Star },
-    ],
-  },
-  {
-    label: "DISCOVER",
-    items: [{ to: "/client/search", label: "Find Services", icon: Search }],
-  },
-  {
-    label: "SETTINGS",
-    items: [
-      { to: "/settings", label: "Profile", icon: Users },
-      { to: "/settings", label: "Addresses", icon: MapPin },
-      { to: "/payments", label: "Payment Methods", icon: CreditCard },
+      { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+      { to: "/client/search", label: "Search Services", icon: Search },
+      { to: "/client/ai-match", label: "AI Match", icon: Sparkles },
+      { to: "/client/bookings", label: "Bookings", icon: Briefcase },
+      { to: "/client/calendar", label: "Calendar", icon: Calendar },
+      { to: "/client/messages", label: "Messages", icon: MessageSquare, badge: "1" },
       { to: "/notifications", label: "Notifications", icon: Bell },
-      { to: "/settings", label: "Settings", icon: Settings },
+      { to: "/payments", label: "Payments", icon: Wallet },
+      { to: "/client/favorites", label: "Saved Providers", icon: Heart },
+      { to: "/settings", search: { tab: "profile" }, label: "Profile", icon: Users },
+      { to: "/settings", search: { tab: "settings" }, label: "Settings", icon: Settings },
     ],
   },
 ];
@@ -127,10 +115,10 @@ const providerNavGroups = [
   {
     label: "SETTINGS",
     items: [
-      { to: "/settings", label: "Profile", icon: Users },
+      { to: "/settings", search: { tab: "profile" }, label: "Profile", icon: Users },
       { to: "/documents", label: "Documents", icon: FileText },
       { to: "/payments", label: "Payouts", icon: Wallet },
-      { to: "/settings", label: "Settings", icon: Settings },
+      { to: "/settings", search: { tab: "settings" }, label: "Settings", icon: Settings },
     ],
   },
 ];
@@ -173,12 +161,15 @@ function NavGroup({ group, location }: { group: any; location: any }) {
       )}
       <ul className="space-y-0.5">
         {group.items.map((n: any) => {
-          const isActive = location.pathname === n.to;
+          const isActive =
+            location.pathname === n.to &&
+            (n.search ? JSON.stringify(location.search) === JSON.stringify(n.search) : true);
           const Icon = n.icon;
           return (
             <li key={n.to + n.label}>
               <Link
                 to={n.to}
+                search={n.search}
                 className={cn(
                   "group flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13.5px] font-medium transition-all relative",
                   n.highlight && isActive
@@ -275,7 +266,6 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="px-4 pb-2 pt-1">
             <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
               <Avatar className="h-10 w-10 rounded-full border-2 border-blue-500/50">
-                <AvatarImage src="https://i.pravatar.cc/150?u=provider" />
                 <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
                   {initials(fullName)}
                 </AvatarFallback>
@@ -321,7 +311,6 @@ export function AppShell({ children }: { children: ReactNode }) {
             /* Client user profile card (bottom) */
             <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
               <Avatar className="h-9 w-9 rounded-full border border-slate-700">
-                <AvatarImage src="https://i.pravatar.cc/150?u=client" />
                 <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
                   {initials(fullName)}
                 </AvatarFallback>
@@ -376,7 +365,6 @@ export function AppShell({ children }: { children: ReactNode }) {
               <DropdownMenuTrigger asChild>
                 <button className="focus:outline-none flex items-center gap-2 group">
                   <Avatar className="h-8 w-8 rounded-full border-2 border-slate-200 shadow-sm transition-transform group-hover:scale-105">
-                    <AvatarImage src="https://i.pravatar.cc/150?u=jane" />
                     <AvatarFallback className="bg-blue-100 text-blue-700 text-xs font-semibold">
                       {initials(user?.email || "User")}
                     </AvatarFallback>

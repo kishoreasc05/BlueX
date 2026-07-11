@@ -39,3 +39,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Project management documentation
+current implementation status.md
+project concept.md
+

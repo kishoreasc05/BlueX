@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { Link, useNavigate } from "@tanstack/react-router";
+import { EmergencyDialog } from "./emergency-dialog";
 import {
   Calendar,
   Briefcase,
@@ -91,7 +93,14 @@ function CustomTooltip({ active, payload, label }: any) {
 export function ClientDashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [searchVal, setSearchVal] = useState("");
+  const [emergencyOpen, setEmergencyOpen] = useState(false);
   const firstName = user?.user_metadata?.full_name?.split(" ")[0] || "there";
+
+  const handleDashboardSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate({ to: "/client/search", search: { q: searchVal || undefined } as any });
+  };
 
   const { data: dashboardData, isLoading } = useQuery({
     queryKey: ["clientDashboardData", user?.id],
@@ -210,7 +219,10 @@ export function ClientDashboard() {
       </div>
 
       {/* ── 2. SEARCH BAR ── */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5">
+      <form
+        onSubmit={handleDashboardSearch}
+        className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5"
+      >
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-3 md:gap-4 items-end">
           <div>
             <label className="text-xs font-semibold text-slate-500 mb-1.5 block">
@@ -221,6 +233,8 @@ export function ClientDashboard() {
               <input
                 type="text"
                 placeholder="Search services..."
+                value={searchVal}
+                onChange={(e) => setSearchVal(e.target.value)}
                 className="w-full h-10 pl-9 pr-4 rounded-xl border border-slate-200 bg-slate-50 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
             </div>
@@ -248,13 +262,13 @@ export function ClientDashboard() {
             </div>
           </div>
           <Button
+            type="submit"
             className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-md shadow-blue-600/20"
-            onClick={() => navigate({ to: "/client/search" })}
           >
             Search
           </Button>
         </div>
-      </div>
+      </form>
 
       {/* ── 3. POPULAR SERVICES ── */}
       <div>
@@ -530,7 +544,10 @@ export function ClientDashboard() {
               <p className="text-xs text-slate-400 mt-2 leading-relaxed">
                 Connect with available pros in <span className="text-white font-bold">minutes</span>
               </p>
-              <button className="mt-4 bg-red-500 hover:bg-red-600 text-white text-sm font-bold px-5 py-2 rounded-xl transition-colors shadow-lg shadow-red-500/25">
+              <button
+                onClick={() => setEmergencyOpen(true)}
+                className="mt-4 bg-red-500 hover:bg-red-600 text-white text-sm font-bold px-5 py-2 rounded-xl transition-colors shadow-lg shadow-red-500/25 cursor-pointer"
+              >
                 Request Now
               </button>
             </div>
@@ -538,38 +555,7 @@ export function ClientDashboard() {
         </div>
       </div>
 
-      {/* ── 5. TRUST BANNER ── */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-6 md:p-7 flex flex-col md:flex-row items-center gap-6 shadow-lg shadow-blue-600/15">
-        <div className="flex items-center gap-4 md:flex-1">
-          <div className="h-14 w-14 rounded-2xl bg-white/15 flex items-center justify-center shrink-0">
-            <Shield className="h-7 w-7 text-white" />
-          </div>
-          <div>
-            <div className="text-lg font-bold text-white">Why choose BlueX.ch?</div>
-            <div className="text-sm text-blue-100 mt-0.5">
-              All professionals are verified, reviewed, and committed to quality service.
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-wrap items-center gap-6 md:gap-8">
-          {[
-            { icon: BadgeCheck, label: "Verified", sub: "Professionals" },
-            { icon: Shield, label: "Secure", sub: "Payments" },
-            { icon: Star, label: "Satisfaction", sub: "Guarantee" },
-            { icon: Headphones, label: "24/7", sub: "Support" },
-          ].map((item) => (
-            <div key={item.label} className="flex items-center gap-2.5">
-              <div className="h-9 w-9 rounded-xl bg-white/15 flex items-center justify-center">
-                <item.icon className="h-4.5 w-4.5 text-white" />
-              </div>
-              <div>
-                <div className="text-xs font-bold text-white">{item.label}</div>
-                <div className="text-[10px] text-blue-200">{item.sub}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <EmergencyDialog open={emergencyOpen} onOpenChange={setEmergencyOpen} />
     </div>
   );
 }

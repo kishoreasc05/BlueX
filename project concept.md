@@ -1,75 +1,141 @@
-BlueX.ch Project Concept & Product Vision
+# BlueX Project Concept
 
-You are building BlueX.ch, an AI-powered marketplace platform for blue-collar services in Switzerland. This is NOT a generic CRM or business management SaaS. The previous concept has evolved into a full-service marketplace connecting customers with skilled service providers while providing AI-powered business tools and an operations platform.
+# Overview
 
-Core Vision
+BlueX is a premium AI-powered Swiss marketplace that connects customers with trusted blue-collar service providers. Unlike a traditional marketplace, BlueX combines intelligent service matching, secure bookings, integrated communication, legal compliance, and AI-powered business assistance into one enterprise platform.
 
-BlueX.ch is the "Fiverr + Uber + Airbnb for blue-collar services" in Switzerland.
+The goal is to become the most trusted platform in Switzerland for hiring professional service providers while simplifying legal, administrative, and business processes for both customers and providers.
 
-The platform enables customers to discover, book, communicate with, and pay trusted service providers, while providers manage their business through AI-powered insights. An internal Operations portal allows BlueX administrators to oversee the entire marketplace.
+BlueX is inspired by Airbnb, Uber, Fiverr, Stripe Connect, and LinkedIn but specifically designed for local blue-collar services.
 
-User Roles
+---
 
-1. Client (Customer)
+# Core Vision
 
-Customers who want to hire professionals.
+BlueX is not simply a booking platform.
+
+It is an intelligent ecosystem where:
+
+- Customers can quickly find trusted professionals.
+- AI recommends the most suitable providers.
+- Providers grow their businesses using AI.
+- BlueX handles secure communication and payments.
+- BlueX simplifies legal and employment processes.
+- The platform owner manages the entire ecosystem from one operations dashboard.
+
+---
+
+# User Roles
+
+## 1. Customer
+
+Customers can:
+
+- Search services
+- Use AI-assisted provider recommendations
+- Browse providers
+- Compare providers
+- View reviews
+- Request bookings
+- Chat securely
+- Make payments
+- Track bookings
+- Leave ratings
+- Manage favourites
+- View booking history
+- Receive reminders
+- Manage profile
+
+---
+
+## 2. Private Service Provider
 
 Examples:
 
-Electrician
-Plumber
-Cleaner
-Gardener
-Painter
-Carpenter
-Movers
-Childcare
-Pet Care
+- Cleaner
+- Gardener
+- Painter
+- Handyman
+- Pet sitter
+- Childcare
+- Moving helper
 
-Client Features:
+Features:
 
-Home page
-Search & filter providers
-Provider profiles
-Booking system
-Secure payments
-Emergency booking
-Live chat
-Booking history
-Reviews & ratings
-Dashboard 2. Provider (Offering)
+- Provider dashboard
+- Booking management
+- Calendar
+- Earnings
+- AI Business Coach
+- Profile management
+- Availability
+- Notifications
+- Chat
+- Ratings
+- Documents
+- AI recommendations
 
-Service professionals who provide physical services.
+---
 
-Provider Features:
+## 3. Company Provider
 
-Dashboard
-Today's jobs
-Earnings overview
-Calendar
-Booking management
-AI Business Coach
-Public tenders
-Pricing management
-Skills & certifications
-Profile management
-Trust Center
-Performance analytics 3. BlueX Operations (Admin)
+Examples:
 
-Internal platform management.
+- Cleaning Company
+- Electrical Company
+- Plumbing Company
+- Moving Company
 
-Operations Features:
+Additional Registration:
 
-Platform analytics
-User management
-Provider management
-Booking monitoring
-Tender management
-Automation agents
-AI monitoring
-Compliance tools
-Platform health dashboard
-Main Business Flow
+- Company Name
+- VAT Number
+- Business Registration
+- Company Address
+- Company Documents
+- Business Bank Account
+- Company Verification
+
+Company Responsibilities:
+
+- Payroll
+- VAT
+- Employee Taxes
+- Insurance
+- Accounting
+
+BlueX does NOT manage company payroll.
+
+---
+
+## 4. Platform Owner (BlueX Operations)
+
+The platform owner manages:
+
+- Marketplace analytics
+- Revenue
+- Commissions
+- Stripe payouts
+- Providers
+- Customers
+- Companies
+- Jobs
+- Bookings
+- Emergency requests
+- AI monitoring
+- Compliance
+- Security
+- Platform settings
+- Support
+- Moderation
+- Notifications
+- Financial reports
+
+---
+
+# Marketplace Workflow
+
+## Customer Journey
 
 Customer
 
@@ -79,154 +145,408 @@ Search Service
 
 ↓
 
-View Provider Profile
+AI recommends providers
 
 ↓
 
-Select Date & Time
+Customer compares providers
 
 ↓
 
-Book Service
+Customer selects provider
 
 ↓
 
-Chat with Provider
+Booking Request
 
 ↓
 
-Provider Completes Job
+Provider receives request
 
 ↓
 
-Payment Processing
+Provider accepts or declines
 
 ↓
 
-Reviews & Ratings
+Booking Confirmed
 
-AI Features
+↓
 
-AI is not just a chatbot.
+BlueX reveals contact details
 
-The AI should function as a business assistant and marketplace intelligence layer.
+↓
 
-Capabilities include:
+BlueX secure chat
 
-Business coaching
-Pricing recommendations
-Business growth suggestions
-Workflow automation
-Smart search
-Document summarization
-Provider recommendations
-Booking assistance
-Analytics insights
-Operational intelligence
-Core Modules
-Authentication & Authorization
-Client Management
-Provider Management
-Service Categories
-Marketplace Search
-Booking Management
-Calendar
-Payments
-Reviews
-Chat System
-Notifications
-AI Assistant
-AI Business Coach
-Public Tender Management
-Emergency Services
-Analytics
-Admin Operations
-Settings
-Dashboard Structure
-Client Dashboard
-Upcoming Bookings
-Recent Activity
-Favorite Providers
-Messages
-Payments
-Emergency Services
-AI Assistant
-Provider Dashboard
-Today's Jobs
-Earnings
-Pending Bookings
-Calendar
-AI Coach
-Public Tenders
-Performance
-Notifications
-Operations Dashboard
+↓
+
+Booking appears in both calendars
+
+↓
+
+Reminder notifications
+
+↓
+
+Service completed
+
+↓
+
+Secure payment
+
+↓
+
+Review & Rating
+
+---
+
+# AI Matching
+
+AI does NOT automatically assign providers.
+
+Instead it:
+
+- Analyses request
+- Recommends best providers
+- Suggests rankings
+- Estimates response time
+- Suggests pricing
+- Suggests alternatives
+
+Final decision always belongs to the customer.
+
+---
+
+# Privacy Rules
+
+Before booking:
+
+Visible:
+
+- Name
+- Rating
+- Reviews
+- Skills
+- Portfolio
+
+Hidden:
+
+- Phone
+- Email
+- Address
+
+After booking confirmation:
+
+Both parties can access contact information through BlueX.
+
+Communication remains inside BlueX.
+
+---
+
+# Booking System
+
+Bookings require provider acceptance.
+
+Booking statuses:
+
+Pending
+
+Accepted
+
+Rejected
+
+Cancelled
+
+Completed
+
+No Show
+
+Emergency
+
+---
+
+# Calendar
+
+Both customer and provider receive:
+
+- Shared booking calendar
+- Upcoming jobs
+- Daily schedule
+- Weekly schedule
+
+Automatic reminders:
+
+- 24 hours before
+- 2 hours before
+
+Future:
+
+Push Notifications
+
+SMS
+
+Email
+
+---
+
+# Payment System
+
+BlueX integrates:
+
+- Stripe Connect
+- Future Swiss payment providers
+
+BlueX never stores card information.
+
+Payments flow through payment providers.
+
+Platform automatically calculates:
+
+- Platform commission
+- Provider payout
+
+---
+
+# Legal Workflow
+
+## Company Providers
+
+Responsible for:
+
+- Payroll
+- VAT
+- Employee taxes
+- Insurance
+- Accounting
+
+BlueX only facilitates bookings.
+
+---
+
+## Private Providers
+
+When a customer hires a private individual:
+
+BlueX simplifies employment.
+
+Possible responsibilities:
+
+- Employment documentation
+- Salary processing
+- Social security
+- Tax calculations
+- Legal compliance
+
+Some processes may require certified staffing/payroll partners depending on Swiss regulations.
+
+This is one of BlueX's biggest differentiators.
+
+---
+
+# AI Business Coach
+
+Available for providers.
+
+Can:
+
+- Improve profiles
+- Suggest pricing
+- Generate descriptions
+- Forecast demand
+- Recommend marketing
+- Business insights
+- Revenue analysis
+
+---
+
+# Emergency Services
+
+Dedicated emergency booking.
+
+Examples:
+
+- Locksmith
+- Emergency plumber
+- Water leakage
+- Heating
+- Electrical emergency
+
+Features:
+
+Fast dispatch
+
+ETA
+
+Priority notifications
+
+---
+
+# Trust & Security
+
+Platform must provide:
+
+- 2FA Authentication
+- Role-based access
+- Secure JWT Authentication
+- Encryption
+- Audit logs
+- GDPR Compliance
+- Swiss Privacy Compliance
+- Provider verification
+- Company verification
+- Identity verification
+- Fraud detection
+- Secure payments
+
+Security is a core selling point of BlueX.
+
+---
+
+# Operations Dashboard
+
+BlueX administrators manage:
+
 Marketplace KPIs
+
 Revenue
-Active Providers
-Active Customers
-Live Bookings
-Emergency Requests
-AI Agents
-Analytics
-Compliance Status
-Technology Stack
 
-Frontend
+Bookings
 
-Next.js
-React
-TypeScript
-Tailwind CSS
-shadcn/ui
-Framer Motion
+Provider verification
 
-Backend
-
-Node.js
-TypeScript
-Supabase
-PostgreSQL
-Edge Functions
-
-Realtime
-
-WebSockets
-
-AI
-
-Claude / OpenAI (server-side)
+Customer support
 
 Payments
 
-Stripe Connect / Swiss Payment Providers
+Disputes
 
-Deployment
+Notifications
 
-Vercel
-Design Style
+Reports
 
-Create a premium enterprise marketplace experience inspired by:
+AI monitoring
 
-Apple
-Linear
-Stripe
-Airbnb
-Uber
-Notion
+Platform health
+
+Compliance
+
+---
+
+# Technology Stack
+
+# Technology Stack
+
+---
+
+## Database
+
+- Supabase PostgreSQL
+
+---
+
+## Authentication
+
+- JWT Authentication
+- Google OAuth
+- Two-Factor Authentication (2FA)
+- Role-Based Access Control (RBAC)
+
+---
+
+## Storage
+
+- Cloudinary (Images, Documents & Media)
+
+---
+
+## Payments
+
+- Stripe Connect
+- Future Swiss Payment Providers
+
+---
+
+## Notifications
+
+- Email Notifications
+- Push Notifications
+- SMS Notifications (Future)
+
+---
+
+## AI
+
+- OpenAI API
+- AI Provider Recommendation Engine
+- AI Business Coach
+- AI Search & Matching
+
+---
+
+## Deployment
+
+- Vercel (Frontend)
+- Railway / DigitalOcean / Hetzner VPS (Backend)
+- PostgreSQL Database (Germany/Switzerland Region)
+
+---
+
+## Monitoring & Analytics
+
+- Sentry
+- PostHog
+
+# Design Philosophy
 
 The UI should feel:
 
-Modern
-Clean
-Spacious
 Premium
+
+Swiss
+
+Elegant
+
+Sophisticated
+
 Minimal
+
+Enterprise
+
 Trustworthy
+
 Professional
 
-Avoid clutter, heavy gradients, gaming aesthetics, or overly complex interfaces.
+Inspired by:
 
-Important Note
+- Apple
+- Stripe
+- Linear
+- Notion
+- Airbnb
+- Swiss Private Banking
 
-The previous "BlueX Business Operating System" architecture remains the technical foundation (AI-first, modular, scalable, multi-tenant, secure). However, the actual product is now a Swiss marketplace for blue-collar services, built around three integrated portals (Client, Provider, and Operations) with AI deeply integrated throughout the platform. Design and implement the application with production-quality architecture, scalability, and an exceptional user experience rather than simply recreating the original AI-generated prototype.
+Avoid:
+
+- Gaming UI
+- Flashy animations
+- Neon colors
+- Heavy gradients
+- Clutter
+
+The platform should immediately communicate trust, security, quality, and professionalism.
+
+---
+
+# Long-Term Vision
+
+BlueX aims to become Switzerland's leading marketplace for professional services by combining:
+
+- AI-powered matching
+- Secure marketplace
+- Legal automation
+- Business growth tools
+- Enterprise operations
+- Seamless customer experience
+
+The platform is designed to scale into multiple European markets while maintaining Swiss standards for quality, privacy, and trust.
