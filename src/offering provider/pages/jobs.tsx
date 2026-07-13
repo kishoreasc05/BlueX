@@ -99,6 +99,33 @@ export function JobsPage() {
     });
   };
 
+  const getJobCounts = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tonight = new Date(today);
+    tonight.setHours(23, 59, 59, 999);
+
+    let todayCount = 0;
+    let upcomingCount = 0;
+    let completedCount = 0;
+
+    (bookings || []).forEach((b) => {
+      const jobDate = new Date(b.scheduled_at);
+      if (b.status === "completed") {
+        completedCount++;
+      } else if (b.status === "confirmed" || b.status === "in_progress") {
+        if (jobDate >= today && jobDate <= tonight) {
+          todayCount++;
+        } else if (jobDate > tonight) {
+          upcomingCount++;
+        }
+      }
+    });
+
+    return { today: todayCount, upcoming: upcomingCount, completed: completedCount };
+  };
+
+  const counts = getJobCounts();
   const filteredJobs = getFilteredJobs();
 
   return (
@@ -121,7 +148,9 @@ export function JobsPage() {
                 : "border-transparent text-slate-450 text-slate-500 hover:text-slate-700"
             )}
           >
-            {tab === "today" ? "Today's Jobs" : tab === "upcoming" ? "Upcoming Schedule" : "Completed Jobs"}
+            {tab === "today" && `Today's Jobs (${counts.today})`}
+            {tab === "upcoming" && `Upcoming Schedule (${counts.upcoming})`}
+            {tab === "completed" && `Completed Jobs (${counts.completed})`}
           </button>
         ))}
       </div>
