@@ -629,7 +629,8 @@ function Dashboard() {
             value: confirmedJobs.length,
             bg: "bg-blue-50",
             color: "text-blue-600",
-            link: "/dashboard",
+            link: "/jobs",
+            hoverBorder: "hover:border-blue-200",
           },
           {
             icon: Clock,
@@ -637,7 +638,8 @@ function Dashboard() {
             value: pendingRequests.length,
             bg: "bg-amber-50",
             color: "text-amber-600",
-            link: "/dashboard",
+            link: "/bookings",
+            hoverBorder: "hover:border-amber-200",
           },
           {
             icon: DollarSign,
@@ -645,7 +647,8 @@ function Dashboard() {
             value: `CHF ${expectedEarnings.toLocaleString("en-CH")}`,
             bg: "bg-emerald-50",
             color: "text-emerald-600",
-            link: "/dashboard",
+            link: "/payments",
+            hoverBorder: "hover:border-emerald-200",
           },
           {
             icon: Star,
@@ -653,12 +656,17 @@ function Dashboard() {
             value: "5.0",
             bg: "bg-purple-50",
             color: "text-purple-600",
-            link: "/dashboard",
+            link: "/settings",
+            hoverBorder: "hover:border-purple-200",
           },
         ].map((kpi, i) => (
           <div
             key={i}
-            className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm flex flex-col justify-between min-h-[110px] relative overflow-hidden group hover:shadow-md transition-shadow cursor-pointer"
+            onClick={() => navigate({ to: kpi.link as any })}
+            className={cn(
+              "bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm flex flex-col justify-between min-h-[110px] relative overflow-hidden group hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer",
+              kpi.hoverBorder,
+            )}
           >
             <div className="flex justify-between items-start">
               <div

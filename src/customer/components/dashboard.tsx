@@ -323,6 +323,7 @@ export function ClientDashboard() {
             bg: "bg-blue-50",
             color: "text-blue-600",
             link: "/client/bookings",
+            hoverBorder: "hover:border-blue-200",
           },
           {
             icon: Clock,
@@ -331,6 +332,7 @@ export function ClientDashboard() {
             bg: "bg-amber-50",
             color: "text-amber-600",
             link: "/client/bookings",
+            hoverBorder: "hover:border-amber-200",
           },
           {
             icon: CheckCircle2,
@@ -339,6 +341,7 @@ export function ClientDashboard() {
             bg: "bg-emerald-50",
             color: "text-emerald-600",
             link: "/client/bookings",
+            hoverBorder: "hover:border-emerald-200",
           },
           {
             icon: Wallet,
@@ -347,11 +350,16 @@ export function ClientDashboard() {
             bg: "bg-indigo-50",
             color: "text-indigo-600",
             link: "/payments",
+            hoverBorder: "hover:border-indigo-200",
           },
         ].map((kpi, i) => (
           <div
             key={i}
-            className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm flex flex-col justify-between min-h-[110px] relative overflow-hidden group hover:shadow-md transition-shadow"
+            onClick={() => navigate({ to: kpi.link as any })}
+            className={cn(
+              "bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm flex flex-col justify-between min-h-[110px] relative overflow-hidden group hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer",
+              kpi.hoverBorder,
+            )}
           >
             <div className="flex justify-between items-start">
               <div
@@ -362,12 +370,9 @@ export function ClientDashboard() {
               >
                 <kpi.icon className={cn("h-4.5 w-4.5", kpi.color)} />
               </div>
-              <Link
-                to={kpi.link}
-                className="text-[10px] font-bold text-slate-400 group-hover:text-blue-600 transition-colors flex items-center gap-0.5"
-              >
+              <span className="text-[10px] font-bold text-slate-400 group-hover:text-blue-600 transition-colors flex items-center gap-0.5">
                 View all <ArrowRight className="w-3 h-3" />
-              </Link>
+              </span>
             </div>
             <div className="mt-3">
               <div className="text-xs font-semibold text-slate-400">{kpi.label}</div>

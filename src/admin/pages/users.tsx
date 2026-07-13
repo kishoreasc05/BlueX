@@ -16,15 +16,30 @@ import {
 import { PageHeader } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/kpi-card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
+
+const routeApi = getRouteApi("/_authenticated/ops/users");
 
 export function OpsUsersPage() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { role: searchRole, tab: searchTab } = routeApi.useSearch();
+
   const [activeTab, setActiveTab] = useState<"users" | "pending_freelancers" | "pending_companies">(
-    "users",
+    searchTab === "pending_freelancers" || searchTab === "pending_companies" ? searchTab : "users",
   );
+
+  useEffect(() => {
+    if (searchTab === "pending_freelancers" || searchTab === "pending_companies") {
+      setActiveTab(searchTab);
+    } else {
+      setActiveTab("users");
+    }
+  }, [searchTab]);
+
   const [selectedProvider, setSelectedProvider] = useState<any>(null);
   const [docDialogOpen, setDocDialogOpen] = useState(false);
 
@@ -41,7 +56,8 @@ export function OpsUsersPage() {
           email, 
           avatar_url,
           role,
-          created_at
+          created_at,
+          provider_profiles(provider_type)
         `,
         )
         .order("created_at", { ascending: false });
@@ -49,6 +65,23 @@ export function OpsUsersPage() {
       if (error) throw error;
       return data || [];
     },
+  });
+
+  // Filter users by role from search params
+  const filteredUsers = (users || []).filter((u: any) => {
+    if (!searchRole) return true;
+    if (searchRole === "provider") {
+      const isCompany = u.provider_profiles?.[0]?.provider_type === "company";
+      return u.role === "provider" && !isCompany;
+    }
+    if (searchRole === "company") {
+      const isCompany = u.provider_profiles?.[0]?.provider_type === "company";
+      return u.role === "provider" && isCompany;
+    }
+    if (searchRole === "client") {
+      return !u.role || u.role === "client";
+    }
+    return true;
   });
 
   // 2. Query pending provider profiles (both freelancers and companies)
@@ -190,14 +223,37 @@ export function OpsUsersPage() {
         </button>
       </div>
 
+      {searchRole && (
+        <div className="bg-blue-50 border border-blue-100 text-blue-800 px-4 py-2.5 rounded-xl flex items-center justify-between text-xs font-semibold mx-1">
+          <div className="flex items-center gap-1.5">
+            <span>
+              Filtering profiles by:{" "}
+              <span className="capitalize font-black">
+                {searchRole === "client" ? "customer" : searchRole}s
+              </span>
+            </span>
+          </div>
+          <button
+            onClick={() => navigate({ to: "/ops/users" })}
+            className="text-blue-600 hover:text-blue-800 underline cursor-pointer font-bold"
+          >
+            Clear Filter
+          </button>
+        </div>
+      )}
+
       <div className="bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden">
         {activeTab === "users" ? (
           usersLoading ? (
             <p className="text-sm text-slate-500 text-center py-12">Loading user profiles...</p>
-          ) : !users || users.length === 0 ? (
+          ) : !filteredUsers || filteredUsers.length === 0 ? (
             <EmptyState
-              title="No users registered"
-              description="There are currently no registered users on the platform."
+              title={searchRole ? "No matching profiles" : "No users registered"}
+              description={
+                searchRole
+                  ? `There are currently no profiles matching the "${searchRole}" role.`
+                  : "There are currently no registered users on the platform."
+              }
               icon={User}
             />
           ) : (
@@ -222,7 +278,7 @@ export function OpsUsersPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {users.map((u: any) => (
+                {filteredUsers.map((u: any) => (
                   <tr key={u.id} className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-6 py-4 flex items-center gap-3">
                       <div className="h-9 w-9 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700">

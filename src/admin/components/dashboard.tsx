@@ -280,7 +280,10 @@ export function OpsDashboard() {
       {/* ── KPI METRICS ROW ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {/* Total Bookings */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
+        <div
+          onClick={() => navigate({ to: "/ops/bookings" })}
+          className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between cursor-pointer hover:shadow-md hover:border-blue-200 hover:-translate-y-0.5 transition-all duration-200"
+        >
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
               Total Bookings
@@ -300,7 +303,10 @@ export function OpsDashboard() {
         </div>
 
         {/* Total Revenue */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
+        <div
+          onClick={() => navigate({ to: "/payments" })}
+          className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between cursor-pointer hover:shadow-md hover:border-emerald-200 hover:-translate-y-0.5 transition-all duration-200"
+        >
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
               Total Revenue
@@ -320,7 +326,10 @@ export function OpsDashboard() {
         </div>
 
         {/* Platform Commission */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
+        <div
+          onClick={() => navigate({ to: "/payments" })}
+          className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between cursor-pointer hover:shadow-md hover:border-purple-200 hover:-translate-y-0.5 transition-all duration-200"
+        >
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
               Platform Commission
@@ -340,7 +349,10 @@ export function OpsDashboard() {
         </div>
 
         {/* Active Providers */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
+        <div
+          onClick={() => navigate({ to: "/ops/users", search: { role: "provider" } as any })}
+          className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between cursor-pointer hover:shadow-md hover:border-blue-200 hover:-translate-y-0.5 transition-all duration-200"
+        >
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
               Active Providers
@@ -360,7 +372,10 @@ export function OpsDashboard() {
         </div>
 
         {/* New Customers */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
+        <div
+          onClick={() => navigate({ to: "/ops/users", search: { role: "client" } as any })}
+          className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between cursor-pointer hover:shadow-md hover:border-indigo-200 hover:-translate-y-0.5 transition-all duration-200"
+        >
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
               New Customers
@@ -380,7 +395,12 @@ export function OpsDashboard() {
         </div>
 
         {/* Pending Verifications */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
+        <div
+          onClick={() =>
+            navigate({ to: "/ops/users", search: { tab: "pending_freelancers" } as any })
+          }
+          className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between cursor-pointer hover:shadow-md hover:border-amber-200 hover:-translate-y-0.5 transition-all duration-200"
+        >
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
               Pending Verifications
