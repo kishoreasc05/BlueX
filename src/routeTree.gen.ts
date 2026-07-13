@@ -27,6 +27,7 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedContractsRouteImport } from './routes/_authenticated/contracts'
 import { Route as AuthenticatedContractorsRouteImport } from './routes/_authenticated/contractors'
 import { Route as AuthenticatedClientsRouteImport } from './routes/_authenticated/clients'
+import { Route as AuthenticatedBookingsRouteImport } from './routes/_authenticated/bookings'
 import { Route as AuthenticatedAuditLogsRouteImport } from './routes/_authenticated/audit-logs'
 import { Route as AuthenticatedAiConversationsRouteImport } from './routes/_authenticated/ai-conversations'
 import { Route as AuthenticatedAiAutomationsRouteImport } from './routes/_authenticated/ai-automations'
@@ -40,6 +41,7 @@ import { Route as AuthenticatedOpsUsersRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedOpsBookingsRouteImport } from './routes/_authenticated/ops.bookings'
 import { Route as AuthenticatedClientTendersRouteImport } from './routes/_authenticated/client.tenders'
 import { Route as AuthenticatedClientSearchRouteImport } from './routes/_authenticated/client.search'
+import { Route as AuthenticatedClientProfileRouteImport } from './routes/_authenticated/client.profile'
 import { Route as AuthenticatedClientMessagesRouteImport } from './routes/_authenticated/client.messages'
 import { Route as AuthenticatedClientFavoritesRouteImport } from './routes/_authenticated/client.favorites'
 import { Route as AuthenticatedClientCalendarRouteImport } from './routes/_authenticated/client.calendar'
@@ -140,6 +142,11 @@ const AuthenticatedClientsRoute = AuthenticatedClientsRouteImport.update({
   path: '/clients',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedBookingsRoute = AuthenticatedBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAuditLogsRoute = AuthenticatedAuditLogsRouteImport.update({
   id: '/audit-logs',
   path: '/audit-logs',
@@ -216,6 +223,12 @@ const AuthenticatedClientSearchRoute =
     path: '/client/search',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedClientProfileRoute =
+  AuthenticatedClientProfileRouteImport.update({
+    id: '/client/profile',
+    path: '/client/profile',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedClientMessagesRoute =
   AuthenticatedClientMessagesRouteImport.update({
     id: '/client/messages',
@@ -267,6 +280,7 @@ export interface FileRoutesByFullPath {
   '/ai-automations': typeof AuthenticatedAiAutomationsRoute
   '/ai-conversations': typeof AuthenticatedAiConversationsRoute
   '/audit-logs': typeof AuthenticatedAuditLogsRoute
+  '/bookings': typeof AuthenticatedBookingsRoute
   '/clients': typeof AuthenticatedClientsRoute
   '/contractors': typeof AuthenticatedContractorsRoute
   '/contracts': typeof AuthenticatedContractsRoute
@@ -287,6 +301,7 @@ export interface FileRoutesByFullPath {
   '/client/calendar': typeof AuthenticatedClientCalendarRoute
   '/client/favorites': typeof AuthenticatedClientFavoritesRoute
   '/client/messages': typeof AuthenticatedClientMessagesRoute
+  '/client/profile': typeof AuthenticatedClientProfileRoute
   '/client/search': typeof AuthenticatedClientSearchRoute
   '/client/tenders': typeof AuthenticatedClientTendersRoute
   '/ops/bookings': typeof AuthenticatedOpsBookingsRoute
@@ -306,6 +321,7 @@ export interface FileRoutesByTo {
   '/ai-automations': typeof AuthenticatedAiAutomationsRoute
   '/ai-conversations': typeof AuthenticatedAiConversationsRoute
   '/audit-logs': typeof AuthenticatedAuditLogsRoute
+  '/bookings': typeof AuthenticatedBookingsRoute
   '/clients': typeof AuthenticatedClientsRoute
   '/contractors': typeof AuthenticatedContractorsRoute
   '/contracts': typeof AuthenticatedContractsRoute
@@ -326,6 +342,7 @@ export interface FileRoutesByTo {
   '/client/calendar': typeof AuthenticatedClientCalendarRoute
   '/client/favorites': typeof AuthenticatedClientFavoritesRoute
   '/client/messages': typeof AuthenticatedClientMessagesRoute
+  '/client/profile': typeof AuthenticatedClientProfileRoute
   '/client/search': typeof AuthenticatedClientSearchRoute
   '/client/tenders': typeof AuthenticatedClientTendersRoute
   '/ops/bookings': typeof AuthenticatedOpsBookingsRoute
@@ -347,6 +364,7 @@ export interface FileRoutesById {
   '/_authenticated/ai-automations': typeof AuthenticatedAiAutomationsRoute
   '/_authenticated/ai-conversations': typeof AuthenticatedAiConversationsRoute
   '/_authenticated/audit-logs': typeof AuthenticatedAuditLogsRoute
+  '/_authenticated/bookings': typeof AuthenticatedBookingsRoute
   '/_authenticated/clients': typeof AuthenticatedClientsRoute
   '/_authenticated/contractors': typeof AuthenticatedContractorsRoute
   '/_authenticated/contracts': typeof AuthenticatedContractsRoute
@@ -367,6 +385,7 @@ export interface FileRoutesById {
   '/_authenticated/client/calendar': typeof AuthenticatedClientCalendarRoute
   '/_authenticated/client/favorites': typeof AuthenticatedClientFavoritesRoute
   '/_authenticated/client/messages': typeof AuthenticatedClientMessagesRoute
+  '/_authenticated/client/profile': typeof AuthenticatedClientProfileRoute
   '/_authenticated/client/search': typeof AuthenticatedClientSearchRoute
   '/_authenticated/client/tenders': typeof AuthenticatedClientTendersRoute
   '/_authenticated/ops/bookings': typeof AuthenticatedOpsBookingsRoute
@@ -388,6 +407,7 @@ export interface FileRouteTypes {
     | '/ai-automations'
     | '/ai-conversations'
     | '/audit-logs'
+    | '/bookings'
     | '/clients'
     | '/contractors'
     | '/contracts'
@@ -408,6 +428,7 @@ export interface FileRouteTypes {
     | '/client/calendar'
     | '/client/favorites'
     | '/client/messages'
+    | '/client/profile'
     | '/client/search'
     | '/client/tenders'
     | '/ops/bookings'
@@ -427,6 +448,7 @@ export interface FileRouteTypes {
     | '/ai-automations'
     | '/ai-conversations'
     | '/audit-logs'
+    | '/bookings'
     | '/clients'
     | '/contractors'
     | '/contracts'
@@ -447,6 +469,7 @@ export interface FileRouteTypes {
     | '/client/calendar'
     | '/client/favorites'
     | '/client/messages'
+    | '/client/profile'
     | '/client/search'
     | '/client/tenders'
     | '/ops/bookings'
@@ -467,6 +490,7 @@ export interface FileRouteTypes {
     | '/_authenticated/ai-automations'
     | '/_authenticated/ai-conversations'
     | '/_authenticated/audit-logs'
+    | '/_authenticated/bookings'
     | '/_authenticated/clients'
     | '/_authenticated/contractors'
     | '/_authenticated/contracts'
@@ -487,6 +511,7 @@ export interface FileRouteTypes {
     | '/_authenticated/client/calendar'
     | '/_authenticated/client/favorites'
     | '/_authenticated/client/messages'
+    | '/_authenticated/client/profile'
     | '/_authenticated/client/search'
     | '/_authenticated/client/tenders'
     | '/_authenticated/ops/bookings'
@@ -634,6 +659,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedClientsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/bookings': {
+      id: '/_authenticated/bookings'
+      path: '/bookings'
+      fullPath: '/bookings'
+      preLoaderRoute: typeof AuthenticatedBookingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/audit-logs': {
       id: '/_authenticated/audit-logs'
       path: '/audit-logs'
@@ -725,6 +757,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedClientSearchRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/client/profile': {
+      id: '/_authenticated/client/profile'
+      path: '/client/profile'
+      fullPath: '/client/profile'
+      preLoaderRoute: typeof AuthenticatedClientProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/client/messages': {
       id: '/_authenticated/client/messages'
       path: '/client/messages'
@@ -783,6 +822,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAiAutomationsRoute: typeof AuthenticatedAiAutomationsRoute
   AuthenticatedAiConversationsRoute: typeof AuthenticatedAiConversationsRoute
   AuthenticatedAuditLogsRoute: typeof AuthenticatedAuditLogsRoute
+  AuthenticatedBookingsRoute: typeof AuthenticatedBookingsRoute
   AuthenticatedClientsRoute: typeof AuthenticatedClientsRoute
   AuthenticatedContractorsRoute: typeof AuthenticatedContractorsRoute
   AuthenticatedContractsRoute: typeof AuthenticatedContractsRoute
@@ -802,6 +842,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedClientCalendarRoute: typeof AuthenticatedClientCalendarRoute
   AuthenticatedClientFavoritesRoute: typeof AuthenticatedClientFavoritesRoute
   AuthenticatedClientMessagesRoute: typeof AuthenticatedClientMessagesRoute
+  AuthenticatedClientProfileRoute: typeof AuthenticatedClientProfileRoute
   AuthenticatedClientSearchRoute: typeof AuthenticatedClientSearchRoute
   AuthenticatedClientTendersRoute: typeof AuthenticatedClientTendersRoute
   AuthenticatedOpsBookingsRoute: typeof AuthenticatedOpsBookingsRoute
@@ -820,6 +861,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAiAutomationsRoute: AuthenticatedAiAutomationsRoute,
   AuthenticatedAiConversationsRoute: AuthenticatedAiConversationsRoute,
   AuthenticatedAuditLogsRoute: AuthenticatedAuditLogsRoute,
+  AuthenticatedBookingsRoute: AuthenticatedBookingsRoute,
   AuthenticatedClientsRoute: AuthenticatedClientsRoute,
   AuthenticatedContractorsRoute: AuthenticatedContractorsRoute,
   AuthenticatedContractsRoute: AuthenticatedContractsRoute,
@@ -839,6 +881,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClientCalendarRoute: AuthenticatedClientCalendarRoute,
   AuthenticatedClientFavoritesRoute: AuthenticatedClientFavoritesRoute,
   AuthenticatedClientMessagesRoute: AuthenticatedClientMessagesRoute,
+  AuthenticatedClientProfileRoute: AuthenticatedClientProfileRoute,
   AuthenticatedClientSearchRoute: AuthenticatedClientSearchRoute,
   AuthenticatedClientTendersRoute: AuthenticatedClientTendersRoute,
   AuthenticatedOpsBookingsRoute: AuthenticatedOpsBookingsRoute,

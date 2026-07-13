@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import {
   LayoutDashboard,
   Users,
+  User,
   HardHat,
   FolderKanban,
   CheckSquare,
@@ -80,7 +81,7 @@ const getClientNavGroups = (unreadCount: number) => [
       { to: "/notifications", label: "Notifications", icon: Bell },
       { to: "/payments", label: "Payments", icon: Wallet },
       { to: "/client/favorites", label: "Saved Providers", icon: Heart },
-      { to: "/settings", search: { tab: "profile" }, label: "Profile", icon: Users },
+      { to: "/client/profile", label: "Profile", icon: User },
       { to: "/settings", search: { tab: "settings" }, label: "Settings", icon: Settings },
     ],
   },
@@ -108,9 +109,9 @@ const getProviderNavGroups = (isApproved: boolean) => {
     {
       label: "JOBS",
       items: [
-        { to: "/jobs", label: "My Jobs", icon: Briefcase, badge: "5" },
+        { to: "/jobs", label: "My Jobs", icon: Briefcase },
         { to: "/tasks", label: "Calendar", icon: Calendar },
-        { to: "/client/bookings", label: "Bookings", icon: CheckSquare },
+        { to: "/bookings", label: "Bookings", icon: CheckSquare },
         { to: "/client/messages", label: "Messages", icon: MessageSquare },
         { to: "/settings", label: "Availability", icon: Clock },
       ],
@@ -152,22 +153,22 @@ const operationsNavGroups = [
     items: [
       { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { to: "/ops/users", label: "Users", icon: Users },
-      { to: "/ops/users", label: "Providers", icon: HardHat },
-      { to: "/ops/users", label: "Companies", icon: Building },
+      { to: "/ops/users", search: { role: "provider" }, label: "Providers", icon: HardHat },
+      { to: "/ops/users", search: { role: "company" }, label: "Companies", icon: Building },
       { to: "/ops/bookings", label: "Bookings", icon: Calendar },
       { to: "/payments", label: "Payments", icon: CreditCard },
-      { to: "/dashboard", label: "Disputes", icon: ShieldAlert, badge: "8" },
-      { to: "/dashboard", label: "Compliance", icon: CheckSquare },
-      { to: "/dashboard", label: "AI & Matching", icon: Sparkles },
-      { to: "/dashboard", label: "Support", icon: MessageSquare, badge: "5" },
+      { to: "/dashboard", search: { view: "disputes" }, label: "Disputes", icon: ShieldAlert, badge: "8" },
+      { to: "/dashboard", search: { view: "compliance" }, label: "Compliance", icon: CheckSquare },
+      { to: "/dashboard", search: { view: "ai" }, label: "AI & Matching", icon: Sparkles },
+      { to: "/dashboard", search: { view: "support" }, label: "Support", icon: MessageSquare, badge: "5" },
       { to: "/reports", label: "Analytics", icon: BarChart3 },
-      { to: "/reports", label: "Reports", icon: FileText },
-      { to: "/dashboard", label: "CMS", icon: Grid3X3 },
+      { to: "/reports", search: { tab: "reports" }, label: "Reports", icon: FileText },
+      { to: "/dashboard", search: { view: "cms" }, label: "CMS", icon: Grid3X3 },
       { to: "/notifications", label: "Notifications", icon: Bell },
-      { to: "/dashboard", label: "Integrations", icon: GitMerge },
+      { to: "/dashboard", search: { view: "integrations" }, label: "Integrations", icon: GitMerge },
       { to: "/settings", label: "Settings", icon: Settings },
-      { to: "/dashboard", label: "Audit Logs", icon: Activity },
-      { to: "/dashboard", label: "System Health", icon: Server },
+      { to: "/dashboard", search: { view: "audit" }, label: "Audit Logs", icon: Activity },
+      { to: "/dashboard", search: { view: "health" }, label: "System Health", icon: Server },
     ],
   },
 ];
@@ -200,7 +201,9 @@ function NavGroup({ group, location }: { group: any; location: any }) {
         {group.items.map((n: any) => {
           const isActive =
             location.pathname === n.to &&
-            (n.search ? JSON.stringify(location.search) === JSON.stringify(n.search) : true);
+            (n.search
+              ? JSON.stringify(location.search) === JSON.stringify(n.search)
+              : Object.keys(location.search || {}).length === 0);
           const Icon = n.icon;
           return (
             <li key={n.to + n.label}>
@@ -483,17 +486,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                 View System Health
               </button>
             </div>
-          ) : activePortal === "provider" ? (
-            /* View Client Mode button */
-            <button
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
-              onClick={() => navigate({ to: "/settings" })}
-            >
-              <Eye className="h-4 w-4" />
-              View Client Mode
-            </button>
           ) : (
-            /* Client user profile card (bottom) */
+            /* Client & Provider user profile card (bottom) */
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors text-left focus:outline-none cursor-pointer">

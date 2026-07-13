@@ -1,209 +1,289 @@
-import { PageHeader } from "@/components/app-shell";
-import { Briefcase, MoreHorizontal, Plus, Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/use-auth";
 import { useActiveOrg } from "@/hooks/use-orgs";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from "@/components/ui/dialog";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Calendar, Clock, DollarSign, MessageSquare, MapPin, User, ShieldAlert, Sparkles, Play, CheckCircle } from "lucide-react";
+import { PageHeader } from "@/components/app-shell";
+import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/kpi-card";
+import { cn } from "@/lib/utils";
+import { useNavigate } from "@tanstack/react-router";
 
 export function JobsPage() {
+  const { user } = useAuth();
   const { activeId } = useActiveOrg();
   const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [department, setDepartment] = useState("");
-  const [location, setLocation] = useState("");
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<"today" | "upcoming" | "completed">("today");
 
-  const { data: jobs, isLoading } = useQuery({
-    queryKey: ["jobs", activeId],
+  // Query confirmed, in_progress, and completed bookings for this provider organization
+  const { data: bookings, isLoading } = useQuery({
+    queryKey: ["providerJobs", activeId],
     enabled: !!activeId,
     queryFn: async () => {
-      const { data, error } = await (supabase as any)
-        .from("jobs")
-        .select("*")
-        .eq("organization_id", activeId!)
-        .order("created_at", { ascending: false });
+      const { data, error } = await supabase
+        .from("bookings")
+        .select(
+          `
+          id, 
+          status, 
+          scheduled_at, 
+          duration_hours, 
+          total_price, 
+          notes,
+          client_id,
+          client:profiles!bookings_client_id_fkey(id, full_name, customer_id, phone, home_address, apartment_no, postal_code, city),
+          service:provider_services(name)
+        `,
+        )
+        .eq("provider_id", activeId!)
+        .in("status", ["confirmed", "in_progress", "completed"])
+        .order("scheduled_at", { ascending: true });
+
       if (error) throw error;
-      return data;
+      return data || [];
     },
   });
 
-  const createJob = useMutation({
-    mutationFn: async () => {
-      const { data, error } = await (supabase as any)
-        .from("jobs")
-        .insert({
-          organization_id: activeId!,
-          title,
-          department,
-          location,
-          status: "open",
-        })
-        .select()
-        .single();
+  // Mutation to transition booking status (confirmed -> in_progress -> completed)
+  const updateJobStatus = useMutation({
+    mutationFn: async ({ id, newStatus }: { id: string; newStatus: "in_progress" | "completed" }) => {
+      const { error } = await supabase
+        .from("bookings")
+        .update({ status: newStatus })
+        .eq("id", id);
       if (error) throw error;
-      return data;
+
+      // Post chat status update notification
+      const bookingRecord = bookings?.find((b) => b.id === id);
+      if (bookingRecord && user) {
+        const content = newStatus === "in_progress"
+          ? "🚀 Job started! The provider is on their way or has started the work."
+          : "🏁 Job completed! The provider has marked the work as done.";
+
+        await supabase.from("messages").insert({
+          sender_id: user.id,
+          receiver_id: bookingRecord.client_id,
+          booking_id: id,
+          content,
+        });
+      }
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["jobs", activeId] });
-      setOpen(false);
-      setTitle("");
-      setDepartment("");
-      setLocation("");
+    onSuccess: (_, variables) => {
+      toast.success(variables.newStatus === "in_progress" ? "Job started!" : "Job completed!");
+      queryClient.invalidateQueries({ queryKey: ["providerJobs", activeId] });
+      queryClient.invalidateQueries({ queryKey: ["messagesForUser"] });
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Failed to update job status.");
     },
   });
+
+  const getFilteredJobs = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tonight = new Date(today);
+    tonight.setHours(23, 59, 59, 999);
+
+    return (bookings || []).filter((b) => {
+      const jobDate = new Date(b.scheduled_at);
+      if (activeTab === "today") {
+        return (b.status === "confirmed" || b.status === "in_progress") && jobDate >= today && jobDate <= tonight;
+      }
+      if (activeTab === "upcoming") {
+        return b.status === "confirmed" && jobDate > tonight;
+      }
+      return b.status === "completed";
+    });
+  };
+
+  const filteredJobs = getFilteredJobs();
 
   return (
-    <div className="space-y-6 pb-12 max-w-[1400px] mx-auto">
+    <div className="space-y-6 pb-12 max-w-[1400px] mx-auto text-slate-800">
       <PageHeader
-        title="Jobs"
-        description="Manage your job postings and hiring process."
-        action={
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl gap-2">
-                <Plus className="h-4 w-4" /> New Job
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Post New Job</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-4 py-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Job Title</label>
-                  <Input
-                    placeholder="e.g. Senior Frontend Engineer"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                  />
+        title="My Jobs Feed"
+        description="Track active assignments, view client service locations, and update work progress."
+      />
+
+      {/* Tabs */}
+      <div className="flex gap-2 border-b border-slate-200">
+        {(["today", "upcoming", "completed"] as const).map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={cn(
+              "px-4 py-2 text-xs font-bold border-b-2 capitalize transition-all cursor-pointer",
+              activeTab === tab
+                ? "border-blue-650 border-blue-600 text-blue-600 font-extrabold"
+                : "border-transparent text-slate-450 text-slate-500 hover:text-slate-700"
+            )}
+          >
+            {tab === "today" ? "Today's Jobs" : tab === "upcoming" ? "Upcoming Schedule" : "Completed Jobs"}
+          </button>
+        ))}
+      </div>
+
+      {isLoading ? (
+        <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-12 text-center text-slate-400 font-medium">
+          Loading jobs...
+        </div>
+      ) : filteredJobs.length === 0 ? (
+        <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-12 text-center">
+          <EmptyState
+            title={`No ${activeTab} jobs`}
+            description={
+              activeTab === "today"
+                ? "You do not have any jobs scheduled for today."
+                : activeTab === "upcoming"
+                  ? "You do not have any upcoming bookings in your calendar."
+                  : "No completed jobs found."
+            }
+          />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-5">
+          {filteredJobs.map((booking) => {
+            const client = booking.client as any;
+            const clientName = client?.full_name || "Unknown Client";
+            const serviceName = (booking.service as any)?.name || "General Service";
+            const formattedDate = new Date(booking.scheduled_at).toLocaleDateString("en-US", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+
+            return (
+              <div
+                key={booking.id}
+                className="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 flex flex-col gap-6 hover:shadow-md transition-all duration-250"
+              >
+                {/* Job Card Header */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-extrabold select-none">
+                      {clientName.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2)}
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 text-sm sm:text-base leading-tight">
+                        {clientName}
+                      </h3>
+                      {client?.customer_id && (
+                        <span className="text-[10px] font-bold text-slate-400">
+                          Customer ID: {client.customer_id}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span
+                      className={cn(
+                        "text-[9px] font-black px-2.5 py-0.5 rounded-full border uppercase tracking-wider",
+                        booking.status === "in_progress"
+                          ? "bg-amber-50 text-amber-700 border-amber-100"
+                          : booking.status === "completed"
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-100"
+                            : "bg-blue-50 text-blue-700 border-blue-100"
+                      )}
+                    >
+                      {booking.status === "in_progress" ? "In Progress" : booking.status}
+                    </span>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Department</label>
-                  <Input
-                    placeholder="e.g. Engineering"
-                    value={department}
-                    onChange={(e) => setDepartment(e.target.value)}
-                  />
+
+                {/* Job Card Body */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-xs font-semibold">
+                  {/* Service & Pricing */}
+                  <div className="space-y-2">
+                    <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Service Offered</span>
+                    <span className="text-slate-800 text-sm font-bold block">{serviceName}</span>
+                    <div className="flex items-center gap-1 text-slate-500 font-bold mt-1">
+                      <DollarSign className="h-4 w-4 text-slate-400" />
+                      <span>Estimate Price: CHF {Number(booking.total_price).toFixed(2)}</span>
+                    </div>
+                  </div>
+
+                  {/* Date & Time */}
+                  <div className="space-y-2">
+                    <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Work Timing</span>
+                    <div className="flex items-center gap-2 text-slate-800">
+                      <Calendar className="h-4 w-4 text-slate-400 shrink-0" />
+                      <span>{formattedDate}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-500 mt-1">
+                      <Clock className="h-4 w-4 text-slate-400 shrink-0" />
+                      <span>Duration: {booking.duration_hours} hours</span>
+                    </div>
+                  </div>
+
+                  {/* Customer Address */}
+                  <div className="space-y-2">
+                    <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Service Location</span>
+                    {client?.home_address ? (
+                      <div className="flex items-start gap-2 text-slate-800">
+                        <MapPin className="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
+                        <div>
+                          <p>{client.home_address}</p>
+                          {client.apartment_no && <p className="text-[10px] text-slate-500">Apartment: {client.apartment_no}</p>}
+                          <p>{client.postal_code} {client.city}</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2 text-slate-400 italic">
+                        <MapPin className="h-4 w-4 shrink-0" />
+                        <span>No address specified by customer</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Location</label>
-                  <Input
-                    placeholder="e.g. Remote or New York, NY"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                  />
+
+                {booking.notes && (
+                  <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 text-xs text-slate-500 font-semibold italic">
+                    Notes: {booking.notes}
+                  </div>
+                )}
+
+                {/* Card Actions */}
+                <div className="flex justify-end gap-2 border-t border-slate-100 pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => navigate({ to: "/client/messages", search: { bookingId: booking.id } as any })}
+                    className="rounded-xl text-xs gap-1.5 h-9 px-4 cursor-pointer"
+                  >
+                    <MessageSquare className="h-4 w-4 text-slate-400" /> Chat with Client
+                  </Button>
+
+                  {booking.status === "confirmed" && (
+                    <Button
+                      onClick={() => updateJobStatus.mutate({ id: booking.id, newStatus: "in_progress" })}
+                      disabled={updateJobStatus.isPending}
+                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs gap-1.5 h-9 px-4 cursor-pointer"
+                    >
+                      <Play className="h-4 w-4" /> Start Job
+                    </Button>
+                  )}
+
+                  {booking.status === "in_progress" && (
+                    <Button
+                      onClick={() => updateJobStatus.mutate({ id: booking.id, newStatus: "completed" })}
+                      disabled={updateJobStatus.isPending}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs gap-1.5 h-9 px-4 cursor-pointer"
+                    >
+                      <CheckCircle className="h-4 w-4" /> Complete Job
+                    </Button>
+                  )}
                 </div>
               </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setOpen(false)}>
-                  Cancel
-                </Button>
-                <Button
-                  className="bg-indigo-600 text-white hover:bg-indigo-700"
-                  onClick={() => createJob.mutate()}
-                  disabled={!title || createJob.isPending}
-                >
-                  {createJob.isPending ? "Creating..." : "Post Job"}
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        }
-      />
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-        <div className="p-4 border-b border-slate-200 flex items-center gap-4">
-          <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-            <Input
-              placeholder="Search jobs..."
-              className="pl-9 bg-slate-50/50 border-slate-200 rounded-xl"
-            />
-          </div>
+            );
+          })}
         </div>
-        <table className="w-full text-sm text-left">
-          <thead className="text-xs text-slate-500 bg-slate-50/50 uppercase border-b border-slate-200">
-            <tr>
-              <th className="px-6 py-4 font-semibold">Job Title</th>
-              <th className="px-6 py-4 font-semibold">Department</th>
-              <th className="px-6 py-4 font-semibold">Location</th>
-              <th className="px-6 py-4 font-semibold">Status</th>
-              <th className="px-6 py-4 font-semibold">Applicants</th>
-              <th className="px-6 py-4 text-right font-semibold">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading ? (
-              <tr>
-                <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
-                  Loading jobs...
-                </td>
-              </tr>
-            ) : jobs && jobs.length > 0 ? (
-              jobs.map((job: any) => (
-                <tr
-                  key={job.id}
-                  className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors"
-                >
-                  <td className="px-6 py-4 font-medium text-slate-900 flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
-                      <Briefcase className="h-4 w-4" />
-                    </div>
-                    {job.title}
-                  </td>
-                  <td className="px-6 py-4 text-slate-500">{job.department}</td>
-                  <td className="px-6 py-4 text-slate-500">{job.location}</td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        job.status === "open"
-                          ? "bg-emerald-50 text-emerald-700"
-                          : job.status === "interviewing"
-                            ? "bg-blue-50 text-blue-700"
-                            : "bg-slate-100 text-slate-700"
-                      }`}
-                    >
-                      {job.status === "open"
-                        ? "Open"
-                        : job.status === "interviewing"
-                          ? "Interviewing"
-                          : "Closed"}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 font-medium text-slate-700">{job.applicants}</td>
-                  <td className="px-6 py-4 text-right">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8 text-slate-400 hover:text-slate-600"
-                    >
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={6} className="px-6 py-12 text-center text-slate-500">
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <Briefcase className="h-8 w-8 text-slate-300" />
-                    <p>No jobs found.</p>
-                  </div>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      )}
     </div>
   );
 }
