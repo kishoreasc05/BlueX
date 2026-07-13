@@ -1,7 +1,11 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useParams, useNavigate, Link } from "@tanstack/react-router";
+import { useAuth } from "@/hooks/use-auth";
+import { toast } from "sonner";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Star,
   Clock,
@@ -26,7 +30,56 @@ import { MOCK_PROVIDERS, MockProvider } from "@/customer/mockData";
 export function ProviderDetailsPage() {
   const { id } = useParams({ from: "/_authenticated/client/providers/$id" } as any);
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("about");
+  const [inquiryOpen, setInquiryOpen] = useState(false);
+  const [inquiryText, setInquiryText] = useState("");
+
+  const sendInquiry = useMutation({
+    mutationFn: async () => {
+      if (!user) throw new Error("You must be logged in to message a provider.");
+      if (!inquiryText.trim()) throw new Error("Please enter a message.");
+
+      // Create a placeholder booking to establish the message thread
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(9, 0, 0, 0);
+
+      const { data: booking, error: bookingError } = await supabase
+        .from("bookings")
+        .insert({
+          client_id: user.id,
+          provider_id: dbContractor.organization_id,
+          scheduled_at: tomorrow.toISOString(),
+          duration_hours: 2,
+          total_price: Number(dbContractor.hourly_rate || 90) * 2,
+          notes: `Initial Inquiry: ${inquiryText}`,
+          status: "pending",
+        })
+        .select("id")
+        .single();
+
+      if (bookingError) throw bookingError;
+
+      const { error: msgError } = await supabase.from("messages").insert({
+        sender_id: user.id,
+        receiver_id: dbContractor.id,
+        booking_id: booking.id,
+        content: inquiryText.trim(),
+      });
+
+      if (msgError) throw msgError;
+    },
+    onSuccess: () => {
+      toast.success("Inquiry sent! Redirecting to chat...");
+      setInquiryOpen(false);
+      setInquiryText("");
+      navigate({ to: "/client/messages" });
+    },
+    onError: (e: any) => {
+      toast.error(e.message || "Failed to send message.");
+    },
+  });
 
   // Fetch from Supabase if not a mock ID
   const isMock = id in MOCK_PROVIDERS;
@@ -34,10 +87,21 @@ export function ProviderDetailsPage() {
     queryKey: ["contractorDetails", id],
     enabled: !isMock && !!id,
     queryFn: async () => {
-      const { data, error } = await supabase.from("contractors").select("*").eq("id", id).single();
+      const { data, error } = await supabase
+        .from("contractors")
+        .select(`
+          *,
+          organization:organizations(
+            id,
+            reviews(rating, comment, created_at, client:profiles(full_name)),
+            bookings(id, status)
+          )
+        `)
+        .eq("id", id)
+        .single();
 
       if (error) throw error;
-      return data;
+      return data as any;
     },
   });
 
@@ -53,15 +117,37 @@ export function ProviderDetailsPage() {
             dbContractor.name.toLowerCase().includes("company")
               ? ("company" as const)
               : ("private" as const),
-          rating: 4.8,
-          reviewsCount: 12,
+          rating: dbContractor.organization?.reviews && dbContractor.organization.reviews.length > 0
+            ? Number(
+                (
+                  dbContractor.organization.reviews.reduce(
+                    (sum: number, r: any) => sum + r.rating,
+                    0
+                  ) / dbContractor.organization.reviews.length
+                ).toFixed(1)
+              )
+            : null,
+          reviewsCount: dbContractor.organization?.reviews?.length || 0,
           specialty: (dbContractor.specialty || "").toLowerCase(),
           specialtyLabel: dbContractor.specialty || "General Contractor",
           location: "Zurich, Switzerland",
-          memberSince: "Jan 2024",
-          responseTime: "30 min",
-          completionRate: "95%",
-          jobsCompleted: 45,
+          memberSince: new Date(dbContractor.created_at).toLocaleDateString("en-US", {
+            month: "short",
+            year: "numeric",
+          }),
+          responseTime: null, // Don't show dummy mockup response time!
+          completionRate:
+            dbContractor.organization?.bookings && dbContractor.organization.bookings.length > 0
+              ? `${Math.round(
+                  (dbContractor.organization.bookings.filter((b: any) => b.status === "completed")
+                    .length /
+                    dbContractor.organization.bookings.length) *
+                    100
+                )}%`
+              : null,
+          jobsCompleted:
+            dbContractor.organization?.bookings?.filter((b: any) => b.status === "completed")
+              .length || 0,
           languages: "DE, EN",
           hourlyRate: Number(dbContractor.hourly_rate || 90),
           minBooking: "2 hours",
@@ -69,20 +155,17 @@ export function ProviderDetailsPage() {
           about:
             dbContractor.notes ||
             "Experienced professional dedicated to quality craftsmanship and customer satisfaction in Switzerland.",
-          services: [
-            dbContractor.specialty || "General Service",
-            "Emergency Repair",
-            "Maintenance",
-          ],
-          reviews: [
-            {
-              id: 1,
-              author: "Client",
-              rating: 5,
-              date: "Recently",
-              text: "Great work, very clean and friendly.",
-            },
-          ],
+          services: [dbContractor.specialty || "General Service"],
+          reviews: (dbContractor.organization?.reviews || []).map((r: any, idx: number) => ({
+            id: idx + 1,
+            author: r.client?.full_name || "Client",
+            rating: r.rating,
+            date: new Date(r.created_at).toLocaleDateString("en-US", {
+              month: "short",
+              year: "numeric",
+            }),
+            text: r.comment || "No comment left.",
+          })),
           faqs: [
             {
               q: "What are your payment terms?",
@@ -167,11 +250,19 @@ export function ProviderDetailsPage() {
               <p className="text-sm font-semibold text-slate-500">{provider.specialty}</p>
 
               <div className="flex items-center justify-center md:justify-start gap-1.5">
-                <div className="flex items-center gap-0.5 text-amber-500">
-                  <Star className="h-4 w-4 fill-current" />
-                  <span className="text-sm font-bold text-slate-800">{provider.rating}</span>
-                </div>
-                <span className="text-sm text-slate-400">({provider.reviewsCount} reviews)</span>
+                {provider.rating ? (
+                  <>
+                    <div className="flex items-center gap-0.5 text-amber-500">
+                      <Star className="h-4 w-4 fill-current" />
+                      <span className="text-sm font-bold text-slate-800">{provider.rating}</span>
+                    </div>
+                    <span className="text-sm text-slate-400">({provider.reviewsCount} reviews)</span>
+                  </>
+                ) : (
+                  <span className="text-xs font-semibold text-slate-400 bg-slate-50 px-2 py-0.5 border border-slate-200 rounded-md">
+                    New Provider
+                  </span>
+                )}
                 <span className="text-slate-300">|</span>
                 <span className="text-xs text-slate-400 font-semibold">{provider.location}</span>
                 <span className="text-slate-300">|</span>
@@ -180,32 +271,38 @@ export function ProviderDetailsPage() {
 
               {/* KPI Stats Grid */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-3 border-t border-slate-100">
-                <div>
-                  <div className="text-xs text-slate-400 font-medium">Response time</div>
-                  <div className="text-sm font-bold text-slate-800 flex items-center gap-1 mt-0.5 justify-center md:justify-start">
-                    <Clock className="h-3.5 w-3.5 text-slate-400" />
-                    {provider.responseTime}
+                {provider.responseTime && (
+                  <div>
+                    <div className="text-xs text-slate-400 font-medium">Response time</div>
+                    <div className="text-sm font-bold text-slate-800 flex items-center gap-1 mt-0.5 justify-center md:justify-start">
+                      <Clock className="h-3.5 w-3.5 text-slate-400" />
+                      {provider.responseTime}
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <div className="text-xs text-slate-400 font-medium">Completion rate</div>
-                  <div className="text-sm font-bold text-slate-800 flex items-center gap-1 mt-0.5 justify-center md:justify-start">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-slate-400" />
-                    {provider.completionRate}
+                )}
+                {provider.completionRate && (
+                  <div>
+                    <div className="text-xs text-slate-400 font-medium">Completion rate</div>
+                    <div className="text-sm font-bold text-slate-800 flex items-center gap-1 mt-0.5 justify-center md:justify-start">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-slate-400" />
+                      {provider.completionRate}
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <div className="text-xs text-slate-400 font-medium">Jobs completed</div>
-                  <div className="text-sm font-bold text-slate-800 flex items-center gap-1 mt-0.5 justify-center md:justify-start">
-                    <Briefcase className="h-3.5 w-3.5 text-slate-400" />
-                    {provider.jobsCompleted}
+                )}
+                {provider.jobsCompleted !== undefined && provider.jobsCompleted > 0 && (
+                  <div>
+                    <div className="text-xs text-slate-400 font-medium">Jobs completed</div>
+                    <div className="text-sm font-bold text-slate-800 flex items-center gap-1 mt-0.5 justify-center md:justify-start">
+                      <Briefcase className="h-3.5 w-3.5 text-slate-400" />
+                      {provider.jobsCompleted}
+                    </div>
                   </div>
-                </div>
+                )}
                 <div>
                   <div className="text-xs text-slate-400 font-medium">Languages</div>
                   <div className="text-sm font-bold text-slate-800 flex items-center gap-1 mt-0.5 justify-center md:justify-start">
                     <Languages className="h-3.5 w-3.5 text-slate-400" />
-                    {provider.languages}
+                    {provider.languages || "DE, EN"}
                   </div>
                 </div>
               </div>
@@ -470,6 +567,7 @@ export function ProviderDetailsPage() {
               </Button>
               <Button
                 variant="outline"
+                onClick={() => setInquiryOpen(true)}
                 className="w-full h-10 rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 font-bold text-xs cursor-pointer"
               >
                 <MessageSquare className="h-3.5 w-3.5 mr-1.5 text-slate-400" />
@@ -484,6 +582,50 @@ export function ProviderDetailsPage() {
           </div>
         </div>
       </div>
+
+      <Dialog open={inquiryOpen} onOpenChange={setInquiryOpen}>
+        <DialogContent className="max-w-md p-6 rounded-2xl border-slate-200">
+          <DialogHeader>
+            <DialogTitle className="text-base font-black text-slate-900">
+              Message {provider.name}
+            </DialogTitle>
+            <DialogDescription className="text-xs text-slate-400 font-semibold mt-0.5">
+              Send an inquiry to initiate a chat with the provider.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 pt-3">
+            <div className="space-y-1.5">
+              <label htmlFor="inquiryText" className="text-xs font-bold text-slate-700">
+                Your Message
+              </label>
+              <Textarea
+                id="inquiryText"
+                placeholder="Hi! I have some questions about your service..."
+                value={inquiryText}
+                onChange={(e) => setInquiryText(e.target.value)}
+                rows={4}
+                className="rounded-xl border-slate-200 text-xs"
+              />
+            </div>
+            <div className="flex justify-end gap-2.5 pt-2">
+              <Button
+                variant="outline"
+                onClick={() => setInquiryOpen(false)}
+                className="h-9 px-4 rounded-xl border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 cursor-pointer"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => sendInquiry.mutate()}
+                disabled={sendInquiry.isPending || !inquiryText.trim()}
+                className="h-9 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold cursor-pointer"
+              >
+                {sendInquiry.isPending ? "Sending..." : "Send Message"}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

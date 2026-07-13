@@ -29,6 +29,13 @@ import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { MOCK_PROVIDERS } from "@/customer/mockData";
 import { EmergencyDialog } from "@/customer/components/emergency-dialog";
+import { AiMatchPage } from "./ai-match";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const routeApi = getRouteApi("/_authenticated/client/search");
 
@@ -139,11 +146,330 @@ function RealMap({ providers }: { providers: any[] }) {
 }
 
 /* ═══════════════════════════════════════════════════════
+   INTERACTIVE MAP MODAL WITH 1KM RANGE RADIUS FILTER
+   ═══════════════════════════════════════════════════════ */
+function InteractiveMapModal({
+  open,
+  onOpenChange,
+  providers,
+  navigate,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  providers: any[];
+  navigate: any;
+}) {
+  const [searchLoc, setSearchLoc] = useState("Zurich, Switzerland");
+  const [center, setCenter] = useState<[number, number]>([47.3769, 8.5417]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<any>(null);
+  const circleRef = useRef<any>(null);
+  const markersRef = useRef<any[]>([]);
+
+  // Function to calculate distance in km
+  const getDistanceKm = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * (Math.PI / 185);
+    const dLon = (lon2 - lon1) * (Math.PI / 185);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 185)) *
+        Math.cos(lat2 * (Math.PI / 185)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
+
+  // Compute coordinates for each provider and filter those within 1km
+  const providersWithCoords = providers.map((prov) => {
+    let hash = 0;
+    const idStr = String(prov.id);
+    for (let i = 0; i < idStr.length; i++) {
+      hash = idStr.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    // Determinisic coordinates offset from Zurich center
+    const lat = 47.3769 + ((hash & 0xff) / 255 - 0.5) * 0.03;
+    const lng = 8.5417 + (((hash >> 8) & 0xff) / 255 - 0.5) * 0.03;
+    const dist = getDistanceKm(center[0], center[1], lat, lng);
+    return { ...prov, lat, lng, dist };
+  });
+
+  const nearbyProviders = providersWithCoords
+    .filter((p) => p.dist <= 1.0)
+    .sort((a, b) => a.dist - b.dist);
+
+  // Trigger geocoding via Nominatim
+  const handleSearch = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!searchLoc.trim()) return;
+
+    setIsLoading(true);
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(
+          searchLoc,
+        )}`,
+      );
+      const data = await res.json();
+      if (data && data.length > 0) {
+        const newLat = parseFloat(data[0].lat);
+        const newLon = parseFloat(data[0].lon);
+        setCenter([newLat, newLon]);
+      } else {
+        alert("Location not found. Please try another search.");
+      }
+    } catch (err) {
+      console.error("Geocoding failed", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 1. Initialize map once when dialog is opened
+  useEffect(() => {
+    if (!open) return;
+
+    // Inject Leaflet CSS
+    const cssId = "leaflet-css-cdn";
+    if (!document.getElementById(cssId)) {
+      const link = document.createElement("link");
+      link.id = cssId;
+      link.rel = "stylesheet";
+      link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+      document.head.appendChild(link);
+    }
+
+    const initMap = () => {
+      const L = (window as any).L;
+      if (!L || !mapContainerRef.current) return;
+
+      if (!mapRef.current) {
+        mapRef.current = L.map(mapContainerRef.current, {
+          zoomControl: false,
+          scrollWheelZoom: true,
+        }).setView(center, 14);
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(mapRef.current);
+
+        L.control.zoom({ position: "topright" }).addTo(mapRef.current);
+      }
+
+      // Force size recalculation after modal transition ends
+      setTimeout(() => {
+        if (mapRef.current) {
+          mapRef.current.invalidateSize();
+        }
+      }, 200);
+    };
+
+    // Inject Leaflet JS
+    const jsId = "leaflet-js-cdn";
+    if (!(window as any).L) {
+      const script = document.createElement("script");
+      script.id = jsId;
+      script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+      script.onload = initMap;
+      document.head.appendChild(script);
+    } else {
+      initMap();
+    }
+
+    return () => {
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+        circleRef.current = null;
+        markersRef.current = [];
+      }
+    };
+  }, [open]);
+
+  // 2. Update view, circle and markers whenever center or nearby providers change
+  useEffect(() => {
+    if (!open || !mapRef.current) return;
+    const L = (window as any).L;
+    if (!L) return;
+
+    // Update view center
+    mapRef.current.setView(center, 14);
+
+    // Draw circle
+    if (circleRef.current) {
+      circleRef.current.remove();
+    }
+    circleRef.current = L.circle(center, {
+      radius: 1000,
+      color: "#3b82f6",
+      fillColor: "#3b82f6",
+      fillOpacity: 0.12,
+      weight: 1.5,
+    }).addTo(mapRef.current);
+
+    // Clear old markers
+    markersRef.current.forEach((m) => m.remove());
+    markersRef.current = [];
+
+    // Add search center marker
+    const centerIcon = L.divIcon({
+      className: "bg-red-500 border-2 border-white rounded-full h-4 w-4 shadow flex items-center justify-center bg-red-650",
+      html: `<div style="width: 6px; height: 6px; background: white; border-radius: 50%;"></div>`,
+    });
+    const centerMarker = L.marker(center, { icon: centerIcon })
+      .addTo(mapRef.current)
+      .bindPopup("<b>Your search center</b>");
+    markersRef.current.push(centerMarker);
+
+    // Add markers for nearby providers
+    nearbyProviders.forEach((prov) => {
+      const popupContent = `
+        <div style="font-family: sans-serif; font-size: 11px; min-width: 140px;">
+          <b style="font-size: 12px; color: #0f172a;">${prov.name}</b><br/>
+          <span style="color: #3b82f6; font-weight: 600;">${
+            prov.specialtyLabel || "Contractor"
+          }</span><br/>
+          <span style="color: #64748b;">Distance: ${(prov.dist * 1000).toFixed(0)}m</span><br/>
+          <span style="font-weight: 700; display: inline-block; margin-top: 4px;">CHF ${Number(
+            prov.hourlyRate,
+          ).toFixed(0)}/hr</span>
+        </div>
+      `;
+
+      const pin = L.marker([prov.lat, prov.lng]).addTo(mapRef.current).bindPopup(popupContent);
+      markersRef.current.push(pin);
+    });
+
+    // Invalidate size once more on update
+    mapRef.current.invalidateSize();
+  }, [open, center, nearbyProviders]);
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-5xl h-[85vh] flex flex-col p-0 overflow-hidden rounded-2xl border-slate-200">
+        {/* Header Search Bar */}
+        <div className="p-4 border-b border-slate-100 flex flex-col sm:flex-row gap-3 justify-between items-center bg-white shrink-0">
+          <div>
+            <DialogTitle className="text-base font-black text-slate-900">
+              🗺️ Find Nearby Providers (1km Range)
+            </DialogTitle>
+            <p className="text-[11px] text-slate-400 font-semibold mt-0.5">
+              Enter a location to find providers operating within 1 kilometer.
+            </p>
+          </div>
+          <form onSubmit={handleSearch} className="flex gap-2 w-full sm:w-auto min-w-[280px]">
+            <input
+              type="text"
+              placeholder="Enter city or address (e.g. Zurich)"
+              value={searchLoc}
+              onChange={(e) => setSearchLoc(e.target.value)}
+              className="flex-1 h-9 px-3 rounded-xl border border-slate-200 text-xs placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-slate-50"
+            />
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="h-9 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shrink-0 cursor-pointer"
+            >
+              {isLoading ? "Searching..." : "Search"}
+            </Button>
+          </form>
+        </div>
+
+        {/* Split Container */}
+        <div className="flex-1 min-h-0 flex flex-col md:flex-row bg-slate-50">
+          {/* Leaflet Map */}
+          <div className="flex-1 h-full min-h-[300px] md:min-h-0 relative">
+            <div ref={mapContainerRef} className="absolute inset-0 z-0 h-full w-full" />
+          </div>
+
+          {/* Sidebar Panel of Nearby Providers */}
+          <div className="w-full md:w-[320px] h-full border-t md:border-t-0 md:border-l border-slate-100 bg-white flex flex-col shrink-0 overflow-y-auto">
+            <div className="p-4 border-b border-slate-100 bg-slate-50/50 shrink-0">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                Results
+              </span>
+              <h4 className="text-xs font-black text-slate-950 mt-0.5">
+                {nearbyProviders.length} Providers Found within 1km
+              </h4>
+            </div>
+
+            <div className="flex-1 divide-y divide-slate-100">
+              {nearbyProviders.length === 0 ? (
+                <div className="p-6 text-center text-slate-400 text-xs space-y-2">
+                  <p className="font-semibold text-slate-700">No providers found</p>
+                  <p className="text-[10px]">
+                    No contractors are situated within 1km of "{searchLoc}". Try another city like
+                    Zurich.
+                  </p>
+                </div>
+              ) : (
+                nearbyProviders.map((prov) => (
+                  <div key={prov.id} className="p-4 space-y-2.5 hover:bg-slate-50/50 transition-colors">
+                    <div>
+                      <div className="flex justify-between items-baseline gap-2">
+                        <span className="text-xs font-bold text-slate-900 truncate">
+                          {prov.name}
+                        </span>
+                        <span className="text-[10px] text-blue-600 font-bold shrink-0 bg-blue-50 px-1.5 py-0.5 rounded">
+                          {(prov.dist * 1000).toFixed(0)}m away
+                        </span>
+                      </div>
+                      <span className="text-[10px] text-slate-400 block font-semibold">
+                        {prov.specialtyLabel}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center gap-4">
+                      <span className="text-xs font-black text-slate-900">
+                        CHF {Number(prov.hourlyRate).toFixed(0)}/hr
+                      </span>
+                      <div className="flex gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (mapRef.current) {
+                              mapRef.current.setView([prov.lat, prov.lng], 16);
+                            }
+                          }}
+                          className="h-7 px-2.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-[10px] font-bold text-slate-650 transition-colors cursor-pointer"
+                        >
+                          Locate
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            onOpenChange(false);
+                            navigate({ to: `/client/book/${prov.id}` as any });
+                          }}
+                          className="h-7 px-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold transition-colors cursor-pointer"
+                        >
+                          Book
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════
    SEARCH PAGE COMPONENT — Real Data & Real Map View
    ═══════════════════════════════════════════════════════ */
 export function SearchPage() {
   const navigate = useNavigate();
   const { q } = routeApi.useSearch();
+  const [activeTab, setActiveTab] = useState<"search" | "aiMatch">("search");
+  const [mapOpen, setMapOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState(q || "");
   const [whereTerm, setWhereTerm] = useState("Zurich, Switzerland");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(q || null);
@@ -171,7 +497,7 @@ export function SearchPage() {
     navigate({ to: "/client/search", search: { q: searchTerm || undefined } as any });
   };
 
-  // Query Real Providers (Contractors) from DB
+  // Query Real Providers (Contractors) from DB with reviews and bookings to calculate real stats
   const { data: providers, isLoading } = useQuery({
     queryKey: ["searchProviders", selectedCategory, searchTerm],
     queryFn: async () => {
@@ -184,7 +510,12 @@ export function SearchPage() {
           specialty, 
           hourly_rate, 
           notes,
-          status
+          status,
+          organization:organizations(
+            id,
+            reviews(rating),
+            bookings(id, status)
+          )
         `,
         )
         .eq("status", "active");
@@ -201,27 +532,46 @@ export function SearchPage() {
   };
 
   // Convert and merge database records with premium local mock providers
-  const dbProvidersConverted = (providers || []).map((p: any) => ({
-    id: p.id,
-    name: p.name,
-    type: "private" as const,
-    specialty: (p.specialty || "").toLowerCase(),
-    specialtyLabel: p.specialty || "Contractor",
-    rating: 4.8,
-    reviewsCount: 12,
-    hourlyRate: Number(p.hourly_rate || 90),
-    responseTime: "30 min",
-    completionRate: "95%",
-    jobsCompleted: 45,
-    languages: "DE, EN",
-    avatar: `https://i.pravatar.cc/150?u=${p.name.replace(/\s+/g, "").toLowerCase()}`,
-    about: p.notes || "Professional blue-collar service provider registered on BlueX.",
-    services: [p.specialty || "General Contractor Services"],
-    reviews: [],
-    faqs: [],
-  }));
+  const dbProvidersConverted = (providers || []).map((p: any) => {
+    const org = p.organization;
+    const reviews = org?.reviews || [];
+    const bookings = org?.bookings || [];
 
-  const allProvidersList = [...dbProvidersConverted, ...Object.values(MOCK_PROVIDERS)];
+    const rating = reviews.length > 0
+      ? Number((reviews.reduce((sum: number, r: any) => sum + r.rating, 0) / reviews.length).toFixed(1))
+      : null;
+    const reviewsCount = reviews.length;
+    const jobsCompleted = bookings.filter((b: any) => b.status === "completed").length;
+    const completionRate = bookings.length > 0
+      ? `${Math.round((jobsCompleted / bookings.length) * 100)}%`
+      : null;
+
+    return {
+      id: p.id,
+      name: p.name,
+      type: p.name.toLowerCase().includes("gmbh") ||
+            p.name.toLowerCase().includes("ag") ||
+            p.name.toLowerCase().includes("company")
+              ? ("company" as const)
+              : ("private" as const),
+      specialty: (p.specialty || "").toLowerCase(),
+      specialtyLabel: p.specialty || "Contractor",
+      rating: rating,
+      reviewsCount: reviewsCount,
+      hourlyRate: Number(p.hourly_rate || 90),
+      responseTime: null, // Don't show dummy mockup response time!
+      completionRate: completionRate,
+      jobsCompleted: jobsCompleted,
+      languages: "DE, EN",
+      avatar: `https://i.pravatar.cc/150?u=${p.name.replace(/\s+/g, "").toLowerCase()}`,
+      about: p.notes || "Professional blue-collar service provider registered on BlueX.",
+      services: [p.specialty || "General Contractor Services"],
+      reviews: reviews,
+      faqs: [],
+    };
+  });
+
+  const allProvidersList = dbProvidersConverted;
 
   // Apply filters locally for rapid interactive testing
   const filteredProviders = allProvidersList.filter((p) => {
@@ -266,11 +616,49 @@ export function SearchPage() {
           <ChevronDown className="h-3 w-3 -rotate-90 text-slate-300" />
           <span className="text-slate-600">Find Services</span>
         </div>
-        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
-          Find Services
-        </h1>
-        <p className="text-slate-500 text-sm">Discover trusted professionals near you.</p>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
+              Find Services
+            </h1>
+            <p className="text-slate-500 text-sm mt-0.5">Discover trusted professionals near you.</p>
+          </div>
+
+          {/* Toggle Tab buttons */}
+          <div className="bg-slate-100 p-1 rounded-xl flex gap-1 border border-slate-200 shrink-0">
+            <button
+              type="button"
+              onClick={() => setActiveTab("search")}
+              className={cn(
+                "px-4 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer",
+                activeTab === "search"
+                  ? "bg-white text-blue-600 shadow-sm"
+                  : "text-slate-500 hover:text-slate-800"
+              )}
+            >
+              Search Directory
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("aiMatch")}
+              className={cn(
+                "px-4 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center gap-1.5",
+                activeTab === "aiMatch"
+                  ? "bg-white text-blue-600 shadow-sm"
+                  : "text-slate-500 hover:text-slate-800"
+              )}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              AI Match
+            </button>
+          </div>
+        </div>
       </div>
+
+      {activeTab === "aiMatch" ? (
+        <AiMatchPage />
+      ) : (
+        <>
 
       {/* ── 2. SEARCH BAR CARD ── */}
       <form
@@ -392,15 +780,23 @@ export function SearchPage() {
         </button>
       </div>
 
-      {/* ── 5. CONTENT GRID (List + Sidebar) ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6">
-        {/* LEFT COLUMN: List */}
-        <div className="space-y-4">
+      {/* ── 5. CONTENT LIST ── */}
+      <div className="space-y-4 max-w-4xl mx-auto">
           <div className="flex items-center justify-between">
-            <div className="text-sm font-bold text-slate-900">
-              {totalResults} {resultNoun} found
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-bold text-slate-900">
+                {totalResults} {resultNoun} found
+              </span>
+              <button
+                type="button"
+                onClick={() => setMapOpen(true)}
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100/80 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+              >
+                🗺️ View Map
+              </button>
             </div>
             <button
+              type="button"
               onClick={() => {
                 setSearchTerm("");
                 setSelectedCategory(null);
@@ -528,48 +924,17 @@ export function SearchPage() {
             )}
           </div>
         </div>
+      </>
+      )}
 
-        {/* RIGHT COLUMN: Sidebar Widgets */}
-        <div className="space-y-5">
-          {/* Map View Widget */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4.5">
-            <div className="flex items-center justify-between mb-3.5">
-              <h3 className="text-sm font-bold text-slate-900">Map View</h3>
-              <button className="text-blue-600 text-xs font-semibold hover:text-blue-700">
-                View larger map
-              </button>
-            </div>
-            {/* Real OSM Map Widget */}
-            <div className="h-72 bg-slate-50 rounded-xl overflow-hidden relative">
-              <RealMap providers={filteredProviders} />
-            </div>
-          </div>
+      {/* ── Map Modal Dialog ── */}
+      <InteractiveMapModal
+        open={mapOpen}
+        onOpenChange={setMapOpen}
+        providers={filteredProviders}
+        navigate={navigate}
+      />
 
-          {/* Emergency Service Banner */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 relative overflow-hidden">
-            <div className="flex items-start justify-between gap-4">
-              <div className="space-y-1.5 flex-1">
-                <h3 className="text-sm font-bold text-slate-900">Need it urgently?</h3>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  Our emergency service is available 24/7
-                </p>
-                <button
-                  onClick={() => setEmergencyOpen(true)}
-                  className="mt-3 flex items-center gap-1.5 text-red-600 text-xs font-bold px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 transition-colors cursor-pointer"
-                >
-                  <AlertTriangle className="h-3.5 w-3.5 text-red-500" />
-                  Emergency Service
-                </button>
-              </div>
-              {/* Pulsing Siren Icon */}
-              <div className="h-16 w-16 rounded-full bg-red-50 flex items-center justify-center relative shrink-0">
-                <span className="absolute inset-0 rounded-full bg-red-400/25 animate-ping" />
-                <AlertTriangle className="h-8 w-8 text-red-500 relative z-10" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <EmergencyDialog open={emergencyOpen} onOpenChange={setEmergencyOpen} />
     </div>
   );

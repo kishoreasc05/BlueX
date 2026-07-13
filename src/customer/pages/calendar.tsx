@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { cn } from "@/lib/utils";
 import {
   Calendar as CalendarIcon,
   Clock,
@@ -12,7 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function ClientCalendarPage() {
+export function ClientCalendarPage({ hideHeader = false }: { hideHeader?: boolean }) {
   const { user } = useAuth();
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -88,16 +89,18 @@ export function ClientCalendarPage() {
   };
 
   return (
-    <div className="space-y-6 pb-12 max-w-[1400px] mx-auto text-slate-800">
-      <div>
-        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-          <CalendarIcon className="h-6 w-6 text-blue-600" />
-          Calendar Schedule
-        </h1>
-        <p className="text-slate-500 text-sm mt-0.5">
-          Manage your upcoming and past bookings in a calendar view.
-        </p>
-      </div>
+    <div className={cn("space-y-6 pb-12 max-w-[1400px] mx-auto text-slate-800", hideHeader && "space-y-0 pb-0")}>
+      {!hideHeader && (
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <CalendarIcon className="h-6 w-6 text-blue-600" />
+            Calendar Schedule
+          </h1>
+          <p className="text-slate-500 text-sm mt-0.5">
+            Manage your upcoming and past bookings in a calendar view.
+          </p>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
         {/* Calendar Grid */}

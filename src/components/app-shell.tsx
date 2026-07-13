@@ -41,12 +41,16 @@ import {
   Grid3X3,
   Zap,
   Image,
+  Server,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { useActiveOrg } from "@/hooks/use-orgs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -59,17 +63,20 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CreateOrgDialog } from "@/components/create-org-dialog";
 
 /* ──────────────────────────────────────────────────────
-   CLIENT SIDEBAR NAV — matches Image 1
+   CLIENT SIDEBAR NAV
    ────────────────────────────────────────────────────── */
-const clientNavGroups = [
+const getClientNavGroups = (unreadCount: number) => [
   {
     items: [
       { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { to: "/client/search", label: "Search Services", icon: Search },
-      { to: "/client/ai-match", label: "AI Match", icon: Sparkles },
       { to: "/client/bookings", label: "Bookings", icon: Briefcase },
-      { to: "/client/calendar", label: "Calendar", icon: Calendar },
-      { to: "/client/messages", label: "Messages", icon: MessageSquare, badge: "1" },
+      {
+        to: "/client/messages",
+        label: "Messages",
+        icon: MessageSquare,
+        badge: unreadCount > 0 ? String(unreadCount) : undefined,
+      },
       { to: "/notifications", label: "Notifications", icon: Bell },
       { to: "/payments", label: "Payments", icon: Wallet },
       { to: "/client/favorites", label: "Saved Providers", icon: Heart },
@@ -82,46 +89,60 @@ const clientNavGroups = [
 /* ──────────────────────────────────────────────────────
    PROVIDER SIDEBAR NAV — matches Image 2
    ────────────────────────────────────────────────────── */
-const providerNavGroups = [
-  {
-    items: [{ to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, highlight: true }],
-  },
-  {
-    label: "JOBS",
-    items: [
-      { to: "/jobs", label: "My Jobs", icon: Briefcase, badge: "5" },
-      { to: "/tasks", label: "Calendar", icon: Calendar },
-      { to: "/client/bookings", label: "Bookings", icon: CheckSquare },
-      { to: "/settings", label: "Availability", icon: Clock },
-    ],
-  },
-  {
-    label: "BUSINESS",
-    items: [
-      { to: "/payments", label: "Earnings", icon: CircleDollarSign },
-      { to: "/contracts", label: "Services & Pricing", icon: CreditCard },
-      { to: "/settings", label: "Reviews", icon: Star },
-      { to: "/documents", label: "Portfolio", icon: Image },
-    ],
-  },
-  {
-    label: "GROWTH",
-    items: [
-      { to: "/ai-assistant", label: "AI Coach", icon: Bot, badge: "New", badgeColor: "emerald" },
-      { to: "/client/tenders", label: "Public Tenders", icon: Briefcase, badge: "12" },
-      { to: "/reports", label: "Insights", icon: TrendingUp },
-    ],
-  },
-  {
-    label: "SETTINGS",
-    items: [
-      { to: "/settings", search: { tab: "profile" }, label: "Profile", icon: Users },
-      { to: "/documents", label: "Documents", icon: FileText },
-      { to: "/payments", label: "Payouts", icon: Wallet },
-      { to: "/settings", search: { tab: "settings" }, label: "Settings", icon: Settings },
-    ],
-  },
-];
+/* ──────────────────────────────────────────────────────
+   PROVIDER SIDEBAR NAV
+   ────────────────────────────────────────────────────── */
+const getProviderNavGroups = (isApproved: boolean) => {
+  if (!isApproved) {
+    return [
+      {
+        items: [{ to: "/dashboard", label: "Verification", icon: LayoutDashboard, highlight: true }],
+      },
+    ];
+  }
+
+  return [
+    {
+      items: [{ to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, highlight: true }],
+    },
+    {
+      label: "JOBS",
+      items: [
+        { to: "/jobs", label: "My Jobs", icon: Briefcase, badge: "5" },
+        { to: "/tasks", label: "Calendar", icon: Calendar },
+        { to: "/client/bookings", label: "Bookings", icon: CheckSquare },
+        { to: "/client/messages", label: "Messages", icon: MessageSquare },
+        { to: "/settings", label: "Availability", icon: Clock },
+      ],
+    },
+    {
+      label: "BUSINESS",
+      items: [
+        { to: "/payments", label: "Earnings", icon: CircleDollarSign },
+        { to: "/contracts", label: "Services & Pricing", icon: CreditCard },
+        { to: "/settings", label: "Reviews", icon: Star },
+        { to: "/documents", label: "Portfolio", icon: Image },
+      ],
+    },
+    {
+      label: "GROWTH",
+      items: [
+        { to: "/ai-assistant", label: "AI Coach", icon: Bot, badge: "New", badgeColor: "emerald" },
+        { to: "/client/tenders", label: "Public Tenders", icon: Briefcase, badge: "12" },
+        { to: "/reports", label: "Insights", icon: TrendingUp },
+      ],
+    },
+    {
+      label: "SETTINGS",
+      items: [
+        { to: "/settings", search: { tab: "profile" }, label: "Profile", icon: Users },
+        { to: "/documents", label: "Documents", icon: FileText },
+        { to: "/payments", label: "Payouts", icon: Wallet },
+        { to: "/settings", search: { tab: "settings" }, label: "Settings", icon: Settings },
+      ],
+    },
+  ];
+};
 
 /* ──────────────────────────────────────────────────────
    OPERATIONS SIDEBAR NAV
@@ -129,12 +150,28 @@ const providerNavGroups = [
 const operationsNavGroups = [
   {
     items: [
-      { to: "/dashboard", label: "Ops Dashboard", icon: LayoutDashboard },
-      { to: "/ops/bookings", label: "Booking Monitor", icon: Activity },
-      { to: "/ops/users", label: "User Moderation", icon: Users },
+      { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+      { to: "/ops/users", label: "Users", icon: Users },
+      { to: "/ops/users", label: "Providers", icon: HardHat },
+      { to: "/ops/users", label: "Companies", icon: Building },
+      { to: "/ops/bookings", label: "Bookings", icon: Calendar },
+      { to: "/payments", label: "Payments", icon: CreditCard },
+      { to: "/dashboard", label: "Disputes", icon: ShieldAlert, badge: "8" },
+      { to: "/dashboard", label: "Compliance", icon: CheckSquare },
+      { to: "/dashboard", label: "AI & Matching", icon: Sparkles },
+      { to: "/dashboard", label: "Support", icon: MessageSquare, badge: "5" },
+      { to: "/reports", label: "Analytics", icon: BarChart3 },
+      { to: "/reports", label: "Reports", icon: FileText },
+      { to: "/dashboard", label: "CMS", icon: Grid3X3 },
+      { to: "/notifications", label: "Notifications", icon: Bell },
+      { to: "/dashboard", label: "Integrations", icon: GitMerge },
+      { to: "/settings", label: "Settings", icon: Settings },
+      { to: "/dashboard", label: "Audit Logs", icon: Activity },
+      { to: "/dashboard", label: "System Health", icon: Server },
     ],
   },
 ];
+
 
 function initials(name?: string | null) {
   if (!name) return "?";
@@ -232,18 +269,143 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { active, orgs, setActiveId } = useActiveOrg();
   const location = useLocation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [createOpen, setCreateOpen] = useState(false);
 
-  const activePortal = user?.user_metadata?.portal_role || "client";
-  const firstName = user?.user_metadata?.full_name?.split(" ")[0] || "User";
-  const fullName = user?.user_metadata?.full_name || "User";
+  // Query unread messages count
+  const { data: unreadCount = 0 } = useQuery({
+    queryKey: ["unreadMessagesCount", user?.id],
+    enabled: !!user?.id,
+    queryFn: async () => {
+      const { count, error } = await supabase
+        .from("messages")
+        .select("*", { count: "exact", head: true })
+        .eq("receiver_id", user!.id)
+        .eq("is_read", false);
+
+      if (error) throw error;
+      return count || 0;
+    },
+  });
+
+  // Setup Realtime subscription for unread count updates
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const channel = supabase
+      .channel("unread-count-realtime")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "messages",
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ["unreadMessagesCount"] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user?.id, queryClient]);
+
+  // Query user profile from database to resolve real-time role
+  const { data: userProfile } = useQuery({
+    queryKey: ["activeUserProfile", user?.id],
+    enabled: !!user?.id,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("role, full_name, email")
+        .eq("id", user!.id)
+        .single();
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const activePortal = userProfile?.role || user?.user_metadata?.portal_role || "client";
+  const firstName = userProfile?.full_name?.split(" ")[0] || user?.user_metadata?.full_name?.split(" ")[0] || "User";
+  const fullName = userProfile?.full_name || user?.user_metadata?.full_name || "User";
+
+
+  // Query provider details and reviews
+  const { data: providerProfile } = useQuery({
+    queryKey: ["providerProfileStatusCard", user?.id, active?.organization?.id],
+    enabled: !!user?.id && activePortal === "provider",
+    queryFn: async () => {
+      const profileQuery = await supabase
+        .from("provider_profiles")
+        .select("verification_status, skills")
+        .eq("user_id", user!.id)
+        .maybeSingle();
+
+      if (profileQuery.error) throw profileQuery.error;
+      const profile = profileQuery.data;
+
+      const orgId = active?.organization?.id;
+
+      let avgRating = 5.0;
+      let reviewCount = 0;
+      let servicesList: string[] = [];
+
+      if (orgId) {
+        const reviewsQuery = await supabase
+          .from("reviews")
+          .select("rating")
+          .eq("provider_id", orgId);
+
+        if (reviewsQuery.error) throw reviewsQuery.error;
+        const reviewsList = reviewsQuery.data || [];
+        if (reviewsList.length > 0) {
+          reviewCount = reviewsList.length;
+          avgRating = Number((reviewsList.reduce((sum, r) => sum + r.rating, 0) / reviewsList.length).toFixed(1));
+        }
+
+        const servicesQuery = await supabase
+          .from("provider_services")
+          .select("name")
+          .eq("provider_id", orgId);
+
+        if (servicesQuery.error) throw servicesQuery.error;
+        servicesList = (servicesQuery.data || []).map((s) => s.name);
+      }
+
+      return {
+        verification_status: profile?.verification_status || "none",
+        skills: profile?.skills || [],
+        avgRating,
+        reviewCount,
+        servicesList,
+      };
+    },
+  });
+
+  const isApproved = activePortal === "provider"
+    ? (providerProfile?.verification_status === "approved")
+    : true;
+
+  const servicesList = providerProfile?.servicesList || [];
+  let specialty = "No services offered";
+  if (servicesList.length > 0) {
+    if (servicesList.length <= 2) {
+      specialty = servicesList.join(", ");
+    } else {
+      specialty = `${servicesList.slice(0, 2).join(", ")} +${servicesList.length - 2}`;
+    }
+  }
+  const avgRating = providerProfile?.avgRating ?? 5.0;
+  const reviewCount = providerProfile?.reviewCount ?? 0;
 
   const navGroups =
     activePortal === "client"
-      ? clientNavGroups
+      ? getClientNavGroups(unreadCount)
       : activePortal === "operations"
         ? operationsNavGroups
-        : providerNavGroups;
+        : getProviderNavGroups(isApproved);
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background text-foreground">
@@ -264,28 +426,37 @@ export function AppShell({ children }: { children: ReactNode }) {
         {/* Provider User Profile Card (top, only for provider) */}
         {activePortal === "provider" && (
           <div className="px-4 pb-2 pt-1">
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-              <Avatar className="h-10 w-10 rounded-full border-2 border-blue-500/50">
+            <button 
+              onClick={() => navigate({ to: "/settings", search: { tab: "services" } as any })}
+              className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors text-left focus:outline-none cursor-pointer"
+            >
+              <Avatar className="h-10 w-10 rounded-full border-2 border-blue-500/50 shrink-0">
                 <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
                   {initials(fullName)}
                 </AvatarFallback>
               </Avatar>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded flex items-center gap-0.5">
-                    <BadgeCheck className="h-3 w-3" /> Verified
-                  </span>
+                  {isApproved ? (
+                    <span className="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+                      <BadgeCheck className="h-3 w-3" /> Verified
+                    </span>
+                  ) : (
+                    <span className="text-[10px] font-bold text-amber-400 bg-amber-400/10 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+                      <Clock className="h-3 w-3" /> Pending
+                    </span>
+                  )}
                 </div>
                 <div className="text-sm font-semibold text-white truncate mt-0.5">{fullName}</div>
-                <div className="text-[11px] text-slate-400">Plumbing Specialist</div>
+                <div className="text-[11px] text-slate-400">{specialty}</div>
                 <div className="flex items-center gap-1 mt-0.5">
                   <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
-                  <span className="text-[11px] text-slate-300 font-medium">4.8</span>
-                  <span className="text-[10px] text-slate-500">(226 reviews)</span>
+                  <span className="text-[11px] text-slate-300 font-medium">{avgRating}</span>
+                  <span className="text-[10px] text-slate-500">({reviewCount} reviews)</span>
                 </div>
               </div>
               <ChevronDown className="h-4 w-4 text-slate-500 shrink-0" />
-            </div>
+            </button>
           </div>
         )}
 
@@ -298,7 +469,21 @@ export function AppShell({ children }: { children: ReactNode }) {
 
         {/* Sidebar Footer */}
         <div className="px-3 pb-4 mt-auto">
-          {activePortal === "provider" ? (
+          {activePortal === "operations" ? (
+            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+              <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">Platform Status</span>
+              <div className="flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                <span className="text-[11px] font-bold text-white">All Systems Operational</span>
+              </div>
+              <button 
+                onClick={() => navigate({ to: "/dashboard" })}
+                className="w-full py-1.5 border border-slate-800 hover:bg-slate-800 rounded-lg text-[9px] font-black text-slate-400 transition-colors block text-center cursor-pointer"
+              >
+                View System Health
+              </button>
+            </div>
+          ) : activePortal === "provider" ? (
             /* View Client Mode button */
             <button
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
@@ -309,20 +494,48 @@ export function AppShell({ children }: { children: ReactNode }) {
             </button>
           ) : (
             /* Client user profile card (bottom) */
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-              <Avatar className="h-9 w-9 rounded-full border border-slate-700">
-                <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
-                  {initials(fullName)}
-                </AvatarFallback>
-              </Avatar>
-              <div className="min-w-0 flex-1">
-                <div className="text-sm font-semibold text-white truncate">{fullName}</div>
-                <div className="text-[11px] text-slate-400 flex items-center gap-1">
-                  <MapPin className="h-3 w-3" /> Zurich, Switzerland
-                </div>
-              </div>
-              <ChevronDown className="h-4 w-4 text-slate-500 shrink-0" />
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors text-left focus:outline-none cursor-pointer">
+                  <Avatar className="h-9 w-9 rounded-full border border-slate-700 shrink-0">
+                    <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
+                      {initials(fullName)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-semibold text-white truncate">{fullName}</div>
+                    <div className="text-[11px] text-slate-400 flex items-center gap-1">
+                      <MapPin className="h-3 w-3" /> Zurich, Switzerland
+                    </div>
+                  </div>
+                  <ChevronDown className="h-4 w-4 text-slate-500 shrink-0" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 rounded-xl">
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none text-slate-900">{fullName}</p>
+                    <p className="text-xs leading-none text-slate-500">{user?.email}</p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => navigate({ to: "/settings" })}
+                  className="cursor-pointer"
+                >
+                  <Settings className="mr-2 h-4 w-4 text-slate-400" />
+                  Settings
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => signOut()}
+                  className="cursor-pointer text-red-600 focus:text-red-600"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           )}
         </div>
       </aside>

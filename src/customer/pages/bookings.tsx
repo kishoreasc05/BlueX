@@ -7,6 +7,9 @@ import { Calendar, Clock, DollarSign, Star, MessageSquare } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/kpi-card";
+import { ClientCalendarPage } from "./calendar";
+import { cn } from "@/lib/utils";
+import { useNavigate } from "@tanstack/react-router";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +22,9 @@ import { Textarea } from "@/components/ui/textarea";
 export function ClientBookingsPage() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<"list" | "calendar">("list");
+  const [listSubTab, setListSubTab] = useState<"confirmed" | "pending">("confirmed");
   const [selectedBooking, setSelectedBooking] = useState<any>(null);
   const [reviewOpen, setReviewOpen] = useState(false);
   const [rating, setRating] = useState(5);
@@ -80,24 +86,103 @@ export function ClientBookingsPage() {
       <PageHeader
         title="My Bookings"
         description="View status, manage schedules, and review your blue-collar service bookings."
+        action={
+          <div className="bg-slate-100 p-1 rounded-xl flex gap-1 border border-slate-200 shrink-0">
+            <button
+              onClick={() => setActiveTab("list")}
+              className={cn(
+                "px-4 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer",
+                activeTab === "list"
+                  ? "bg-white text-blue-600 shadow-sm"
+                  : "text-slate-500 hover:text-slate-800"
+              )}
+            >
+              List View
+            </button>
+            <button
+              onClick={() => setActiveTab("calendar")}
+              className={cn(
+                "px-4 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center gap-1.5",
+                activeTab === "calendar"
+                  ? "bg-white text-blue-600 shadow-sm"
+                  : "text-slate-500 hover:text-slate-800"
+              )}
+            >
+              <Calendar className="w-3.5 h-3.5" />
+              Calendar View
+            </button>
+          </div>
+        }
       />
 
-      <div className="bg-white rounded-2xl border border-slate-200/60 shadow-sm p-6">
-        {isLoading ? (
-          <p className="text-sm text-slate-500 text-center py-6">Loading bookings...</p>
-        ) : !bookings || bookings.length === 0 ? (
-          <EmptyState
-            title="No bookings found"
-            description="You don't have any bookings. Go to Search Services to book an electrician, plumber, or cleaner."
-            icon={Calendar}
-          />
-        ) : (
-          <div className="divide-y divide-slate-100 -mx-6 -my-6">
-            {bookings.map((booking: any) => (
-              <div
-                key={booking.id}
-                className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50/50 transition-colors"
+      {activeTab === "calendar" ? (
+        <ClientCalendarPage hideHeader />
+      ) : (
+        <>
+          <div className="bg-white rounded-2xl border border-slate-200/60 shadow-sm p-6">
+            {/* Sub-tabs for Confirmed vs Pending */}
+            <div className="flex gap-4 border-b border-slate-100 pb-3 mb-6">
+              <button
+                onClick={() => setListSubTab("confirmed")}
+                className={cn(
+                  "pb-2 px-1 text-xs font-bold border-b-2 transition-all cursor-pointer",
+                  listSubTab === "confirmed"
+                    ? "border-blue-600 text-blue-600 font-black"
+                    : "border-transparent text-slate-400 hover:text-slate-600"
+                )}
               >
+                Confirmed Bookings
+              </button>
+              <button
+                onClick={() => setListSubTab("pending")}
+                className={cn(
+                  "pb-2 px-1 text-xs font-bold border-b-2 transition-all cursor-pointer flex items-center gap-1.5",
+                  listSubTab === "pending"
+                    ? "border-blue-600 text-blue-600 font-black"
+                    : "border-transparent text-slate-400 hover:text-slate-600"
+                )}
+              >
+                Pending Requests
+                {bookings && bookings.filter((b: any) => b.status === "pending").length > 0 && (
+                  <span className="bg-amber-100 text-amber-800 text-[9px] px-1.5 py-0.5 rounded-full font-black">
+                    {bookings.filter((b: any) => b.status === "pending").length}
+                  </span>
+                )}
+              </button>
+            </div>
+
+            {isLoading ? (
+              <p className="text-sm text-slate-500 text-center py-6">Loading bookings...</p>
+            ) : (() => {
+              const filteredBookings = (bookings || []).filter((booking: any) => {
+                if (listSubTab === "confirmed") {
+                  return booking.status !== "pending";
+                } else {
+                  return booking.status === "pending";
+                }
+              });
+
+              if (filteredBookings.length === 0) {
+                return (
+                  <EmptyState
+                    title={listSubTab === "confirmed" ? "No confirmed bookings" : "No pending requests"}
+                    description={
+                      listSubTab === "confirmed"
+                        ? "You don't have any confirmed bookings yet."
+                        : "You don't have any pending requests. Once you submit a booking, it will show up here."
+                    }
+                    icon={Calendar}
+                  />
+                );
+              }
+
+              return (
+                <div className="divide-y divide-slate-100 -mx-6 -my-6">
+                  {filteredBookings.map((booking: any) => (
+                    <div
+                      key={booking.id}
+                      className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50/50 transition-colors"
+                    >
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <h3 className="font-bold text-slate-900">
@@ -150,6 +235,14 @@ export function ClientBookingsPage() {
                     variant="outline"
                     size="sm"
                     className="rounded-xl text-xs gap-1 cursor-pointer"
+                    onClick={() => {
+                      // Find the original/first booking for this provider (the one with messages)
+                      const sameProv = (bookings || [])
+                        .filter((b: any) => b.provider_id === booking.provider_id)
+                        .sort((a: any, b: any) => new Date(a.scheduled_at).getTime() - new Date(b.scheduled_at).getTime());
+                      const chatBooking = sameProv[0] || booking;
+                      navigate({ to: "/client/messages", search: { bookingId: chatBooking.id } as any });
+                    }}
                   >
                     <MessageSquare className="w-3.5 h-3.5" /> Chat
                   </Button>
@@ -168,7 +261,7 @@ export function ClientBookingsPage() {
               </div>
             ))}
           </div>
-        )}
+        )})()}
       </div>
 
       {/* Review Dialog */}
@@ -222,6 +315,8 @@ export function ClientBookingsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+        </>
+      )}
     </div>
   );
 }

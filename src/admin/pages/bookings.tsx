@@ -2,14 +2,33 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Activity, Clock, DollarSign, Calendar, RefreshCw, XCircle } from "lucide-react";
+import { Activity, Clock, Calendar, XCircle, UserCheck, CheckCircle2 } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/kpi-card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 export function OpsBookingsPage() {
   const queryClient = useQueryClient();
+  const [selectedBooking, setSelectedBooking] = useState<any>(null);
+  const [reassignOpen, setReassignOpen] = useState(false);
+  const [newOrgId, setNewOrgId] = useState("");
 
+  // 1. Fetch bookings
   const { data: bookings, isLoading } = useQuery({
     queryKey: ["opsBookings"],
     queryFn: async () => {
@@ -24,7 +43,7 @@ export function OpsBookingsPage() {
           total_price, 
           notes,
           client:profiles(full_name, email),
-          provider:organizations(name),
+          provider:organizations(id, name),
           service:provider_services(name)
         `,
         )
@@ -35,6 +54,31 @@ export function OpsBookingsPage() {
     },
   });
 
+  // 2. Fetch all verified providers' organizations
+  const { data: availableProviders = [] } = useQuery({
+    queryKey: ["verifiedProvidersOrgs"],
+    queryFn: async () => {
+      const { data: verifiedProfiles, error: profilesError } = await supabase
+        .from("provider_profiles")
+        .select("user_id")
+        .eq("verification_status", "approved");
+
+      if (profilesError) throw profilesError;
+      const userIds = verifiedProfiles?.map((p) => p.user_id) || [];
+
+      if (userIds.length === 0) return [];
+
+      const { data: orgs, error: orgsError } = await supabase
+        .from("organizations")
+        .select("id, name")
+        .in("created_by", userIds);
+
+      if (orgsError) throw orgsError;
+      return orgs || [];
+    },
+  });
+
+  // 3. Cancel Mutation
   const cancelBooking = useMutation({
     mutationFn: async (bookingId: string) => {
       const { error } = await supabase
@@ -46,11 +90,38 @@ export function OpsBookingsPage() {
     onSuccess: () => {
       toast.success("Booking cancelled successfully.");
       queryClient.invalidateQueries({ queryKey: ["opsBookings"] });
+      queryClient.invalidateQueries({ queryKey: ["opsDashboardData"] });
     },
     onError: (error) => {
       toast.error(error.message);
     },
   });
+
+  // 4. Reassign Mutation
+  const reassignMutation = useMutation({
+    mutationFn: async () => {
+      const { error } = await supabase
+        .from("bookings")
+        .update({ provider_id: newOrgId })
+        .eq("id", selectedBooking.id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Booking reassigned successfully!");
+      queryClient.invalidateQueries({ queryKey: ["opsBookings"] });
+      setReassignOpen(false);
+      setSelectedBooking(null);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const handleReassignClick = (booking: any) => {
+    setSelectedBooking(booking);
+    setNewOrgId(booking.provider?.id || "");
+    setReassignOpen(true);
+  };
 
   return (
     <div className="space-y-6 pb-12 max-w-[1400px] mx-auto text-slate-800">
@@ -145,17 +216,29 @@ export function OpsBookingsPage() {
                     CHF {Number(b.total_price).toFixed(2)}
                   </td>
                   <td className="px-6 py-4 text-right">
-                    {b.status !== "cancelled" && b.status !== "completed" && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-red-500 hover:text-red-600 hover:bg-red-50 rounded-xl text-xs gap-1 cursor-pointer"
-                        onClick={() => cancelBooking.mutate(b.id)}
-                        disabled={cancelBooking.isPending}
-                      >
-                        <XCircle className="w-3.5 h-3.5" /> Force Cancel
-                      </Button>
-                    )}
+                    <div className="flex justify-end gap-2">
+                      {b.status !== "cancelled" && b.status !== "completed" && (
+                        <>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-blue-600 border-blue-100 hover:bg-blue-50 rounded-xl text-xs gap-1 cursor-pointer font-bold"
+                            onClick={() => handleReassignClick(b)}
+                          >
+                            <UserCheck className="w-3.5 h-3.5" /> Reassign
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-red-500 hover:text-red-650 hover:bg-red-50 rounded-xl text-xs gap-1 cursor-pointer"
+                            onClick={() => cancelBooking.mutate(b.id)}
+                            disabled={cancelBooking.isPending}
+                          >
+                            <XCircle className="w-3.5 h-3.5" /> Force Cancel
+                          </Button>
+                        </>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -163,6 +246,70 @@ export function OpsBookingsPage() {
           </table>
         )}
       </div>
+
+      {/* ── Reassign Provider Dialog ── */}
+      <Dialog open={reassignOpen} onOpenChange={setReassignOpen}>
+        <DialogContent className="max-w-md p-6 rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-base font-bold text-slate-950 flex items-center gap-1.5">
+              🔄 Manual Provider Dispatch Reassignment
+            </DialogTitle>
+          </DialogHeader>
+
+          {selectedBooking && (
+            <div className="space-y-4 py-4">
+              <div className="bg-slate-50 p-4 rounded-xl space-y-2 text-xs">
+                <div>
+                  <span className="text-slate-400 font-bold uppercase text-[9px] block">Customer / Service</span>
+                  <span className="text-slate-900 font-bold">
+                    {selectedBooking.client?.full_name} — {selectedBooking.service?.name}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-400 font-bold uppercase text-[9px] block">Current Provider</span>
+                  <span className="text-slate-600 font-semibold">{selectedBooking.provider?.name || "Independent"}</span>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label className="text-xs font-semibold text-slate-500">Select Target Service Provider</Label>
+                <Select value={newOrgId} onValueChange={setNewOrgId}>
+                  <SelectTrigger className="rounded-xl border-slate-200 h-10">
+                    <SelectValue placeholder="Choose provider organization..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {availableProviders.map((org: any) => (
+                      <SelectItem key={org.id} value={org.id}>
+                        {org.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-[10px] text-slate-400">
+                  Only active, verified individual providers and registered staffing companies appear in this list.
+                </p>
+              </div>
+            </div>
+          )}
+
+          <DialogFooter className="pt-4 border-t border-slate-100 flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setReassignOpen(false)}
+              className="rounded-xl border-slate-200 text-xs font-bold"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => reassignMutation.mutate()}
+              disabled={reassignMutation.isPending}
+              className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold px-6 cursor-pointer flex items-center gap-1"
+            >
+              <CheckCircle2 className="w-4 h-4" /> Confirm Dispatch
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

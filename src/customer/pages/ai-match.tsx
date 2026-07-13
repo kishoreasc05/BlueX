@@ -162,13 +162,19 @@ export function AiMatchPage() {
               </div>
 
               {/* Rating */}
-              <div className="flex items-center justify-center md:justify-start gap-1.5">
-                <div className="flex items-center gap-0.5 text-amber-500">
-                  <Star className="h-3.5 w-3.5 fill-current" />
-                  <span className="text-xs font-bold text-slate-800">{prov.rating}</span>
+              {prov.rating ? (
+                <div className="flex items-center justify-center md:justify-start gap-1.5">
+                  <div className="flex items-center gap-0.5 text-amber-500">
+                    <Star className="h-3.5 w-3.5 fill-current" />
+                    <span className="text-xs font-bold text-slate-800">{prov.rating}</span>
+                  </div>
+                  <span className="text-xs text-slate-400">({prov.reviewsCount} reviews)</span>
                 </div>
-                <span className="text-xs text-slate-400">({prov.reviewsCount} reviews)</span>
-              </div>
+              ) : (
+                <div className="text-xs text-slate-400 font-semibold bg-slate-50 border border-slate-200 px-2 py-0.5 rounded-md inline-block max-w-[100px] text-center">
+                  New Provider
+                </div>
+              )}
 
               {/* Badges */}
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-1.5">

@@ -88,13 +88,19 @@ export function ClientFavoritesPage() {
                     {prov.specialty}
                   </span>
 
-                  <div className="flex items-center gap-1 mt-1 text-amber-500">
-                    <Star className="h-3 w-3 fill-current" />
-                    <span className="text-[10px] font-bold text-slate-800">{prov.rating}</span>
-                    <span className="text-[10px] text-slate-400 font-normal">
-                      ({prov.reviewsCount})
-                    </span>
-                  </div>
+                  {prov.rating ? (
+                    <div className="flex items-center gap-1 mt-1 text-amber-500">
+                      <Star className="h-3 w-3 fill-current" />
+                      <span className="text-[10px] font-bold text-slate-800">{prov.rating}</span>
+                      <span className="text-[10px] text-slate-400 font-normal">
+                        ({prov.reviewsCount})
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="text-[10px] text-slate-400 mt-1 font-semibold">
+                      New Provider
+                    </div>
+                  )}
                 </div>
               </div>
 

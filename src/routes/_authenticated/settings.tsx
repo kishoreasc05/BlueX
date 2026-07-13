@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -87,6 +88,68 @@ function SettingsPage() {
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteRole, setInviteRole] = useState<"member" | "admin">("member");
 
+  // Provider-specific profile states
+  const [skills, setSkills] = useState("");
+  const [hourlyRate, setHourlyRate] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [vatNumber, setVatNumber] = useState("");
+  const [bio, setBio] = useState("");
+
+  // Services offered states
+  const [newServiceName, setNewServiceName] = useState("");
+  const [newServiceDesc, setNewServiceDesc] = useState("");
+  const [newServicePrice, setNewServicePrice] = useState("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+
+  // Fetch provider profiles
+  const { data: providerProfile, refetch: refetchProviderProfile } = useQuery({
+    queryKey: ["settingsProviderProfile", user?.id],
+    enabled: !!user?.id && portalRole === "provider",
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("provider_profiles")
+        .select("*")
+        .eq("user_id", user!.id)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Query service categories
+  const categories = useQuery({
+    queryKey: ["serviceCategories"],
+    enabled: portalRole === "provider",
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("service_categories")
+        .select("id, name, slug");
+      if (error) throw error;
+      return data || [];
+    },
+  });
+
+  // Query provider services
+  const providerServices = useQuery({
+    queryKey: ["providerServicesList", activeId],
+    enabled: !!activeId && portalRole === "provider",
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("provider_services")
+        .select(`
+          id,
+          name,
+          description,
+          price,
+          category_id,
+          category:service_categories(name)
+        `)
+        .eq("provider_id", activeId!);
+      if (error) throw error;
+      return data || [];
+    },
+  });
+
   // Sync state with loaded user/org data
   useEffect(() => {
     if (user?.user_metadata?.full_name) {
@@ -102,6 +165,16 @@ function SettingsPage() {
       setOrgName(active.organization.name);
     }
   }, [active]);
+
+  useEffect(() => {
+    if (providerProfile) {
+      setSkills(providerProfile.skills?.join(", ") || "");
+      setHourlyRate(providerProfile.hourly_rate?.toString() || "");
+      setCompanyName(providerProfile.company_name || "");
+      setVatNumber(providerProfile.vat_number || "");
+      setBio(providerProfile.bio || "");
+    }
+  }, [providerProfile]);
 
   const members = useQuery({
     queryKey: ["members", activeId],
@@ -155,7 +228,22 @@ function SettingsPage() {
         .eq("id", user!.id);
       if (profileError) throw profileError;
 
-      // 2. Update auth metadata
+      // 2. Update provider_profiles table if provider
+      if (portalRole === "provider") {
+        const { error: provError } = await supabase
+          .from("provider_profiles")
+          .update({
+            skills: skills.split(",").map(s => s.trim()).filter(Boolean),
+            hourly_rate: hourlyRate ? Number(hourlyRate) : null,
+            company_name: companyName.trim() || null,
+            vat_number: vatNumber.trim() || null,
+            bio: bio.trim() || null,
+          })
+          .eq("user_id", user!.id);
+        if (provError) throw provError;
+      }
+
+      // 3. Update auth metadata
       const { error: authError } = await supabase.auth.updateUser({
         data: { full_name: profileName },
       });
@@ -164,8 +252,7 @@ function SettingsPage() {
     onSuccess: () => {
       toast.success("Profile details updated successfully!");
       qc.invalidateQueries({ queryKey: ["user"] });
-      // Reload page to refresh sidebar context
-      window.location.reload();
+      refetchProviderProfile();
     },
     onError: (e: Error) => toast.error(e.message || "Failed to update profile"),
   });
@@ -233,6 +320,51 @@ function SettingsPage() {
     },
   });
 
+  // Services mutations
+  const handleAddService = useMutation({
+    mutationFn: async () => {
+      if (!selectedCategoryId || !newServiceName.trim() || !newServicePrice) {
+        throw new Error("Please fill in all required fields");
+      }
+      const { error } = await supabase
+        .from("provider_services")
+        .insert({
+          provider_id: activeId!,
+          category_id: selectedCategoryId,
+          name: newServiceName.trim(),
+          description: newServiceDesc.trim() || null,
+          price: Number(newServicePrice),
+        });
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Service added successfully!");
+      setNewServiceName("");
+      setNewServiceDesc("");
+      setNewServicePrice("");
+      setSelectedCategoryId("");
+      providerServices.refetch();
+      qc.invalidateQueries({ queryKey: ["providerProfileStatusCard"] });
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  const handleDeleteService = useMutation({
+    mutationFn: async (serviceId: string) => {
+      const { error } = await supabase
+        .from("provider_services")
+        .delete()
+        .eq("id", serviceId);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Service removed");
+      providerServices.refetch();
+      qc.invalidateQueries({ queryKey: ["providerProfileStatusCard"] });
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
   function copyInvite(token: string) {
     const url = `${window.location.origin}/invite/${token}`;
     navigator.clipboard.writeText(url);
@@ -254,6 +386,14 @@ function SettingsPage() {
           >
             Profile
           </TabsTrigger>
+          {portalRole === "provider" && (
+            <TabsTrigger
+              value="services"
+              className="rounded-lg text-xs font-semibold px-4.5 py-2 cursor-pointer transition-all data-[state=active]:bg-white data-[state=active]:text-slate-900 data-[state=active]:shadow-sm"
+            >
+              Services
+            </TabsTrigger>
+          )}
           {hasWorkspace && (
             <>
               <TabsTrigger
@@ -327,12 +467,73 @@ function SettingsPage() {
                 <p className="text-[10px] text-slate-400">Email address cannot be changed.</p>
               </div>
 
+              {portalRole === "provider" && (
+                <>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold text-slate-500">Specialties / Skills (comma separated)</Label>
+                    <Input
+                      value={skills}
+                      onChange={(e) => setSkills(e.target.value)}
+                      placeholder="e.g. plumbing, heating, cleaning"
+                      className="rounded-xl border-slate-200 focus-visible:ring-blue-500 h-10"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold text-slate-500">Hourly Rate (CHF)</Label>
+                    <Input
+                      type="number"
+                      value={hourlyRate}
+                      onChange={(e) => setHourlyRate(e.target.value)}
+                      placeholder="e.g. 95"
+                      className="rounded-xl border-slate-200 focus-visible:ring-blue-500 h-10"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold text-slate-500">Company Name</Label>
+                    <Input
+                      value={companyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
+                      placeholder="e.g. Manoj Plumbers GmbH"
+                      className="rounded-xl border-slate-200 focus-visible:ring-blue-500 h-10"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold text-slate-500">VAT Number</Label>
+                    <Input
+                      value={vatNumber}
+                      onChange={(e) => setVatNumber(e.target.value)}
+                      placeholder="e.g. CHE-123.456.789 MWST"
+                      className="rounded-xl border-slate-200 focus-visible:ring-blue-500 h-10"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold text-slate-500">About Me</Label>
+                    <Textarea
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value)}
+                      placeholder="Tell customers about your experience, services, and values..."
+                      rows={4}
+                      className="rounded-xl border-slate-200 focus-visible:ring-blue-500 text-xs"
+                    />
+                  </div>
+                </>
+              )}
+
               <Button
                 onClick={() => updateProfile.mutate()}
                 disabled={
                   updateProfile.isPending ||
                   !profileName.trim() ||
-                  profileName === user?.user_metadata?.full_name
+                  (profileName === user?.user_metadata?.full_name &&
+                    skills === (providerProfile?.skills?.join(", ") || "") &&
+                    hourlyRate === (providerProfile?.hourly_rate?.toString() || "") &&
+                    companyName === (providerProfile?.company_name || "") &&
+                    vatNumber === (providerProfile?.vat_number || "") &&
+                    bio === (providerProfile?.bio || ""))
                 }
                 className="mt-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md cursor-pointer h-10 font-bold transition-all"
               >
@@ -382,6 +583,137 @@ function SettingsPage() {
             </div>
           </div>
         </TabsContent>
+
+        {/* ── SERVICES TAB (Only for Provider portalRole) ── */}
+        {portalRole === "provider" && (
+          <TabsContent value="services" className="space-y-6 outline-none">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Left Column: List of Services (Span 2) */}
+              <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">Offered Services</h3>
+                  <p className="text-xs text-slate-500 mt-1">
+                    These services will be visible to customers searching for providers in your categories.
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  {providerServices.isLoading ? (
+                    <div className="py-8 text-center text-slate-400 text-sm">
+                      Loading services...
+                    </div>
+                  ) : providerServices.data && providerServices.data.length > 0 ? (
+                    providerServices.data.map((srv: any) => (
+                      <div
+                        key={srv.id}
+                        className="flex items-start justify-between p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors"
+                      >
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
+                              {srv.category?.name}
+                            </span>
+                            <span className="text-sm font-bold text-slate-800">{srv.name}</span>
+                          </div>
+                          {srv.description && (
+                            <p className="text-xs text-slate-500 max-w-md mt-1">{srv.description}</p>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-4 shrink-0">
+                          <span className="text-sm font-bold text-slate-900">CHF {srv.price}</span>
+                          <button
+                            onClick={() => handleDeleteService.mutate(srv.id)}
+                            className="p-1 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                            title="Delete service"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="py-12 text-center border-2 border-dashed border-slate-200 rounded-2xl">
+                      <div className="text-slate-400 text-sm font-medium">No services registered yet.</div>
+                      <p className="text-xs text-slate-400 mt-1 max-w-xs mx-auto">
+                        List services to let clients book you directly for specific jobs.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right Column: Add Service Form */}
+              <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
+                <div>
+                  <h3 className="text-base font-bold text-slate-900">Add Service</h3>
+                  <p className="text-xs text-slate-500 mt-1">Create a new service offering.</p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold text-slate-500">Category *</Label>
+                    <Select value={selectedCategoryId} onValueChange={setSelectedCategoryId}>
+                      <SelectTrigger className="rounded-xl border-slate-200 h-10">
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categories.data?.map((cat: any) => (
+                          <SelectItem key={cat.id} value={cat.id}>
+                            {cat.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold text-slate-500">Service Name / Title *</Label>
+                    <Input
+                      value={newServiceName}
+                      onChange={(e) => setNewServiceName(e.target.value)}
+                      placeholder="e.g. Toilet unclogging, Kitchen deep clean"
+                      className="rounded-xl border-slate-200 focus-visible:ring-blue-500 h-10"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold text-slate-500">Price (CHF) *</Label>
+                    <Input
+                      type="number"
+                      value={newServicePrice}
+                      onChange={(e) => setNewServicePrice(e.target.value)}
+                      placeholder="e.g. 150"
+                      className="rounded-xl border-slate-200 focus-visible:ring-blue-500 h-10"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold text-slate-500">Description</Label>
+                    <Input
+                      value={newServiceDesc}
+                      onChange={(e) => setNewServiceDesc(e.target.value)}
+                      placeholder="Brief details about what is included..."
+                      className="rounded-xl border-slate-200 focus-visible:ring-blue-500 h-10"
+                    />
+                  </div>
+
+                  <Button
+                    onClick={() => handleAddService.mutate()}
+                    disabled={
+                      handleAddService.isPending ||
+                      !selectedCategoryId ||
+                      !newServiceName.trim() ||
+                      !newServicePrice
+                    }
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md cursor-pointer h-10 font-bold transition-all mt-2"
+                  >
+                    Add Service
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+        )}
 
         {/* ── SETTINGS TAB (Notifications, Language/Region, Default Location) ── */}
         <TabsContent value="settings" className="space-y-6 outline-none">

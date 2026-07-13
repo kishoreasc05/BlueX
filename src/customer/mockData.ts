@@ -4,14 +4,14 @@ export interface MockProvider {
   type: "private" | "company";
   specialty: string; // lowercase slug matching category slugs
   specialtyLabel: string; // User-friendly display label
-  rating: number;
+  rating: number | null;
   reviewsCount: number;
   hourlyRate: number;
   location: string;
   memberSince: string;
   minBooking: string;
-  responseTime: string;
-  completionRate: string;
+  responseTime: string | null;
+  completionRate: string | null;
   jobsCompleted: number;
   languages: string;
   avatar: string;
@@ -39,14 +39,14 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     type: "company",
     specialty: "cleaner",
     specialtyLabel: "Professional Cleaning Services",
-    rating: 4.9,
-    reviewsCount: 128,
+    rating: null,
+    reviewsCount: 0,
     location: "Zurich, Switzerland",
     memberSince: "Jan 2023",
     minBooking: "2 hours",
-    responseTime: "15 min",
-    completionRate: "98%",
-    jobsCompleted: 312,
+    responseTime: null,
+    completionRate: null,
+    jobsCompleted: 0,
     languages: "DE, EN",
     hourlyRate: 52,
     avatar:
@@ -59,22 +59,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
       "Move-in / Move-out Cleaning",
       "Window Cleaning",
     ],
-    reviews: [
-      {
-        id: 1,
-        author: "Anna M.",
-        rating: 5,
-        date: "2 weeks ago",
-        text: "Excellent cleaning! They were extremely professional, punctual, and left the apartment spotless.",
-      },
-      {
-        id: 2,
-        author: "Beat S.",
-        rating: 5,
-        date: "1 month ago",
-        text: "Very reliable service. The team was friendly and worked very fast. Highly recommended!",
-      },
-    ],
+    reviews: [],
     faqs: [
       {
         q: "Do I need to provide cleaning supplies?",
@@ -96,14 +81,14 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     type: "company",
     specialty: "cleaner",
     specialtyLabel: "House Cleaning Company",
-    rating: 4.8,
-    reviewsCount: 96,
+    rating: null,
+    reviewsCount: 0,
     location: "Zurich, Switzerland",
     memberSince: "Mar 2023",
     minBooking: "2 hours",
-    responseTime: "30 min",
-    completionRate: "95%",
-    jobsCompleted: 245,
+    responseTime: null,
+    completionRate: null,
+    jobsCompleted: 0,
     languages: "DE, EN, FR",
     hourlyRate: 48,
     avatar:
@@ -111,15 +96,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     about:
       "Sparkle Home Services provides top-tier home care throughout the Zurich region. We handle the recruitment, social security, and insurance of our cleaning team, allowing you to enjoy a sparkling clean home hassle-free.",
     services: ["General Cleaning", "Kitchen Deep Clean", "Ironing & Laundry"],
-    reviews: [
-      {
-        id: 1,
-        author: "Clara K.",
-        rating: 5,
-        date: "3 days ago",
-        text: "Great pricing and super friendly cleaners. Will book again next month!",
-      },
-    ],
+    reviews: [],
     faqs: [
       {
         q: "Can I request the same cleaner each time?",
@@ -137,14 +114,14 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     type: "company",
     specialty: "cleaner",
     specialtyLabel: "Elite Housekeeping Agency",
-    rating: 4.7,
-    reviewsCount: 75,
+    rating: null,
+    reviewsCount: 0,
     location: "Zurich, Switzerland",
     memberSince: "Nov 2022",
     minBooking: "2 hours",
-    responseTime: "20 min",
-    completionRate: "97%",
-    jobsCompleted: 189,
+    responseTime: null,
+    completionRate: null,
+    jobsCompleted: 0,
     languages: "DE, EN, IT",
     hourlyRate: 55,
     avatar:
@@ -157,15 +134,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
       "Carpet Steam Cleaning",
       "Disinfecting Services",
     ],
-    reviews: [
-      {
-        id: 1,
-        author: "Thomas L.",
-        rating: 4,
-        date: "1 week ago",
-        text: "Very thorough clean. Professional team.",
-      },
-    ],
+    reviews: [],
     faqs: [
       {
         q: "What is your cancellation policy?",
@@ -183,14 +152,14 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     type: "private",
     specialty: "cleaner",
     specialtyLabel: "Independent Housekeeper",
-    rating: 4.95,
-    reviewsCount: 42,
+    rating: null,
+    reviewsCount: 0,
     location: "Zurich, Switzerland",
     memberSince: "May 2023",
     minBooking: "2 hours",
-    responseTime: "10 min",
-    completionRate: "100%",
-    jobsCompleted: 85,
+    responseTime: null,
+    completionRate: null,
+    jobsCompleted: 0,
     languages: "DE, FR",
     hourlyRate: 36,
     avatar:
@@ -198,15 +167,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     about:
       "Hi! I am Sarah, an experienced cleaner offering private cleaning services in Zurich. I am passionate about creating clean, peaceful living spaces. Hiring me is simple and legally compliant through BlueX's automated payroll and social contribution system.",
     services: ["Regular Housework", "Laundry & Ironing", "Window Cleaning"],
-    reviews: [
-      {
-        id: 1,
-        author: "Marc O.",
-        rating: 5,
-        date: "1 week ago",
-        text: "Sarah is amazing. Very thorough, polite, and always on time. Highly recommended!",
-      },
-    ],
+    reviews: [],
     faqs: [
       {
         q: "How is my employment with you registered?",
@@ -223,14 +184,14 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     type: "company",
     specialty: "plumber",
     specialtyLabel: "Licensed Plumbing Services",
-    rating: 4.85,
-    reviewsCount: 154,
+    rating: null,
+    reviewsCount: 0,
     location: "Zurich, Switzerland",
     memberSince: "Feb 2022",
     minBooking: "1 hour",
-    responseTime: "25 min",
-    completionRate: "99%",
-    jobsCompleted: 420,
+    responseTime: null,
+    completionRate: null,
+    jobsCompleted: 0,
     languages: "DE, EN, IT",
     hourlyRate: 115,
     avatar:
@@ -243,15 +204,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
       "Drain Unblocking",
       "Heating Maintenance",
     ],
-    reviews: [
-      {
-        id: 1,
-        author: "Urs P.",
-        rating: 5,
-        date: "3 days ago",
-        text: "Had a pipe leak at 8 PM. They arrived in 30 mins and fixed it instantly. Lifesavers!",
-      },
-    ],
+    reviews: [],
     faqs: [
       {
         q: "Do you have emergency dispatch?",
@@ -269,14 +222,14 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     type: "company",
     specialty: "electrician",
     specialtyLabel: "Certified Electrical Installation",
-    rating: 4.9,
-    reviewsCount: 110,
+    rating: null,
+    reviewsCount: 0,
     location: "Zurich, Switzerland",
     memberSince: "Jul 2021",
     minBooking: "1 hour",
-    responseTime: "20 min",
-    completionRate: "98%",
-    jobsCompleted: 350,
+    responseTime: null,
+    completionRate: null,
+    jobsCompleted: 0,
     languages: "DE, EN, FR",
     hourlyRate: 125,
     avatar:
@@ -289,15 +242,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
       "Fuse Box Upgrades",
       "Safety Inspections",
     ],
-    reviews: [
-      {
-        id: 1,
-        author: "Dominik B.",
-        rating: 5,
-        date: "2 weeks ago",
-        text: "Extremely professional. Installed all lighting fixtures and set up our smart home dashboard perfectly.",
-      },
-    ],
+    reviews: [],
     faqs: [
       {
         q: "Are your technicians certified?",
@@ -315,14 +260,14 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     type: "private",
     specialty: "carpenter",
     specialtyLabel: "Handyman & Carpenter",
-    rating: 4.88,
-    reviewsCount: 68,
+    rating: null,
+    reviewsCount: 0,
     location: "Zurich, Switzerland",
     memberSince: "Sep 2022",
     minBooking: "2 hours",
-    responseTime: "35 min",
-    completionRate: "96%",
-    jobsCompleted: 156,
+    responseTime: null,
+    completionRate: null,
+    jobsCompleted: 0,
     languages: "DE",
     hourlyRate: 68,
     avatar:
@@ -335,15 +280,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
       "Door & Window Repairs",
       "Picture Hanging & Shelf Mounting",
     ],
-    reviews: [
-      {
-        id: 1,
-        author: "Rita S.",
-        rating: 5,
-        date: "1 month ago",
-        text: "Hans repaired our old wooden dining table. It looks absolutely brand new. Exceptional craftsmanship!",
-      },
-    ],
+    reviews: [],
     faqs: [
       {
         q: "Can you help pick up furniture?",
@@ -360,14 +297,14 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     type: "private",
     specialty: "gardener",
     specialtyLabel: "Independent Gardener",
-    rating: 4.82,
-    reviewsCount: 30,
+    rating: null,
+    reviewsCount: 0,
     location: "Zurich, Switzerland",
     memberSince: "Apr 2023",
     minBooking: "2 hours",
-    responseTime: "45 min",
-    completionRate: "94%",
-    jobsCompleted: 58,
+    responseTime: null,
+    completionRate: null,
+    jobsCompleted: 0,
     languages: "FR, DE, EN",
     hourlyRate: 58,
     avatar:
@@ -380,15 +317,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
       "Garden Weeding & Mulching",
       "Planting & Leaf Cleanup",
     ],
-    reviews: [
-      {
-        id: 1,
-        author: "Michelle V.",
-        rating: 5,
-        date: "3 weeks ago",
-        text: "Marc did a fantastic job trimming our hedges. Very neat, clean, and friendly gardener.",
-      },
-    ],
+    reviews: [],
     faqs: [
       {
         q: "Do you bring your own tools?",
@@ -405,14 +334,14 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     type: "private",
     specialty: "childcare",
     specialtyLabel: "Certified Childcare & Nanny",
-    rating: 4.97,
-    reviewsCount: 55,
+    rating: null,
+    reviewsCount: 0,
     location: "Zurich, Switzerland",
     memberSince: "Jan 2023",
     minBooking: "3 hours",
-    responseTime: "15 min",
-    completionRate: "100%",
-    jobsCompleted: 110,
+    responseTime: null,
+    completionRate: null,
+    jobsCompleted: 0,
     languages: "IT, DE, EN",
     hourlyRate: 42,
     avatar:
@@ -420,15 +349,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     about:
       "Hi families! I am Elena, a qualified nanny with a certificate in early childhood education. I have over 6 years of experience caring for children from babies to school age. I am CPR/First Aid certified.",
     services: ["Babysitting", "After-school Care", "Language Tutoring (Italian)"],
-    reviews: [
-      {
-        id: 1,
-        author: "Laura F.",
-        rating: 5,
-        date: "2 weeks ago",
-        text: "Elena is wonderful with our kids. They absolutely adore her. Extremely responsible and trustworthy.",
-      },
-    ],
+    reviews: [],
     faqs: [
       {
         q: "Are you First Aid certified?",
@@ -445,14 +366,14 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     type: "company",
     specialty: "movers",
     specialtyLabel: "Moving & Transport Company",
-    rating: 4.78,
-    reviewsCount: 114,
+    rating: null,
+    reviewsCount: 0,
     location: "Zurich, Switzerland",
     memberSince: "Nov 2022",
     minBooking: "4 hours",
-    responseTime: "30 min",
-    completionRate: "96%",
-    jobsCompleted: 290,
+    responseTime: null,
+    completionRate: null,
+    jobsCompleted: 0,
     languages: "DE, EN",
     hourlyRate: 85,
     avatar:
@@ -465,15 +386,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
       "Professional Packing Service",
       "Piano Transport",
     ],
-    reviews: [
-      {
-        id: 1,
-        author: "Sandra G.",
-        rating: 5,
-        date: "3 weeks ago",
-        text: "Amazing team! They packed our 4-room apartment in a morning and moved everything without a single scratch.",
-      },
-    ],
+    reviews: [],
     faqs: [
       {
         q: "Is transport insurance included?",
