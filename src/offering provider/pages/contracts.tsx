@@ -28,7 +28,7 @@ export function ContractsPage() {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [editingService, setEditingService] = useState<any>(null);
-  
+
   // Form States
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -56,10 +56,12 @@ export function ContractsPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("provider_services")
-        .select(`
+        .select(
+          `
           *,
           category:service_categories(id, name, slug)
-        `)
+        `,
+        )
         .eq("provider_id", activeId!)
         .order("created_at", { ascending: false });
       if (error) throw error;
@@ -138,10 +140,7 @@ export function ContractsPage() {
   // 5. Delete Service Mutation
   const deleteServiceMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from("provider_services")
-        .delete()
-        .eq("id", id);
+      const { error } = await supabase.from("provider_services").delete().eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -203,7 +202,7 @@ export function ContractsPage() {
             />
           </div>
         </div>
-        
+
         <table className="w-full text-sm text-left">
           <thead className="text-xs text-slate-500 bg-slate-50/50 uppercase border-b border-slate-200">
             <tr>
@@ -223,10 +222,7 @@ export function ContractsPage() {
               </tr>
             ) : services && services.length > 0 ? (
               services.map((service: any) => (
-                <tr
-                  key={service.id}
-                  className="hover:bg-slate-50/30 transition-colors"
-                >
+                <tr key={service.id} className="hover:bg-slate-50/30 transition-colors">
                   <td className="px-6 py-4 font-medium text-slate-900">
                     <div className="flex items-center gap-3">
                       <div className="h-8 w-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">

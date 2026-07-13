@@ -39,12 +39,54 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "rec
 
 /* ── Service Categories ── */
 const CATEGORIES = [
-  { name: "Cleaning", slug: "cleaner", icon: Sparkles, color: "text-sky-600", bg: "bg-sky-50", count: "120+ providers" },
-  { name: "Plumbing", slug: "plumber", icon: Droplet, color: "text-blue-600", bg: "bg-blue-50", count: "80+ providers" },
-  { name: "Electrical", slug: "electrician", icon: Zap, color: "text-amber-600", bg: "bg-amber-50", count: "75+ providers" },
-  { name: "Garden & Outdoor", slug: "gardener", icon: Leaf, color: "text-emerald-600", bg: "bg-emerald-50", count: "60+ providers" },
-  { name: "Moving & Transport", slug: "movers", icon: Truck, color: "text-rose-600", bg: "bg-rose-50", count: "90+ providers" },
-  { name: "Handyman", slug: "carpenter", icon: Hammer, color: "text-orange-600", bg: "bg-orange-50", count: "100+ providers" },
+  {
+    name: "Cleaning",
+    slug: "cleaner",
+    icon: Sparkles,
+    color: "text-sky-600",
+    bg: "bg-sky-50",
+    count: "120+ providers",
+  },
+  {
+    name: "Plumbing",
+    slug: "plumber",
+    icon: Droplet,
+    color: "text-blue-600",
+    bg: "bg-blue-50",
+    count: "80+ providers",
+  },
+  {
+    name: "Electrical",
+    slug: "electrician",
+    icon: Zap,
+    color: "text-amber-600",
+    bg: "bg-amber-50",
+    count: "75+ providers",
+  },
+  {
+    name: "Garden & Outdoor",
+    slug: "gardener",
+    icon: Leaf,
+    color: "text-emerald-600",
+    bg: "bg-emerald-50",
+    count: "60+ providers",
+  },
+  {
+    name: "Moving & Transport",
+    slug: "movers",
+    icon: Truck,
+    color: "text-rose-600",
+    bg: "bg-rose-50",
+    count: "90+ providers",
+  },
+  {
+    name: "Handyman",
+    slug: "carpenter",
+    icon: Hammer,
+    color: "text-orange-600",
+    bg: "bg-orange-50",
+    count: "100+ providers",
+  },
 ];
 
 /* ── Custom chart tooltip ── */
@@ -105,7 +147,8 @@ export function ClientDashboard() {
       // Query top 3 contractors for AI matches
       const contractorsQuery = supabase
         .from("contractors")
-        .select(`
+        .select(
+          `
           id,
           name,
           hourly_rate,
@@ -115,7 +158,8 @@ export function ClientDashboard() {
             reviews(rating),
             bookings(id, status)
           )
-        `)
+        `,
+        )
         .limit(3);
 
       const [bookingsRes, tendersRes, reviewsRes, messagesRes, contractorsRes] = await Promise.all([
@@ -182,7 +226,12 @@ export function ClientDashboard() {
 
         const rating =
           reviewsList.length > 0
-            ? Number((reviewsList.reduce((sum: number, r: any) => sum + r.rating, 0) / reviewsList.length).toFixed(1))
+            ? Number(
+                (
+                  reviewsList.reduce((sum: number, r: any) => sum + r.rating, 0) /
+                  reviewsList.length
+                ).toFixed(1),
+              )
             : null;
 
         return {
@@ -225,24 +274,22 @@ export function ClientDashboard() {
   const pendingCount = dashboardData?.pending?.length ?? 0;
 
   // Build dynamic notifications
-  const dynamicNotifications = (dashboardData?.bookings || [])
-    .slice(0, 3)
-    .map((b) => {
-      let message = "";
-      let timeStr = "Just now";
+  const dynamicNotifications = (dashboardData?.bookings || []).slice(0, 3).map((b) => {
+    let message = "";
+    const timeStr = "Just now";
 
-      if (b.status === "pending") {
-        message = `Booking request for ${(b.service as any)?.name || "Service"} is pending approval.`;
-      } else if (b.status === "confirmed") {
-        message = `Booking with ${(b.provider as any)?.name || "Provider"} is confirmed.`;
-      } else if (b.status === "completed") {
-        message = `Completed service with ${(b.provider as any)?.name || "Provider"}.`;
-      } else {
-        message = `Service status updated to ${b.status}.`;
-      }
+    if (b.status === "pending") {
+      message = `Booking request for ${(b.service as any)?.name || "Service"} is pending approval.`;
+    } else if (b.status === "confirmed") {
+      message = `Booking with ${(b.provider as any)?.name || "Provider"} is confirmed.`;
+    } else if (b.status === "completed") {
+      message = `Completed service with ${(b.provider as any)?.name || "Provider"}.`;
+    } else {
+      message = `Service status updated to ${b.status}.`;
+    }
 
-      return { id: b.id, message, timeStr };
-    });
+    return { id: b.id, message, timeStr };
+  });
 
   return (
     <div className="space-y-6 pb-12 max-w-[1400px] mx-auto text-slate-800">
@@ -307,7 +354,12 @@ export function ClientDashboard() {
             className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm flex flex-col justify-between min-h-[110px] relative overflow-hidden group hover:shadow-md transition-shadow"
           >
             <div className="flex justify-between items-start">
-              <div className={cn("h-9 w-9 rounded-xl flex items-center justify-center shrink-0", kpi.bg)}>
+              <div
+                className={cn(
+                  "h-9 w-9 rounded-xl flex items-center justify-center shrink-0",
+                  kpi.bg,
+                )}
+              >
                 <kpi.icon className={cn("h-4.5 w-4.5", kpi.color)} />
               </div>
               <Link
@@ -319,9 +371,7 @@ export function ClientDashboard() {
             </div>
             <div className="mt-3">
               <div className="text-xs font-semibold text-slate-400">{kpi.label}</div>
-              <div className="text-xl font-black text-slate-900 mt-1 leading-none">
-                {kpi.value}
-              </div>
+              <div className="text-xl font-black text-slate-900 mt-1 leading-none">{kpi.value}</div>
             </div>
           </div>
         ))}
@@ -352,7 +402,9 @@ export function ClientDashboard() {
                   </div>
                   <div className="space-y-0.5">
                     <p className="text-xs font-bold text-slate-800">No upcoming bookings</p>
-                    <p className="text-[11px] text-slate-400">Find a provider to request a home service.</p>
+                    <p className="text-[11px] text-slate-400">
+                      Find a provider to request a home service.
+                    </p>
                   </div>
                 </div>
               ) : (
@@ -458,20 +510,26 @@ export function ClientDashboard() {
                   onClick={() => navigate({ to: "/client/search", search: { q: cat.slug } as any })}
                   className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-100 hover:border-blue-150 hover:bg-blue-50/10 hover:shadow-sm transition-all group text-left cursor-pointer"
                 >
-                  <div className={cn("h-9 w-9 rounded-xl flex items-center justify-center shrink-0", cat.bg)}>
+                  <div
+                    className={cn(
+                      "h-9 w-9 rounded-xl flex items-center justify-center shrink-0",
+                      cat.bg,
+                    )}
+                  >
                     <cat.icon className={cn("h-4.5 w-4.5", cat.color)} />
                   </div>
                   <div className="min-w-0">
                     <div className="text-xs font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate">
                       {cat.name}
                     </div>
-                    <div className="text-[10px] text-slate-400 font-semibold mt-0.5 truncate">{cat.count}</div>
+                    <div className="text-[10px] text-slate-400 font-semibold mt-0.5 truncate">
+                      {cat.count}
+                    </div>
                   </div>
                 </button>
               ))}
             </div>
           </div>
-
         </div>
 
         {/* RIGHT COLUMN (SIDEBAR) */}
@@ -489,7 +547,10 @@ export function ClientDashboard() {
             </div>
             <div className="space-y-3">
               {(dashboardData?.aiMatches || []).map((provider: any, i: number) => (
-                <div key={i} className="flex items-center justify-between gap-3 p-3 bg-slate-50/50 border border-slate-100 rounded-xl">
+                <div
+                  key={i}
+                  className="flex items-center justify-between gap-3 p-3 bg-slate-50/50 border border-slate-100 rounded-xl"
+                >
                   <div className="flex items-center gap-2.5 min-w-0">
                     <div className="h-9 w-9 rounded-full bg-slate-200 flex items-center justify-center shrink-0 font-bold text-slate-600 text-xs">
                       {provider.name.charAt(0)}
@@ -501,7 +562,9 @@ export function ClientDashboard() {
                           <Star className="w-2.5 h-2.5 fill-amber-500" />
                           {provider.rating || "New"}
                         </span>
-                        <span className="text-[10px] text-slate-400 font-semibold">CHF {provider.hourlyRate}/hr</span>
+                        <span className="text-[10px] text-slate-400 font-semibold">
+                          CHF {provider.hourlyRate}/hr
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -522,8 +585,6 @@ export function ClientDashboard() {
             </button>
           </div>
 
-
-
           {/* Spending Overview */}
           <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
@@ -534,7 +595,9 @@ export function ClientDashboard() {
             </div>
             <div>
               <div className="flex items-baseline gap-2">
-                <span className="text-xl font-black text-slate-900">CHF {totalSpent.toLocaleString("en-CH")}</span>
+                <span className="text-xl font-black text-slate-900">
+                  CHF {totalSpent.toLocaleString("en-CH")}
+                </span>
                 <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-md">
                   + 16% from last month
                 </span>

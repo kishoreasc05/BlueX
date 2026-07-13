@@ -168,7 +168,13 @@ const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
 /* ═══════════════════════════════════════════════════════
    PROVIDER VERIFICATION WIZARD WITH CLOUDINARY UPLOADS
    ═══════════════════════════════════════════════════════ */
-function ProviderVerificationWizard({ profile, onSuccess }: { profile: any; onSuccess: () => void }) {
+function ProviderVerificationWizard({
+  profile,
+  onSuccess,
+}: {
+  profile: any;
+  onSuccess: () => void;
+}) {
   const { user } = useAuth();
   const [submitting, setSubmitting] = useState(false);
   const [uploads, setUploads] = useState<Record<string, string>>({
@@ -178,11 +184,14 @@ function ProviderVerificationWizard({ profile, onSuccess }: { profile: any; onSu
   });
   const [uploading, setUploading] = useState<Record<string, boolean>>({});
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, field: "idDoc" | "selfie" | "addressProof") => {
+  const handleFileChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: "idDoc" | "selfie" | "addressProof",
+  ) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setUploading(prev => ({ ...prev, [field]: true }));
+    setUploading((prev) => ({ ...prev, [field]: true }));
     try {
       const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "demo";
       const preset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "unsigned_preset";
@@ -208,12 +217,12 @@ function ProviderVerificationWizard({ profile, onSuccess }: { profile: any; onSu
         secureUrl = `https://res.cloudinary.com/demo/image/upload/v123456789/${file.name.replace(/\s+/g, "_")}`;
       }
 
-      setUploads(prev => ({ ...prev, [field]: secureUrl }));
+      setUploads((prev) => ({ ...prev, [field]: secureUrl }));
       toast.success("Document uploaded successfully.");
     } catch (err) {
       toast.error("Failed to upload document.");
     } finally {
-      setUploading(prev => ({ ...prev, [field]: false }));
+      setUploading((prev) => ({ ...prev, [field]: false }));
     }
   };
 
@@ -254,7 +263,8 @@ function ProviderVerificationWizard({ profile, onSuccess }: { profile: any; onSu
         <div className="space-y-2">
           <h2 className="text-xl font-black text-slate-900">⏳ Verification in Progress</h2>
           <p className="text-slate-500 text-xs leading-relaxed max-w-sm mx-auto font-medium">
-            Our operations team is currently reviewing your identity documents. This process usually takes less than 24 hours.
+            Our operations team is currently reviewing your identity documents. This process usually
+            takes less than 24 hours.
           </p>
         </div>
 
@@ -267,23 +277,33 @@ function ProviderVerificationWizard({ profile, onSuccess }: { profile: any; onSu
               { label: "Account Registered", status: "completed" },
               { label: "Documents Submitted", status: "completed" },
               { label: "Operations Audit", status: "pending" },
-              { label: "Account Activation", status: "locked" }
+              { label: "Account Activation", status: "locked" },
             ].map((step, idx) => (
               <div key={step.label} className="flex items-center gap-3">
-                <div className={cn(
-                  "h-5 w-5 rounded-full flex items-center justify-center text-[10px] font-bold",
-                  step.status === "completed" ? "bg-blue-100 text-blue-700" :
-                  step.status === "pending" ? "bg-amber-100 text-amber-700 animate-pulse" :
-                  "bg-slate-100 text-slate-400"
-                )}>
+                <div
+                  className={cn(
+                    "h-5 w-5 rounded-full flex items-center justify-center text-[10px] font-bold",
+                    step.status === "completed"
+                      ? "bg-blue-100 text-blue-700"
+                      : step.status === "pending"
+                        ? "bg-amber-100 text-amber-700 animate-pulse"
+                        : "bg-slate-100 text-slate-400",
+                  )}
+                >
                   {step.status === "completed" ? "✓" : idx + 1}
                 </div>
-                <span className={cn(
-                  "text-xs font-bold",
-                  step.status === "completed" ? "text-slate-800" :
-                  step.status === "pending" ? "text-slate-900 font-extrabold" :
-                  "text-slate-400"
-                )}>{step.label}</span>
+                <span
+                  className={cn(
+                    "text-xs font-bold",
+                    step.status === "completed"
+                      ? "text-slate-800"
+                      : step.status === "pending"
+                        ? "text-slate-900 font-extrabold"
+                        : "text-slate-400",
+                  )}
+                >
+                  {step.label}
+                </span>
               </div>
             ))}
           </div>
@@ -307,12 +327,19 @@ function ProviderVerificationWizard({ profile, onSuccess }: { profile: any; onSu
         {[
           { field: "idDoc", label: "Government ID", desc: "Passport or Driver License" },
           { field: "selfie", label: "Selfie with ID", desc: "Hold your ID card next to your face" },
-          { field: "addressProof", label: "Proof of Address", desc: "Recent utility bill or statement" }
+          {
+            field: "addressProof",
+            label: "Proof of Address",
+            desc: "Recent utility bill or statement",
+          },
         ].map((item) => {
           const isUploaded = !!uploads[item.field];
           const isUploading = uploading[item.field];
           return (
-            <div key={item.field} className="border border-slate-150 rounded-2xl p-4 flex flex-col justify-between min-h-[160px] bg-slate-50/50">
+            <div
+              key={item.field}
+              className="border border-slate-150 rounded-2xl p-4 flex flex-col justify-between min-h-[160px] bg-slate-50/50"
+            >
               <div>
                 <span className="text-xs font-bold text-slate-900 block">{item.label}</span>
                 <span className="text-[10px] text-slate-400 block mt-1 leading-normal font-semibold">
@@ -386,9 +413,16 @@ function Dashboard() {
   });
 
   const activePortal = userProfile?.role || user?.user_metadata?.portal_role || "client";
-  const firstName = userProfile?.full_name?.split(" ")[0] || user?.user_metadata?.full_name?.split(" ")[0] || "there";
+  const firstName =
+    userProfile?.full_name?.split(" ")[0] ||
+    user?.user_metadata?.full_name?.split(" ")[0] ||
+    "there";
 
-  const { data: providerProfile, isLoading: isProviderLoading, refetch: refetchProfile } = useQuery({
+  const {
+    data: providerProfile,
+    isLoading: isProviderLoading,
+    refetch: refetchProfile,
+  } = useQuery({
     queryKey: ["providerProfile", user?.id],
     enabled: !!user?.id && activePortal === "provider",
     queryFn: async () => {
@@ -402,37 +436,6 @@ function Dashboard() {
     },
   });
 
-  /* ── Client / Ops portals ── */
-  if (isProfileLoading) {
-    return <div className="text-center py-20 text-slate-400 font-bold text-xs">Loading portal profile...</div>;
-  }
-
-  if (activePortal === "client") {
-    return <ClientDashboard />;
-  }
-  if (activePortal === "operations") {
-    return <OpsDashboard />;
-  }
-
-  // Provider Portal Loading Check
-  if (isProviderLoading) {
-    return <div className="text-center py-20 text-slate-400 font-bold text-xs">Loading profile...</div>;
-  }
-
-  const verificationStatus = providerProfile?.verification_status || "none";
-
-  if (verificationStatus !== "approved") {
-    return (
-      <ProviderVerificationWizard
-        profile={providerProfile}
-        onSuccess={refetchProfile}
-      />
-    );
-  }
-
-  /* ═══════════════════════════════════════════════════════
-     PROVIDER DASHBOARD — matches Image 2
-     ═══════════════════════════════════════════════════════ */
   // 1. Resolve Provider's Organization
   const { data: providerOrg } = useQuery({
     queryKey: ["providerOrg", user?.id],
@@ -450,13 +453,18 @@ function Dashboard() {
   });
 
   // 2. Query Bookings
-  const { data: dbBookings = [], isLoading: bookingsLoading, refetch: refetchBookings } = useQuery({
+  const {
+    data: dbBookings = [],
+    isLoading: bookingsLoading,
+    refetch: refetchBookings,
+  } = useQuery({
     queryKey: ["providerBookings", providerOrg?.id],
     enabled: !!providerOrg?.id && activePortal === "provider",
     queryFn: async () => {
       const { data, error } = await supabase
         .from("bookings")
-        .select(`
+        .select(
+          `
           id,
           client_id,
           provider_id,
@@ -467,7 +475,8 @@ function Dashboard() {
           notes,
           created_at,
           client_profile:profiles!bookings_client_id_fkey(id, full_name, email)
-        `)
+        `,
+        )
         .eq("provider_id", providerOrg!.id)
         .order("created_at", { ascending: false });
       if (error) throw error;
@@ -476,10 +485,17 @@ function Dashboard() {
       const normalized = (data || []).map((booking: any) => {
         const rawProfile = booking.client_profile;
         const singleProfile = Array.isArray(rawProfile) ? rawProfile[0] : rawProfile;
-        
+
         const dateObj = new Date(booking.scheduled_at);
-        const formattedDate = dateObj.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-        const formattedTime = dateObj.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+        const formattedDate = dateObj.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
+        const formattedTime = dateObj.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
 
         return {
           ...booking,
@@ -528,9 +544,45 @@ function Dashboard() {
     },
   });
 
+  /* ── Client / Ops portals ── */
+  if (isProfileLoading) {
+    return (
+      <div className="text-center py-20 text-slate-400 font-bold text-xs">
+        Loading portal profile...
+      </div>
+    );
+  }
+
+  if (activePortal === "client") {
+    return <ClientDashboard />;
+  }
+  if (activePortal === "operations") {
+    return <OpsDashboard />;
+  }
+
+  // Provider Portal Loading Check
+  if (isProviderLoading) {
+    return (
+      <div className="text-center py-20 text-slate-400 font-bold text-xs">Loading profile...</div>
+    );
+  }
+
+  const verificationStatus = providerProfile?.verification_status || "none";
+
+  if (verificationStatus !== "approved") {
+    return <ProviderVerificationWizard profile={providerProfile} onSuccess={refetchProfile} />;
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     PROVIDER DASHBOARD — matches Image 2
+     ═══════════════════════════════════════════════════════ */
+
   // 4. Calculations for KPIs
   const pendingRequests = dbBookings.filter((b) => b.status === "pending");
-  const confirmedJobs = dbBookings.filter((b) => b.status === "confirmed" || b.status === "confirmed_provider" || b.status === "completed");
+  const confirmedJobs = dbBookings.filter(
+    (b) =>
+      b.status === "confirmed" || b.status === "confirmed_provider" || b.status === "completed",
+  );
   const expectedEarnings = confirmedJobs.reduce((sum, b) => sum + Number(b.total_price || 0), 0);
   const primarySkill = providerProfile?.skills?.[0] || "Services";
 
@@ -609,7 +661,12 @@ function Dashboard() {
             className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm flex flex-col justify-between min-h-[110px] relative overflow-hidden group hover:shadow-md transition-shadow cursor-pointer"
           >
             <div className="flex justify-between items-start">
-              <div className={cn("h-9 w-9 rounded-xl flex items-center justify-center shrink-0", kpi.bg)}>
+              <div
+                className={cn(
+                  "h-9 w-9 rounded-xl flex items-center justify-center shrink-0",
+                  kpi.bg,
+                )}
+              >
                 <kpi.icon className={cn("h-4.5 w-4.5", kpi.color)} />
               </div>
               <span className="text-[10px] font-bold text-slate-400 group-hover:text-blue-600 transition-colors flex items-center gap-0.5">
@@ -618,9 +675,7 @@ function Dashboard() {
             </div>
             <div className="mt-3">
               <div className="text-xs font-semibold text-slate-400">{kpi.label}</div>
-              <div className="text-xl font-black text-slate-900 mt-1 leading-none">
-                {kpi.value}
-              </div>
+              <div className="text-xl font-black text-slate-900 mt-1 leading-none">{kpi.value}</div>
             </div>
           </div>
         ))}
@@ -645,7 +700,9 @@ function Dashboard() {
                   </div>
                   <div className="space-y-0.5">
                     <p className="text-xs font-bold text-slate-800">No confirmed jobs</p>
-                    <p className="text-[11px] text-slate-400">New bookings will appear here once accepted.</p>
+                    <p className="text-[11px] text-slate-400">
+                      New bookings will appear here once accepted.
+                    </p>
                   </div>
                 </div>
               ) : (
@@ -686,7 +743,9 @@ function Dashboard() {
 
                       <div className="flex items-center gap-3 justify-between sm:justify-end shrink-0 border-t sm:border-t-0 pt-2 sm:pt-0">
                         <div className="text-right mr-2">
-                          <div className="text-xs font-black text-slate-900">CHF {job.total_price}</div>
+                          <div className="text-xs font-black text-slate-900">
+                            CHF {job.total_price}
+                          </div>
                         </div>
                         <span
                           className={cn(
@@ -710,7 +769,9 @@ function Dashboard() {
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm">
             <div className="p-5 border-b border-slate-100">
               <h3 className="text-sm font-bold text-slate-950">Pending Booking Requests</h3>
-              <p className="text-[11px] text-slate-400 font-semibold mt-0.5">Accept or decline incoming customer gig requests.</p>
+              <p className="text-[11px] text-slate-400 font-semibold mt-0.5">
+                Accept or decline incoming customer gig requests.
+              </p>
             </div>
             <div className="p-2">
               {pendingRequests.length === 0 ? (
@@ -720,13 +781,18 @@ function Dashboard() {
                   </div>
                   <div className="space-y-0.5">
                     <p className="text-xs font-bold text-slate-800">No pending requests</p>
-                    <p className="text-[11px] text-slate-400">Check back later or optimize your profile using the AI Coach.</p>
+                    <p className="text-[11px] text-slate-400">
+                      Check back later or optimize your profile using the AI Coach.
+                    </p>
                   </div>
                 </div>
               ) : (
                 <div className="divide-y divide-slate-100">
                   {pendingRequests.map((req) => (
-                    <div key={req.id} className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50/50 rounded-xl transition-colors">
+                    <div
+                      key={req.id}
+                      className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50/50 rounded-xl transition-colors"
+                    >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <span className="text-xs font-bold text-slate-900">
@@ -748,21 +814,29 @@ function Dashboard() {
                       </div>
                       <div className="flex items-center gap-4 shrink-0 justify-between md:justify-end border-t md:border-t-0 pt-2 md:pt-0">
                         <div className="text-right">
-                          <span className="text-[8px] font-bold text-slate-400 block uppercase">price</span>
-                          <span className="text-xs font-black text-slate-950">CHF {req.total_price}</span>
+                          <span className="text-[8px] font-bold text-slate-400 block uppercase">
+                            price
+                          </span>
+                          <span className="text-xs font-black text-slate-950">
+                            CHF {req.total_price}
+                          </span>
                         </div>
                         <div className="flex gap-2">
                           <Button
                             variant="outline"
                             onClick={() => declineBookingMutation.mutate(req.id)}
-                            disabled={declineBookingMutation.isPending || acceptBookingMutation.isPending}
+                            disabled={
+                              declineBookingMutation.isPending || acceptBookingMutation.isPending
+                            }
                             className="border-red-200 hover:bg-red-50 hover:text-red-700 text-red-650 text-[10px] font-bold rounded-xl cursor-pointer h-8 px-3"
                           >
                             Decline
                           </Button>
                           <Button
                             onClick={() => acceptBookingMutation.mutate(req.id)}
-                            disabled={declineBookingMutation.isPending || acceptBookingMutation.isPending}
+                            disabled={
+                              declineBookingMutation.isPending || acceptBookingMutation.isPending
+                            }
                             className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold rounded-xl cursor-pointer h-8 px-4"
                           >
                             Accept Booking
@@ -789,12 +863,17 @@ function Dashboard() {
             </div>
             <div>
               <div className="flex items-baseline gap-2">
-                <span className="text-xl font-black text-slate-900">CHF {expectedEarnings.toLocaleString("en-CH")}</span>
+                <span className="text-xl font-black text-slate-900">
+                  CHF {expectedEarnings.toLocaleString("en-CH")}
+                </span>
               </div>
             </div>
             <div className="h-[120px] w-full mt-2 -mx-4">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={providerChartData} margin={{ top: 5, right: 10, left: 10, bottom: 0 }}>
+                <AreaChart
+                  data={providerChartData}
+                  margin={{ top: 5, right: 10, left: 10, bottom: 0 }}
+                >
                   <defs>
                     <linearGradient id="colorProviderAmount" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.15} />
@@ -834,7 +913,9 @@ function Dashboard() {
                 <span className="text-xs font-bold text-slate-700">Rates Suggestion</span>
               </div>
               <p className="text-[11px] text-slate-500 leading-relaxed font-semibold">
-                High demand for <span className="text-slate-800 font-black">{primarySkill}</span> in Zurich area! Consider raising your hourly rate by 10% to match current market trends.
+                High demand for <span className="text-slate-800 font-black">{primarySkill}</span> in
+                Zurich area! Consider raising your hourly rate by 10% to match current market
+                trends.
               </p>
             </div>
 

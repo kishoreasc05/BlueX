@@ -30,12 +30,7 @@ import { cn } from "@/lib/utils";
 import { MOCK_PROVIDERS } from "@/customer/mockData";
 import { EmergencyDialog } from "@/customer/components/emergency-dialog";
 import { AiMatchPage } from "./ai-match";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const routeApi = getRouteApi("/_authenticated/client/search");
 
@@ -317,7 +312,8 @@ function InteractiveMapModal({
 
     // Add search center marker
     const centerIcon = L.divIcon({
-      className: "bg-red-500 border-2 border-white rounded-full h-4 w-4 shadow flex items-center justify-center bg-red-650",
+      className:
+        "bg-red-500 border-2 border-white rounded-full h-4 w-4 shadow flex items-center justify-center bg-red-650",
       html: `<div style="width: 6px; height: 6px; background: white; border-radius: 50%;"></div>`,
     });
     const centerMarker = L.marker(center, { icon: centerIcon })
@@ -408,7 +404,10 @@ function InteractiveMapModal({
                 </div>
               ) : (
                 nearbyProviders.map((prov) => (
-                  <div key={prov.id} className="p-4 space-y-2.5 hover:bg-slate-50/50 transition-colors">
+                  <div
+                    key={prov.id}
+                    className="p-4 space-y-2.5 hover:bg-slate-50/50 transition-colors"
+                  >
                     <div>
                       <div className="flex justify-between items-baseline gap-2">
                         <span className="text-xs font-bold text-slate-900 truncate">
@@ -537,23 +536,28 @@ export function SearchPage() {
     const reviews = org?.reviews || [];
     const bookings = org?.bookings || [];
 
-    const rating = reviews.length > 0
-      ? Number((reviews.reduce((sum: number, r: any) => sum + r.rating, 0) / reviews.length).toFixed(1))
-      : null;
+    const rating =
+      reviews.length > 0
+        ? Number(
+            (reviews.reduce((sum: number, r: any) => sum + r.rating, 0) / reviews.length).toFixed(
+              1,
+            ),
+          )
+        : null;
     const reviewsCount = reviews.length;
     const jobsCompleted = bookings.filter((b: any) => b.status === "completed").length;
-    const completionRate = bookings.length > 0
-      ? `${Math.round((jobsCompleted / bookings.length) * 100)}%`
-      : null;
+    const completionRate =
+      bookings.length > 0 ? `${Math.round((jobsCompleted / bookings.length) * 100)}%` : null;
 
     return {
       id: p.id,
       name: p.name,
-      type: p.name.toLowerCase().includes("gmbh") ||
-            p.name.toLowerCase().includes("ag") ||
-            p.name.toLowerCase().includes("company")
-              ? ("company" as const)
-              : ("private" as const),
+      type:
+        p.name.toLowerCase().includes("gmbh") ||
+        p.name.toLowerCase().includes("ag") ||
+        p.name.toLowerCase().includes("company")
+          ? ("company" as const)
+          : ("private" as const),
       specialty: (p.specialty || "").toLowerCase(),
       specialtyLabel: p.specialty || "Contractor",
       rating: rating,
@@ -621,7 +625,9 @@ export function SearchPage() {
             <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
               Find Services
             </h1>
-            <p className="text-slate-500 text-sm mt-0.5">Discover trusted professionals near you.</p>
+            <p className="text-slate-500 text-sm mt-0.5">
+              Discover trusted professionals near you.
+            </p>
           </div>
 
           {/* Toggle Tab buttons */}
@@ -633,7 +639,7 @@ export function SearchPage() {
                 "px-4 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer",
                 activeTab === "search"
                   ? "bg-white text-blue-600 shadow-sm"
-                  : "text-slate-500 hover:text-slate-800"
+                  : "text-slate-500 hover:text-slate-800",
               )}
             >
               Search Directory
@@ -645,7 +651,7 @@ export function SearchPage() {
                 "px-4 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center gap-1.5",
                 activeTab === "aiMatch"
                   ? "bg-white text-blue-600 shadow-sm"
-                  : "text-slate-500 hover:text-slate-800"
+                  : "text-slate-500 hover:text-slate-800",
               )}
             >
               <Sparkles className="w-3.5 h-3.5" />
@@ -659,272 +665,275 @@ export function SearchPage() {
         <AiMatchPage />
       ) : (
         <>
-
-      {/* ── 2. SEARCH BAR CARD ── */}
-      <form
-        onSubmit={handleSearchSubmit}
-        className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-3 md:gap-4 items-end">
-          <div>
-            <label className="text-xs font-semibold text-slate-500 mb-1.5 block">
-              What service do you need?
-            </label>
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Search services..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full h-10 pl-9 pr-4 rounded-xl border border-slate-200 bg-slate-50 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              />
-            </div>
-          </div>
-          <div>
-            <label className="text-xs font-semibold text-slate-500 mb-1.5 block">Where?</label>
-            <div className="relative">
-              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-              <input
-                type="text"
-                value={whereTerm}
-                onChange={(e) => setWhereTerm(e.target.value)}
-                className="w-full h-10 pl-9 pr-4 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              />
-            </div>
-          </div>
-          <div>
-            <label className="text-xs font-semibold text-slate-500 mb-1.5 block">When?</label>
-            <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Select date"
-                className="w-full h-10 pl-9 pr-4 rounded-xl border border-slate-200 bg-slate-50 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              />
-            </div>
-          </div>
-          <Button
-            type="submit"
-            className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-md shadow-blue-600/20"
+          {/* ── 2. SEARCH BAR CARD ── */}
+          <form
+            onSubmit={handleSearchSubmit}
+            className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5"
           >
-            Search
-          </Button>
-        </div>
-      </form>
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-3 md:gap-4 items-end">
+              <div>
+                <label className="text-xs font-semibold text-slate-500 mb-1.5 block">
+                  What service do you need?
+                </label>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="Search services..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full h-10 pl-9 pr-4 rounded-xl border border-slate-200 bg-slate-50 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-slate-500 mb-1.5 block">Where?</label>
+                <div className="relative">
+                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                  <input
+                    type="text"
+                    value={whereTerm}
+                    onChange={(e) => setWhereTerm(e.target.value)}
+                    className="w-full h-10 pl-9 pr-4 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-slate-500 mb-1.5 block">When?</label>
+                <div className="relative">
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="Select date"
+                    className="w-full h-10 pl-9 pr-4 rounded-xl border border-slate-200 bg-slate-50 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  />
+                </div>
+              </div>
+              <Button
+                type="submit"
+                className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-md shadow-blue-600/20"
+              >
+                Search
+              </Button>
+            </div>
+          </form>
 
-      {/* ── 3. CATEGORY PILLS ── */}
-      <div className="flex flex-wrap items-center gap-2">
-        {CATEGORY_TABS.map((tab) => {
-          const isSelected = selectedCategory === tab.slug;
-          const Icon = tab.icon;
-          return (
-            <button
-              key={tab.name}
-              onClick={() => {
-                setSelectedCategory(tab.slug);
-                navigate({ to: "/client/search", search: { q: tab.slug || undefined } as any });
-              }}
-              className={cn(
-                "flex items-center gap-1.5 px-4.5 py-2 rounded-full border text-xs font-semibold transition-all cursor-pointer",
-                isSelected
-                  ? "bg-blue-50 border-blue-200 text-blue-600 shadow-sm"
-                  : "bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50",
-              )}
-            >
-              {Icon && <Icon className={cn("h-3.5 w-3.5", tab.color)} />}
-              {tab.name}
+          {/* ── 3. CATEGORY PILLS ── */}
+          <div className="flex flex-wrap items-center gap-2">
+            {CATEGORY_TABS.map((tab) => {
+              const isSelected = selectedCategory === tab.slug;
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.name}
+                  onClick={() => {
+                    setSelectedCategory(tab.slug);
+                    navigate({ to: "/client/search", search: { q: tab.slug || undefined } as any });
+                  }}
+                  className={cn(
+                    "flex items-center gap-1.5 px-4.5 py-2 rounded-full border text-xs font-semibold transition-all cursor-pointer",
+                    isSelected
+                      ? "bg-blue-50 border-blue-200 text-blue-600 shadow-sm"
+                      : "bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50",
+                  )}
+                >
+                  {Icon && <Icon className={cn("h-3.5 w-3.5", tab.color)} />}
+                  {tab.name}
+                </button>
+              );
+            })}
+            <button className="flex items-center gap-1 px-4.5 py-2 rounded-full border border-slate-200 bg-white text-xs font-semibold text-slate-600 hover:bg-slate-50">
+              More <ChevronDown className="h-3 w-3 text-slate-400" />
             </button>
-          );
-        })}
-        <button className="flex items-center gap-1 px-4.5 py-2 rounded-full border border-slate-200 bg-white text-xs font-semibold text-slate-600 hover:bg-slate-50">
-          More <ChevronDown className="h-3 w-3 text-slate-400" />
-        </button>
-      </div>
+          </div>
 
-      {/* ── 4. FILTER DROPDOWNS ── */}
-      <div className="flex flex-wrap items-center gap-3">
-        {[
-          { label: "Sort by", value: "Recommended" },
-          { label: "Price Range", value: "Any Price" },
-          { label: "Rating", value: "4.0+" },
-          { label: "Availability", value: "Any Time" },
-        ].map((filter) => (
-          <button
-            key={filter.label}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer"
-          >
-            <span className="text-slate-400">{filter.label}</span>
-            <span className="text-slate-800">{filter.value}</span>
-            <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
-          </button>
-        ))}
+          {/* ── 4. FILTER DROPDOWNS ── */}
+          <div className="flex flex-wrap items-center gap-3">
+            {[
+              { label: "Sort by", value: "Recommended" },
+              { label: "Price Range", value: "Any Price" },
+              { label: "Rating", value: "4.0+" },
+              { label: "Availability", value: "Any Time" },
+            ].map((filter) => (
+              <button
+                key={filter.label}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer"
+              >
+                <span className="text-slate-400">{filter.label}</span>
+                <span className="text-slate-800">{filter.value}</span>
+                <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
+              </button>
+            ))}
 
-        {/* Interactive Provider Type Filter */}
-        <div className="relative">
-          <select
-            value={providerType}
-            onChange={(e) => setProviderType(e.target.value)}
-            className="appearance-none flex items-center gap-2 pl-4 pr-10 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
-          >
-            <option value="all">Provider Type: All</option>
-            <option value="company">🏢 Companies Only</option>
-            <option value="private">👤 Private Individuals Only</option>
-          </select>
-          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
-        </div>
+            {/* Interactive Provider Type Filter */}
+            <div className="relative">
+              <select
+                value={providerType}
+                onChange={(e) => setProviderType(e.target.value)}
+                className="appearance-none flex items-center gap-2 pl-4 pr-10 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
+              >
+                <option value="all">Provider Type: All</option>
+                <option value="company">🏢 Companies Only</option>
+                <option value="private">👤 Private Individuals Only</option>
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
+            </div>
 
-        <button className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors ml-auto cursor-pointer">
-          <SlidersHorizontal className="h-3.5 w-3.5 text-slate-500" />
-          Filters
-        </button>
-      </div>
+            <button className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors ml-auto cursor-pointer">
+              <SlidersHorizontal className="h-3.5 w-3.5 text-slate-500" />
+              Filters
+            </button>
+          </div>
 
-      {/* ── 5. CONTENT LIST ── */}
-      <div className="space-y-4 max-w-4xl mx-auto">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="text-sm font-bold text-slate-900">
-                {totalResults} {resultNoun} found
-              </span>
+          {/* ── 5. CONTENT LIST ── */}
+          <div className="space-y-4 max-w-4xl mx-auto">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-bold text-slate-900">
+                  {totalResults} {resultNoun} found
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setMapOpen(true)}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100/80 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+                >
+                  🗺️ View Map
+                </button>
+              </div>
               <button
                 type="button"
-                onClick={() => setMapOpen(true)}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100/80 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+                onClick={() => {
+                  setSearchTerm("");
+                  setSelectedCategory(null);
+                  setProviderType("all");
+                }}
+                className="text-xs text-blue-600 font-semibold hover:text-blue-700"
               >
-                🗺️ View Map
+                Clear all
               </button>
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setSearchTerm("");
-                setSelectedCategory(null);
-                setProviderType("all");
-              }}
-              className="text-xs text-blue-600 font-semibold hover:text-blue-700"
-            >
-              Clear all
-            </button>
-          </div>
 
-          {/* List of cards */}
-          <div className="space-y-4">
-            {isLoading ? (
-              <div className="py-20 text-center text-sm text-slate-500">
-                Searching for providers...
-              </div>
-            ) : !filteredProviders || filteredProviders.length === 0 ? (
-              <EmptyState
-                title="No service providers found"
-                description="We couldn't find any active providers matching your filter criteria. Try expanding your filters or search term."
-                icon={Search}
-              />
-            ) : (
-              filteredProviders.map((p) => {
-                const isFav = !!favorites[p.id];
-                return (
-                  <div
-                    key={p.id}
-                    className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5 flex flex-col md:flex-row gap-4 relative hover:border-blue-200 transition-colors"
-                  >
-                    {/* Photo */}
-                    <div className="h-24 w-24 rounded-2xl overflow-hidden bg-slate-100 shrink-0 relative mx-auto md:mx-0">
-                      <img src={p.avatar} alt={p.name} className="h-full w-full object-cover" />
-                    </div>
-
-                    {/* Main Details */}
-                    <div className="flex-1 space-y-1.5 text-center md:text-left">
-                      <div className="flex flex-col md:flex-row md:items-center gap-2 justify-center md:justify-start">
-                        <span className="text-sm font-bold text-slate-900 flex items-center gap-1 justify-center md:justify-start">
-                          {p.name}
-                          <BadgeCheck className="h-4 w-4 text-blue-500 fill-blue-500/10" />
-                        </span>
-
-                        {/* Provider Type Badge */}
-                        {p.type === "company" ? (
-                          <span className="inline-flex items-center gap-1 text-[9px] font-bold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100/50 uppercase tracking-wider">
-                            <Building className="h-2.5 w-2.5" /> Company
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 text-[9px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100/50 uppercase tracking-wider">
-                            <User className="h-2.5 w-2.5" /> Private
-                          </span>
-                        )}
-                      </div>
-                      <div className="text-xs text-slate-400 font-semibold">{p.specialtyLabel}</div>
-
-                      {/* Notes / Description */}
-                      {p.about && (
-                        <p className="text-xs text-slate-500 line-clamp-2 mt-1 leading-relaxed">
-                          {p.about}
-                        </p>
-                      )}
-
-                      {/* Quick credentials badges */}
-                      <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-1 text-[11px] text-slate-500 font-medium">
-                        <span className="flex items-center gap-1">💼 Swiss Certified</span>
-                        <span className="flex items-center gap-1 text-blue-600">✓ Verified</span>
-                        <span className="flex items-center gap-1 text-emerald-600">🛡️ Insured</span>
-                        {p.type === "private" && (
-                          <span className="flex items-center gap-1 text-violet-600 font-bold">
-                            ⚖️ Payroll Automated
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Price & Actions on the Right */}
-                    <div className="flex flex-col items-center md:items-end justify-between gap-3 md:gap-0 shrink-0 text-center md:text-right md:pl-4 md:border-l border-slate-100">
-                      {/* Price */}
-                      <div>
-                        <div className="text-lg font-black text-slate-900 leading-tight">
-                          CHF {Number(p.hourlyRate).toFixed(0)}
-                        </div>
-                        <div className="text-[10px] text-slate-400 font-semibold uppercase">
-                          per hour
-                        </div>
-                        <span className="inline-block mt-1 text-[9px] font-bold px-2 py-0.5 rounded border uppercase bg-emerald-50 text-emerald-600 border-emerald-100">
-                          Available Today
-                        </span>
-                      </div>
-
-                      {/* Action buttons */}
-                      <div className="flex flex-col gap-2 w-full sm:w-auto md:w-36">
-                        <button
-                          onClick={() => navigate({ to: `/client/providers/${p.id}` as any })}
-                          className="h-9 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition-colors shadow-sm cursor-pointer"
-                        >
-                          View Profile
-                        </button>
-                        <button
-                          onClick={() => navigate({ to: `/client/book/${p.id}` as any })}
-                          className="h-9 px-4 rounded-xl border border-blue-200 bg-white hover:bg-blue-50 text-blue-600 text-xs font-semibold transition-colors shadow-sm cursor-pointer"
-                        >
-                          Book Now
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Favorite Toggle button */}
-                    <button
-                      onClick={() => toggleFavorite(p.id)}
-                      className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-slate-50 transition-colors"
+            {/* List of cards */}
+            <div className="space-y-4">
+              {isLoading ? (
+                <div className="py-20 text-center text-sm text-slate-500">
+                  Searching for providers...
+                </div>
+              ) : !filteredProviders || filteredProviders.length === 0 ? (
+                <EmptyState
+                  title="No service providers found"
+                  description="We couldn't find any active providers matching your filter criteria. Try expanding your filters or search term."
+                  icon={Search}
+                />
+              ) : (
+                filteredProviders.map((p) => {
+                  const isFav = !!favorites[p.id];
+                  return (
+                    <div
+                      key={p.id}
+                      className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5 flex flex-col md:flex-row gap-4 relative hover:border-blue-200 transition-colors"
                     >
-                      <Heart
-                        className={cn(
-                          "h-4.5 w-4.5 transition-colors",
-                          isFav ? "text-red-500 fill-red-500" : "text-slate-300",
+                      {/* Photo */}
+                      <div className="h-24 w-24 rounded-2xl overflow-hidden bg-slate-100 shrink-0 relative mx-auto md:mx-0">
+                        <img src={p.avatar} alt={p.name} className="h-full w-full object-cover" />
+                      </div>
+
+                      {/* Main Details */}
+                      <div className="flex-1 space-y-1.5 text-center md:text-left">
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 justify-center md:justify-start">
+                          <span className="text-sm font-bold text-slate-900 flex items-center gap-1 justify-center md:justify-start">
+                            {p.name}
+                            <BadgeCheck className="h-4 w-4 text-blue-500 fill-blue-500/10" />
+                          </span>
+
+                          {/* Provider Type Badge */}
+                          {p.type === "company" ? (
+                            <span className="inline-flex items-center gap-1 text-[9px] font-bold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100/50 uppercase tracking-wider">
+                              <Building className="h-2.5 w-2.5" /> Company
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 text-[9px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100/50 uppercase tracking-wider">
+                              <User className="h-2.5 w-2.5" /> Private
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-xs text-slate-400 font-semibold">
+                          {p.specialtyLabel}
+                        </div>
+
+                        {/* Notes / Description */}
+                        {p.about && (
+                          <p className="text-xs text-slate-500 line-clamp-2 mt-1 leading-relaxed">
+                            {p.about}
+                          </p>
                         )}
-                      />
-                    </button>
-                  </div>
-                );
-              })
-            )}
+
+                        {/* Quick credentials badges */}
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-1 text-[11px] text-slate-500 font-medium">
+                          <span className="flex items-center gap-1">💼 Swiss Certified</span>
+                          <span className="flex items-center gap-1 text-blue-600">✓ Verified</span>
+                          <span className="flex items-center gap-1 text-emerald-600">
+                            🛡️ Insured
+                          </span>
+                          {p.type === "private" && (
+                            <span className="flex items-center gap-1 text-violet-600 font-bold">
+                              ⚖️ Payroll Automated
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Price & Actions on the Right */}
+                      <div className="flex flex-col items-center md:items-end justify-between gap-3 md:gap-0 shrink-0 text-center md:text-right md:pl-4 md:border-l border-slate-100">
+                        {/* Price */}
+                        <div>
+                          <div className="text-lg font-black text-slate-900 leading-tight">
+                            CHF {Number(p.hourlyRate).toFixed(0)}
+                          </div>
+                          <div className="text-[10px] text-slate-400 font-semibold uppercase">
+                            per hour
+                          </div>
+                          <span className="inline-block mt-1 text-[9px] font-bold px-2 py-0.5 rounded border uppercase bg-emerald-50 text-emerald-600 border-emerald-100">
+                            Available Today
+                          </span>
+                        </div>
+
+                        {/* Action buttons */}
+                        <div className="flex flex-col gap-2 w-full sm:w-auto md:w-36">
+                          <button
+                            onClick={() => navigate({ to: `/client/providers/${p.id}` as any })}
+                            className="h-9 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition-colors shadow-sm cursor-pointer"
+                          >
+                            View Profile
+                          </button>
+                          <button
+                            onClick={() => navigate({ to: `/client/book/${p.id}` as any })}
+                            className="h-9 px-4 rounded-xl border border-blue-200 bg-white hover:bg-blue-50 text-blue-600 text-xs font-semibold transition-colors shadow-sm cursor-pointer"
+                          >
+                            Book Now
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Favorite Toggle button */}
+                      <button
+                        onClick={() => toggleFavorite(p.id)}
+                        className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-slate-50 transition-colors"
+                      >
+                        <Heart
+                          className={cn(
+                            "h-4.5 w-4.5 transition-colors",
+                            isFav ? "text-red-500 fill-red-500" : "text-slate-300",
+                          )}
+                        />
+                      </button>
+                    </div>
+                  );
+                })
+              )}
+            </div>
           </div>
-        </div>
-      </>
+        </>
       )}
 
       {/* ── Map Modal Dialog ── */}

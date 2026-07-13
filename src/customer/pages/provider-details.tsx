@@ -4,7 +4,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { useParams, useNavigate, Link } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Star,
@@ -89,14 +95,16 @@ export function ProviderDetailsPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("contractors")
-        .select(`
+        .select(
+          `
           *,
           organization:organizations(
             id,
             reviews(rating, comment, created_at, client:profiles(full_name)),
             bookings(id, status)
           )
-        `)
+        `,
+        )
         .eq("id", id)
         .single();
 
@@ -117,16 +125,17 @@ export function ProviderDetailsPage() {
             dbContractor.name.toLowerCase().includes("company")
               ? ("company" as const)
               : ("private" as const),
-          rating: dbContractor.organization?.reviews && dbContractor.organization.reviews.length > 0
-            ? Number(
-                (
-                  dbContractor.organization.reviews.reduce(
-                    (sum: number, r: any) => sum + r.rating,
-                    0
-                  ) / dbContractor.organization.reviews.length
-                ).toFixed(1)
-              )
-            : null,
+          rating:
+            dbContractor.organization?.reviews && dbContractor.organization.reviews.length > 0
+              ? Number(
+                  (
+                    dbContractor.organization.reviews.reduce(
+                      (sum: number, r: any) => sum + r.rating,
+                      0,
+                    ) / dbContractor.organization.reviews.length
+                  ).toFixed(1),
+                )
+              : null,
           reviewsCount: dbContractor.organization?.reviews?.length || 0,
           specialty: (dbContractor.specialty || "").toLowerCase(),
           specialtyLabel: dbContractor.specialty || "General Contractor",
@@ -142,7 +151,7 @@ export function ProviderDetailsPage() {
                   (dbContractor.organization.bookings.filter((b: any) => b.status === "completed")
                     .length /
                     dbContractor.organization.bookings.length) *
-                    100
+                    100,
                 )}%`
               : null,
           jobsCompleted:
@@ -256,7 +265,9 @@ export function ProviderDetailsPage() {
                       <Star className="h-4 w-4 fill-current" />
                       <span className="text-sm font-bold text-slate-800">{provider.rating}</span>
                     </div>
-                    <span className="text-sm text-slate-400">({provider.reviewsCount} reviews)</span>
+                    <span className="text-sm text-slate-400">
+                      ({provider.reviewsCount} reviews)
+                    </span>
                   </>
                 ) : (
                   <span className="text-xs font-semibold text-slate-400 bg-slate-50 px-2 py-0.5 border border-slate-200 rounded-md">

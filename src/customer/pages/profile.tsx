@@ -164,7 +164,10 @@ export function CustomerProfilePage() {
         <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 space-y-6 flex flex-col items-center text-center">
           <div className="h-24 w-24 rounded-full bg-blue-650 bg-blue-600 text-white flex items-center justify-center text-3xl font-black shadow-inner select-none relative">
             {getInitials(profile?.full_name)}
-            <div className="absolute -bottom-1.5 -right-1.5 bg-emerald-500 text-white p-1.5 rounded-full border-2 border-white shadow-sm" title="Verified Account">
+            <div
+              className="absolute -bottom-1.5 -right-1.5 bg-emerald-500 text-white p-1.5 rounded-full border-2 border-white shadow-sm"
+              title="Verified Account"
+            >
               <ShieldCheck className="h-4 w-4" />
             </div>
           </div>
@@ -216,7 +219,11 @@ export function CustomerProfilePage() {
                 : "bg-slate-900 hover:bg-slate-800 text-white"
             }`}
           >
-            {isEditing ? (updateProfileMutation.isPending ? "Saving..." : "Save Profile") : "Edit Profile"}
+            {isEditing
+              ? updateProfileMutation.isPending
+                ? "Saving..."
+                : "Save Profile"
+              : "Edit Profile"}
           </Button>
           {isEditing && (
             <Button
@@ -270,7 +277,9 @@ export function CustomerProfilePage() {
                   disabled
                   className="rounded-xl border-slate-200 text-xs h-10 bg-slate-50 text-slate-500 font-semibold"
                 />
-                <p className="text-[10px] text-slate-400 font-medium">To modify your email contact support.</p>
+                <p className="text-[10px] text-slate-400 font-medium">
+                  To modify your email contact support.
+                </p>
               </div>
 
               <div className="space-y-1.5">
@@ -318,7 +327,11 @@ export function CustomerProfilePage() {
                 <Label className="text-xs font-semibold text-slate-500 flex items-center gap-1">
                   <Globe className="h-3.5 w-3.5" /> Preferred Language
                 </Label>
-                <Select value={preferredLang} onValueChange={setPreferredLang} disabled={!isEditing}>
+                <Select
+                  value={preferredLang}
+                  onValueChange={setPreferredLang}
+                  disabled={!isEditing}
+                >
                   <SelectTrigger className="rounded-xl border-slate-200 text-xs h-10 bg-white disabled:bg-slate-50 disabled:text-slate-500">
                     <SelectValue placeholder="Select Language" />
                   </SelectTrigger>
@@ -342,7 +355,9 @@ export function CustomerProfilePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="space-y-1.5 md:col-span-2">
-                <Label className="text-xs font-semibold text-slate-500">Home Address (Street, Number)</Label>
+                <Label className="text-xs font-semibold text-slate-500">
+                  Home Address (Street, Number)
+                </Label>
                 <Input
                   value={homeAddress}
                   onChange={(e) => setHomeAddress(e.target.value)}
@@ -353,7 +368,9 @@ export function CustomerProfilePage() {
               </div>
 
               <div className="space-y-1.5">
-                <Label className="text-xs font-semibold text-slate-500">Apartment / Suite Number</Label>
+                <Label className="text-xs font-semibold text-slate-500">
+                  Apartment / Suite Number
+                </Label>
                 <Input
                   value={apartmentNo}
                   onChange={(e) => setApartmentNo(e.target.value)}

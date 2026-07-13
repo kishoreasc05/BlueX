@@ -121,9 +121,7 @@ function SettingsPage() {
     queryKey: ["serviceCategories"],
     enabled: portalRole === "provider",
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("service_categories")
-        .select("id, name, slug");
+      const { data, error } = await supabase.from("service_categories").select("id, name, slug");
       if (error) throw error;
       return data || [];
     },
@@ -136,14 +134,16 @@ function SettingsPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("provider_services")
-        .select(`
+        .select(
+          `
           id,
           name,
           description,
           price,
           category_id,
           category:service_categories(name)
-        `)
+        `,
+        )
         .eq("provider_id", activeId!);
       if (error) throw error;
       return data || [];
@@ -233,7 +233,10 @@ function SettingsPage() {
         const { error: provError } = await supabase
           .from("provider_profiles")
           .update({
-            skills: skills.split(",").map(s => s.trim()).filter(Boolean),
+            skills: skills
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean),
             hourly_rate: hourlyRate ? Number(hourlyRate) : null,
             company_name: companyName.trim() || null,
             vat_number: vatNumber.trim() || null,
@@ -326,15 +329,13 @@ function SettingsPage() {
       if (!selectedCategoryId || !newServiceName.trim() || !newServicePrice) {
         throw new Error("Please fill in all required fields");
       }
-      const { error } = await supabase
-        .from("provider_services")
-        .insert({
-          provider_id: activeId!,
-          category_id: selectedCategoryId,
-          name: newServiceName.trim(),
-          description: newServiceDesc.trim() || null,
-          price: Number(newServicePrice),
-        });
+      const { error } = await supabase.from("provider_services").insert({
+        provider_id: activeId!,
+        category_id: selectedCategoryId,
+        name: newServiceName.trim(),
+        description: newServiceDesc.trim() || null,
+        price: Number(newServicePrice),
+      });
       if (error) throw error;
     },
     onSuccess: () => {
@@ -351,10 +352,7 @@ function SettingsPage() {
 
   const handleDeleteService = useMutation({
     mutationFn: async (serviceId: string) => {
-      const { error } = await supabase
-        .from("provider_services")
-        .delete()
-        .eq("id", serviceId);
+      const { error } = await supabase.from("provider_services").delete().eq("id", serviceId);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -470,7 +468,9 @@ function SettingsPage() {
               {portalRole === "provider" && (
                 <>
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-slate-500">Specialties / Skills (comma separated)</Label>
+                    <Label className="text-xs font-semibold text-slate-500">
+                      Specialties / Skills (comma separated)
+                    </Label>
                     <Input
                       value={skills}
                       onChange={(e) => setSkills(e.target.value)}
@@ -480,7 +480,9 @@ function SettingsPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-slate-500">Hourly Rate (CHF)</Label>
+                    <Label className="text-xs font-semibold text-slate-500">
+                      Hourly Rate (CHF)
+                    </Label>
                     <Input
                       type="number"
                       value={hourlyRate}
@@ -593,7 +595,8 @@ function SettingsPage() {
                 <div>
                   <h3 className="text-lg font-bold text-slate-900">Offered Services</h3>
                   <p className="text-xs text-slate-500 mt-1">
-                    These services will be visible to customers searching for providers in your categories.
+                    These services will be visible to customers searching for providers in your
+                    categories.
                   </p>
                 </div>
 
@@ -616,7 +619,9 @@ function SettingsPage() {
                             <span className="text-sm font-bold text-slate-800">{srv.name}</span>
                           </div>
                           {srv.description && (
-                            <p className="text-xs text-slate-500 max-w-md mt-1">{srv.description}</p>
+                            <p className="text-xs text-slate-500 max-w-md mt-1">
+                              {srv.description}
+                            </p>
                           )}
                         </div>
                         <div className="flex items-center gap-4 shrink-0">
@@ -633,7 +638,9 @@ function SettingsPage() {
                     ))
                   ) : (
                     <div className="py-12 text-center border-2 border-dashed border-slate-200 rounded-2xl">
-                      <div className="text-slate-400 text-sm font-medium">No services registered yet.</div>
+                      <div className="text-slate-400 text-sm font-medium">
+                        No services registered yet.
+                      </div>
                       <p className="text-xs text-slate-400 mt-1 max-w-xs mx-auto">
                         List services to let clients book you directly for specific jobs.
                       </p>
@@ -667,7 +674,9 @@ function SettingsPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-slate-500">Service Name / Title *</Label>
+                    <Label className="text-xs font-semibold text-slate-500">
+                      Service Name / Title *
+                    </Label>
                     <Input
                       value={newServiceName}
                       onChange={(e) => setNewServiceName(e.target.value)}

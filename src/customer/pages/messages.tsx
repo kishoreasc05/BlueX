@@ -7,7 +7,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { useActiveOrg } from "@/hooks/use-orgs";
 import { Switch } from "@/components/ui/switch";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { toast } from "sonner";
 
 export function ClientMessagesPage() {
@@ -24,9 +30,7 @@ export function ClientMessagesPage() {
     queryKey: ["clientBookingsForChats", user?.id, activeId, portalRole],
     enabled: !!user?.id,
     queryFn: async () => {
-      let query = supabase
-        .from("bookings")
-        .select(`
+      let query = supabase.from("bookings").select(`
           id,
           status,
           scheduled_at,
@@ -83,7 +87,7 @@ export function ClientMessagesPage() {
         },
         () => {
           queryClient.invalidateQueries({ queryKey: ["messagesForUser"] });
-        }
+        },
       )
       .on(
         "postgres_changes",
@@ -94,7 +98,7 @@ export function ClientMessagesPage() {
         },
         () => {
           queryClient.invalidateQueries({ queryKey: ["clientBookingsForChats"] });
-        }
+        },
       )
       .subscribe();
 
@@ -148,9 +152,10 @@ export function ClientMessagesPage() {
 
       const providerRaw = activeBooking.provider;
       const providerObj = Array.isArray(providerRaw) ? providerRaw[0] : providerRaw;
-      const rate = activeBooking.total_price && activeBooking.duration_hours
-        ? Number(activeBooking.total_price) / Number(activeBooking.duration_hours)
-        : 90;
+      const rate =
+        activeBooking.total_price && activeBooking.duration_hours
+          ? Number(activeBooking.total_price) / Number(activeBooking.duration_hours)
+          : 90;
 
       const total = rate * quickDuration;
 
@@ -185,10 +190,19 @@ export function ClientMessagesPage() {
   });
 
   const updateBookingStatus = useMutation({
-    mutationFn: async ({ msgId, msgContent, newStatus }: { msgId: string; msgContent: string; newStatus: "confirmed" | "cancelled" }) => {
+    mutationFn: async ({
+      msgId,
+      msgContent,
+      newStatus,
+    }: {
+      msgId: string;
+      msgContent: string;
+      newStatus: "confirmed" | "cancelled";
+    }) => {
       const providerRaw = activeBooking.provider;
       const providerObj = Array.isArray(providerRaw) ? providerRaw[0] : providerRaw;
-      const receiverId = portalRole === "provider" ? (activeBooking.client as any)?.id : providerObj.created_by;
+      const receiverId =
+        portalRole === "provider" ? (activeBooking.client as any)?.id : providerObj.created_by;
 
       if (newStatus === "confirmed") {
         // Parse the booking request payload from the message content
@@ -196,25 +210,22 @@ export function ClientMessagesPage() {
         const payload = JSON.parse(jsonStr);
 
         // Create the actual booking now that provider accepted
-        const { error: bookingError } = await supabase
-          .from("bookings")
-          .insert({
-            client_id: payload.clientId,
-            provider_id: payload.providerId,
-            scheduled_at: payload.scheduledAt,
-            duration_hours: payload.durationHours,
-            total_price: payload.totalPrice,
-            notes: "Quick Booking accepted from chat thread.",
-            status: "confirmed",
-          });
+        const { error: bookingError } = await supabase.from("bookings").insert({
+          client_id: payload.clientId,
+          provider_id: payload.providerId,
+          scheduled_at: payload.scheduledAt,
+          duration_hours: payload.durationHours,
+          total_price: payload.totalPrice,
+          notes: "Quick Booking accepted from chat thread.",
+          status: "confirmed",
+        });
 
         if (bookingError) throw bookingError;
       }
 
       // Update the original message to mark it as handled
-      const content = newStatus === "confirmed"
-        ? "✅ Booking request accepted!"
-        : "❌ Booking request declined.";
+      const content =
+        newStatus === "confirmed" ? "✅ Booking request accepted!" : "❌ Booking request declined.";
 
       // Mark the booking request message as resolved by appending status
       await supabase
@@ -287,13 +298,12 @@ export function ClientMessagesPage() {
     const serviceRaw = booking.service;
     const serviceObj = Array.isArray(serviceRaw) ? serviceRaw[0] : serviceRaw;
 
-    const chatPartnerName = portalRole === "provider"
-      ? (booking.client as any)?.full_name || "Client"
-      : providerObj?.name || "Service Provider";
+    const chatPartnerName =
+      portalRole === "provider"
+        ? (booking.client as any)?.full_name || "Client"
+        : providerObj?.name || "Service Provider";
 
-    const partnerId = portalRole === "provider"
-      ? (booking.client as any)?.id
-      : providerObj?.id;
+    const partnerId = portalRole === "provider" ? (booking.client as any)?.id : providerObj?.id;
 
     return {
       id: booking.id,
@@ -303,7 +313,10 @@ export function ClientMessagesPage() {
       lastMessage: lastMsg ? lastMsg.content : "No messages yet. Say hello!",
       hasMessages: messages.length > 0,
       time: lastMsg
-        ? new Date(lastMsg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+        ? new Date(lastMsg.created_at).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })
         : new Date(booking.scheduled_at).toLocaleDateString([], { month: "short", day: "numeric" }),
       unread: lastMsg ? !lastMsg.is_read && lastMsg.sender_id !== user?.id : false,
       messages,
@@ -342,12 +355,15 @@ export function ClientMessagesPage() {
   const isLoading = bookingsLoading || messagesLoading;
 
   const currentChatPartnerName = activeBooking
-    ? (portalRole === "provider"
-        ? (activeBooking.client as any)?.full_name || "Client"
-        : (Array.isArray(activeBooking.provider) ? activeBooking.provider[0] : activeBooking.provider)?.name || "Service Provider")
+    ? portalRole === "provider"
+      ? (activeBooking.client as any)?.full_name || "Client"
+      : (Array.isArray(activeBooking.provider) ? activeBooking.provider[0] : activeBooking.provider)
+          ?.name || "Service Provider"
     : null;
   const currentChatService = activeBooking
-    ? (Array.isArray(activeBooking.service) ? activeBooking.service[0] : activeBooking.service)
+    ? Array.isArray(activeBooking.service)
+      ? activeBooking.service[0]
+      : activeBooking.service
     : null;
 
   return (
@@ -430,9 +446,7 @@ export function ClientMessagesPage() {
               {/* Header */}
               <div className="p-4 border-b border-slate-200 flex justify-between items-center bg-white shrink-0">
                 <div>
-                  <h3 className="font-black text-slate-900 text-sm">
-                    {currentChatPartnerName}
-                  </h3>
+                  <h3 className="font-black text-slate-900 text-sm">{currentChatPartnerName}</h3>
                   <span className="text-[10px] text-slate-400 font-semibold">
                     {currentChatService?.name || "General Service"}
                   </span>
@@ -482,26 +496,38 @@ export function ClientMessagesPage() {
                       const jsonStr = rawContent.replace("[BOOKING_REQUEST:", "").slice(0, -1);
                       const payload = JSON.parse(jsonStr);
                       bDate = new Date(payload.scheduledAt).toLocaleDateString("en-US", {
-                        weekday: "short", month: "short", day: "numeric",
-                        hour: "2-digit", minute: "2-digit"
+                        weekday: "short",
+                        month: "short",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
                       });
                       bDuration = payload.durationHours;
                       bPrice = payload.totalPrice;
-                    } catch {}
+                    } catch (e) {
+                      // ignore parse errors
+                    }
 
                     const bStatus = resolvedStatus || "pending";
 
                     return (
-                      <div key={msg.id} className={`flex ${isMe ? "justify-end" : "justify-start"} my-2`}>
+                      <div
+                        key={msg.id}
+                        className={`flex ${isMe ? "justify-end" : "justify-start"} my-2`}
+                      >
                         <div className="max-w-[80%] rounded-2xl p-4 bg-white border border-slate-200 shadow-sm space-y-3">
                           <div className="flex items-center gap-2 text-xs font-black text-slate-900 border-b border-slate-100 pb-2">
                             <Calendar className="h-4 w-4 text-blue-600" />
                             <span>📅 Booking Request</span>
-                            <span className={`ml-auto px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider ${
-                              bStatus === "confirmed" ? "bg-emerald-50 text-emerald-700" :
-                              bStatus === "cancelled" ? "bg-red-50 text-red-700" :
-                              "bg-amber-50 text-amber-700"
-                            }`}>
+                            <span
+                              className={`ml-auto px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider ${
+                                bStatus === "confirmed"
+                                  ? "bg-emerald-50 text-emerald-700"
+                                  : bStatus === "cancelled"
+                                    ? "bg-red-50 text-red-700"
+                                    : "bg-amber-50 text-amber-700"
+                              }`}
+                            >
                               {bStatus}
                             </span>
                           </div>
@@ -525,14 +551,26 @@ export function ClientMessagesPage() {
                           {portalRole === "provider" && bStatus === "pending" && (
                             <div className="flex gap-2 pt-1">
                               <Button
-                                onClick={() => updateBookingStatus.mutate({ msgId: msg.id, msgContent: rawContent, newStatus: "confirmed" })}
+                                onClick={() =>
+                                  updateBookingStatus.mutate({
+                                    msgId: msg.id,
+                                    msgContent: rawContent,
+                                    newStatus: "confirmed",
+                                  })
+                                }
                                 disabled={updateBookingStatus.isPending}
                                 className="h-7 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold cursor-pointer"
                               >
                                 Accept
                               </Button>
                               <Button
-                                onClick={() => updateBookingStatus.mutate({ msgId: msg.id, msgContent: rawContent, newStatus: "cancelled" })}
+                                onClick={() =>
+                                  updateBookingStatus.mutate({
+                                    msgId: msg.id,
+                                    msgContent: rawContent,
+                                    newStatus: "cancelled",
+                                  })
+                                }
                                 disabled={updateBookingStatus.isPending}
                                 className="h-7 px-3 rounded-lg bg-red-600 hover:bg-red-700 text-white text-[10px] font-bold cursor-pointer"
                               >
@@ -544,7 +582,13 @@ export function ClientMessagesPage() {
                           {portalRole === "client" && bStatus === "pending" && (
                             <div className="pt-1">
                               <Button
-                                onClick={() => updateBookingStatus.mutate({ msgId: msg.id, msgContent: rawContent, newStatus: "cancelled" })}
+                                onClick={() =>
+                                  updateBookingStatus.mutate({
+                                    msgId: msg.id,
+                                    msgContent: rawContent,
+                                    newStatus: "cancelled",
+                                  })
+                                }
                                 disabled={updateBookingStatus.isPending}
                                 className="h-7 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10px] font-bold cursor-pointer"
                               >
@@ -627,7 +671,9 @@ export function ClientMessagesPage() {
 
                   <div className="space-y-4 pt-3">
                     <div className="space-y-1.5">
-                      <label htmlFor="quickDate" className="text-xs font-bold text-slate-700">Date</label>
+                      <label htmlFor="quickDate" className="text-xs font-bold text-slate-700">
+                        Date
+                      </label>
                       <input
                         id="quickDate"
                         type="date"
@@ -640,7 +686,9 @@ export function ClientMessagesPage() {
 
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1.5">
-                        <label htmlFor="quickTime" className="text-xs font-bold text-slate-700">Start Time</label>
+                        <label htmlFor="quickTime" className="text-xs font-bold text-slate-700">
+                          Start Time
+                        </label>
                         <input
                           id="quickTime"
                           type="time"
@@ -651,7 +699,9 @@ export function ClientMessagesPage() {
                       </div>
 
                       <div className="space-y-1.5">
-                        <label htmlFor="quickDuration" className="text-xs font-bold text-slate-700">Duration</label>
+                        <label htmlFor="quickDuration" className="text-xs font-bold text-slate-700">
+                          Duration
+                        </label>
                         <select
                           id="quickDuration"
                           value={quickDuration}

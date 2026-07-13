@@ -89,7 +89,12 @@ export function ClientCalendarPage({ hideHeader = false }: { hideHeader?: boolea
   };
 
   return (
-    <div className={cn("space-y-6 pb-12 max-w-[1400px] mx-auto text-slate-800", hideHeader && "space-y-0 pb-0")}>
+    <div
+      className={cn(
+        "space-y-6 pb-12 max-w-[1400px] mx-auto text-slate-800",
+        hideHeader && "space-y-0 pb-0",
+      )}
+    >
       {!hideHeader && (
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-2">

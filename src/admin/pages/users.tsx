@@ -1,21 +1,30 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { ShieldAlert, User, ShieldCheck, Mail, Shield, Eye, Check, X, FileText, Briefcase, Landmark } from "lucide-react";
+import {
+  ShieldAlert,
+  User,
+  ShieldCheck,
+  Mail,
+  Shield,
+  Eye,
+  Check,
+  X,
+  FileText,
+  Briefcase,
+  Landmark,
+} from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/kpi-card";
 import { useState } from "react";
 import { toast } from "sonner";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 export function OpsUsersPage() {
   const queryClient = useQueryClient();
-  const [activeTab, setActiveTab] = useState<"users" | "pending_freelancers" | "pending_companies">("users");
+  const [activeTab, setActiveTab] = useState<"users" | "pending_freelancers" | "pending_companies">(
+    "users",
+  );
   const [selectedProvider, setSelectedProvider] = useState<any>(null);
   const [docDialogOpen, setDocDialogOpen] = useState(false);
 
@@ -43,12 +52,17 @@ export function OpsUsersPage() {
   });
 
   // 2. Query pending provider profiles (both freelancers and companies)
-  const { data: pendingProviders = [], isLoading: pendingLoading, refetch: refetchPending } = useQuery({
+  const {
+    data: pendingProviders = [],
+    isLoading: pendingLoading,
+    refetch: refetchPending,
+  } = useQuery({
     queryKey: ["pendingProvidersList"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("provider_profiles")
-        .select(`
+        .select(
+          `
           user_id,
           skills,
           experience_years,
@@ -64,7 +78,8 @@ export function OpsUsersPage() {
           business_registration_url,
           liability_insurance_url,
           profile:profiles(id, full_name, email, created_at)
-        `)
+        `,
+        )
         .eq("verification_status", "pending_approval");
 
       if (error) throw error;
@@ -73,8 +88,10 @@ export function OpsUsersPage() {
   });
 
   // Filter pending lists locally
-  const pendingFreelancers = pendingProviders.filter(p => (p.provider_type || "individual") === "individual");
-  const pendingCompanies = pendingProviders.filter(p => p.provider_type === "company");
+  const pendingFreelancers = pendingProviders.filter(
+    (p) => (p.provider_type || "individual") === "individual",
+  );
+  const pendingCompanies = pendingProviders.filter((p) => p.provider_type === "company");
 
   // 3. Approve Mutation
   const approveMutation = useMutation({
@@ -139,7 +156,7 @@ export function OpsUsersPage() {
         >
           All Profiles
         </button>
-        
+
         <button
           onClick={() => setActiveTab("pending_freelancers")}
           className={`px-5 py-3 text-xs font-bold transition-all border-b-2 cursor-pointer flex items-center gap-1.5 ${
@@ -187,11 +204,21 @@ export function OpsUsersPage() {
             <table className="w-full text-left text-sm">
               <thead className="bg-slate-50/50 border-b border-slate-200">
                 <tr>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">User</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Contact</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Created</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Role</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider text-right">Moderation</th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                    User
+                  </th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                    Contact
+                  </th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                    Created
+                  </th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                    Role
+                  </th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider text-right">
+                    Moderation
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -202,7 +229,9 @@ export function OpsUsersPage() {
                         {u.full_name ? u.full_name[0].toUpperCase() : "U"}
                       </div>
                       <div>
-                        <div className="font-semibold text-slate-900">{u.full_name || "Anonymous User"}</div>
+                        <div className="font-semibold text-slate-900">
+                          {u.full_name || "Anonymous User"}
+                        </div>
                         <div className="text-[10px] text-slate-400 font-mono">{u.id}</div>
                       </div>
                     </td>
@@ -220,11 +249,15 @@ export function OpsUsersPage() {
                       })}
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
-                        u.role === "operations" ? "bg-purple-50 text-purple-700 border-purple-100" :
-                        u.role === "provider" ? "bg-blue-50 text-blue-700 border-blue-100" :
-                        "bg-slate-50 text-slate-700 border-slate-100"
-                      }`}>
+                      <span
+                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
+                          u.role === "operations"
+                            ? "bg-purple-50 text-purple-700 border-purple-100"
+                            : u.role === "provider"
+                              ? "bg-blue-50 text-blue-700 border-blue-100"
+                              : "bg-slate-50 text-slate-700 border-slate-100"
+                        }`}
+                      >
                         {u.role || "client"}
                       </span>
                     </td>
@@ -244,24 +277,38 @@ export function OpsUsersPage() {
           )
         ) : activeTab === "pending_freelancers" ? (
           pendingLoading ? (
-            <p className="text-sm text-slate-500 text-center py-12">Loading pending freelancers...</p>
+            <p className="text-sm text-slate-500 text-center py-12">
+              Loading pending freelancers...
+            </p>
           ) : pendingFreelancers.length === 0 ? (
             <div className="py-20 text-center space-y-2">
               <div className="h-12 w-12 rounded-full bg-slate-50 flex items-center justify-center mx-auto text-slate-400">
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <p className="text-sm font-bold text-slate-800">No pending freelancers</p>
-              <p className="text-xs text-slate-400 font-semibold">All freelance provider credentials are audited.</p>
+              <p className="text-xs text-slate-400 font-semibold">
+                All freelance provider credentials are audited.
+              </p>
             </div>
           ) : (
             <table className="w-full text-left text-sm">
               <thead className="bg-slate-50/50 border-b border-slate-200">
                 <tr>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Freelancer</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Skills</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Hourly Rate</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider text-right">Audit</th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                    Freelancer
+                  </th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                    Skills
+                  </th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                    Hourly Rate
+                  </th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider text-right">
+                    Audit
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -272,14 +319,19 @@ export function OpsUsersPage() {
                         {p.profile?.full_name ? p.profile.full_name[0].toUpperCase() : "P"}
                       </div>
                       <div>
-                        <div className="font-semibold text-slate-900">{p.profile?.full_name || "Independent"}</div>
+                        <div className="font-semibold text-slate-900">
+                          {p.profile?.full_name || "Independent"}
+                        </div>
                         <div className="text-xs text-slate-400 mt-0.5">{p.profile?.email}</div>
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-1">
                         {(p.skills || []).map((s: string) => (
-                          <span key={s} className="bg-slate-100 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded">
+                          <span
+                            key={s}
+                            className="bg-slate-100 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded"
+                          >
                             {s}
                           </span>
                         ))}
@@ -309,62 +361,72 @@ export function OpsUsersPage() {
               </tbody>
             </table>
           )
-        ) : (
-          pendingLoading ? (
-            <p className="text-sm text-slate-500 text-center py-12">Loading pending companies...</p>
-          ) : pendingCompanies.length === 0 ? (
-            <div className="py-20 text-center space-y-2">
-              <div className="h-12 w-12 rounded-full bg-slate-50 flex items-center justify-center mx-auto text-slate-400">
-                <Landmark className="w-6 h-6" />
-              </div>
-              <p className="text-sm font-bold text-slate-800">No pending companies</p>
-              <p className="text-xs text-slate-400 font-semibold">All corporate registration applications are processed.</p>
+        ) : pendingLoading ? (
+          <p className="text-sm text-slate-500 text-center py-12">Loading pending companies...</p>
+        ) : pendingCompanies.length === 0 ? (
+          <div className="py-20 text-center space-y-2">
+            <div className="h-12 w-12 rounded-full bg-slate-50 flex items-center justify-center mx-auto text-slate-400">
+              <Landmark className="w-6 h-6" />
             </div>
-          ) : (
-            <table className="w-full text-left text-sm">
-              <thead className="bg-slate-50/50 border-b border-slate-200">
-                <tr>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Company Name</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">VAT Number</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Representative</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider text-right">Documents</th>
+            <p className="text-sm font-bold text-slate-800">No pending companies</p>
+            <p className="text-xs text-slate-400 font-semibold">
+              All corporate registration applications are processed.
+            </p>
+          </div>
+        ) : (
+          <table className="w-full text-left text-sm">
+            <thead className="bg-slate-50/50 border-b border-slate-200">
+              <tr>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  Company Name
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  VAT Number
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  Representative
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-4 font-semibold text-slate-500 text-xs uppercase tracking-wider text-right">
+                  Documents
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {pendingCompanies.map((p: any) => (
+                <tr key={p.user_id} className="hover:bg-slate-50/50 transition-colors">
+                  <td className="px-6 py-4 font-semibold text-slate-900">
+                    {p.company_name || "Registered Enterprise"}
+                  </td>
+                  <td className="px-6 py-4 text-xs font-mono text-slate-600">
+                    {p.vat_number || "CHE-XXX.XXX.XXX MWST"}
+                  </td>
+                  <td className="px-6 py-4 text-xs text-slate-500">
+                    <div className="font-semibold text-slate-850">{p.profile?.full_name}</div>
+                    <div className="text-[10px] text-slate-400">{p.profile?.email}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider border border-blue-100 animate-pulse">
+                      Awaiting VAT check
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <Button
+                      onClick={() => {
+                        setSelectedProvider(p);
+                        setDocDialogOpen(true);
+                      }}
+                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs gap-1 cursor-pointer font-bold px-4 h-9"
+                    >
+                      <Eye className="w-3.5 h-3.5" /> Audit Company
+                    </Button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {pendingCompanies.map((p: any) => (
-                  <tr key={p.user_id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="px-6 py-4 font-semibold text-slate-900">
-                      {p.company_name || "Registered Enterprise"}
-                    </td>
-                    <td className="px-6 py-4 text-xs font-mono text-slate-600">
-                      {p.vat_number || "CHE-XXX.XXX.XXX MWST"}
-                    </td>
-                    <td className="px-6 py-4 text-xs text-slate-500">
-                      <div className="font-semibold text-slate-850">{p.profile?.full_name}</div>
-                      <div className="text-[10px] text-slate-400">{p.profile?.email}</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider border border-blue-100 animate-pulse">
-                        Awaiting VAT check
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <Button
-                        onClick={() => {
-                          setSelectedProvider(p);
-                          setDocDialogOpen(true);
-                        }}
-                        className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs gap-1 cursor-pointer font-bold px-4 h-9"
-                      >
-                        <Eye className="w-3.5 h-3.5" /> Audit Company
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )
+              ))}
+            </tbody>
+          </table>
         )}
       </div>
 
@@ -382,23 +444,33 @@ export function OpsUsersPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl">
                 <div>
                   <span className="text-[10px] font-bold text-slate-400 uppercase">
-                    {selectedProvider.provider_type === "company" ? "Company name" : "Provider name"}
+                    {selectedProvider.provider_type === "company"
+                      ? "Company name"
+                      : "Provider name"}
                   </span>
                   <p className="text-xs font-bold text-slate-900">
-                    {selectedProvider.provider_type === "company" 
-                      ? selectedProvider.company_name 
+                    {selectedProvider.provider_type === "company"
+                      ? selectedProvider.company_name
                       : selectedProvider.profile?.full_name}
                   </p>
                 </div>
                 {selectedProvider.provider_type === "company" ? (
                   <div>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase">VAT Registration</span>
-                    <p className="text-xs font-bold text-slate-900">{selectedProvider.vat_number}</p>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase">
+                      VAT Registration
+                    </span>
+                    <p className="text-xs font-bold text-slate-900">
+                      {selectedProvider.vat_number}
+                    </p>
                   </div>
                 ) : (
                   <div>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase">Experience</span>
-                    <p className="text-xs font-bold text-slate-900">{selectedProvider.experience_years} years</p>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase">
+                      Experience
+                    </span>
+                    <p className="text-xs font-bold text-slate-900">
+                      {selectedProvider.experience_years} years
+                    </p>
                   </div>
                 )}
               </div>
@@ -408,33 +480,59 @@ export function OpsUsersPage() {
                 <h4 className="text-xs font-bold text-slate-950 uppercase tracking-wider border-b pb-1">
                   Uploaded verification documents
                 </h4>
-                
+
                 {selectedProvider.provider_type === "company" ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Business Registration */}
                     <div className="space-y-1.5">
-                      <span className="text-[10px] font-bold text-slate-500">Business Registration Certificate</span>
+                      <span className="text-[10px] font-bold text-slate-500">
+                        Business Registration Certificate
+                      </span>
                       <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-48 flex items-center justify-center">
                         {selectedProvider.business_registration_url ? (
-                          <a href={selectedProvider.business_registration_url} target="_blank" rel="noreferrer" className="w-full h-full block">
-                            <img src={selectedProvider.business_registration_url} alt="Business Registration" className="w-full h-full object-cover hover:scale-102 transition-transform" />
+                          <a
+                            href={selectedProvider.business_registration_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-full h-full block"
+                          >
+                            <img
+                              src={selectedProvider.business_registration_url}
+                              alt="Business Registration"
+                              className="w-full h-full object-cover hover:scale-102 transition-transform"
+                            />
                           </a>
                         ) : (
-                          <span className="text-[10px] text-slate-400 font-semibold">Not uploaded</span>
+                          <span className="text-[10px] text-slate-400 font-semibold">
+                            Not uploaded
+                          </span>
                         )}
                       </div>
                     </div>
 
                     {/* Liability Insurance */}
                     <div className="space-y-1.5">
-                      <span className="text-[10px] font-bold text-slate-500">Liability Insurance Proof</span>
+                      <span className="text-[10px] font-bold text-slate-500">
+                        Liability Insurance Proof
+                      </span>
                       <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-48 flex items-center justify-center">
                         {selectedProvider.liability_insurance_url ? (
-                          <a href={selectedProvider.liability_insurance_url} target="_blank" rel="noreferrer" className="w-full h-full block">
-                            <img src={selectedProvider.liability_insurance_url} alt="Liability Insurance" className="w-full h-full object-cover hover:scale-102 transition-transform" />
+                          <a
+                            href={selectedProvider.liability_insurance_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-full h-full block"
+                          >
+                            <img
+                              src={selectedProvider.liability_insurance_url}
+                              alt="Liability Insurance"
+                              className="w-full h-full object-cover hover:scale-102 transition-transform"
+                            />
                           </a>
                         ) : (
-                          <span className="text-[10px] text-slate-400 font-semibold">Not uploaded</span>
+                          <span className="text-[10px] text-slate-400 font-semibold">
+                            Not uploaded
+                          </span>
                         )}
                       </div>
                     </div>
@@ -446,25 +544,49 @@ export function OpsUsersPage() {
                       <span className="text-[10px] font-bold text-slate-500">Government ID</span>
                       <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-40 flex items-center justify-center">
                         {selectedProvider.id_document_url ? (
-                          <a href={selectedProvider.id_document_url} target="_blank" rel="noreferrer" className="w-full h-full block">
-                            <img src={selectedProvider.id_document_url} alt="ID Document" className="w-full h-full object-cover hover:scale-105 transition-transform" />
+                          <a
+                            href={selectedProvider.id_document_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-full h-full block"
+                          >
+                            <img
+                              src={selectedProvider.id_document_url}
+                              alt="ID Document"
+                              className="w-full h-full object-cover hover:scale-105 transition-transform"
+                            />
                           </a>
                         ) : (
-                          <span className="text-[10px] text-slate-400 font-semibold">Not uploaded</span>
+                          <span className="text-[10px] text-slate-400 font-semibold">
+                            Not uploaded
+                          </span>
                         )}
                       </div>
                     </div>
 
                     {/* Selfie */}
                     <div className="space-y-1.5">
-                      <span className="text-[10px] font-bold text-slate-500">Verification Selfie</span>
+                      <span className="text-[10px] font-bold text-slate-500">
+                        Verification Selfie
+                      </span>
                       <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-40 flex items-center justify-center">
                         {selectedProvider.selfie_url ? (
-                          <a href={selectedProvider.selfie_url} target="_blank" rel="noreferrer" className="w-full h-full block">
-                            <img src={selectedProvider.selfie_url} alt="Selfie" className="w-full h-full object-cover hover:scale-105 transition-transform" />
+                          <a
+                            href={selectedProvider.selfie_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-full h-full block"
+                          >
+                            <img
+                              src={selectedProvider.selfie_url}
+                              alt="Selfie"
+                              className="w-full h-full object-cover hover:scale-105 transition-transform"
+                            />
                           </a>
                         ) : (
-                          <span className="text-[10px] text-slate-400 font-semibold">Not uploaded</span>
+                          <span className="text-[10px] text-slate-400 font-semibold">
+                            Not uploaded
+                          </span>
                         )}
                       </div>
                     </div>
@@ -474,11 +596,22 @@ export function OpsUsersPage() {
                       <span className="text-[10px] font-bold text-slate-500">Proof of Address</span>
                       <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-40 flex items-center justify-center">
                         {selectedProvider.address_proof_url ? (
-                          <a href={selectedProvider.address_proof_url} target="_blank" rel="noreferrer" className="w-full h-full block">
-                            <img src={selectedProvider.address_proof_url} alt="Address Proof" className="w-full h-full object-cover hover:scale-105 transition-transform" />
+                          <a
+                            href={selectedProvider.address_proof_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-full h-full block"
+                          >
+                            <img
+                              src={selectedProvider.address_proof_url}
+                              alt="Address Proof"
+                              className="w-full h-full object-cover hover:scale-105 transition-transform"
+                            />
                           </a>
                         ) : (
-                          <span className="text-[10px] text-slate-400 font-semibold">Not uploaded</span>
+                          <span className="text-[10px] text-slate-400 font-semibold">
+                            Not uploaded
+                          </span>
                         )}
                       </div>
                     </div>

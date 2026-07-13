@@ -39,7 +39,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 // Colors for status donuts
 const STATUS_COLORS = {
   confirmed: "#3b82f6", // Blue
-  pending: "#f59e0b",   // Amber
+  pending: "#f59e0b", // Amber
   completed: "#10b981", // Emerald
   cancelled: "#ef4444", // Red
 };
@@ -54,7 +54,8 @@ export function OpsDashboard() {
       // Fetch bookings with clients and services
       const bookingsQuery = await supabase
         .from("bookings")
-        .select(`
+        .select(
+          `
           id, 
           status, 
           total_price, 
@@ -64,7 +65,8 @@ export function OpsDashboard() {
           client:profiles(full_name, email),
           provider:organizations(name),
           service:provider_services(name)
-        `)
+        `,
+        )
         .order("created_at", { ascending: false });
 
       if (bookingsQuery.error) throw bookingsQuery.error;
@@ -79,9 +81,7 @@ export function OpsDashboard() {
       const profiles = (profilesQuery.data || []) as any[];
 
       // Fetch provider profiles
-      const providersQuery = await supabase
-        .from("provider_profiles")
-        .select(`
+      const providersQuery = await supabase.from("provider_profiles").select(`
           user_id,
           verification_status,
           provider_type,
@@ -98,9 +98,13 @@ export function OpsDashboard() {
         .filter((b) => b.status === "completed" || b.status === "confirmed")
         .reduce((sum, b) => sum + Number(b.total_price), 0);
       const platformCommission = totalRevenue * 0.15; // 15% platform commission
-      const activeProviders = providerProfiles.filter((p) => p.verification_status === "approved").length;
+      const activeProviders = providerProfiles.filter(
+        (p) => p.verification_status === "approved",
+      ).length;
       const newCustomers = profiles.filter((p) => p.role === "client").length;
-      const pendingVerificationsCount = providerProfiles.filter((p) => p.verification_status === "pending_approval").length;
+      const pendingVerificationsCount = providerProfiles.filter(
+        (p) => p.verification_status === "pending_approval",
+      ).length;
 
       // Bookings grouped by status
       const statusCounts = bookings.reduce(
@@ -109,7 +113,7 @@ export function OpsDashboard() {
           acc[s] = (acc[s] || 0) + 1;
           return acc;
         },
-        { confirmed: 0, pending: 0, completed: 0, cancelled: 0 }
+        { confirmed: 0, pending: 0, completed: 0, cancelled: 0 },
       );
 
       const statusDonutData = [
@@ -131,8 +135,11 @@ export function OpsDashboard() {
         const dayRev = dayBookings
           .filter((b) => b.status === "completed" || b.status === "confirmed")
           .reduce((sum, b) => sum + Number(b.total_price), 0);
-        
-        const label = new Date(dateStr).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+
+        const label = new Date(dateStr).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+        });
         return { name: label, Revenue: dayRev };
       });
 
@@ -201,7 +208,6 @@ export function OpsDashboard() {
         recentBookings: normalizedRecent,
       };
     },
-
   });
 
   const stats = opsData?.stats || {
@@ -237,10 +243,18 @@ export function OpsDashboard() {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="h-9 w-9 text-slate-500 rounded-xl hover:bg-slate-100">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9 text-slate-500 rounded-xl hover:bg-slate-100"
+            >
               <Bell className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="icon" className="h-9 w-9 text-slate-500 rounded-xl hover:bg-slate-100">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9 text-slate-500 rounded-xl hover:bg-slate-100"
+            >
               <HelpCircle className="h-4 w-4" />
             </Button>
 
@@ -248,11 +262,15 @@ export function OpsDashboard() {
 
             <div className="flex items-center gap-2.5">
               <Avatar className="h-9 w-9 border border-slate-200">
-                <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">AD</AvatarFallback>
+                <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
+                  AD
+                </AvatarFallback>
               </Avatar>
               <div className="hidden lg:block text-left">
                 <div className="text-xs font-black text-slate-900 leading-tight">Admin</div>
-                <div className="text-[10px] text-slate-450 font-bold leading-tight">Super Admin</div>
+                <div className="text-[10px] text-slate-450 font-bold leading-tight">
+                  Super Admin
+                </div>
               </div>
             </div>
           </div>
@@ -264,13 +282,17 @@ export function OpsDashboard() {
         {/* Total Bookings */}
         <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Bookings</span>
+            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+              Total Bookings
+            </span>
             <div className="h-8 w-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
               <Calendar className="h-4 w-4" />
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-black text-slate-900">{stats.totalBookings.toLocaleString()}</div>
+            <div className="text-2xl font-black text-slate-900">
+              {stats.totalBookings.toLocaleString()}
+            </div>
             <div className="text-[10px] text-emerald-600 font-bold flex items-center gap-0.5 mt-1">
               <TrendingUp className="h-3 w-3" /> +18.2% vs yesterday
             </div>
@@ -280,13 +302,17 @@ export function OpsDashboard() {
         {/* Total Revenue */}
         <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Revenue</span>
+            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+              Total Revenue
+            </span>
             <div className="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
               <DollarSign className="h-4 w-4" />
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-black text-slate-900">CHF {stats.totalRevenue.toLocaleString()}</div>
+            <div className="text-2xl font-black text-slate-900">
+              CHF {stats.totalRevenue.toLocaleString()}
+            </div>
             <div className="text-[10px] text-emerald-600 font-bold flex items-center gap-0.5 mt-1">
               <TrendingUp className="h-3 w-3" /> +21.4% vs yesterday
             </div>
@@ -296,13 +322,17 @@ export function OpsDashboard() {
         {/* Platform Commission */}
         <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Platform Commission</span>
+            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+              Platform Commission
+            </span>
             <div className="h-8 w-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
               <Percent className="h-4 w-4" />
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-black text-slate-900">CHF {stats.platformCommission.toLocaleString()}</div>
+            <div className="text-2xl font-black text-slate-900">
+              CHF {stats.platformCommission.toLocaleString()}
+            </div>
             <div className="text-[10px] text-emerald-600 font-bold flex items-center gap-0.5 mt-1">
               <TrendingUp className="h-3 w-3" /> +19.6% vs yesterday
             </div>
@@ -312,13 +342,17 @@ export function OpsDashboard() {
         {/* Active Providers */}
         <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Active Providers</span>
+            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+              Active Providers
+            </span>
             <div className="h-8 w-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
               <Users className="h-4 w-4" />
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-black text-slate-900">{stats.activeProviders.toLocaleString()}</div>
+            <div className="text-2xl font-black text-slate-900">
+              {stats.activeProviders.toLocaleString()}
+            </div>
             <div className="text-[10px] text-emerald-600 font-bold flex items-center gap-0.5 mt-1">
               <TrendingUp className="h-3 w-3" /> +15.7% vs yesterday
             </div>
@@ -328,13 +362,17 @@ export function OpsDashboard() {
         {/* New Customers */}
         <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">New Customers</span>
+            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+              New Customers
+            </span>
             <div className="h-8 w-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
               <Users className="h-4 w-4" />
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-black text-slate-900">{stats.newCustomers.toLocaleString()}</div>
+            <div className="text-2xl font-black text-slate-900">
+              {stats.newCustomers.toLocaleString()}
+            </div>
             <div className="text-[10px] text-emerald-600 font-bold flex items-center gap-0.5 mt-1">
               <TrendingUp className="h-3 w-3" /> +12.5% vs yesterday
             </div>
@@ -344,13 +382,17 @@ export function OpsDashboard() {
         {/* Pending Verifications */}
         <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Pending Verifications</span>
+            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+              Pending Verifications
+            </span>
             <div className="h-8 w-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
               <AlertCircle className="h-4 w-4" />
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-black text-slate-900">{stats.pendingVerifications.toLocaleString()}</div>
+            <div className="text-2xl font-black text-slate-900">
+              {stats.pendingVerifications.toLocaleString()}
+            </div>
             <div className="text-[10px] text-red-500 font-bold flex items-center gap-0.5 mt-1">
               <TrendingDown className="h-3 w-3" /> -8.3% vs yesterday
             </div>
@@ -373,7 +415,9 @@ export function OpsDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="md:col-span-2 space-y-4">
               <div>
-                <span className="text-[11px] font-bold text-slate-400 block uppercase">Revenue (CHF)</span>
+                <span className="text-[11px] font-bold text-slate-400 block uppercase">
+                  Revenue (CHF)
+                </span>
                 <div className="flex items-baseline gap-2 mt-1">
                   <span className="text-3xl font-black text-slate-900">
                     CHF {stats.totalRevenue.toLocaleString()}
@@ -437,7 +481,9 @@ export function OpsDashboard() {
               <div className="h-32 w-32 relative flex items-center justify-center">
                 <div className="absolute flex flex-col items-center text-center">
                   <span className="text-xl font-black text-slate-900">{stats.totalBookings}</span>
-                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Total</span>
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                    Total
+                  </span>
                 </div>
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -460,7 +506,10 @@ export function OpsDashboard() {
               <div className="w-full grid grid-cols-2 gap-2 text-[10px]">
                 {(opsData?.statusDonutData || []).map((entry: any) => (
                   <div key={entry.name} className="flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full shrink-0" style={{ backgroundColor: entry.color }} />
+                    <span
+                      className="h-2 w-2 rounded-full shrink-0"
+                      style={{ backgroundColor: entry.color }}
+                    />
                     <span className="text-slate-500 font-semibold">{entry.name}</span>
                     <span className="ml-auto font-black text-slate-900">{entry.value}</span>
                   </div>
@@ -475,18 +524,28 @@ export function OpsDashboard() {
           <div>
             <div className="flex items-center justify-between pb-4 border-b border-slate-100">
               <h2 className="text-sm font-black text-slate-900">Live Activity</h2>
-              <button className="text-[11px] font-bold text-blue-600 hover:underline">View all</button>
+              <button className="text-[11px] font-bold text-blue-600 hover:underline">
+                View all
+              </button>
             </div>
 
             <div className="mt-4 space-y-4">
               {opsData?.activityFeed.map((activity, idx) => (
                 <div key={idx} className="flex gap-3">
-                  <div className={`h-8 w-8 rounded-full flex items-center justify-center shrink-0 ${
-                    activity.type === "booking" ? "bg-blue-50 text-blue-600" :
-                    activity.type === "registration" ? "bg-indigo-50 text-indigo-600" :
-                    "bg-emerald-50 text-emerald-600"
-                  }`}>
-                    {activity.type === "booking" ? <Calendar className="h-4 w-4" /> : <Users className="h-4 w-4" />}
+                  <div
+                    className={`h-8 w-8 rounded-full flex items-center justify-center shrink-0 ${
+                      activity.type === "booking"
+                        ? "bg-blue-50 text-blue-600"
+                        : activity.type === "registration"
+                          ? "bg-indigo-50 text-indigo-600"
+                          : "bg-emerald-50 text-emerald-600"
+                    }`}
+                  >
+                    {activity.type === "booking" ? (
+                      <Calendar className="h-4 w-4" />
+                    ) : (
+                      <Users className="h-4 w-4" />
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <span className="text-[11.5px] font-black text-slate-900 block leading-tight">
@@ -497,7 +556,10 @@ export function OpsDashboard() {
                     </span>
                   </div>
                   <span className="text-[9px] font-bold text-slate-400 shrink-0">
-                    {new Date(activity.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    {new Date(activity.time).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </span>
                 </div>
               ))}
@@ -516,7 +578,9 @@ export function OpsDashboard() {
         <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">Pending Verifications</h3>
+              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">
+                Pending Verifications
+              </h3>
               <button
                 onClick={() => navigate({ to: "/ops/users" })}
                 className="text-[10px] font-bold text-blue-600 hover:underline"
@@ -535,8 +599,12 @@ export function OpsDashboard() {
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
-                      <span className="text-[11px] font-black text-slate-800 block leading-tight truncate">{p.name}</span>
-                      <span className="text-[9px] font-bold text-slate-400 block leading-tight">{p.type}</span>
+                      <span className="text-[11px] font-black text-slate-800 block leading-tight truncate">
+                        {p.name}
+                      </span>
+                      <span className="text-[9px] font-bold text-slate-400 block leading-tight">
+                        {p.type}
+                      </span>
                     </div>
                     <span className="inline-flex px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 text-[9px] font-bold uppercase tracking-wider border border-amber-100">
                       Pending
@@ -544,7 +612,9 @@ export function OpsDashboard() {
                   </div>
                 ))
               ) : (
-                <p className="text-[11px] text-slate-400 text-center py-6 font-semibold">No pending accounts</p>
+                <p className="text-[11px] text-slate-400 text-center py-6 font-semibold">
+                  No pending accounts
+                </p>
               )}
             </div>
           </div>
@@ -561,8 +631,12 @@ export function OpsDashboard() {
         <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">Top Services (This Month)</h3>
-              <button className="text-[10px] font-bold text-blue-600 hover:underline">View all</button>
+              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">
+                Top Services (This Month)
+              </h3>
+              <button className="text-[10px] font-bold text-blue-600 hover:underline">
+                View all
+              </button>
             </div>
 
             <div className="mt-4 space-y-3">
@@ -595,7 +669,9 @@ export function OpsDashboard() {
         <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">Revenue Overview</h3>
+              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">
+                Revenue Overview
+              </h3>
               <select className="border border-slate-250 rounded-lg px-2 h-7 text-[10px] font-bold bg-white text-slate-600">
                 <option>This Month</option>
               </select>
@@ -604,15 +680,21 @@ export function OpsDashboard() {
             <div className="mt-4 space-y-3 text-[11px]">
               <div className="flex justify-between items-center py-1">
                 <span className="text-slate-500 font-bold">Total Revenue</span>
-                <span className="text-slate-900 font-black">CHF {stats.totalRevenue.toLocaleString()}</span>
+                <span className="text-slate-900 font-black">
+                  CHF {stats.totalRevenue.toLocaleString()}
+                </span>
               </div>
               <div className="flex justify-between items-center py-1">
                 <span className="text-slate-500 font-bold">Platform Commission</span>
-                <span className="text-slate-900 font-black">CHF {stats.platformCommission.toLocaleString()}</span>
+                <span className="text-slate-900 font-black">
+                  CHF {stats.platformCommission.toLocaleString()}
+                </span>
               </div>
               <div className="flex justify-between items-center py-1">
                 <span className="text-slate-500 font-bold">Provider Payouts</span>
-                <span className="text-slate-900 font-black">CHF {(stats.totalRevenue - stats.platformCommission).toLocaleString()}</span>
+                <span className="text-slate-900 font-black">
+                  CHF {(stats.totalRevenue - stats.platformCommission).toLocaleString()}
+                </span>
               </div>
               <div className="flex justify-between items-center py-1 text-red-500 font-bold">
                 <span>Refunds</span>
@@ -630,28 +712,56 @@ export function OpsDashboard() {
         <div className="bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">Alerts & Tasks</h3>
-              <button className="text-[10px] font-bold text-blue-600 hover:underline">View all</button>
+              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider">
+                Alerts & Tasks
+              </h3>
+              <button className="text-[10px] font-bold text-blue-600 hover:underline">
+                View all
+              </button>
             </div>
 
             <div className="mt-4 space-y-3">
               {[
-                { title: "3 providers have expired documents", desc: "Please review and take action.", type: "danger" },
-                { title: "2 company verifications pending", desc: "Company documents need review.", type: "warning" },
-                { title: "5 payments failed", desc: "Action required to retry payments.", type: "danger" },
-                { title: "System update available", desc: "New update v2.4.1 is ready to install.", type: "info" },
+                {
+                  title: "3 providers have expired documents",
+                  desc: "Please review and take action.",
+                  type: "danger",
+                },
+                {
+                  title: "2 company verifications pending",
+                  desc: "Company documents need review.",
+                  type: "warning",
+                },
+                {
+                  title: "5 payments failed",
+                  desc: "Action required to retry payments.",
+                  type: "danger",
+                },
+                {
+                  title: "System update available",
+                  desc: "New update v2.4.1 is ready to install.",
+                  type: "info",
+                },
               ].map((alert, idx) => (
                 <div key={idx} className="flex gap-2 text-[10.5px]">
-                  <div className={`h-4 w-4 rounded-full flex items-center justify-center shrink-0 text-white mt-0.5 text-[8px] font-black ${
-                    alert.type === "danger" ? "bg-red-500" :
-                    alert.type === "warning" ? "bg-amber-500" :
-                    "bg-blue-500"
-                  }`}>
+                  <div
+                    className={`h-4 w-4 rounded-full flex items-center justify-center shrink-0 text-white mt-0.5 text-[8px] font-black ${
+                      alert.type === "danger"
+                        ? "bg-red-500"
+                        : alert.type === "warning"
+                          ? "bg-amber-500"
+                          : "bg-blue-500"
+                    }`}
+                  >
                     !
                   </div>
                   <div>
-                    <span className="text-slate-850 font-black block leading-snug">{alert.title}</span>
-                    <span className="text-[9.5px] text-slate-400 font-bold block mt-0.5 leading-snug">{alert.desc}</span>
+                    <span className="text-slate-850 font-black block leading-snug">
+                      {alert.title}
+                    </span>
+                    <span className="text-[9.5px] text-slate-400 font-bold block mt-0.5 leading-snug">
+                      {alert.desc}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -711,15 +821,23 @@ export function OpsDashboard() {
                         {b.provider?.name || "Independent"}
                       </td>
                       <td className="px-6 py-4 text-slate-500 font-semibold">
-                        {new Date(b.scheduled_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                        {new Date(b.scheduled_at).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                        })}
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`inline-block text-[9px] font-black px-2 py-0.5 rounded border uppercase tracking-wider ${
-                          b.status === "completed" ? "bg-emerald-50 text-emerald-700 border-emerald-100" :
-                          b.status === "confirmed" ? "bg-blue-50 text-blue-700 border-blue-100" :
-                          b.status === "pending" ? "bg-amber-50 text-amber-700 border-amber-100" :
-                          "bg-red-50 text-red-700 border-red-100"
-                        }`}>
+                        <span
+                          className={`inline-block text-[9px] font-black px-2 py-0.5 rounded border uppercase tracking-wider ${
+                            b.status === "completed"
+                              ? "bg-emerald-50 text-emerald-700 border-emerald-100"
+                              : b.status === "confirmed"
+                                ? "bg-blue-50 text-blue-700 border-blue-100"
+                                : b.status === "pending"
+                                  ? "bg-amber-50 text-amber-700 border-amber-100"
+                                  : "bg-red-50 text-red-700 border-red-100"
+                          }`}
+                        >
                           {b.status}
                         </span>
                       </td>
@@ -727,7 +845,11 @@ export function OpsDashboard() {
                         CHF {Number(b.total_price).toFixed(2)}
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <Button variant="ghost" size="icon" className="h-6 w-6 text-slate-400 rounded hover:bg-slate-100">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-6 w-6 text-slate-400 rounded hover:bg-slate-100"
+                        >
                           <MoreVertical className="h-4 w-4" />
                         </Button>
                       </td>
@@ -757,7 +879,9 @@ export function OpsDashboard() {
             <div className="h-32 w-32 relative flex items-center justify-center">
               <div className="absolute flex flex-col items-center text-center">
                 <span className="text-xl font-black text-slate-900">42</span>
-                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Tickets</span>
+                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                  Tickets
+                </span>
               </div>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -795,9 +919,14 @@ export function OpsDashboard() {
                 { name: "Resolved", value: 5, percentage: "12%", color: "#ef4444" },
               ].map((item) => (
                 <div key={item.name} className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                  <span
+                    className="h-2 w-2 rounded-full shrink-0"
+                    style={{ backgroundColor: item.color }}
+                  />
                   <span className="text-slate-500 font-bold">{item.name}</span>
-                  <span className="ml-auto font-black text-slate-900">{item.value} ({item.percentage})</span>
+                  <span className="ml-auto font-black text-slate-900">
+                    {item.value} ({item.percentage})
+                  </span>
                 </div>
               ))}
             </div>

@@ -97,7 +97,9 @@ const getProviderNavGroups = (isApproved: boolean) => {
   if (!isApproved) {
     return [
       {
-        items: [{ to: "/dashboard", label: "Verification", icon: LayoutDashboard, highlight: true }],
+        items: [
+          { to: "/dashboard", label: "Verification", icon: LayoutDashboard, highlight: true },
+        ],
       },
     ];
   }
@@ -157,10 +159,22 @@ const operationsNavGroups = [
       { to: "/ops/users", search: { role: "company" }, label: "Companies", icon: Building },
       { to: "/ops/bookings", label: "Bookings", icon: Calendar },
       { to: "/payments", label: "Payments", icon: CreditCard },
-      { to: "/dashboard", search: { view: "disputes" }, label: "Disputes", icon: ShieldAlert, badge: "8" },
+      {
+        to: "/dashboard",
+        search: { view: "disputes" },
+        label: "Disputes",
+        icon: ShieldAlert,
+        badge: "8",
+      },
       { to: "/dashboard", search: { view: "compliance" }, label: "Compliance", icon: CheckSquare },
       { to: "/dashboard", search: { view: "ai" }, label: "AI & Matching", icon: Sparkles },
-      { to: "/dashboard", search: { view: "support" }, label: "Support", icon: MessageSquare, badge: "5" },
+      {
+        to: "/dashboard",
+        search: { view: "support" },
+        label: "Support",
+        icon: MessageSquare,
+        badge: "5",
+      },
       { to: "/reports", label: "Analytics", icon: BarChart3 },
       { to: "/reports", search: { tab: "reports" }, label: "Reports", icon: FileText },
       { to: "/dashboard", search: { view: "cms" }, label: "CMS", icon: Grid3X3 },
@@ -172,7 +186,6 @@ const operationsNavGroups = [
     ],
   },
 ];
-
 
 function initials(name?: string | null) {
   if (!name) return "?";
@@ -306,7 +319,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         },
         () => {
           queryClient.invalidateQueries({ queryKey: ["unreadMessagesCount"] });
-        }
+        },
       )
       .subscribe();
 
@@ -331,9 +344,11 @@ export function AppShell({ children }: { children: ReactNode }) {
   });
 
   const activePortal = userProfile?.role || user?.user_metadata?.portal_role || "client";
-  const firstName = userProfile?.full_name?.split(" ")[0] || user?.user_metadata?.full_name?.split(" ")[0] || "User";
+  const firstName =
+    userProfile?.full_name?.split(" ")[0] ||
+    user?.user_metadata?.full_name?.split(" ")[0] ||
+    "User";
   const fullName = userProfile?.full_name || user?.user_metadata?.full_name || "User";
-
 
   // Query provider details and reviews
   const { data: providerProfile } = useQuery({
@@ -365,7 +380,9 @@ export function AppShell({ children }: { children: ReactNode }) {
         const reviewsList = reviewsQuery.data || [];
         if (reviewsList.length > 0) {
           reviewCount = reviewsList.length;
-          avgRating = Number((reviewsList.reduce((sum, r) => sum + r.rating, 0) / reviewsList.length).toFixed(1));
+          avgRating = Number(
+            (reviewsList.reduce((sum, r) => sum + r.rating, 0) / reviewsList.length).toFixed(1),
+          );
         }
 
         const servicesQuery = await supabase
@@ -387,9 +404,8 @@ export function AppShell({ children }: { children: ReactNode }) {
     },
   });
 
-  const isApproved = activePortal === "provider"
-    ? (providerProfile?.verification_status === "approved")
-    : true;
+  const isApproved =
+    activePortal === "provider" ? providerProfile?.verification_status === "approved" : true;
 
   const servicesList = providerProfile?.servicesList || [];
   let specialty = "No services offered";
@@ -429,7 +445,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         {/* Provider User Profile Card (top, only for provider) */}
         {activePortal === "provider" && (
           <div className="px-4 pb-2 pt-1">
-            <button 
+            <button
               onClick={() => navigate({ to: "/settings", search: { tab: "services" } as any })}
               className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors text-left focus:outline-none cursor-pointer"
             >
@@ -474,12 +490,14 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="px-3 pb-4 mt-auto">
           {activePortal === "operations" ? (
             <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
-              <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">Platform Status</span>
+              <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">
+                Platform Status
+              </span>
               <div className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
                 <span className="text-[11px] font-bold text-white">All Systems Operational</span>
               </div>
-              <button 
+              <button
                 onClick={() => navigate({ to: "/dashboard" })}
                 className="w-full py-1.5 border border-slate-800 hover:bg-slate-800 rounded-lg text-[9px] font-black text-slate-400 transition-colors block text-center cursor-pointer"
               >

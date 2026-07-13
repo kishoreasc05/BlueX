@@ -260,19 +260,27 @@ export function OpsBookingsPage() {
             <div className="space-y-4 py-4">
               <div className="bg-slate-50 p-4 rounded-xl space-y-2 text-xs">
                 <div>
-                  <span className="text-slate-400 font-bold uppercase text-[9px] block">Customer / Service</span>
+                  <span className="text-slate-400 font-bold uppercase text-[9px] block">
+                    Customer / Service
+                  </span>
                   <span className="text-slate-900 font-bold">
                     {selectedBooking.client?.full_name} — {selectedBooking.service?.name}
                   </span>
                 </div>
                 <div>
-                  <span className="text-slate-400 font-bold uppercase text-[9px] block">Current Provider</span>
-                  <span className="text-slate-600 font-semibold">{selectedBooking.provider?.name || "Independent"}</span>
+                  <span className="text-slate-400 font-bold uppercase text-[9px] block">
+                    Current Provider
+                  </span>
+                  <span className="text-slate-600 font-semibold">
+                    {selectedBooking.provider?.name || "Independent"}
+                  </span>
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <Label className="text-xs font-semibold text-slate-500">Select Target Service Provider</Label>
+                <Label className="text-xs font-semibold text-slate-500">
+                  Select Target Service Provider
+                </Label>
                 <Select value={newOrgId} onValueChange={setNewOrgId}>
                   <SelectTrigger className="rounded-xl border-slate-200 h-10">
                     <SelectValue placeholder="Choose provider organization..." />
@@ -286,7 +294,8 @@ export function OpsBookingsPage() {
                   </SelectContent>
                 </Select>
                 <p className="text-[10px] text-slate-400">
-                  Only active, verified individual providers and registered staffing companies appear in this list.
+                  Only active, verified individual providers and registered staffing companies
+                  appear in this list.
                 </p>
               </div>
             </div>

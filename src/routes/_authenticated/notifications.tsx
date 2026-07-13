@@ -19,14 +19,16 @@ function Page() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("bookings")
-        .select(`
+        .select(
+          `
           id,
           status,
           scheduled_at,
           updated_at,
           provider:organizations(name),
           service:provider_services(name)
-        `)
+        `,
+        )
         .eq("client_id", user!.id)
         .order("updated_at", { ascending: false });
 
@@ -116,7 +118,9 @@ function Page() {
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden divide-y divide-slate-100">
           {notifications.map((n) => (
             <div key={n.id} className="p-6 flex gap-4 hover:bg-slate-50/50 transition-colors">
-              <div className={`h-10 w-10 rounded-full ${n.bg} flex items-center justify-center shrink-0`}>
+              <div
+                className={`h-10 w-10 rounded-full ${n.bg} flex items-center justify-center shrink-0`}
+              >
                 <n.Icon className={`h-5 w-5 ${n.color}`} />
               </div>
               <div className="flex-1">

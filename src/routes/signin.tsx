@@ -92,7 +92,10 @@ function AuthPage() {
           metadata.hourly_rate = hourlyRate;
           metadata.bio = bio;
           metadata.languages = languages;
-          metadata.skills = skills.split(",").map((s) => s.trim()).filter(Boolean);
+          metadata.skills = skills
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean);
         }
 
         const { error } = await supabase.auth.signUp({

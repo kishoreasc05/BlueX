@@ -19,13 +19,15 @@ function Page() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("bookings")
-        .select(`
+        .select(
+          `
           id,
           status,
           scheduled_at,
           total_price,
           provider:organizations(name)
-        `)
+        `,
+        )
         .eq("client_id", user!.id)
         .order("scheduled_at", { ascending: false });
 
@@ -57,10 +59,7 @@ function Page() {
 
   return (
     <div className="space-y-6 pb-12 max-w-[1400px] mx-auto text-slate-800">
-      <PageHeader
-        title="Payments"
-        description="Track your transaction history and invoices."
-      />
+      <PageHeader title="Payments" description="Track your transaction history and invoices." />
 
       {isLoading ? (
         <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-12 text-center text-slate-400 font-medium">

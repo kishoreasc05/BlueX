@@ -16,7 +16,9 @@ export function ProviderBookingsPage() {
   const { activeId } = useActiveOrg();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const [listSubTab, setListSubTab] = useState<"confirmed" | "pending" | "completed" | "cancelled">("confirmed");
+  const [listSubTab, setListSubTab] = useState<"confirmed" | "pending" | "completed" | "cancelled">(
+    "confirmed",
+  );
 
   // Query bookings for this provider organization
   const { data: bookings, isLoading } = useQuery({
@@ -49,18 +51,16 @@ export function ProviderBookingsPage() {
   // Mutation to accept or decline a booking request
   const updateBookingStatus = useMutation({
     mutationFn: async ({ id, newStatus }: { id: string; newStatus: "confirmed" | "cancelled" }) => {
-      const { error } = await supabase
-        .from("bookings")
-        .update({ status: newStatus })
-        .eq("id", id);
+      const { error } = await supabase.from("bookings").update({ status: newStatus }).eq("id", id);
       if (error) throw error;
 
       // Find the booking to get the client id and post chat notification
-      const bookingRecord = bookings?.find(b => b.id === id);
+      const bookingRecord = bookings?.find((b) => b.id === id);
       if (bookingRecord && user) {
-        const content = newStatus === "confirmed"
-          ? "✅ Booking request accepted!"
-          : "❌ Booking request declined.";
+        const content =
+          newStatus === "confirmed"
+            ? "✅ Booking request accepted!"
+            : "❌ Booking request declined.";
 
         await supabase.from("messages").insert({
           sender_id: user.id,
@@ -71,7 +71,9 @@ export function ProviderBookingsPage() {
       }
     },
     onSuccess: (_, variables) => {
-      toast.success(variables.newStatus === "confirmed" ? "Booking accepted!" : "Booking declined.");
+      toast.success(
+        variables.newStatus === "confirmed" ? "Booking accepted!" : "Booking declined.",
+      );
       queryClient.invalidateQueries({ queryKey: ["providerBookings", activeId] });
       queryClient.invalidateQueries({ queryKey: ["messagesForUser"] });
     },
@@ -104,7 +106,7 @@ export function ProviderBookingsPage() {
               "px-4 py-2 text-xs font-bold border-b-2 capitalize transition-all cursor-pointer",
               listSubTab === tab
                 ? "border-blue-650 border-blue-600 text-blue-600 font-extrabold"
-                : "border-transparent text-slate-450 text-slate-500 hover:text-slate-700"
+                : "border-transparent text-slate-450 text-slate-500 hover:text-slate-700",
             )}
           >
             {tab === "cancelled" ? "Cancelled / Declined" : `${tab} Requests`}
@@ -145,9 +147,7 @@ export function ProviderBookingsPage() {
               >
                 <div className="space-y-3 flex-1">
                   <div className="flex items-center gap-2.5">
-                    <h3 className="font-bold text-slate-900 text-sm md:text-base">
-                      {serviceName}
-                    </h3>
+                    <h3 className="font-bold text-slate-900 text-sm md:text-base">{serviceName}</h3>
                     <span
                       className={cn(
                         "text-[9px] font-black px-2 py-0.5 rounded border uppercase tracking-wider",
@@ -157,7 +157,7 @@ export function ProviderBookingsPage() {
                             ? "bg-blue-50 text-blue-700 border-blue-100"
                             : booking.status === "pending"
                               ? "bg-amber-50 text-amber-700 border-amber-100"
-                              : "bg-slate-50 text-slate-700 border-slate-100"
+                              : "bg-slate-50 text-slate-700 border-slate-100",
                       )}
                     >
                       {booking.status}
@@ -189,7 +189,9 @@ export function ProviderBookingsPage() {
                     {client?.home_address && (
                       <div className="flex items-center gap-1.5 sm:col-span-2">
                         <span className="text-slate-400">Address:</span>
-                        <span className="text-slate-800">{client.home_address}, {client.city}</span>
+                        <span className="text-slate-800">
+                          {client.home_address}, {client.city}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -206,7 +208,9 @@ export function ProviderBookingsPage() {
                     variant="outline"
                     size="sm"
                     className="rounded-xl text-xs gap-1.5 cursor-pointer h-9 px-3.5"
-                    onClick={() => navigate({ to: "/client/messages", search: { bookingId: booking.id } as any })}
+                    onClick={() =>
+                      navigate({ to: "/client/messages", search: { bookingId: booking.id } as any })
+                    }
                   >
                     <MessageSquare className="w-3.5 h-3.5 text-slate-400" /> Chat
                   </Button>
@@ -217,7 +221,9 @@ export function ProviderBookingsPage() {
                         size="sm"
                         disabled={updateBookingStatus.isPending}
                         className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs gap-1.5 cursor-pointer h-9 px-3.5"
-                        onClick={() => updateBookingStatus.mutate({ id: booking.id, newStatus: "confirmed" })}
+                        onClick={() =>
+                          updateBookingStatus.mutate({ id: booking.id, newStatus: "confirmed" })
+                        }
                       >
                         <Check className="w-3.5 h-3.5" /> Accept
                       </Button>
@@ -226,7 +232,9 @@ export function ProviderBookingsPage() {
                         variant="outline"
                         disabled={updateBookingStatus.isPending}
                         className="border-red-200 hover:bg-red-50 text-red-650 hover:text-red-700 text-red-600 rounded-xl text-xs gap-1.5 cursor-pointer h-9 px-3.5"
-                        onClick={() => updateBookingStatus.mutate({ id: booking.id, newStatus: "cancelled" })}
+                        onClick={() =>
+                          updateBookingStatus.mutate({ id: booking.id, newStatus: "cancelled" })
+                        }
                       >
                         <X className="w-3.5 h-3.5" /> Decline
                       </Button>

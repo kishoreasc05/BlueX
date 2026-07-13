@@ -4,7 +4,18 @@ import { useAuth } from "@/hooks/use-auth";
 import { useActiveOrg } from "@/hooks/use-orgs";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Calendar, Clock, DollarSign, MessageSquare, MapPin, User, ShieldAlert, Sparkles, Play, CheckCircle } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  DollarSign,
+  MessageSquare,
+  MapPin,
+  User,
+  ShieldAlert,
+  Sparkles,
+  Play,
+  CheckCircle,
+} from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/kpi-card";
@@ -49,19 +60,23 @@ export function JobsPage() {
 
   // Mutation to transition booking status (confirmed -> in_progress -> completed)
   const updateJobStatus = useMutation({
-    mutationFn: async ({ id, newStatus }: { id: string; newStatus: "in_progress" | "completed" }) => {
-      const { error } = await supabase
-        .from("bookings")
-        .update({ status: newStatus })
-        .eq("id", id);
+    mutationFn: async ({
+      id,
+      newStatus,
+    }: {
+      id: string;
+      newStatus: "in_progress" | "completed";
+    }) => {
+      const { error } = await supabase.from("bookings").update({ status: newStatus }).eq("id", id);
       if (error) throw error;
 
       // Post chat status update notification
       const bookingRecord = bookings?.find((b) => b.id === id);
       if (bookingRecord && user) {
-        const content = newStatus === "in_progress"
-          ? "🚀 Job started! The provider is on their way or has started the work."
-          : "🏁 Job completed! The provider has marked the work as done.";
+        const content =
+          newStatus === "in_progress"
+            ? "🚀 Job started! The provider is on their way or has started the work."
+            : "🏁 Job completed! The provider has marked the work as done.";
 
         await supabase.from("messages").insert({
           sender_id: user.id,
@@ -90,7 +105,11 @@ export function JobsPage() {
     return (bookings || []).filter((b) => {
       const jobDate = new Date(b.scheduled_at);
       if (activeTab === "today") {
-        return (b.status === "confirmed" || b.status === "in_progress") && jobDate >= today && jobDate <= tonight;
+        return (
+          (b.status === "confirmed" || b.status === "in_progress") &&
+          jobDate >= today &&
+          jobDate <= tonight
+        );
       }
       if (activeTab === "upcoming") {
         return b.status === "confirmed" && jobDate > tonight;
@@ -145,7 +164,7 @@ export function JobsPage() {
               "px-4 py-2 text-xs font-bold border-b-2 capitalize transition-all cursor-pointer",
               activeTab === tab
                 ? "border-blue-650 border-blue-600 text-blue-600 font-extrabold"
-                : "border-transparent text-slate-450 text-slate-500 hover:text-slate-700"
+                : "border-transparent text-slate-450 text-slate-500 hover:text-slate-700",
             )}
           >
             {tab === "today" && `Today's Jobs (${counts.today})`}
@@ -196,7 +215,12 @@ export function JobsPage() {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-extrabold select-none">
-                      {clientName.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2)}
+                      {clientName
+                        .split(" ")
+                        .map((n: string) => n[0])
+                        .join("")
+                        .toUpperCase()
+                        .slice(0, 2)}
                     </div>
                     <div>
                       <h3 className="font-bold text-slate-900 text-sm sm:text-base leading-tight">
@@ -218,7 +242,7 @@ export function JobsPage() {
                           ? "bg-amber-50 text-amber-700 border-amber-100"
                           : booking.status === "completed"
                             ? "bg-emerald-50 text-emerald-700 border-emerald-100"
-                            : "bg-blue-50 text-blue-700 border-blue-100"
+                            : "bg-blue-50 text-blue-700 border-blue-100",
                       )}
                     >
                       {booking.status === "in_progress" ? "In Progress" : booking.status}
@@ -230,7 +254,9 @@ export function JobsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-xs font-semibold">
                   {/* Service & Pricing */}
                   <div className="space-y-2">
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Service Offered</span>
+                    <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">
+                      Service Offered
+                    </span>
                     <span className="text-slate-800 text-sm font-bold block">{serviceName}</span>
                     <div className="flex items-center gap-1 text-slate-500 font-bold mt-1">
                       <DollarSign className="h-4 w-4 text-slate-400" />
@@ -240,7 +266,9 @@ export function JobsPage() {
 
                   {/* Date & Time */}
                   <div className="space-y-2">
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Work Timing</span>
+                    <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">
+                      Work Timing
+                    </span>
                     <div className="flex items-center gap-2 text-slate-800">
                       <Calendar className="h-4 w-4 text-slate-400 shrink-0" />
                       <span>{formattedDate}</span>
@@ -253,14 +281,22 @@ export function JobsPage() {
 
                   {/* Customer Address */}
                   <div className="space-y-2">
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Service Location</span>
+                    <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">
+                      Service Location
+                    </span>
                     {client?.home_address ? (
                       <div className="flex items-start gap-2 text-slate-800">
                         <MapPin className="h-4 w-4 text-slate-400 shrink-0 mt-0.5" />
                         <div>
                           <p>{client.home_address}</p>
-                          {client.apartment_no && <p className="text-[10px] text-slate-500">Apartment: {client.apartment_no}</p>}
-                          <p>{client.postal_code} {client.city}</p>
+                          {client.apartment_no && (
+                            <p className="text-[10px] text-slate-500">
+                              Apartment: {client.apartment_no}
+                            </p>
+                          )}
+                          <p>
+                            {client.postal_code} {client.city}
+                          </p>
                         </div>
                       </div>
                     ) : (
@@ -282,7 +318,9 @@ export function JobsPage() {
                 <div className="flex justify-end gap-2 border-t border-slate-100 pt-4">
                   <Button
                     variant="outline"
-                    onClick={() => navigate({ to: "/client/messages", search: { bookingId: booking.id } as any })}
+                    onClick={() =>
+                      navigate({ to: "/client/messages", search: { bookingId: booking.id } as any })
+                    }
                     className="rounded-xl text-xs gap-1.5 h-9 px-4 cursor-pointer"
                   >
                     <MessageSquare className="h-4 w-4 text-slate-400" /> Chat with Client
@@ -290,7 +328,9 @@ export function JobsPage() {
 
                   {booking.status === "confirmed" && (
                     <Button
-                      onClick={() => updateJobStatus.mutate({ id: booking.id, newStatus: "in_progress" })}
+                      onClick={() =>
+                        updateJobStatus.mutate({ id: booking.id, newStatus: "in_progress" })
+                      }
                       disabled={updateJobStatus.isPending}
                       className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs gap-1.5 h-9 px-4 cursor-pointer"
                     >
@@ -300,7 +340,9 @@ export function JobsPage() {
 
                   {booking.status === "in_progress" && (
                     <Button
-                      onClick={() => updateJobStatus.mutate({ id: booking.id, newStatus: "completed" })}
+                      onClick={() =>
+                        updateJobStatus.mutate({ id: booking.id, newStatus: "completed" })
+                      }
                       disabled={updateJobStatus.isPending}
                       className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs gap-1.5 h-9 px-4 cursor-pointer"
                     >
