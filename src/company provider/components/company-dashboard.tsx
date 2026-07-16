@@ -80,7 +80,7 @@ export function CompanyDashboard({
   const pendingRequests = bookings.filter((b) => b.status === "pending");
   const activeJobs = bookings.filter((b) => b.status === "confirmed" || b.status === "in_progress");
   const completedJobs = bookings.filter((b) => b.status === "completed");
-  
+
   const monthlyRevenue = completedJobs.reduce((sum, b) => sum + Number(b.total_price || 0), 0);
   const pendingPayouts = activeJobs.reduce((sum, b) => sum + Number(b.total_price || 0), 0);
   const avgRating = "4.9";
@@ -199,7 +199,12 @@ export function CompanyDashboard({
             )}
           >
             <div className="flex justify-between items-start">
-              <div className={cn("h-9 w-9 rounded-xl flex items-center justify-center shrink-0", kpi.bg)}>
+              <div
+                className={cn(
+                  "h-9 w-9 rounded-xl flex items-center justify-center shrink-0",
+                  kpi.bg,
+                )}
+              >
                 <kpi.icon className="h-4.5 w-4.5" />
               </div>
               <span className="text-[10px] font-bold text-slate-400 group-hover:text-blue-600 transition-colors">
@@ -240,8 +245,20 @@ export function CompanyDashboard({
                       <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <XAxis dataKey="date" stroke="#94a3b8" fontSize={10} tickLine={false} axisLine={false} />
-                  <YAxis stroke="#94a3b8" fontSize={10} tickLine={false} axisLine={false} tickFormatter={(v) => `CHF ${v}`} />
+                  <XAxis
+                    dataKey="date"
+                    stroke="#94a3b8"
+                    fontSize={10}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis
+                    stroke="#94a3b8"
+                    fontSize={10}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(v) => `CHF ${v}`}
+                  />
                   <Tooltip content={<CustomTooltip />} />
                   <Area
                     type="monotone"
@@ -274,13 +291,18 @@ export function CompanyDashboard({
                   </div>
                   <div>
                     <p className="text-xs font-bold text-slate-800">All caught up!</p>
-                    <p className="text-[11px] text-slate-400 mt-0.5">No pending customer requests.</p>
+                    <p className="text-[11px] text-slate-400 mt-0.5">
+                      No pending customer requests.
+                    </p>
                   </div>
                 </div>
               ) : (
                 <div className="divide-y divide-slate-100">
                   {pendingRequests.map((req) => (
-                    <div key={req.id} className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50/50 rounded-xl transition-colors">
+                    <div
+                      key={req.id}
+                      className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50/50 rounded-xl transition-colors"
+                    >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <span className="text-xs font-bold text-slate-900">
@@ -350,7 +372,7 @@ export function CompanyDashboard({
                 Manage Employees
               </Button>
             </div>
-            
+
             <div className="space-y-3">
               {employeesLoading ? (
                 <p className="text-slate-400 text-xs text-center">Loading team...</p>
@@ -360,7 +382,10 @@ export function CompanyDashboard({
                 </div>
               ) : (
                 employees.slice(0, 4).map((member: any) => (
-                  <div key={member.id} className="flex items-center justify-between border-b border-slate-50 pb-2 last:border-0 last:pb-0">
+                  <div
+                    key={member.id}
+                    className="flex items-center justify-between border-b border-slate-50 pb-2 last:border-0 last:pb-0"
+                  >
                     <div className="flex items-center gap-2.5 min-w-0">
                       <div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-500 border border-slate-200 text-xs uppercase">
                         {member.profile?.full_name?.charAt(0) || "E"}
@@ -387,16 +412,15 @@ export function CompanyDashboard({
               <ShieldCheck className="h-4.5 w-4.5 text-blue-600" /> Company Responsibilities
             </h3>
             <div className="text-[11px] text-slate-500 leading-relaxed space-y-2.5 font-medium">
-              <p>
-                As a registered business on BlueX, you are solely responsible for:
-              </p>
+              <p>As a registered business on BlueX, you are solely responsible for:</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li>Employee salaries & social security contributions</li>
                 <li>VAT reporting and accounting filings</li>
                 <li>Company and employee liability insurances</li>
               </ul>
               <p className="text-slate-400 italic">
-                BlueX operates as a booking agent and payouts flow directly to your business Stripe Connect bank account.
+                BlueX operates as a booking agent and payouts flow directly to your business Stripe
+                Connect bank account.
               </p>
             </div>
           </div>

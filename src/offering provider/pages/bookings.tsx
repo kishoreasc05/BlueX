@@ -44,12 +44,14 @@ export function ProviderBookingsPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("organization_members")
-        .select(`
+        .select(
+          `
           id,
           role,
           user_id,
           profile:profiles(id, full_name, email)
-        `)
+        `,
+        )
         .eq("organization_id", activeId!);
       if (error) throw error;
       return data || [];
@@ -274,7 +276,12 @@ export function ProviderBookingsPage() {
                       <span className="text-[10px] text-slate-400 font-bold">Assignee:</span>
                       <select
                         value={booking.assigned_employee_id || ""}
-                        onChange={(e) => updateAssigneeMutation.mutate({ id: booking.id, employeeId: e.target.value || null })}
+                        onChange={(e) =>
+                          updateAssigneeMutation.mutate({
+                            id: booking.id,
+                            employeeId: e.target.value || null,
+                          })
+                        }
                         className="h-7 px-2 rounded-md border border-slate-200 bg-slate-50 text-[10px] focus:outline-none focus:ring-1 focus:ring-blue-600 font-bold cursor-pointer"
                       >
                         <option value="">Unassigned</option>
@@ -292,7 +299,12 @@ export function ProviderBookingsPage() {
                       <span className="text-[10px] text-slate-400 font-bold">Assign to:</span>
                       <select
                         value={selectedAssignees[booking.id] || ""}
-                        onChange={(e) => setSelectedAssignees(prev => ({ ...prev, [booking.id]: e.target.value }))}
+                        onChange={(e) =>
+                          setSelectedAssignees((prev) => ({
+                            ...prev,
+                            [booking.id]: e.target.value,
+                          }))
+                        }
                         className="h-7 px-2 rounded-md border border-slate-200 bg-white text-[10px] focus:outline-none focus:ring-1 focus:ring-blue-600 font-bold cursor-pointer"
                       >
                         <option value="">Choose Employee</option>
@@ -328,7 +340,7 @@ export function ProviderBookingsPage() {
                           updateBookingStatus.mutate({
                             id: booking.id,
                             newStatus: "confirmed",
-                            assignedEmployeeId: selectedAssignees[booking.id]
+                            assignedEmployeeId: selectedAssignees[booking.id],
                           })
                         }
                       >

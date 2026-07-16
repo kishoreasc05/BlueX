@@ -158,7 +158,10 @@ function AuthPage() {
       <div className="w-full max-w-[450px] relative z-10 my-8">
         {/* Logo and Brand Header */}
         <div className="flex flex-col items-center mb-6 text-center">
-          <Link to="/" className="flex items-center gap-2 text-white font-extrabold text-2xl tracking-tight mb-1 group">
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-white font-extrabold text-2xl tracking-tight mb-1 group"
+          >
             <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-sky-500 text-white text-base font-black shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
               X
             </span>
@@ -286,11 +289,7 @@ function AuthPage() {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white transition-colors cursor-pointer"
                     >
-                      {showPassword ? (
-                        <EyeOff className="w-4 h-4" />
-                      ) : (
-                        <Eye className="w-4 h-4" />
-                      )}
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
                 </div>
@@ -379,11 +378,7 @@ function AuthPage() {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white transition-colors cursor-pointer"
                     >
-                      {showPassword ? (
-                        <EyeOff className="w-4 h-4" />
-                      ) : (
-                        <Eye className="w-4 h-4" />
-                      )}
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
                 </div>
@@ -449,235 +444,249 @@ function AuthPage() {
                     onChange={(e) => setPreferredLanguage(e.target.value)}
                     className="w-full h-10 px-3 rounded-xl border border-slate-800 bg-slate-900 text-white text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-sky-500"
                   >
-                    <option value="en" className="bg-slate-950 text-white">English</option>
-                    <option value="de" className="bg-slate-950 text-white">Deutsch (German)</option>
-                    <option value="fr" className="bg-slate-950 text-white">Français (French)</option>
-                    <option value="it" className="bg-slate-950 text-white">Italiano (Italian)</option>
+                    <option value="en" className="bg-slate-950 text-white">
+                      English
+                    </option>
+                    <option value="de" className="bg-slate-950 text-white">
+                      Deutsch (German)
+                    </option>
+                    <option value="fr" className="bg-slate-950 text-white">
+                      Français (French)
+                    </option>
+                    <option value="it" className="bg-slate-950 text-white">
+                      Italiano (Italian)
+                    </option>
                   </select>
                 </div>
               </>
             )}
 
             {/* ── MODE: SIGN UP (STEP 2 - PROVIDER INDIVIDUAL) ── */}
-            {mode === "signup" && signupStep === 2 && role === "provider" && providerType === "individual" && (
-              <>
-                <div className="grid grid-cols-2 gap-3">
+            {mode === "signup" &&
+              signupStep === 2 &&
+              role === "provider" &&
+              providerType === "individual" && (
+                <>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="city" className="text-xs font-bold text-zinc-300">
+                        City (Operations Base)
+                      </Label>
+                      <Input
+                        id="city"
+                        type="text"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        required
+                        placeholder="Zurich"
+                        className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="rate" className="text-xs font-bold text-zinc-300">
+                        Hourly Rate (CHF/hr)
+                      </Label>
+                      <Input
+                        id="rate"
+                        type="number"
+                        value={hourlyRate}
+                        onChange={(e) => setHourlyRate(e.target.value)}
+                        required
+                        placeholder="90"
+                        className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
+                      />
+                    </div>
+                  </div>
+
                   <div className="space-y-1.5">
-                    <Label htmlFor="city" className="text-xs font-bold text-zinc-300">
-                      City (Operations Base)
+                    <Label htmlFor="languages" className="text-xs font-bold text-zinc-300">
+                      Spoken Languages (comma separated)
                     </Label>
                     <Input
-                      id="city"
+                      id="languages"
                       type="text"
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
+                      value={languages}
+                      onChange={(e) => setLanguages(e.target.value)}
                       required
-                      placeholder="Zurich"
+                      placeholder="DE, EN, FR"
                       className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
                     />
                   </div>
+
                   <div className="space-y-1.5">
-                    <Label htmlFor="rate" className="text-xs font-bold text-zinc-300">
-                      Hourly Rate (CHF/hr)
+                    <Label htmlFor="skills" className="text-xs font-bold text-zinc-300">
+                      Skills/Specialties (comma separated)
                     </Label>
                     <Input
-                      id="rate"
-                      type="number"
-                      value={hourlyRate}
-                      onChange={(e) => setHourlyRate(e.target.value)}
+                      id="skills"
+                      type="text"
+                      value={skills}
+                      onChange={(e) => setSkills(e.target.value)}
                       required
-                      placeholder="90"
+                      placeholder="Cleaning, Ironing, Plumbing, Painting"
                       className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
                     />
                   </div>
-                </div>
 
-                <div className="space-y-1.5">
-                  <Label htmlFor="languages" className="text-xs font-bold text-zinc-300">
-                    Spoken Languages (comma separated)
-                  </Label>
-                  <Input
-                    id="languages"
-                    type="text"
-                    value={languages}
-                    onChange={(e) => setLanguages(e.target.value)}
-                    required
-                    placeholder="DE, EN, FR"
-                    className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <Label htmlFor="skills" className="text-xs font-bold text-zinc-300">
-                    Skills/Specialties (comma separated)
-                  </Label>
-                  <Input
-                    id="skills"
-                    type="text"
-                    value={skills}
-                    onChange={(e) => setSkills(e.target.value)}
-                    required
-                    placeholder="Cleaning, Ironing, Plumbing, Painting"
-                    className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <Label htmlFor="bio" className="text-xs font-bold text-zinc-300">
-                    Professional Bio / Description
-                  </Label>
-                  <Textarea
-                    id="bio"
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
-                    required
-                    placeholder="Tell customers about your experience and qualifications..."
-                    className="min-h-[70px] rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 text-xs"
-                  />
-                </div>
-              </>
-            )}
+                  <div className="space-y-1.5">
+                    <Label htmlFor="bio" className="text-xs font-bold text-zinc-300">
+                      Professional Bio / Description
+                    </Label>
+                    <Textarea
+                      id="bio"
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value)}
+                      required
+                      placeholder="Tell customers about your experience and qualifications..."
+                      className="min-h-[70px] rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 text-xs"
+                    />
+                  </div>
+                </>
+              )}
 
             {/* ── MODE: SIGN UP (STEP 2 - PROVIDER COMPANY) ── */}
-            {mode === "signup" && signupStep === 2 && role === "provider" && providerType === "company" && (
-              <>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <Label htmlFor="companyName" className="text-xs font-bold text-zinc-300">
-                      Company Name
-                    </Label>
-                    <Input
-                      id="companyName"
-                      type="text"
-                      value={companyName}
-                      onChange={(e) => setCompanyName(e.target.value)}
-                      required
-                      placeholder="Swiss Cleaners AG"
-                      className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
-                    />
+            {mode === "signup" &&
+              signupStep === 2 &&
+              role === "provider" &&
+              providerType === "company" && (
+                <>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="companyName" className="text-xs font-bold text-zinc-300">
+                        Company Name
+                      </Label>
+                      <Input
+                        id="companyName"
+                        type="text"
+                        value={companyName}
+                        onChange={(e) => setCompanyName(e.target.value)}
+                        required
+                        placeholder="Swiss Cleaners AG"
+                        className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="legalRep" className="text-xs font-bold text-zinc-300">
+                        Legal Representative
+                      </Label>
+                      <Input
+                        id="legalRep"
+                        type="text"
+                        value={legalRepresentative}
+                        onChange={(e) => setLegalRepresentative(e.target.value)}
+                        required
+                        placeholder="Marc Meier"
+                        className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
+                      />
+                    </div>
                   </div>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="legalRep" className="text-xs font-bold text-zinc-300">
-                      Legal Representative
-                    </Label>
-                    <Input
-                      id="legalRep"
-                      type="text"
-                      value={legalRepresentative}
-                      onChange={(e) => setLegalRepresentative(e.target.value)}
-                      required
-                      placeholder="Marc Meier"
-                      className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
-                    />
-                  </div>
-                </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <Label htmlFor="regNumber" className="text-xs font-bold text-zinc-300">
-                      Registration Number
-                    </Label>
-                    <Input
-                      id="regNumber"
-                      type="text"
-                      value={businessRegistrationNumber}
-                      onChange={(e) => setBusinessRegistrationNumber(e.target.value)}
-                      required
-                      placeholder="CHE-123.456.789 MWST"
-                      className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
-                    />
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="regNumber" className="text-xs font-bold text-zinc-300">
+                        Registration Number
+                      </Label>
+                      <Input
+                        id="regNumber"
+                        type="text"
+                        value={businessRegistrationNumber}
+                        onChange={(e) => setBusinessRegistrationNumber(e.target.value)}
+                        required
+                        placeholder="CHE-123.456.789 MWST"
+                        className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="vatNumber" className="text-xs font-bold text-zinc-300">
+                        VAT Number
+                      </Label>
+                      <Input
+                        id="vatNumber"
+                        type="text"
+                        value={vatNumber}
+                        onChange={(e) => setVatNumber(e.target.value)}
+                        required
+                        placeholder="CHE-123.456.789 VAT"
+                        className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
+                      />
+                    </div>
                   </div>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="vatNumber" className="text-xs font-bold text-zinc-300">
-                      VAT Number
-                    </Label>
-                    <Input
-                      id="vatNumber"
-                      type="text"
-                      value={vatNumber}
-                      onChange={(e) => setVatNumber(e.target.value)}
-                      required
-                      placeholder="CHE-123.456.789 VAT"
-                      className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
-                    />
-                  </div>
-                </div>
 
-                <div className="space-y-1.5">
-                  <Label htmlFor="companyAddress" className="text-xs font-bold text-zinc-300">
-                    Company Address
-                  </Label>
-                  <Input
-                     id="companyAddress"
-                     type="text"
-                     value={address}
-                     onChange={(e) => setAddress(e.target.value)}
-                     required
-                     placeholder="Bahnhofstrasse 100"
-                     className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
-                   />
-                </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="companyAddress" className="text-xs font-bold text-zinc-300">
+                      Company Address
+                    </Label>
+                    <Input
+                      id="companyAddress"
+                      type="text"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      required
+                      placeholder="Bahnhofstrasse 100"
+                      className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
+                    />
+                  </div>
 
-                <div className="grid grid-cols-3 gap-2">
-                  <div className="space-y-1.5">
-                    <Label htmlFor="companyCity" className="text-xs font-bold text-zinc-300">
-                      City
-                    </Label>
-                    <Input
-                      id="companyCity"
-                      type="text"
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      required
-                      placeholder="Zurich"
-                      className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
-                    />
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="companyCity" className="text-xs font-bold text-zinc-300">
+                        City
+                      </Label>
+                      <Input
+                        id="companyCity"
+                        type="text"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        required
+                        placeholder="Zurich"
+                        className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="companyPostal" className="text-xs font-bold text-zinc-300">
+                        Postal Code
+                      </Label>
+                      <Input
+                        id="companyPostal"
+                        type="text"
+                        value={postalCode}
+                        onChange={(e) => setPostalCode(e.target.value)}
+                        required
+                        placeholder="8001"
+                        className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="companyCountry" className="text-xs font-bold text-zinc-300">
+                        Country
+                      </Label>
+                      <Input
+                        id="companyCountry"
+                        type="text"
+                        value={country}
+                        onChange={(e) => setCountry(e.target.value)}
+                        required
+                        placeholder="Switzerland"
+                        className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
+                      />
+                    </div>
                   </div>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="companyPostal" className="text-xs font-bold text-zinc-300">
-                      Postal Code
-                    </Label>
-                    <Input
-                      id="companyPostal"
-                      type="text"
-                      value={postalCode}
-                      onChange={(e) => setPostalCode(e.target.value)}
-                      required
-                      placeholder="8001"
-                      className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="companyCountry" className="text-xs font-bold text-zinc-300">
-                      Country
-                    </Label>
-                    <Input
-                      id="companyCountry"
-                      type="text"
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
-                      required
-                      placeholder="Switzerland"
-                      className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
-                    />
-                  </div>
-                </div>
 
-                <div className="space-y-1.5">
-                  <Label htmlFor="website" className="text-xs font-bold text-zinc-300">
-                    Website (Optional)
-                  </Label>
-                  <Input
-                    id="website"
-                    type="url"
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                    placeholder="https://example.com"
-                    className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
-                  />
-                </div>
-              </>
-            )}
+                  <div className="space-y-1.5">
+                    <Label htmlFor="website" className="text-xs font-bold text-zinc-300">
+                      Website (Optional)
+                    </Label>
+                    <Input
+                      id="website"
+                      type="url"
+                      value={website}
+                      onChange={(e) => setWebsite(e.target.value)}
+                      placeholder="https://example.com"
+                      className="h-10 rounded-xl border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 focus-visible:ring-sky-500 text-xs"
+                    />
+                  </div>
+                </>
+              )}
 
             {/* Action buttons */}
             <div className="flex gap-3 pt-2">

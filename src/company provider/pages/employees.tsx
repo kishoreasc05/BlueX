@@ -45,13 +45,15 @@ export function EmployeesPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("organization_members")
-        .select(`
+        .select(
+          `
           id,
           role,
           user_id,
           created_at,
           profile:profiles(id, full_name, email)
-        `)
+        `,
+        )
         .eq("organization_id", activeId!);
       if (error) throw error;
       return data || [];
@@ -99,10 +101,7 @@ export function EmployeesPage() {
   // Remove member mutation
   const removeMemberMutation = useMutation({
     mutationFn: async (memberId: string) => {
-      const { error } = await supabase
-        .from("organization_members")
-        .delete()
-        .eq("id", memberId);
+      const { error } = await supabase.from("organization_members").delete().eq("id", memberId);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -117,10 +116,7 @@ export function EmployeesPage() {
   // Delete invite mutation
   const cancelInviteMutation = useMutation({
     mutationFn: async (inviteId: string) => {
-      const { error } = await supabase
-        .from("organization_invites")
-        .delete()
-        .eq("id", inviteId);
+      const { error } = await supabase.from("organization_invites").delete().eq("id", inviteId);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -160,7 +156,9 @@ export function EmployeesPage() {
               </DialogHeader>
               <div className="space-y-4 py-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-xs font-bold text-slate-700">Email Address</Label>
+                  <Label htmlFor="email" className="text-xs font-bold text-slate-700">
+                    Email Address
+                  </Label>
                   <Input
                     id="email"
                     type="email"
@@ -170,7 +168,9 @@ export function EmployeesPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="role" className="text-xs font-bold text-slate-700">Team Role</Label>
+                  <Label htmlFor="role" className="text-xs font-bold text-slate-700">
+                    Team Role
+                  </Label>
                   <select
                     id="role"
                     value={inviteRole}
@@ -183,7 +183,11 @@ export function EmployeesPage() {
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={() => setInviteOpen(false)} className="rounded-xl text-xs font-bold">
+                <Button
+                  variant="outline"
+                  onClick={() => setInviteOpen(false)}
+                  className="rounded-xl text-xs font-bold"
+                >
                   Cancel
                 </Button>
                 <Button
@@ -214,18 +218,21 @@ export function EmployeesPage() {
               <div className="text-center py-12 text-slate-500">
                 <Users className="h-8 w-8 mx-auto text-slate-350 mb-2" />
                 <p className="text-xs font-bold text-slate-800">No team members</p>
-                <p className="text-[11px] text-slate-400 mt-0.5">Invite your employees using the invite button.</p>
+                <p className="text-[11px] text-slate-400 mt-0.5">
+                  Invite your employees using the invite button.
+                </p>
               </div>
             ) : (
               <div className="divide-y divide-slate-100">
                 {employees.map((member: any) => {
-                  const initials = member.profile?.full_name
-                    ?.split(" ")
-                    .map((n: string) => n[0])
-                    .join("")
-                    .slice(0, 2)
-                    .toUpperCase() || "?";
-                  
+                  const initials =
+                    member.profile?.full_name
+                      ?.split(" ")
+                      .map((n: string) => n[0])
+                      .join("")
+                      .slice(0, 2)
+                      .toUpperCase() || "?";
+
                   return (
                     <div key={member.id} className="p-4 flex items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
@@ -243,14 +250,16 @@ export function EmployeesPage() {
                       </div>
 
                       <div className="flex items-center gap-3">
-                        <span className={cn(
-                          "text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded border",
-                          member.role === "owner" 
-                            ? "bg-purple-50 text-purple-700 border-purple-100"
-                            : member.role === "admin"
-                              ? "bg-blue-50 text-blue-700 border-blue-100"
-                              : "bg-slate-50 text-slate-700 border-slate-100"
-                        )}>
+                        <span
+                          className={cn(
+                            "text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded border",
+                            member.role === "owner"
+                              ? "bg-purple-50 text-purple-700 border-purple-100"
+                              : member.role === "admin"
+                                ? "bg-blue-50 text-blue-700 border-blue-100"
+                                : "bg-slate-50 text-slate-700 border-slate-100",
+                          )}
+                        >
                           {member.role}
                         </span>
 
@@ -288,11 +297,18 @@ export function EmployeesPage() {
               </p>
             ) : (
               invites.map((invite: any) => (
-                <div key={invite.id} className="border border-slate-100 rounded-xl p-3 bg-slate-50/50 space-y-2">
+                <div
+                  key={invite.id}
+                  className="border border-slate-100 rounded-xl p-3 bg-slate-50/50 space-y-2"
+                >
                   <div className="flex justify-between items-start gap-2">
                     <div className="min-w-0">
-                      <div className="text-xs font-bold text-slate-900 truncate">{invite.email}</div>
-                      <div className="text-[9px] text-slate-400 font-semibold uppercase tracking-wider mt-0.5">{invite.role}</div>
+                      <div className="text-xs font-bold text-slate-900 truncate">
+                        {invite.email}
+                      </div>
+                      <div className="text-[9px] text-slate-400 font-semibold uppercase tracking-wider mt-0.5">
+                        {invite.role}
+                      </div>
                     </div>
                     <Button
                       variant="ghost"
@@ -303,7 +319,7 @@ export function EmployeesPage() {
                       <Trash2 className="h-3.5 w-3.5" />
                     </Button>
                   </div>
-                  
+
                   <div className="flex items-center gap-1.5 pt-1 border-t border-slate-100/50">
                     <Button
                       size="sm"

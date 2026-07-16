@@ -508,39 +508,65 @@ export function OpsUsersPage() {
                 {selectedProvider.provider_type === "company" ? (
                   <>
                     <div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase">Company Name</span>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">
+                        Company Name
+                      </span>
                       <p className="font-bold text-slate-900">{selectedProvider.company_name}</p>
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase">Legal Representative</span>
-                      <p className="font-bold text-slate-900">{selectedProvider.legal_representative}</p>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">
+                        Legal Representative
+                      </span>
+                      <p className="font-bold text-slate-900">
+                        {selectedProvider.legal_representative}
+                      </p>
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase">VAT Number</span>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">
+                        VAT Number
+                      </span>
                       <p className="font-bold text-slate-900">{selectedProvider.vat_number}</p>
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase">Registration Number</span>
-                      <p className="font-bold text-slate-900">{selectedProvider.business_registration_number}</p>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">
+                        Registration Number
+                      </span>
+                      <p className="font-bold text-slate-900">
+                        {selectedProvider.business_registration_number}
+                      </p>
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase">Website</span>
-                      <p className="font-bold text-slate-900">{selectedProvider.website || "N/A"}</p>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">
+                        Website
+                      </span>
+                      <p className="font-bold text-slate-900">
+                        {selectedProvider.website || "N/A"}
+                      </p>
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase">Country</span>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">
+                        Country
+                      </span>
                       <p className="font-bold text-slate-900">{selectedProvider.country}</p>
                     </div>
                   </>
                 ) : (
                   <>
                     <div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase">Provider Name</span>
-                      <p className="font-bold text-slate-900">{selectedProvider.profile?.full_name}</p>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">
+                        Provider Name
+                      </span>
+                      <p className="font-bold text-slate-900">
+                        {selectedProvider.profile?.full_name}
+                      </p>
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase">Experience</span>
-                      <p className="font-bold text-slate-900">{selectedProvider.experience_years} years</p>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">
+                        Experience
+                      </span>
+                      <p className="font-bold text-slate-900">
+                        {selectedProvider.experience_years} years
+                      </p>
                     </div>
                   </>
                 )}
@@ -583,9 +609,7 @@ export function OpsUsersPage() {
 
                     {/* VAT Certificate */}
                     <div className="space-y-1.5">
-                      <span className="text-[10px] font-bold text-slate-500">
-                        VAT Certificate
-                      </span>
+                      <span className="text-[10px] font-bold text-slate-500">VAT Certificate</span>
                       <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-32 flex items-center justify-center">
                         {selectedProvider.vat_certificate_url ? (
                           <a
@@ -664,9 +688,7 @@ export function OpsUsersPage() {
 
                     {/* Company Logo */}
                     <div className="space-y-1.5">
-                      <span className="text-[10px] font-bold text-slate-500">
-                        Company Logo
-                      </span>
+                      <span className="text-[10px] font-bold text-slate-500">Company Logo</span>
                       <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-32 flex items-center justify-center">
                         {selectedProvider.company_logo_url ? (
                           <a

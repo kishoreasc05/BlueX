@@ -178,7 +178,7 @@ function ProviderVerificationWizard({
 }) {
   const { user } = useAuth();
   const [submitting, setSubmitting] = useState(false);
-  
+
   const isCompany = profile?.provider_type === "company";
 
   const [uploads, setUploads] = useState<Record<string, string>>({
@@ -194,10 +194,7 @@ function ProviderVerificationWizard({
   });
   const [uploading, setUploading] = useState<Record<string, boolean>>({});
 
-  const handleFileChange = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: string,
-  ) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -290,8 +287,8 @@ function ProviderVerificationWizard({
         <div className="space-y-2">
           <h2 className="text-xl font-black text-slate-900">⏳ Verification in Progress</h2>
           <p className="text-slate-500 text-xs leading-relaxed max-w-sm mx-auto font-medium">
-            Our operations team is currently reviewing your company and business details. This process usually
-            takes less than 24 hours.
+            Our operations team is currently reviewing your company and business details. This
+            process usually takes less than 24 hours.
           </p>
         </div>
 
@@ -341,12 +338,33 @@ function ProviderVerificationWizard({
 
   const items = isCompany
     ? [
-        { field: "businessReg", label: "Business Registration Certificate", desc: "Official commercial registry entry" },
-        { field: "vatCert", label: "VAT Certificate", desc: "Official VAT confirmation registry doc" },
-        { field: "liabilityInsurance", label: "Liability Insurance Certificate", desc: "Active business insurance statement" },
-        { field: "repId", label: "Identity of Representative", desc: "Passport/ID of legal representative" },
+        {
+          field: "businessReg",
+          label: "Business Registration Certificate",
+          desc: "Official commercial registry entry",
+        },
+        {
+          field: "vatCert",
+          label: "VAT Certificate",
+          desc: "Official VAT confirmation registry doc",
+        },
+        {
+          field: "liabilityInsurance",
+          label: "Liability Insurance Certificate",
+          desc: "Active business insurance statement",
+        },
+        {
+          field: "repId",
+          label: "Identity of Representative",
+          desc: "Passport/ID of legal representative",
+        },
         { field: "companyLogo", label: "Company Logo", desc: "Public avatar / branding logo" },
-        { field: "businessLicense", label: "Business License (Optional)", desc: "Special category work permit/license", optional: true },
+        {
+          field: "businessLicense",
+          label: "Business License (Optional)",
+          desc: "Special category work permit/license",
+          optional: true,
+        },
       ]
     : [
         { field: "idDoc", label: "Government ID", desc: "Passport or Driver License" },
@@ -381,7 +399,9 @@ function ProviderVerificationWizard({
               <div>
                 <span className="text-xs font-bold text-slate-900 block">
                   {item.label}
-                  {item.optional && <span className="text-[10px] text-slate-400 font-normal ml-1">(Optional)</span>}
+                  {item.optional && (
+                    <span className="text-[10px] text-slate-400 font-normal ml-1">(Optional)</span>
+                  )}
                 </span>
                 <span className="text-[10px] text-slate-400 block mt-1 leading-normal font-semibold">
                   {item.desc}

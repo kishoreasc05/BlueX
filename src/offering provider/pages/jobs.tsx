@@ -52,12 +52,14 @@ export function JobsPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("organization_members")
-        .select(`
+        .select(
+          `
           id,
           role,
           user_id,
           profile:profiles(id, full_name, email)
-        `)
+        `,
+        )
         .eq("organization_id", activeId!);
       if (error) throw error;
       return data || [];
@@ -305,7 +307,12 @@ export function JobsPage() {
                 </div>
 
                 {/* Job Card Body */}
-                <div className={cn("grid grid-cols-1 md:grid-cols-2 gap-6 text-xs font-semibold", isCompany ? "lg:grid-cols-4" : "lg:grid-cols-3")}>
+                <div
+                  className={cn(
+                    "grid grid-cols-1 md:grid-cols-2 gap-6 text-xs font-semibold",
+                    isCompany ? "lg:grid-cols-4" : "lg:grid-cols-3",
+                  )}
+                >
                   {/* Service & Pricing */}
                   <div className="space-y-2">
                     <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">
@@ -370,7 +377,12 @@ export function JobsPage() {
                       <select
                         value={booking.assigned_employee_id || ""}
                         disabled={booking.status === "completed"}
-                        onChange={(e) => updateAssigneeMutation.mutate({ id: booking.id, employeeId: e.target.value || null })}
+                        onChange={(e) =>
+                          updateAssigneeMutation.mutate({
+                            id: booking.id,
+                            employeeId: e.target.value || null,
+                          })
+                        }
                         className="h-9 px-2 rounded-xl border border-slate-200 bg-white text-xs focus:outline-none focus:ring-1 focus:ring-blue-600 font-bold cursor-pointer w-full"
                       >
                         <option value="">Unassigned</option>

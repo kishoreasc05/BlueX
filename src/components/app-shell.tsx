@@ -122,9 +122,7 @@ const getProviderNavGroups = (isApproved: boolean, isCompany: boolean = false) =
       ? [
           {
             label: "TEAM",
-            items: [
-              { to: "/organizations/members", label: "Employees", icon: Users },
-            ],
+            items: [{ to: "/organizations/members", label: "Employees", icon: Users }],
           },
         ]
       : []),
@@ -469,7 +467,11 @@ export function AppShell({ children }: { children: ReactNode }) {
                   <AvatarImage src={providerProfile.company_logo_url} className="object-cover" />
                 )}
                 <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
-                  {initials(isCompany && providerProfile?.company_name ? providerProfile.company_name : fullName)}
+                  {initials(
+                    isCompany && providerProfile?.company_name
+                      ? providerProfile.company_name
+                      : fullName,
+                  )}
                 </AvatarFallback>
               </Avatar>
               <div className="min-w-0 flex-1">
@@ -485,7 +487,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                   )}
                 </div>
                 <div className="text-sm font-semibold text-white truncate mt-0.5">
-                  {isCompany && providerProfile?.company_name ? providerProfile.company_name : fullName}
+                  {isCompany && providerProfile?.company_name
+                    ? providerProfile.company_name
+                    : fullName}
                 </div>
                 <div className="text-[11px] text-slate-400">{specialty}</div>
                 <div className="flex items-center gap-1 mt-0.5">
@@ -530,16 +534,27 @@ export function AppShell({ children }: { children: ReactNode }) {
               <DropdownMenuTrigger asChild>
                 <button className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors text-left focus:outline-none cursor-pointer">
                   <Avatar className="h-9 w-9 rounded-full border border-slate-700 shrink-0">
-                    {activePortal === "provider" && isCompany && providerProfile?.company_logo_url && (
-                      <AvatarImage src={providerProfile.company_logo_url} className="object-cover" />
-                    )}
+                    {activePortal === "provider" &&
+                      isCompany &&
+                      providerProfile?.company_logo_url && (
+                        <AvatarImage
+                          src={providerProfile.company_logo_url}
+                          className="object-cover"
+                        />
+                      )}
                     <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
-                      {initials(activePortal === "provider" && isCompany && providerProfile?.company_name ? providerProfile.company_name : fullName)}
+                      {initials(
+                        activePortal === "provider" && isCompany && providerProfile?.company_name
+                          ? providerProfile.company_name
+                          : fullName,
+                      )}
                     </AvatarFallback>
                   </Avatar>
                   <div className="min-w-0 flex-1">
                     <div className="text-sm font-semibold text-white truncate">
-                      {activePortal === "provider" && isCompany && providerProfile?.company_name ? providerProfile.company_name : fullName}
+                      {activePortal === "provider" && isCompany && providerProfile?.company_name
+                        ? providerProfile.company_name
+                        : fullName}
                     </div>
                     <div className="text-[11px] text-slate-400 flex items-center gap-1">
                       <MapPin className="h-3 w-3" /> Zurich, Switzerland
