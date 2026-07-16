@@ -93,7 +93,7 @@ const getClientNavGroups = (unreadCount: number) => [
 /* ──────────────────────────────────────────────────────
    PROVIDER SIDEBAR NAV
    ────────────────────────────────────────────────────── */
-const getProviderNavGroups = (isApproved: boolean) => {
+const getProviderNavGroups = (isApproved: boolean, isCompany: boolean = false) => {
   if (!isApproved) {
     return [
       {
@@ -118,6 +118,16 @@ const getProviderNavGroups = (isApproved: boolean) => {
         { to: "/settings", label: "Availability", icon: Clock },
       ],
     },
+    ...(isCompany
+      ? [
+          {
+            label: "TEAM",
+            items: [
+              { to: "/organizations/members", label: "Employees", icon: Users },
+            ],
+          },
+        ]
+      : []),
     {
       label: "BUSINESS",
       items: [
@@ -357,7 +367,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     queryFn: async () => {
       const profileQuery = await supabase
         .from("provider_profiles")
-        .select("verification_status, skills")
+        .select("verification_status, skills, provider_type, company_name, company_logo_url")
         .eq("user_id", user!.id)
         .maybeSingle();
 
@@ -397,6 +407,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       return {
         verification_status: profile?.verification_status || "none",
         skills: profile?.skills || [],
+        provider_type: profile?.provider_type || "individual",
+        company_name: profile?.company_name || "",
+        company_logo_url: profile?.company_logo_url || "",
         avgRating,
         reviewCount,
         servicesList,
@@ -406,6 +419,8 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const isApproved =
     activePortal === "provider" ? providerProfile?.verification_status === "approved" : true;
+
+  const isCompany = providerProfile?.provider_type === "company";
 
   const servicesList = providerProfile?.servicesList || [];
   let specialty = "No services offered";
@@ -424,7 +439,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       ? getClientNavGroups(unreadCount)
       : activePortal === "operations"
         ? operationsNavGroups
-        : getProviderNavGroups(isApproved);
+        : getProviderNavGroups(isApproved, isCompany);
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background text-foreground">
@@ -450,8 +465,11 @@ export function AppShell({ children }: { children: ReactNode }) {
               className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors text-left focus:outline-none cursor-pointer"
             >
               <Avatar className="h-10 w-10 rounded-full border-2 border-blue-500/50 shrink-0">
+                {isCompany && providerProfile?.company_logo_url && (
+                  <AvatarImage src={providerProfile.company_logo_url} className="object-cover" />
+                )}
                 <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
-                  {initials(fullName)}
+                  {initials(isCompany && providerProfile?.company_name ? providerProfile.company_name : fullName)}
                 </AvatarFallback>
               </Avatar>
               <div className="min-w-0 flex-1">
@@ -466,7 +484,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                     </span>
                   )}
                 </div>
-                <div className="text-sm font-semibold text-white truncate mt-0.5">{fullName}</div>
+                <div className="text-sm font-semibold text-white truncate mt-0.5">
+                  {isCompany && providerProfile?.company_name ? providerProfile.company_name : fullName}
+                </div>
                 <div className="text-[11px] text-slate-400">{specialty}</div>
                 <div className="flex items-center gap-1 mt-0.5">
                   <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
@@ -510,12 +530,17 @@ export function AppShell({ children }: { children: ReactNode }) {
               <DropdownMenuTrigger asChild>
                 <button className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors text-left focus:outline-none cursor-pointer">
                   <Avatar className="h-9 w-9 rounded-full border border-slate-700 shrink-0">
+                    {activePortal === "provider" && isCompany && providerProfile?.company_logo_url && (
+                      <AvatarImage src={providerProfile.company_logo_url} className="object-cover" />
+                    )}
                     <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
-                      {initials(fullName)}
+                      {initials(activePortal === "provider" && isCompany && providerProfile?.company_name ? providerProfile.company_name : fullName)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold text-white truncate">{fullName}</div>
+                    <div className="text-sm font-semibold text-white truncate">
+                      {activePortal === "provider" && isCompany && providerProfile?.company_name ? providerProfile.company_name : fullName}
+                    </div>
                     <div className="text-[11px] text-slate-400 flex items-center gap-1">
                       <MapPin className="h-3 w-3" /> Zurich, Switzerland
                     </div>

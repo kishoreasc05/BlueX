@@ -29,6 +29,41 @@ export function JobsPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"today" | "upcoming" | "completed">("today");
 
+  // Query provider profile to determine type (individual vs company)
+  const { data: providerProfile } = useQuery({
+    queryKey: ["providerProfileJobs", user?.id],
+    enabled: !!user?.id,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("provider_profiles")
+        .select("provider_type")
+        .eq("user_id", user!.id)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+  const isCompany = providerProfile?.provider_type === "company";
+
+  // Query active employees (organization members)
+  const { data: employees = [] } = useQuery({
+    queryKey: ["companyEmployeesJobs", activeId],
+    enabled: !!activeId && isCompany,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("organization_members")
+        .select(`
+          id,
+          role,
+          user_id,
+          profile:profiles(id, full_name, email)
+        `)
+        .eq("organization_id", activeId!);
+      if (error) throw error;
+      return data || [];
+    },
+  });
+
   // Query confirmed, in_progress, and completed bookings for this provider organization
   const { data: bookings, isLoading } = useQuery({
     queryKey: ["providerJobs", activeId],
@@ -45,6 +80,7 @@ export function JobsPage() {
           total_price, 
           notes,
           client_id,
+          assigned_employee_id,
           client:profiles!bookings_client_id_fkey(id, full_name, customer_id, phone, home_address, apartment_no, postal_code, city),
           service:provider_services(name)
         `,
@@ -55,6 +91,24 @@ export function JobsPage() {
 
       if (error) throw error;
       return data || [];
+    },
+  });
+
+  // Mutation to update employee assignment
+  const updateAssigneeMutation = useMutation({
+    mutationFn: async ({ id, employeeId }: { id: string; employeeId: string | null }) => {
+      const { error } = await supabase
+        .from("bookings")
+        .update({ assigned_employee_id: employeeId })
+        .eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Employee assignment updated!");
+      queryClient.invalidateQueries({ queryKey: ["providerJobs", activeId] });
+    },
+    onError: (err: any) => {
+      toast.error(err.message || "Failed to update assignment.");
     },
   });
 
@@ -251,7 +305,7 @@ export function JobsPage() {
                 </div>
 
                 {/* Job Card Body */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-xs font-semibold">
+                <div className={cn("grid grid-cols-1 md:grid-cols-2 gap-6 text-xs font-semibold", isCompany ? "lg:grid-cols-4" : "lg:grid-cols-3")}>
                   {/* Service & Pricing */}
                   <div className="space-y-2">
                     <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">
@@ -306,6 +360,28 @@ export function JobsPage() {
                       </div>
                     )}
                   </div>
+
+                  {/* Assigned Employee (Company Only) */}
+                  {isCompany && (
+                    <div className="space-y-2">
+                      <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">
+                        Assigned Employee
+                      </span>
+                      <select
+                        value={booking.assigned_employee_id || ""}
+                        disabled={booking.status === "completed"}
+                        onChange={(e) => updateAssigneeMutation.mutate({ id: booking.id, employeeId: e.target.value || null })}
+                        className="h-9 px-2 rounded-xl border border-slate-200 bg-white text-xs focus:outline-none focus:ring-1 focus:ring-blue-600 font-bold cursor-pointer w-full"
+                      >
+                        <option value="">Unassigned</option>
+                        {employees.map((member: any) => (
+                          <option key={member.id} value={member.profile?.id}>
+                            {member.profile?.full_name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
                 </div>
 
                 {booking.notes && (

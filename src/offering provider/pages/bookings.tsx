@@ -19,6 +19,42 @@ export function ProviderBookingsPage() {
   const [listSubTab, setListSubTab] = useState<"confirmed" | "pending" | "completed" | "cancelled">(
     "confirmed",
   );
+  const [selectedAssignees, setSelectedAssignees] = useState<Record<string, string>>({});
+
+  // Query provider profile to determine type (individual vs company)
+  const { data: providerProfile } = useQuery({
+    queryKey: ["providerProfileBookings", user?.id],
+    enabled: !!user?.id,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("provider_profiles")
+        .select("provider_type")
+        .eq("user_id", user!.id)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+  const isCompany = providerProfile?.provider_type === "company";
+
+  // Query active employees (organization members)
+  const { data: employees = [] } = useQuery({
+    queryKey: ["companyEmployeesBookings", activeId],
+    enabled: !!activeId && isCompany,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("organization_members")
+        .select(`
+          id,
+          role,
+          user_id,
+          profile:profiles(id, full_name, email)
+        `)
+        .eq("organization_id", activeId!);
+      if (error) throw error;
+      return data || [];
+    },
+  });
 
   // Query bookings for this provider organization
   const { data: bookings, isLoading } = useQuery({
@@ -36,6 +72,7 @@ export function ProviderBookingsPage() {
           total_price, 
           notes,
           client_id,
+          assigned_employee_id,
           client:profiles!bookings_client_id_fkey(id, full_name, customer_id, phone, home_address, city),
           service:provider_services(name)
         `,
@@ -50,8 +87,20 @@ export function ProviderBookingsPage() {
 
   // Mutation to accept or decline a booking request
   const updateBookingStatus = useMutation({
-    mutationFn: async ({ id, newStatus }: { id: string; newStatus: "confirmed" | "cancelled" }) => {
-      const { error } = await supabase.from("bookings").update({ status: newStatus }).eq("id", id);
+    mutationFn: async ({
+      id,
+      newStatus,
+      assignedEmployeeId,
+    }: {
+      id: string;
+      newStatus: "confirmed" | "cancelled";
+      assignedEmployeeId?: string;
+    }) => {
+      const updateData: Record<string, any> = { status: newStatus };
+      if (newStatus === "confirmed" && assignedEmployeeId) {
+        updateData.assigned_employee_id = assignedEmployeeId;
+      }
+      const { error } = await supabase.from("bookings").update(updateData).eq("id", id);
       if (error) throw error;
 
       // Find the booking to get the client id and post chat notification
@@ -59,7 +108,7 @@ export function ProviderBookingsPage() {
       if (bookingRecord && user) {
         const content =
           newStatus === "confirmed"
-            ? "✅ Booking request accepted!"
+            ? `✅ Booking request accepted!${assignedEmployeeId ? " An employee has been assigned to your service." : ""}`
             : "❌ Booking request declined.";
 
         await supabase.from("messages").insert({
@@ -79,6 +128,24 @@ export function ProviderBookingsPage() {
     },
     onError: (error: any) => {
       toast.error(error.message || "Failed to update booking status.");
+    },
+  });
+
+  // Mutation to update employee assignment
+  const updateAssigneeMutation = useMutation({
+    mutationFn: async ({ id, employeeId }: { id: string; employeeId: string | null }) => {
+      const { error } = await supabase
+        .from("bookings")
+        .update({ assigned_employee_id: employeeId })
+        .eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Employee assignment updated!");
+      queryClient.invalidateQueries({ queryKey: ["providerBookings", activeId] });
+    },
+    onError: (err: any) => {
+      toast.error(err.message || "Failed to update assignment.");
     },
   });
 
@@ -201,6 +268,42 @@ export function ProviderBookingsPage() {
                       Notes: {booking.notes}
                     </p>
                   )}
+
+                  {isCompany && booking.status === "confirmed" && (
+                    <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-100 w-fit">
+                      <span className="text-[10px] text-slate-400 font-bold">Assignee:</span>
+                      <select
+                        value={booking.assigned_employee_id || ""}
+                        onChange={(e) => updateAssigneeMutation.mutate({ id: booking.id, employeeId: e.target.value || null })}
+                        className="h-7 px-2 rounded-md border border-slate-200 bg-slate-50 text-[10px] focus:outline-none focus:ring-1 focus:ring-blue-600 font-bold cursor-pointer"
+                      >
+                        <option value="">Unassigned</option>
+                        {employees.map((member: any) => (
+                          <option key={member.id} value={member.profile?.id}>
+                            {member.profile?.full_name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
+                  {isCompany && booking.status === "pending" && (
+                    <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-100 w-fit">
+                      <span className="text-[10px] text-slate-400 font-bold">Assign to:</span>
+                      <select
+                        value={selectedAssignees[booking.id] || ""}
+                        onChange={(e) => setSelectedAssignees(prev => ({ ...prev, [booking.id]: e.target.value }))}
+                        className="h-7 px-2 rounded-md border border-slate-200 bg-white text-[10px] focus:outline-none focus:ring-1 focus:ring-blue-600 font-bold cursor-pointer"
+                      >
+                        <option value="">Choose Employee</option>
+                        {employees.map((member: any) => (
+                          <option key={member.id} value={member.profile?.id}>
+                            {member.profile?.full_name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0 md:self-center">
@@ -222,7 +325,11 @@ export function ProviderBookingsPage() {
                         disabled={updateBookingStatus.isPending}
                         className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs gap-1.5 cursor-pointer h-9 px-3.5"
                         onClick={() =>
-                          updateBookingStatus.mutate({ id: booking.id, newStatus: "confirmed" })
+                          updateBookingStatus.mutate({
+                            id: booking.id,
+                            newStatus: "confirmed",
+                            assignedEmployeeId: selectedAssignees[booking.id]
+                          })
                         }
                       >
                         <Check className="w-3.5 h-3.5" /> Accept

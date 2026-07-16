@@ -110,6 +110,13 @@ export function OpsUsersPage() {
           vat_number,
           business_registration_url,
           liability_insurance_url,
+          business_registration_number,
+          legal_representative,
+          website,
+          country,
+          vat_certificate_url,
+          company_logo_url,
+          business_license_url,
           profile:profiles(id, full_name, email, created_at)
         `,
         )
@@ -496,55 +503,63 @@ export function OpsUsersPage() {
           </DialogHeader>
 
           {selectedProvider && (
-            <div className="flex-1 min-h-0 overflow-y-auto py-5 space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl">
-                <div>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase">
-                    {selectedProvider.provider_type === "company"
-                      ? "Company name"
-                      : "Provider name"}
-                  </span>
-                  <p className="text-xs font-bold text-slate-900">
-                    {selectedProvider.provider_type === "company"
-                      ? selectedProvider.company_name
-                      : selectedProvider.profile?.full_name}
-                  </p>
-                </div>
+            <div className="flex-1 min-h-0 overflow-y-auto py-5">
+              <div className="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl text-xs">
                 {selectedProvider.provider_type === "company" ? (
-                  <div>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase">
-                      VAT Registration
-                    </span>
-                    <p className="text-xs font-bold text-slate-900">
-                      {selectedProvider.vat_number}
-                    </p>
-                  </div>
+                  <>
+                    <div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">Company Name</span>
+                      <p className="font-bold text-slate-900">{selectedProvider.company_name}</p>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">Legal Representative</span>
+                      <p className="font-bold text-slate-900">{selectedProvider.legal_representative}</p>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">VAT Number</span>
+                      <p className="font-bold text-slate-900">{selectedProvider.vat_number}</p>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">Registration Number</span>
+                      <p className="font-bold text-slate-900">{selectedProvider.business_registration_number}</p>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">Website</span>
+                      <p className="font-bold text-slate-900">{selectedProvider.website || "N/A"}</p>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">Country</span>
+                      <p className="font-bold text-slate-900">{selectedProvider.country}</p>
+                    </div>
+                  </>
                 ) : (
-                  <div>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase">
-                      Experience
-                    </span>
-                    <p className="text-xs font-bold text-slate-900">
-                      {selectedProvider.experience_years} years
-                    </p>
-                  </div>
+                  <>
+                    <div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">Provider Name</span>
+                      <p className="font-bold text-slate-900">{selectedProvider.profile?.full_name}</p>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">Experience</span>
+                      <p className="font-bold text-slate-900">{selectedProvider.experience_years} years</p>
+                    </div>
+                  </>
                 )}
               </div>
 
               {/* Document Previews */}
               <div className="space-y-4">
-                <h4 className="text-xs font-bold text-slate-950 uppercase tracking-wider border-b pb-1">
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b pb-1">
                   Uploaded verification documents
                 </h4>
 
                 {selectedProvider.provider_type === "company" ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {/* Business Registration */}
                     <div className="space-y-1.5">
                       <span className="text-[10px] font-bold text-slate-500">
                         Business Registration Certificate
                       </span>
-                      <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-48 flex items-center justify-center">
+                      <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-32 flex items-center justify-center">
                         {selectedProvider.business_registration_url ? (
                           <a
                             href={selectedProvider.business_registration_url}
@@ -566,12 +581,39 @@ export function OpsUsersPage() {
                       </div>
                     </div>
 
+                    {/* VAT Certificate */}
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] font-bold text-slate-500">
+                        VAT Certificate
+                      </span>
+                      <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-32 flex items-center justify-center">
+                        {selectedProvider.vat_certificate_url ? (
+                          <a
+                            href={selectedProvider.vat_certificate_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-full h-full block"
+                          >
+                            <img
+                              src={selectedProvider.vat_certificate_url}
+                              alt="VAT Certificate"
+                              className="w-full h-full object-cover hover:scale-102 transition-transform"
+                            />
+                          </a>
+                        ) : (
+                          <span className="text-[10px] text-slate-400 font-semibold">
+                            Not uploaded
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
                     {/* Liability Insurance */}
                     <div className="space-y-1.5">
                       <span className="text-[10px] font-bold text-slate-500">
                         Liability Insurance Proof
                       </span>
-                      <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-48 flex items-center justify-center">
+                      <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-32 flex items-center justify-center">
                         {selectedProvider.liability_insurance_url ? (
                           <a
                             href={selectedProvider.liability_insurance_url}
@@ -582,6 +624,87 @@ export function OpsUsersPage() {
                             <img
                               src={selectedProvider.liability_insurance_url}
                               alt="Liability Insurance"
+                              className="w-full h-full object-cover hover:scale-102 transition-transform"
+                            />
+                          </a>
+                        ) : (
+                          <span className="text-[10px] text-slate-400 font-semibold">
+                            Not uploaded
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Identity of Representative */}
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] font-bold text-slate-500">
+                        Representative ID
+                      </span>
+                      <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-32 flex items-center justify-center">
+                        {selectedProvider.id_document_url ? (
+                          <a
+                            href={selectedProvider.id_document_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-full h-full block"
+                          >
+                            <img
+                              src={selectedProvider.id_document_url}
+                              alt="Representative ID"
+                              className="w-full h-full object-cover hover:scale-102 transition-transform"
+                            />
+                          </a>
+                        ) : (
+                          <span className="text-[10px] text-slate-400 font-semibold">
+                            Not uploaded
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Company Logo */}
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] font-bold text-slate-500">
+                        Company Logo
+                      </span>
+                      <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-32 flex items-center justify-center">
+                        {selectedProvider.company_logo_url ? (
+                          <a
+                            href={selectedProvider.company_logo_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-full h-full block"
+                          >
+                            <img
+                              src={selectedProvider.company_logo_url}
+                              alt="Company Logo"
+                              className="w-full h-full object-cover hover:scale-102 transition-transform"
+                            />
+                          </a>
+                        ) : (
+                          <span className="text-[10px] text-slate-400 font-semibold">
+                            Not uploaded
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Business License */}
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] font-bold text-slate-500">
+                        Business License (Optional)
+                      </span>
+                      <div className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-32 flex items-center justify-center">
+                        {selectedProvider.business_license_url ? (
+                          <a
+                            href={selectedProvider.business_license_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-full h-full block"
+                          >
+                            <img
+                              src={selectedProvider.business_license_url}
+                              alt="Business License"
                               className="w-full h-full object-cover hover:scale-102 transition-transform"
                             />
                           </a>

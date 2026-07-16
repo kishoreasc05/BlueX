@@ -35,6 +35,7 @@ import { Button } from "@/components/ui/button";
 
 import { ClientDashboard } from "@/customer/components/dashboard";
 import { OpsDashboard } from "@/admin/components/dashboard";
+import { CompanyDashboard } from "@/company provider/components/company-dashboard";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 /* ── Custom chart tooltip ── */
@@ -177,16 +178,25 @@ function ProviderVerificationWizard({
 }) {
   const { user } = useAuth();
   const [submitting, setSubmitting] = useState(false);
+  
+  const isCompany = profile?.provider_type === "company";
+
   const [uploads, setUploads] = useState<Record<string, string>>({
     idDoc: profile?.id_document_url || "",
     selfie: profile?.selfie_url || "",
     addressProof: profile?.address_proof_url || "",
+    businessReg: profile?.business_registration_url || "",
+    vatCert: profile?.vat_certificate_url || "",
+    liabilityInsurance: profile?.liability_insurance_url || "",
+    repId: profile?.id_document_url || "",
+    companyLogo: profile?.company_logo_url || "",
+    businessLicense: profile?.business_license_url || "",
   });
   const [uploading, setUploading] = useState<Record<string, boolean>>({});
 
   const handleFileChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
-    field: "idDoc" | "selfie" | "addressProof",
+    field: string,
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -227,21 +237,38 @@ function ProviderVerificationWizard({
   };
 
   const handleSubmit = async () => {
-    if (!uploads.idDoc || !uploads.selfie || !uploads.addressProof) {
-      toast.error("Please upload all three required documents.");
+    const requiredFields = isCompany
+      ? ["businessReg", "vatCert", "liabilityInsurance", "repId", "companyLogo"]
+      : ["idDoc", "selfie", "addressProof"];
+
+    const missing = requiredFields.filter((f) => !uploads[f]);
+    if (missing.length > 0) {
+      toast.error("Please upload all required verification documents.");
       return;
     }
 
     setSubmitting(true);
     try {
+      const updatePayload: Record<string, any> = isCompany
+        ? {
+            business_registration_url: uploads.businessReg,
+            vat_certificate_url: uploads.vatCert,
+            liability_insurance_url: uploads.liabilityInsurance,
+            id_document_url: uploads.repId,
+            company_logo_url: uploads.companyLogo,
+            business_license_url: uploads.businessLicense || null,
+            verification_status: "pending_approval",
+          }
+        : {
+            id_document_url: uploads.idDoc,
+            selfie_url: uploads.selfie,
+            address_proof_url: uploads.addressProof,
+            verification_status: "pending_approval",
+          };
+
       const { error } = await supabase
         .from("provider_profiles")
-        .update({
-          id_document_url: uploads.idDoc,
-          selfie_url: uploads.selfie,
-          address_proof_url: uploads.addressProof,
-          verification_status: "pending_approval",
-        })
+        .update(updatePayload)
         .eq("user_id", user!.id);
 
       if (error) throw error;
@@ -263,7 +290,7 @@ function ProviderVerificationWizard({
         <div className="space-y-2">
           <h2 className="text-xl font-black text-slate-900">⏳ Verification in Progress</h2>
           <p className="text-slate-500 text-xs leading-relaxed max-w-sm mx-auto font-medium">
-            Our operations team is currently reviewing your identity documents. This process usually
+            Our operations team is currently reviewing your company and business details. This process usually
             takes less than 24 hours.
           </p>
         </div>
@@ -312,6 +339,25 @@ function ProviderVerificationWizard({
     );
   }
 
+  const items = isCompany
+    ? [
+        { field: "businessReg", label: "Business Registration Certificate", desc: "Official commercial registry entry" },
+        { field: "vatCert", label: "VAT Certificate", desc: "Official VAT confirmation registry doc" },
+        { field: "liabilityInsurance", label: "Liability Insurance Certificate", desc: "Active business insurance statement" },
+        { field: "repId", label: "Identity of Representative", desc: "Passport/ID of legal representative" },
+        { field: "companyLogo", label: "Company Logo", desc: "Public avatar / branding logo" },
+        { field: "businessLicense", label: "Business License (Optional)", desc: "Special category work permit/license", optional: true },
+      ]
+    : [
+        { field: "idDoc", label: "Government ID", desc: "Passport or Driver License" },
+        { field: "selfie", label: "Selfie with ID", desc: "Hold your ID card next to your face" },
+        {
+          field: "addressProof",
+          label: "Proof of Address",
+          desc: "Recent utility bill or statement",
+        },
+      ];
+
   return (
     <div className="max-w-2xl mx-auto my-8 bg-white border border-slate-200 rounded-3xl p-8 shadow-sm space-y-6">
       <div>
@@ -319,20 +365,12 @@ function ProviderVerificationWizard({
           🔐 Onboarding & Verification
         </h2>
         <p className="text-slate-500 text-xs font-medium mt-1">
-          To start receiving gig requests, please upload your verification credentials.
+          To start receiving bookings, please upload your company verification credentials.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {[
-          { field: "idDoc", label: "Government ID", desc: "Passport or Driver License" },
-          { field: "selfie", label: "Selfie with ID", desc: "Hold your ID card next to your face" },
-          {
-            field: "addressProof",
-            label: "Proof of Address",
-            desc: "Recent utility bill or statement",
-          },
-        ].map((item) => {
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {items.map((item) => {
           const isUploaded = !!uploads[item.field];
           const isUploading = uploading[item.field];
           return (
@@ -341,7 +379,10 @@ function ProviderVerificationWizard({
               className="border border-slate-150 rounded-2xl p-4 flex flex-col justify-between min-h-[160px] bg-slate-50/50"
             >
               <div>
-                <span className="text-xs font-bold text-slate-900 block">{item.label}</span>
+                <span className="text-xs font-bold text-slate-900 block">
+                  {item.label}
+                  {item.optional && <span className="text-[10px] text-slate-400 font-normal ml-1">(Optional)</span>}
+                </span>
                 <span className="text-[10px] text-slate-400 block mt-1 leading-normal font-semibold">
                   {item.desc}
                 </span>
@@ -365,7 +406,7 @@ function ProviderVerificationWizard({
                     <input
                       type="file"
                       accept="image/*,application/pdf"
-                      onChange={(e) => handleFileChange(e, item.field as any)}
+                      onChange={(e) => handleFileChange(e, item.field)}
                       className="hidden"
                     />
                   </label>
@@ -379,7 +420,7 @@ function ProviderVerificationWizard({
       <div className="border-t border-slate-100 pt-5 flex justify-end">
         <Button
           onClick={handleSubmit}
-          disabled={submitting || uploading.idDoc || uploading.selfie || uploading.addressProof}
+          disabled={submitting || Object.values(uploading).some(Boolean)}
           className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl px-6 cursor-pointer"
         >
           {submitting ? "Submitting..." : "Submit for Verification"}
@@ -571,6 +612,22 @@ function Dashboard() {
 
   if (verificationStatus !== "approved") {
     return <ProviderVerificationWizard profile={providerProfile} onSuccess={refetchProfile} />;
+  }
+
+  const isCompany = providerProfile?.provider_type === "company";
+
+  if (isCompany) {
+    return (
+      <CompanyDashboard
+        profile={providerProfile}
+        bookings={dbBookings}
+        bookingsLoading={bookingsLoading}
+        onAccept={(id) => acceptBookingMutation.mutate(id)}
+        onDecline={(id) => declineBookingMutation.mutate(id)}
+        acceptPending={acceptBookingMutation.isPending}
+        declinePending={declineBookingMutation.isPending}
+      />
+    );
   }
 
   /* ═══════════════════════════════════════════════════════
