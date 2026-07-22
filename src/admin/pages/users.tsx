@@ -20,6 +20,7 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
+import { OcrDocumentManager } from "@/ai module/ocr module";
 
 const routeApi = getRouteApi("/_authenticated/ops/users");
 
@@ -819,8 +820,20 @@ export function OpsUsersPage() {
                   </div>
                 )}
               </div>
+
+              {/* OCR Scanned & Verified Documents */}
+              <div className="space-y-3 pt-6 border-t border-slate-100">
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-blue-600" />
+                  <span>OCR Scanned & Auto-Verified Documents</span>
+                </h4>
+                <div className="bg-slate-50/50 p-4 rounded-xl border border-slate-200">
+                  <OcrDocumentManager targetUserId={selectedProvider.user_id} readOnly />
+                </div>
+              </div>
             </div>
           )}
+
 
           {selectedProvider && (
             <div className="border-t border-slate-100 pt-4 flex justify-between gap-3 bg-white">

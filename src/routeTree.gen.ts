@@ -20,6 +20,7 @@ import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
 import { Route as AuthenticatedPaymentsRouteImport } from './routes/_authenticated/payments'
+import { Route as AuthenticatedOcrRouteImport } from './routes/_authenticated/ocr'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedJobsRouteImport } from './routes/_authenticated/jobs'
 import { Route as AuthenticatedDocumentsRouteImport } from './routes/_authenticated/documents'
@@ -103,6 +104,11 @@ const AuthenticatedProjectsRoute = AuthenticatedProjectsRouteImport.update({
 const AuthenticatedPaymentsRoute = AuthenticatedPaymentsRouteImport.update({
   id: '/payments',
   path: '/payments',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedOcrRoute = AuthenticatedOcrRouteImport.update({
+  id: '/ocr',
+  path: '/ocr',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedNotificationsRoute =
@@ -288,6 +294,7 @@ export interface FileRoutesByFullPath {
   '/documents': typeof AuthenticatedDocumentsRoute
   '/jobs': typeof AuthenticatedJobsRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/ocr': typeof AuthenticatedOcrRoute
   '/payments': typeof AuthenticatedPaymentsRoute
   '/projects': typeof AuthenticatedProjectsRoute
   '/reports': typeof AuthenticatedReportsRoute
@@ -329,6 +336,7 @@ export interface FileRoutesByTo {
   '/documents': typeof AuthenticatedDocumentsRoute
   '/jobs': typeof AuthenticatedJobsRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/ocr': typeof AuthenticatedOcrRoute
   '/payments': typeof AuthenticatedPaymentsRoute
   '/projects': typeof AuthenticatedProjectsRoute
   '/reports': typeof AuthenticatedReportsRoute
@@ -372,6 +380,7 @@ export interface FileRoutesById {
   '/_authenticated/documents': typeof AuthenticatedDocumentsRoute
   '/_authenticated/jobs': typeof AuthenticatedJobsRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
+  '/_authenticated/ocr': typeof AuthenticatedOcrRoute
   '/_authenticated/payments': typeof AuthenticatedPaymentsRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
@@ -415,6 +424,7 @@ export interface FileRouteTypes {
     | '/documents'
     | '/jobs'
     | '/notifications'
+    | '/ocr'
     | '/payments'
     | '/projects'
     | '/reports'
@@ -456,6 +466,7 @@ export interface FileRouteTypes {
     | '/documents'
     | '/jobs'
     | '/notifications'
+    | '/ocr'
     | '/payments'
     | '/projects'
     | '/reports'
@@ -498,6 +509,7 @@ export interface FileRouteTypes {
     | '/_authenticated/documents'
     | '/_authenticated/jobs'
     | '/_authenticated/notifications'
+    | '/_authenticated/ocr'
     | '/_authenticated/payments'
     | '/_authenticated/projects'
     | '/_authenticated/reports'
@@ -608,6 +620,13 @@ declare module '@tanstack/react-router' {
       path: '/payments'
       fullPath: '/payments'
       preLoaderRoute: typeof AuthenticatedPaymentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ocr': {
+      id: '/_authenticated/ocr'
+      path: '/ocr'
+      fullPath: '/ocr'
+      preLoaderRoute: typeof AuthenticatedOcrRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/notifications': {
@@ -830,6 +849,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDocumentsRoute: typeof AuthenticatedDocumentsRoute
   AuthenticatedJobsRoute: typeof AuthenticatedJobsRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedOcrRoute: typeof AuthenticatedOcrRoute
   AuthenticatedPaymentsRoute: typeof AuthenticatedPaymentsRoute
   AuthenticatedProjectsRoute: typeof AuthenticatedProjectsRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
@@ -869,6 +889,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDocumentsRoute: AuthenticatedDocumentsRoute,
   AuthenticatedJobsRoute: AuthenticatedJobsRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedOcrRoute: AuthenticatedOcrRoute,
   AuthenticatedPaymentsRoute: AuthenticatedPaymentsRoute,
   AuthenticatedProjectsRoute: AuthenticatedProjectsRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
