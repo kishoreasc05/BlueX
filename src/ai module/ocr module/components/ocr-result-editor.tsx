@@ -77,7 +77,7 @@ export function OcrResultEditor({
           {/* Confidence Badge */}
           <div
             className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${getConfidenceBadge(
-              confidence
+              confidence,
             )}`}
           >
             <Award className="w-3.5 h-3.5" />
@@ -108,7 +108,11 @@ export function OcrResultEditor({
         {/* Action Toolbar */}
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={handleCopy} className="h-8 text-xs">
-            {copied ? <Check className="w-3.5 h-3.5 mr-1 text-emerald-500" /> : <Copy className="w-3.5 h-3.5 mr-1" />}
+            {copied ? (
+              <Check className="w-3.5 h-3.5 mr-1 text-emerald-500" />
+            ) : (
+              <Copy className="w-3.5 h-3.5 mr-1" />
+            )}
             {copied ? "Copied" : "Copy"}
           </Button>
 
@@ -118,7 +122,12 @@ export function OcrResultEditor({
           </Button>
 
           {onSave && (
-            <Button size="sm" onClick={handleSave} disabled={saving || disabled} className="h-8 text-xs shadow-xs">
+            <Button
+              size="sm"
+              onClick={handleSave}
+              disabled={saving || disabled}
+              className="h-8 text-xs shadow-xs"
+            >
               <Save className="w-3.5 h-3.5 mr-1" />
               {saving ? "Saving..." : "Save OCR Result"}
             </Button>

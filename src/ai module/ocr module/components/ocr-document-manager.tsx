@@ -196,12 +196,21 @@ export function OcrDocumentManager({ targetUserId, readOnly }: OcrDocumentManage
       {showUploadModal && (
         <div className="bg-card border border-primary/30 rounded-2xl p-6 shadow-md space-y-4 animate-in fade-in duration-200">
           <div className="flex items-center justify-between border-b border-border pb-3">
-            <h3 className="text-base font-semibold text-foreground">Upload Document for OCR Scan</h3>
+            <h3 className="text-base font-semibold text-foreground">
+              Upload Document for OCR Scan
+            </h3>
             <Button variant="ghost" size="sm" onClick={() => setShowUploadModal(false)}>
               Close
             </Button>
           </div>
-          <OcrUploadZone onFileSelect={handleStartOcr} disabled={progressState.stage !== "idle" && progressState.stage !== "completed" && progressState.stage !== "failed"} />
+          <OcrUploadZone
+            onFileSelect={handleStartOcr}
+            disabled={
+              progressState.stage !== "idle" &&
+              progressState.stage !== "completed" &&
+              progressState.stage !== "failed"
+            }
+          />
 
           {progressState.stage !== "idle" && activeFile && (
             <OcrProgressCard progress={progressState} documentName={activeFile.name} />
@@ -233,7 +242,9 @@ export function OcrDocumentManager({ targetUserId, readOnly }: OcrDocumentManage
       {editingDoc && (
         <div className="space-y-2 bg-card p-6 rounded-2xl border border-primary/30 shadow-lg">
           <div className="flex items-center justify-between border-b border-border pb-3">
-            <h3 className="text-sm font-semibold text-foreground">Edit OCR Content: {editingDoc.document_name}</h3>
+            <h3 className="text-sm font-semibold text-foreground">
+              Edit OCR Content: {editingDoc.document_name}
+            </h3>
             <Button variant="ghost" size="sm" onClick={() => setEditingDoc(null)}>
               Cancel Editing
             </Button>
@@ -263,7 +274,8 @@ export function OcrDocumentManager({ targetUserId, readOnly }: OcrDocumentManage
             <div>
               <p className="text-sm font-semibold text-foreground">No OCR documents found</p>
               <p className="text-xs text-muted-foreground mt-1">
-                Upload business licenses, tax documents, or files to perform local OCR character recognition.
+                Upload business licenses, tax documents, or files to perform local OCR character
+                recognition.
               </p>
             </div>
             {!readOnly && (
@@ -298,7 +310,10 @@ export function OcrDocumentManager({ targetUserId, readOnly }: OcrDocumentManage
                             {doc.document_name}
                           </p>
                           <p className="text-xs text-muted-foreground uppercase">
-                            {doc.document_type} • {doc.file_size_bytes ? `${(doc.file_size_bytes / 1024).toFixed(0)} KB` : "File"}
+                            {doc.document_type} •{" "}
+                            {doc.file_size_bytes
+                              ? `${(doc.file_size_bytes / 1024).toFixed(0)} KB`
+                              : "File"}
                           </p>
                         </div>
                       </div>
@@ -317,8 +332,8 @@ export function OcrDocumentManager({ targetUserId, readOnly }: OcrDocumentManage
                             doc.confidence >= 80
                               ? "text-emerald-500"
                               : doc.confidence >= 50
-                              ? "text-amber-500"
-                              : "text-rose-500"
+                                ? "text-amber-500"
+                                : "text-rose-500"
                           }`}
                         />
                         <span className="font-semibold text-foreground text-xs">
@@ -338,8 +353,8 @@ export function OcrDocumentManager({ targetUserId, readOnly }: OcrDocumentManage
                             doc.status === "completed"
                               ? "bg-blue-500/10 text-blue-600"
                               : doc.status === "failed"
-                              ? "bg-rose-500/10 text-rose-600"
-                              : "bg-amber-500/10 text-amber-600 animate-pulse"
+                                ? "bg-rose-500/10 text-rose-600"
+                                : "bg-amber-500/10 text-amber-600 animate-pulse"
                           }`}
                         >
                           {doc.status}

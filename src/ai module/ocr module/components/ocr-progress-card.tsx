@@ -23,8 +23,8 @@ export function OcrProgressCard({ progress, documentName }: OcrProgressCardProps
               isCompleted
                 ? "bg-emerald-500/10 text-emerald-600"
                 : isFailed
-                ? "bg-destructive/10 text-destructive"
-                : "bg-primary/10 text-primary"
+                  ? "bg-destructive/10 text-destructive"
+                  : "bg-primary/10 text-primary"
             }`}
           >
             {isCompleted ? (
@@ -59,8 +59,8 @@ export function OcrProgressCard({ progress, documentName }: OcrProgressCardProps
             isCompleted
               ? "[&>div]:bg-emerald-500"
               : isFailed
-              ? "[&>div]:bg-destructive"
-              : "[&>div]:bg-primary"
+                ? "[&>div]:bg-destructive"
+                : "[&>div]:bg-primary"
           }`}
         />
       </div>

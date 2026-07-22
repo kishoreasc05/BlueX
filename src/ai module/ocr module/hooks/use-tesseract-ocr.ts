@@ -139,7 +139,9 @@ export function useTesseractOcr(options: UseTesseractOcrOptions = {}) {
         if (workerRef.current) {
           try {
             await workerRef.current.terminate();
-          } catch {}
+          } catch {
+            // ignore termination errors
+          }
           workerRef.current = null;
         }
 
@@ -153,7 +155,7 @@ export function useTesseractOcr(options: UseTesseractOcrOptions = {}) {
         throw new Error(errorMessage);
       }
     },
-    [defaultLang, options.confidenceThreshold]
+    [defaultLang, options.confidenceThreshold],
   );
 
   return {

@@ -834,7 +834,6 @@ export function OpsUsersPage() {
             </div>
           )}
 
-
           {selectedProvider && (
             <div className="border-t border-slate-100 pt-4 flex justify-between gap-3 bg-white">
               <Button

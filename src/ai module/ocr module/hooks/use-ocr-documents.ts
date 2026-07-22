@@ -56,7 +56,7 @@ export function useOcrDocuments(filters: DocumentFilterOptions = {}) {
         results = results.filter(
           (d) =>
             d.document_name.toLowerCase().includes(s) ||
-            (d.extracted_text && d.extracted_text.toLowerCase().includes(s))
+            (d.extracted_text && d.extracted_text.toLowerCase().includes(s)),
         );
       }
 

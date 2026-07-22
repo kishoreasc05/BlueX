@@ -20,13 +20,10 @@ export function useCloudinaryUpload() {
         formData.append("file", file);
         formData.append("upload_preset", uploadPreset);
 
-        const response = await fetch(
-          `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, {
+          method: "POST",
+          body: formData,
+        });
 
         if (!response.ok) {
           const errData = await response.json();

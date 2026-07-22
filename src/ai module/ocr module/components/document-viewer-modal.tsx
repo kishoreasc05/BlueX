@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { X, ZoomIn, ZoomOut, RotateCw, Maximize2, Download, ExternalLink, FileText } from "lucide-react";
+import {
+  X,
+  ZoomIn,
+  ZoomOut,
+  RotateCw,
+  Maximize2,
+  Download,
+  ExternalLink,
+  FileText,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface DocumentViewerModalProps {

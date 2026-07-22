@@ -21,11 +21,7 @@ export function useProviderAutoApproval(options: AutoApprovalOptions = {}) {
       const { userId, documentId, category, confidence, extractedText } = params;
 
       // Only verification categories trigger automatic provider profile approval
-      const isVerificationDoc = [
-        "verification_license",
-        "tax_id",
-        "id_proof",
-      ].includes(category);
+      const isVerificationDoc = ["verification_license", "tax_id", "id_proof"].includes(category);
 
       if (!isVerificationDoc) {
         return {
@@ -64,7 +60,7 @@ export function useProviderAutoApproval(options: AutoApprovalOptions = {}) {
           }
 
           toast.success(
-            "🎉 Provider Account Auto-Approved! OCR document confidence score verified."
+            "🎉 Provider Account Auto-Approved! OCR document confidence score verified.",
           );
 
           return {
@@ -80,7 +76,7 @@ export function useProviderAutoApproval(options: AutoApprovalOptions = {}) {
         }
       } else {
         toast.info(
-          `OCR confidence (${confidence}%) below ${threshold}% threshold. Please ensure document image is clear.`
+          `OCR confidence (${confidence}%) below ${threshold}% threshold. Please ensure document image is clear.`,
         );
         return {
           isApproved: false,
@@ -88,7 +84,7 @@ export function useProviderAutoApproval(options: AutoApprovalOptions = {}) {
         };
       }
     },
-    [threshold]
+    [threshold],
   );
 
   return {

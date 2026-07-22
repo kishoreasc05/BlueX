@@ -51,7 +51,9 @@ export function OcrDashboardStats({ targetUserId }: OcrDashboardStatsProps) {
               </p>
               <h3 className="text-2xl font-bold text-foreground mt-1">{s.value}</h3>
             </div>
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center border ${s.color}`}>
+            <div
+              className={`w-12 h-12 rounded-xl flex items-center justify-center border ${s.color}`}
+            >
               <Icon className="w-6 h-6" />
             </div>
           </div>

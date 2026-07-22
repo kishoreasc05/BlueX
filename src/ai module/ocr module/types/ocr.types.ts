@@ -1,13 +1,9 @@
-export type DocumentCategory = 
-  | "verification_license" 
-  | "tax_id" 
-  | "id_proof" 
-  | "contract" 
-  | "general";
+export type DocumentCategory =
+  "verification_license" | "tax_id" | "id_proof" | "contract" | "general";
 
 export type OcrStatus = "processing" | "completed" | "failed";
 
-export type OcrProcessingStage = 
+export type OcrProcessingStage =
   | "idle"
   | "validating"
   | "initializing"

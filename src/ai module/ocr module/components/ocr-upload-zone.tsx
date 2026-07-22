@@ -5,13 +5,7 @@ import { DocumentCategory } from "../types/ocr.types";
 import { toast } from "sonner";
 
 const MAX_FILE_SIZE_BYTES = 20 * 1024 * 1024; // 20 MB
-const ALLOWED_TYPES = [
-  "application/pdf",
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
+const ALLOWED_TYPES = ["application/pdf", "image/jpeg", "image/jpg", "image/png", "image/webp"];
 
 interface OcrUploadZoneProps {
   onFileSelect: (file: File, category: DocumentCategory) => void;
@@ -26,7 +20,9 @@ export function OcrUploadZone({ onFileSelect, disabled }: OcrUploadZoneProps) {
 
   const validateAndSetFile = (file: File) => {
     if (file.size > MAX_FILE_SIZE_BYTES) {
-      toast.error(`File size exceeds maximum allowed 20 MB (${(file.size / (1024 * 1024)).toFixed(1)} MB)`);
+      toast.error(
+        `File size exceeds maximum allowed 20 MB (${(file.size / (1024 * 1024)).toFixed(1)} MB)`,
+      );
       return;
     }
 
@@ -34,8 +30,7 @@ export function OcrUploadZone({ onFileSelect, disabled }: OcrUploadZoneProps) {
     const extension = file.name.split(".").pop()?.toLowerCase() || "";
 
     const isAllowed =
-      ALLOWED_TYPES.includes(fileType) ||
-      ["pdf", "jpg", "jpeg", "png", "webp"].includes(extension);
+      ALLOWED_TYPES.includes(fileType) || ["pdf", "jpg", "jpeg", "png", "webp"].includes(extension);
 
     if (!isAllowed) {
       toast.error("Unsupported file type. Please upload a PDF, JPG, JPEG, PNG, or WEBP file.");
@@ -78,7 +73,9 @@ export function OcrUploadZone({ onFileSelect, disabled }: OcrUploadZoneProps) {
           disabled={disabled}
           className="px-3 py-1.5 text-sm rounded-lg border border-border bg-background text-foreground shadow-xs focus:ring-2 focus:ring-primary/20 outline-hidden"
         >
-          <option value="verification_license">📜 Business License / Registration (Auto-Verify)</option>
+          <option value="verification_license">
+            📜 Business License / Registration (Auto-Verify)
+          </option>
           <option value="tax_id">🏷️ Tax / VAT ID Certificate (Auto-Verify)</option>
           <option value="id_proof">🪪 Government ID / Passport (Auto-Verify)</option>
           <option value="contract">📝 Contract / Agreement</option>
@@ -117,7 +114,8 @@ export function OcrUploadZone({ onFileSelect, disabled }: OcrUploadZoneProps) {
             </div>
             <div>
               <p className="text-base font-semibold text-foreground">
-                Drag & Drop your document here, or <span className="text-primary underline">browse</span>
+                Drag & Drop your document here, or{" "}
+                <span className="text-primary underline">browse</span>
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 Supports PDF, JPG, JPEG, PNG, WEBP (Max 20 MB)
@@ -134,11 +132,10 @@ export function OcrUploadZone({ onFileSelect, disabled }: OcrUploadZoneProps) {
                 <FileText className="w-5 h-5" />
               </div>
               <div className="text-left min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">
-                  {selectedFile.name}
-                </p>
+                <p className="text-sm font-medium text-foreground truncate">{selectedFile.name}</p>
                 <p className="text-xs text-muted-foreground">
-                  {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB • {selectedFile.type || "Document"}
+                  {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB •{" "}
+                  {selectedFile.type || "Document"}
                 </p>
               </div>
             </div>
