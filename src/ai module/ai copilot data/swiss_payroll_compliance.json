@@ -3,7 +3,20 @@
     {
       "id": "swiss_payroll_tax",
       "category": "compliance",
-      "keywords": ["payroll", "tax", "ahv", "uvg", "social security", "insurance", "vat", "mwst", "withholding", "payout", "compliance", "legal"],
+      "keywords": [
+        "payroll",
+        "tax",
+        "ahv",
+        "uvg",
+        "social security",
+        "insurance",
+        "vat",
+        "mwst",
+        "withholding",
+        "payout",
+        "compliance",
+        "legal"
+      ],
       "title": "🇨🇭 BlueX Swiss Payroll & Social Security Compliance",
       "summary": "BlueX automatically manages Swiss tax compliance, VAT invoicing, and social security calculations for all completed bookings:",
       "complianceItems": [

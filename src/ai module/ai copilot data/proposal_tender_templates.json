@@ -3,7 +3,18 @@
     {
       "id": "tender_bidding",
       "category": "tenders",
-      "keywords": ["tender", "tenders", "bid", "bidding", "proposal", "public tender", "apply", "win tender", "quote", "estimate"],
+      "keywords": [
+        "tender",
+        "tenders",
+        "bid",
+        "bidding",
+        "proposal",
+        "public tender",
+        "apply",
+        "win tender",
+        "quote",
+        "estimate"
+      ],
       "title": "📝 How to Win Public Tenders on BlueX",
       "summary": "Here is a professional Swiss tender bid proposal response template customized for your provider profile:",
       "structure": [

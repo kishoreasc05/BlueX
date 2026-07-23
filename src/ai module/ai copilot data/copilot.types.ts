@@ -48,7 +48,17 @@ export interface ClientGreetingTemplate {
 
 export interface CopilotKnowledgeRule {
   id: string;
-  category: "diagnostics" | "pricing" | "growth" | "tenders" | "compliance" | "verification" | "disputes" | "equipment" | "communication" | "emergency";
+  category:
+    | "diagnostics"
+    | "pricing"
+    | "growth"
+    | "tenders"
+    | "compliance"
+    | "verification"
+    | "disputes"
+    | "equipment"
+    | "communication"
+    | "emergency";
   keywords: string[];
   title: string;
   summary: string;

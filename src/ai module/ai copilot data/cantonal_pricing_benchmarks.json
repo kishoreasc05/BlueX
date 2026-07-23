@@ -1,60 +1,270 @@
 {
   "benchmarks": {
     "ZH": [
-      { "trade": "Plumbing & Heating", "marketRange": "CHF 95 - 135 / hr", "recommended": "CHF 115 / hr", "avgRateNumber": 115 },
-      { "trade": "Electrical Setup", "marketRange": "CHF 105 - 145 / hr", "recommended": "CHF 125 / hr", "avgRateNumber": 125 },
-      { "trade": "Cleaning Services", "marketRange": "CHF 45 - 65 / hr", "recommended": "CHF 52 / hr", "avgRateNumber": 52 },
-      { "trade": "Painting & Decorating", "marketRange": "CHF 70 - 95 / hr", "recommended": "CHF 85 / hr", "avgRateNumber": 85 },
-      { "trade": "Carpentry & Handyman", "marketRange": "CHF 75 - 105 / hr", "recommended": "CHF 90 / hr", "avgRateNumber": 90 },
-      { "trade": "Gardening & Landscape", "marketRange": "CHF 55 - 80 / hr", "recommended": "CHF 65 / hr", "avgRateNumber": 65 }
+      {
+        "trade": "Plumbing & Heating",
+        "marketRange": "CHF 95 - 135 / hr",
+        "recommended": "CHF 115 / hr",
+        "avgRateNumber": 115
+      },
+      {
+        "trade": "Electrical Setup",
+        "marketRange": "CHF 105 - 145 / hr",
+        "recommended": "CHF 125 / hr",
+        "avgRateNumber": 125
+      },
+      {
+        "trade": "Cleaning Services",
+        "marketRange": "CHF 45 - 65 / hr",
+        "recommended": "CHF 52 / hr",
+        "avgRateNumber": 52
+      },
+      {
+        "trade": "Painting & Decorating",
+        "marketRange": "CHF 70 - 95 / hr",
+        "recommended": "CHF 85 / hr",
+        "avgRateNumber": 85
+      },
+      {
+        "trade": "Carpentry & Handyman",
+        "marketRange": "CHF 75 - 105 / hr",
+        "recommended": "CHF 90 / hr",
+        "avgRateNumber": 90
+      },
+      {
+        "trade": "Gardening & Landscape",
+        "marketRange": "CHF 55 - 80 / hr",
+        "recommended": "CHF 65 / hr",
+        "avgRateNumber": 65
+      }
     ],
     "BE": [
-      { "trade": "Plumbing & Heating", "marketRange": "CHF 90 - 125 / hr", "recommended": "CHF 108 / hr", "avgRateNumber": 108 },
-      { "trade": "Electrical Setup", "marketRange": "CHF 98 - 138 / hr", "recommended": "CHF 118 / hr", "avgRateNumber": 118 },
-      { "trade": "Cleaning Services", "marketRange": "CHF 42 - 60 / hr", "recommended": "CHF 48 / hr", "avgRateNumber": 48 },
-      { "trade": "Painting & Decorating", "marketRange": "CHF 68 - 90 / hr", "recommended": "CHF 80 / hr", "avgRateNumber": 80 },
-      { "trade": "Carpentry & Handyman", "marketRange": "CHF 72 - 98 / hr", "recommended": "CHF 85 / hr", "avgRateNumber": 85 },
-      { "trade": "Gardening & Landscape", "marketRange": "CHF 52 - 75 / hr", "recommended": "CHF 62 / hr", "avgRateNumber": 62 }
+      {
+        "trade": "Plumbing & Heating",
+        "marketRange": "CHF 90 - 125 / hr",
+        "recommended": "CHF 108 / hr",
+        "avgRateNumber": 108
+      },
+      {
+        "trade": "Electrical Setup",
+        "marketRange": "CHF 98 - 138 / hr",
+        "recommended": "CHF 118 / hr",
+        "avgRateNumber": 118
+      },
+      {
+        "trade": "Cleaning Services",
+        "marketRange": "CHF 42 - 60 / hr",
+        "recommended": "CHF 48 / hr",
+        "avgRateNumber": 48
+      },
+      {
+        "trade": "Painting & Decorating",
+        "marketRange": "CHF 68 - 90 / hr",
+        "recommended": "CHF 80 / hr",
+        "avgRateNumber": 80
+      },
+      {
+        "trade": "Carpentry & Handyman",
+        "marketRange": "CHF 72 - 98 / hr",
+        "recommended": "CHF 85 / hr",
+        "avgRateNumber": 85
+      },
+      {
+        "trade": "Gardening & Landscape",
+        "marketRange": "CHF 52 - 75 / hr",
+        "recommended": "CHF 62 / hr",
+        "avgRateNumber": 62
+      }
     ],
     "GE": [
-      { "trade": "Plumbing & Heating", "marketRange": "CHF 100 - 140 / hr", "recommended": "CHF 120 / hr", "avgRateNumber": 120 },
-      { "trade": "Electrical Setup", "marketRange": "CHF 110 - 150 / hr", "recommended": "CHF 130 / hr", "avgRateNumber": 130 },
-      { "trade": "Cleaning Services", "marketRange": "CHF 48 - 68 / hr", "recommended": "CHF 55 / hr", "avgRateNumber": 55 },
-      { "trade": "Painting & Decorating", "marketRange": "CHF 75 - 100 / hr", "recommended": "CHF 88 / hr", "avgRateNumber": 88 },
-      { "trade": "Carpentry & Handyman", "marketRange": "CHF 80 - 110 / hr", "recommended": "CHF 95 / hr", "avgRateNumber": 95 },
-      { "trade": "Gardening & Landscape", "marketRange": "CHF 58 - 82 / hr", "recommended": "CHF 68 / hr", "avgRateNumber": 68 }
+      {
+        "trade": "Plumbing & Heating",
+        "marketRange": "CHF 100 - 140 / hr",
+        "recommended": "CHF 120 / hr",
+        "avgRateNumber": 120
+      },
+      {
+        "trade": "Electrical Setup",
+        "marketRange": "CHF 110 - 150 / hr",
+        "recommended": "CHF 130 / hr",
+        "avgRateNumber": 130
+      },
+      {
+        "trade": "Cleaning Services",
+        "marketRange": "CHF 48 - 68 / hr",
+        "recommended": "CHF 55 / hr",
+        "avgRateNumber": 55
+      },
+      {
+        "trade": "Painting & Decorating",
+        "marketRange": "CHF 75 - 100 / hr",
+        "recommended": "CHF 88 / hr",
+        "avgRateNumber": 88
+      },
+      {
+        "trade": "Carpentry & Handyman",
+        "marketRange": "CHF 80 - 110 / hr",
+        "recommended": "CHF 95 / hr",
+        "avgRateNumber": 95
+      },
+      {
+        "trade": "Gardening & Landscape",
+        "marketRange": "CHF 58 - 82 / hr",
+        "recommended": "CHF 68 / hr",
+        "avgRateNumber": 68
+      }
     ],
     "BS": [
-      { "trade": "Plumbing & Heating", "marketRange": "CHF 95 - 130 / hr", "recommended": "CHF 112 / hr", "avgRateNumber": 112 },
-      { "trade": "Electrical Setup", "marketRange": "CHF 100 - 140 / hr", "recommended": "CHF 122 / hr", "avgRateNumber": 122 },
-      { "trade": "Cleaning Services", "marketRange": "CHF 44 - 62 / hr", "recommended": "CHF 50 / hr", "avgRateNumber": 50 },
-      { "trade": "Painting & Decorating", "marketRange": "CHF 70 - 92 / hr", "recommended": "CHF 82 / hr", "avgRateNumber": 82 },
-      { "trade": "Carpentry & Handyman", "marketRange": "CHF 75 - 100 / hr", "recommended": "CHF 88 / hr", "avgRateNumber": 88 },
-      { "trade": "Gardening & Landscape", "marketRange": "CHF 54 - 78 / hr", "recommended": "CHF 64 / hr", "avgRateNumber": 64 }
+      {
+        "trade": "Plumbing & Heating",
+        "marketRange": "CHF 95 - 130 / hr",
+        "recommended": "CHF 112 / hr",
+        "avgRateNumber": 112
+      },
+      {
+        "trade": "Electrical Setup",
+        "marketRange": "CHF 100 - 140 / hr",
+        "recommended": "CHF 122 / hr",
+        "avgRateNumber": 122
+      },
+      {
+        "trade": "Cleaning Services",
+        "marketRange": "CHF 44 - 62 / hr",
+        "recommended": "CHF 50 / hr",
+        "avgRateNumber": 50
+      },
+      {
+        "trade": "Painting & Decorating",
+        "marketRange": "CHF 70 - 92 / hr",
+        "recommended": "CHF 82 / hr",
+        "avgRateNumber": 82
+      },
+      {
+        "trade": "Carpentry & Handyman",
+        "marketRange": "CHF 75 - 100 / hr",
+        "recommended": "CHF 88 / hr",
+        "avgRateNumber": 88
+      },
+      {
+        "trade": "Gardening & Landscape",
+        "marketRange": "CHF 54 - 78 / hr",
+        "recommended": "CHF 64 / hr",
+        "avgRateNumber": 64
+      }
     ],
     "VD": [
-      { "trade": "Plumbing & Heating", "marketRange": "CHF 92 - 128 / hr", "recommended": "CHF 110 / hr", "avgRateNumber": 110 },
-      { "trade": "Electrical Setup", "marketRange": "CHF 102 - 142 / hr", "recommended": "CHF 122 / hr", "avgRateNumber": 122 },
-      { "trade": "Cleaning Services", "marketRange": "CHF 45 - 64 / hr", "recommended": "CHF 52 / hr", "avgRateNumber": 52 },
-      { "trade": "Painting & Decorating", "marketRange": "CHF 72 - 95 / hr", "recommended": "CHF 84 / hr", "avgRateNumber": 84 },
-      { "trade": "Carpentry & Handyman", "marketRange": "CHF 76 - 102 / hr", "recommended": "CHF 90 / hr", "avgRateNumber": 90 },
-      { "trade": "Gardening & Landscape", "marketRange": "CHF 55 - 78 / hr", "recommended": "CHF 65 / hr", "avgRateNumber": 65 }
+      {
+        "trade": "Plumbing & Heating",
+        "marketRange": "CHF 92 - 128 / hr",
+        "recommended": "CHF 110 / hr",
+        "avgRateNumber": 110
+      },
+      {
+        "trade": "Electrical Setup",
+        "marketRange": "CHF 102 - 142 / hr",
+        "recommended": "CHF 122 / hr",
+        "avgRateNumber": 122
+      },
+      {
+        "trade": "Cleaning Services",
+        "marketRange": "CHF 45 - 64 / hr",
+        "recommended": "CHF 52 / hr",
+        "avgRateNumber": 52
+      },
+      {
+        "trade": "Painting & Decorating",
+        "marketRange": "CHF 72 - 95 / hr",
+        "recommended": "CHF 84 / hr",
+        "avgRateNumber": 84
+      },
+      {
+        "trade": "Carpentry & Handyman",
+        "marketRange": "CHF 76 - 102 / hr",
+        "recommended": "CHF 90 / hr",
+        "avgRateNumber": 90
+      },
+      {
+        "trade": "Gardening & Landscape",
+        "marketRange": "CHF 55 - 78 / hr",
+        "recommended": "CHF 65 / hr",
+        "avgRateNumber": 65
+      }
     ],
     "ZG": [
-      { "trade": "Plumbing & Heating", "marketRange": "CHF 98 - 138 / hr", "recommended": "CHF 118 / hr", "avgRateNumber": 118 },
-      { "trade": "Electrical Setup", "marketRange": "CHF 108 - 148 / hr", "recommended": "CHF 128 / hr", "avgRateNumber": 128 },
-      { "trade": "Cleaning Services", "marketRange": "CHF 46 - 66 / hr", "recommended": "CHF 54 / hr", "avgRateNumber": 54 },
-      { "trade": "Painting & Decorating", "marketRange": "CHF 74 - 98 / hr", "recommended": "CHF 86 / hr", "avgRateNumber": 86 },
-      { "trade": "Carpentry & Handyman", "marketRange": "CHF 78 - 108 / hr", "recommended": "CHF 92 / hr", "avgRateNumber": 92 },
-      { "trade": "Gardening & Landscape", "marketRange": "CHF 56 - 80 / hr", "recommended": "CHF 66 / hr", "avgRateNumber": 66 }
+      {
+        "trade": "Plumbing & Heating",
+        "marketRange": "CHF 98 - 138 / hr",
+        "recommended": "CHF 118 / hr",
+        "avgRateNumber": 118
+      },
+      {
+        "trade": "Electrical Setup",
+        "marketRange": "CHF 108 - 148 / hr",
+        "recommended": "CHF 128 / hr",
+        "avgRateNumber": 128
+      },
+      {
+        "trade": "Cleaning Services",
+        "marketRange": "CHF 46 - 66 / hr",
+        "recommended": "CHF 54 / hr",
+        "avgRateNumber": 54
+      },
+      {
+        "trade": "Painting & Decorating",
+        "marketRange": "CHF 74 - 98 / hr",
+        "recommended": "CHF 86 / hr",
+        "avgRateNumber": 86
+      },
+      {
+        "trade": "Carpentry & Handyman",
+        "marketRange": "CHF 78 - 108 / hr",
+        "recommended": "CHF 92 / hr",
+        "avgRateNumber": 92
+      },
+      {
+        "trade": "Gardening & Landscape",
+        "marketRange": "CHF 56 - 80 / hr",
+        "recommended": "CHF 66 / hr",
+        "avgRateNumber": 66
+      }
     ],
     "DEFAULT": [
-      { "trade": "Plumbing & Heating", "marketRange": "CHF 95 - 135 / hr", "recommended": "CHF 110 / hr", "avgRateNumber": 110 },
-      { "trade": "Electrical Setup", "marketRange": "CHF 105 - 145 / hr", "recommended": "CHF 125 / hr", "avgRateNumber": 125 },
-      { "trade": "Cleaning Services", "marketRange": "CHF 45 - 65 / hr", "recommended": "CHF 52 / hr", "avgRateNumber": 52 },
-      { "trade": "Painting & Decorating", "marketRange": "CHF 70 - 95 / hr", "recommended": "CHF 85 / hr", "avgRateNumber": 85 },
-      { "trade": "Carpentry & Handyman", "marketRange": "CHF 75 - 105 / hr", "recommended": "CHF 90 / hr", "avgRateNumber": 90 },
-      { "trade": "Gardening & Landscape", "marketRange": "CHF 55 - 80 / hr", "recommended": "CHF 65 / hr", "avgRateNumber": 65 }
+      {
+        "trade": "Plumbing & Heating",
+        "marketRange": "CHF 95 - 135 / hr",
+        "recommended": "CHF 110 / hr",
+        "avgRateNumber": 110
+      },
+      {
+        "trade": "Electrical Setup",
+        "marketRange": "CHF 105 - 145 / hr",
+        "recommended": "CHF 125 / hr",
+        "avgRateNumber": 125
+      },
+      {
+        "trade": "Cleaning Services",
+        "marketRange": "CHF 45 - 65 / hr",
+        "recommended": "CHF 52 / hr",
+        "avgRateNumber": 52
+      },
+      {
+        "trade": "Painting & Decorating",
+        "marketRange": "CHF 70 - 95 / hr",
+        "recommended": "CHF 85 / hr",
+        "avgRateNumber": 85
+      },
+      {
+        "trade": "Carpentry & Handyman",
+        "marketRange": "CHF 75 - 105 / hr",
+        "recommended": "CHF 90 / hr",
+        "avgRateNumber": 90
+      },
+      {
+        "trade": "Gardening & Landscape",
+        "marketRange": "CHF 55 - 80 / hr",
+        "recommended": "CHF 65 / hr",
+        "avgRateNumber": 65
+      }
     ]
   }
 }

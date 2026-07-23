@@ -3,7 +3,19 @@
     {
       "id": "ocr_verification",
       "category": "verification",
-      "keywords": ["ocr", "verification", "verify", "document", "auto approve", "identity", "id", "passport", "confidence", "trust", "badge"],
+      "keywords": [
+        "ocr",
+        "verification",
+        "verify",
+        "document",
+        "auto approve",
+        "identity",
+        "id",
+        "passport",
+        "confidence",
+        "trust",
+        "badge"
+      ],
       "title": "🛡️ BlueX Dynamic OCR Multi-Factor Document Verification",
       "summary": "How BlueX automatically validates provider documents in seconds with zero admin wait time:",
       "factors": [

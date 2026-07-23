@@ -45,9 +45,27 @@ interface ChatMessage {
   benchmarks?: CantonalBenchmark[];
   actionPoints?: string[];
   sampleText?: string;
-  complianceItems?: { code: string; title: string; percentageOrRule: string; description: string; mandatory: boolean }[];
-  surcharges?: { type: string; timeframe: string; surchargeMultiplier: string; minCalloutFeeCHF: number; description: string }[];
-  communicationTemplate?: { language: string; tone: string; greeting: string; scopeConfirmation: string; closing: string }[];
+  complianceItems?: {
+    code: string;
+    title: string;
+    percentageOrRule: string;
+    description: string;
+    mandatory: boolean;
+  }[];
+  surcharges?: {
+    type: string;
+    timeframe: string;
+    surchargeMultiplier: string;
+    minCalloutFeeCHF: number;
+    description: string;
+  }[];
+  communicationTemplate?: {
+    language: string;
+    tone: string;
+    greeting: string;
+    scopeConfirmation: string;
+    closing: string;
+  }[];
   timestamp: string;
 }
 
@@ -127,7 +145,8 @@ function AiCoachPage() {
     },
   });
 
-  const providerName = user?.user_metadata?.full_name || providerProfile?.company_name || "Provider";
+  const providerName =
+    user?.user_metadata?.full_name || providerProfile?.company_name || "Provider";
 
   // Construct Real Provider Data Object for Copilot Engine
   const realProviderData: ProviderRealData = {
@@ -158,7 +177,11 @@ function AiCoachPage() {
       title: "🚀 Welcome to BlueX AI Business Coach",
       actionPoints: [
         "📊 Ask me to analyze your profile health score & conversion rate.",
-        "💰 Compare your rate (CHF " + (providerProfile?.hourly_rate || 95) + "/hr) against Canton " + (providerProfile?.canton || "ZH") + " market benchmarks.",
+        "💰 Compare your rate (CHF " +
+          (providerProfile?.hourly_rate || 95) +
+          "/hr) against Canton " +
+          (providerProfile?.canton || "ZH") +
+          " market benchmarks.",
         "📝 Draft personalized winning bid responses for public tenders.",
         "🇨🇭 Review Swiss social security (AHV/UVG) & 8.1% MwSt invoicing rules.",
       ],
@@ -355,7 +378,9 @@ function AiCoachPage() {
                             </span>
                           </div>
                           <div className="font-bold text-slate-800 text-xs">{ci.title}</div>
-                          <p className="text-[11px] text-slate-500 leading-normal">{ci.description}</p>
+                          <p className="text-[11px] text-slate-500 leading-normal">
+                            {ci.description}
+                          </p>
                         </div>
                       ))}
                     </div>
@@ -395,11 +420,20 @@ function AiCoachPage() {
                   {msg.communicationTemplate && msg.communicationTemplate.length > 0 && (
                     <div className="pt-2">
                       {msg.communicationTemplate.map((ct, idx) => (
-                        <div key={idx} className="bg-slate-900 text-slate-100 rounded-xl p-4 space-y-2 text-xs font-mono">
+                        <div
+                          key={idx}
+                          className="bg-slate-900 text-slate-100 rounded-xl p-4 space-y-2 text-xs font-mono"
+                        >
                           <div className="flex items-center justify-between text-slate-400 text-[10px] font-sans border-b border-slate-800 pb-2">
-                            <span>{ct.language} • {ct.tone}</span>
+                            <span>
+                              {ct.language} • {ct.tone}
+                            </span>
                             <button
-                              onClick={() => copyToClipboard(`${ct.greeting}\n\n${ct.scopeConfirmation}\n\n${ct.closing}`)}
+                              onClick={() =>
+                                copyToClipboard(
+                                  `${ct.greeting}\n\n${ct.scopeConfirmation}\n\n${ct.closing}`,
+                                )
+                              }
                               className="text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1 cursor-pointer"
                             >
                               <Copy className="h-3 w-3" />

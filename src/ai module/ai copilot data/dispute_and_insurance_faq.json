@@ -3,7 +3,17 @@
     {
       "id": "dispute_and_insurance",
       "category": "disputes",
-      "keywords": ["insurance", "dispute", "liability", "escrow", "cancellation", "refund", "damage", "safety", "guarantee"],
+      "keywords": [
+        "insurance",
+        "dispute",
+        "liability",
+        "escrow",
+        "cancellation",
+        "refund",
+        "damage",
+        "safety",
+        "guarantee"
+      ],
       "title": "🛡️ Swiss Liability Insurance & Escrow Payout Protection",
       "summary": "Everything you need to know about BlueX protection mechanisms for providers and clients:",
       "actionPoints": [

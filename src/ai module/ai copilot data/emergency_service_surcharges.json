@@ -3,7 +3,17 @@
     {
       "id": "emergency_surcharges",
       "category": "emergency",
-      "keywords": ["emergency", "surcharge", "night", "weekend", "holiday", "callout", "fee", "urgent", "24/7"],
+      "keywords": [
+        "emergency",
+        "surcharge",
+        "night",
+        "weekend",
+        "holiday",
+        "callout",
+        "fee",
+        "urgent",
+        "24/7"
+      ],
       "title": "⚡ Swiss Emergency, Night & Weekend Surcharge Rules",
       "summary": "Standard Swiss trade rules for emergency callouts and off-hours service pricing:",
       "surchargeRules": [

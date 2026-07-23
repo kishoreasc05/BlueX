@@ -3,7 +3,17 @@
     {
       "id": "equipment_materials",
       "category": "equipment",
-      "keywords": ["equipment", "tools", "materials", "markup", "minergie", "eco", "waste", "disposal", "standards"],
+      "keywords": [
+        "equipment",
+        "tools",
+        "materials",
+        "markup",
+        "minergie",
+        "eco",
+        "waste",
+        "disposal",
+        "standards"
+      ],
       "title": "🛠️ Swiss Equipment & Material Markup Guidelines",
       "summary": "Best practices for sourcing materials, applying markup, and complying with Swiss eco disposal regulations:",
       "actionPoints": [

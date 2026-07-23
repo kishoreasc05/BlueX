@@ -18,7 +18,12 @@ export * from "./copilot.types";
 export function calculateRealProfileHealth(provider: ProviderRealData): {
   score: number;
   conversionRate: number;
-  metrics: { label: string; value: string; target: string; status: "good" | "warning" | "critical" }[];
+  metrics: {
+    label: string;
+    value: string;
+    target: string;
+    status: "good" | "warning" | "critical";
+  }[];
 } {
   let score = 20; // Base score
 
@@ -37,10 +42,10 @@ export function calculateRealProfileHealth(provider: ProviderRealData): {
   if (reviewsCount >= 5) score += 10;
 
   const scoreClamped = Math.min(100, Math.max(25, score));
-  
+
   // Calculate conversion rate dynamically based on completed jobs and verified badge
   const conversionRate = isVerified
-    ? Math.min(32.5, 12.0 + completedJobs * 1.5 + (reviewsCount * 0.8)).toFixed(1)
+    ? Math.min(32.5, 12.0 + completedJobs * 1.5 + reviewsCount * 0.8).toFixed(1)
     : Math.min(18.4, 6.0 + completedJobs * 0.8).toFixed(1);
 
   return {
@@ -68,7 +73,7 @@ export function calculateRealProfileHealth(provider: ProviderRealData): {
  */
 export function evaluateCopilotQuery(
   query: string,
-  provider: ProviderRealData
+  provider: ProviderRealData,
 ): {
   title: string;
   summary: string;
@@ -115,16 +120,21 @@ export function evaluateCopilotQuery(
     qLower.includes("benchmark")
   ) {
     const cantonKey = (cantonalBenchmarksData.benchmarks as any)[userCanton] ? userCanton : "ZH";
-    const benchList: CantonalBenchmark[] = (cantonalBenchmarksData.benchmarks as any)[cantonKey] || (cantonalBenchmarksData.benchmarks as any)["DEFAULT"];
+    const benchList: CantonalBenchmark[] =
+      (cantonalBenchmarksData.benchmarks as any)[cantonKey] ||
+      (cantonalBenchmarksData.benchmarks as any)["DEFAULT"];
 
     // Evaluate user's rate against recommended median
-    const matchedTrade = benchList.find((b) => b.trade.toLowerCase().includes(userTrade.toLowerCase())) || benchList[0];
+    const matchedTrade =
+      benchList.find((b) => b.trade.toLowerCase().includes(userTrade.toLowerCase())) ||
+      benchList[0];
     const diff = userRate - matchedTrade.avgRateNumber;
-    const comparisonNote = diff === 0
-      ? `Your rate of CHF ${userRate}/hr matches the recommended median in Canton ${cantonKey}.`
-      : diff > 0
-      ? `Your rate of CHF ${userRate}/hr is CHF ${diff} above the Canton ${cantonKey} median. Consider offering bundled packages.`
-      : `Your rate of CHF ${userRate}/hr is CHF ${Math.abs(diff)} below the Canton ${cantonKey} average. You have headroom to increase your rate by +${Math.round((Math.abs(diff)/userRate)*100)}%.`;
+    const comparisonNote =
+      diff === 0
+        ? `Your rate of CHF ${userRate}/hr matches the recommended median in Canton ${cantonKey}.`
+        : diff > 0
+          ? `Your rate of CHF ${userRate}/hr is CHF ${diff} above the Canton ${cantonKey} median. Consider offering bundled packages.`
+          : `Your rate of CHF ${userRate}/hr is CHF ${Math.abs(diff)} below the Canton ${cantonKey} average. You have headroom to increase your rate by +${Math.round((Math.abs(diff) / userRate) * 100)}%.`;
 
     return {
       title: `💰 Canton ${cantonKey} Market Rate & Pricing Benchmarks`,
@@ -132,8 +142,8 @@ export function evaluateCopilotQuery(
       benchmarks: benchList,
       actionPoints: [
         `💡 **Sweet Spot Strategy**: Setting your rate within 5% of the recommended median in Canton ${cantonKey} maximizes win rate without sacrificing margin.`,
-        "📈 **Peak Demand Surcharge**: You can increase your rate by +15% for urgent weekend or same-day bookings."
-      ]
+        "📈 **Peak Demand Surcharge**: You can increase your rate by +15% for urgent weekend or same-day bookings.",
+      ],
     };
   }
 
@@ -167,8 +177,8 @@ export function evaluateCopilotQuery(
       sampleText: populatedProposal,
       actionPoints: [
         ...template.actionPoints,
-        `📝 **Pre-filled details**: Automatically populated with your real name (${userName}), rate (CHF ${userRate}/hr), and location (${userCanton}).`
-      ]
+        `📝 **Pre-filled details**: Automatically populated with your real name (${userName}), rate (CHF ${userRate}/hr), and location (${userCanton}).`,
+      ],
     };
   }
 
@@ -187,7 +197,7 @@ export function evaluateCopilotQuery(
       title: comp.title,
       summary: comp.summary,
       complianceItems: comp.complianceItems,
-      actionPoints: comp.actionPoints
+      actionPoints: comp.actionPoints,
     };
   }
 
@@ -205,7 +215,7 @@ export function evaluateCopilotQuery(
     return {
       title: ocr.title,
       summary: `Your account verification status: ${isVerified ? "✅ Verified Provider" : "⏳ Pending Document Verification"}.\n\nHow our dynamic OCR multi-factor engine scores uploads:`,
-      actionPoints: ocr.actionPoints
+      actionPoints: ocr.actionPoints,
     };
   }
 
@@ -223,7 +233,7 @@ export function evaluateCopilotQuery(
       title: sur.title,
       summary: sur.summary,
       surcharges: sur.surchargeRules,
-      actionPoints: sur.actionPoints
+      actionPoints: sur.actionPoints,
     };
   }
 
@@ -240,7 +250,7 @@ export function evaluateCopilotQuery(
       title: comm.title,
       summary: comm.summary,
       communicationTemplate: [comm.communicationTemplate],
-      actionPoints: comm.actionPoints
+      actionPoints: comm.actionPoints,
     };
   }
 
@@ -257,7 +267,7 @@ export function evaluateCopilotQuery(
     return {
       title: eq.title,
       summary: eq.summary,
-      actionPoints: eq.actionPoints
+      actionPoints: eq.actionPoints,
     };
   }
 
@@ -273,7 +283,7 @@ export function evaluateCopilotQuery(
     return {
       title: disp.title,
       summary: disp.summary,
-      actionPoints: disp.actionPoints
+      actionPoints: disp.actionPoints,
     };
   }
 
@@ -282,6 +292,6 @@ export function evaluateCopilotQuery(
   return {
     title: growth.title,
     summary: `Here is a provider growth strategy customized for your profile (${userName}):`,
-    actionPoints: growth.actionPoints
+    actionPoints: growth.actionPoints,
   };
 }

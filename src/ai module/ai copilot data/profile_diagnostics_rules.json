@@ -3,7 +3,16 @@
     {
       "id": "profile_analysis",
       "category": "diagnostics",
-      "keywords": ["health", "score", "profile", "performance", "diagnostic", "conversion", "rank", "visibility"],
+      "keywords": [
+        "health",
+        "score",
+        "profile",
+        "performance",
+        "diagnostic",
+        "conversion",
+        "rank",
+        "visibility"
+      ],
       "title": "📊 Real-Time Profile Performance & Health Score Analysis",
       "summary": "Here is a complete live diagnostic of your BlueX provider profile based on Swiss market benchmarks:",
       "weightBreakdown": {

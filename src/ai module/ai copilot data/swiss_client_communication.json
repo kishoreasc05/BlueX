@@ -3,7 +3,17 @@
     {
       "id": "client_communication",
       "category": "communication",
-      "keywords": ["communication", "greeting", "client", "message", "german", "french", "italian", "etiquette", "formal"],
+      "keywords": [
+        "communication",
+        "greeting",
+        "client",
+        "message",
+        "german",
+        "french",
+        "italian",
+        "etiquette",
+        "formal"
+      ],
       "title": "🇨🇭 Swiss Client Etiquette & Messaging Templates",
       "summary": "Professional greeting and follow-up templates in Swiss national languages:",
       "communicationTemplate": {
