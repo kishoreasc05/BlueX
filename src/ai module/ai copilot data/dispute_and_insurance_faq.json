@@ -1,0 +1,16 @@
+{
+  "faq": [
+    {
+      "id": "dispute_and_insurance",
+      "category": "disputes",
+      "keywords": ["insurance", "dispute", "liability", "escrow", "cancellation", "refund", "damage", "safety", "guarantee"],
+      "title": "🛡️ Swiss Liability Insurance & Escrow Payout Protection",
+      "summary": "Everything you need to know about BlueX protection mechanisms for providers and clients:",
+      "actionPoints": [
+        "💼 **CHF 5,000,000 Liability Coverage**: Every booking completed through BlueX is automatically covered by Swiss General Commercial Liability Insurance.",
+        "🔒 **Escrow Protection**: Client funds are secured in escrow at booking time and released to provider within 24 hours of job sign-off.",
+        "🤝 **Dispute Resolution**: In case of scope disagreement, BlueX Mediation provides neutral site evaluation within 48 hours."
+      ]
+    }
+  ]
+}

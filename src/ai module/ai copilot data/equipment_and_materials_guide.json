@@ -1,0 +1,16 @@
+{
+  "guides": [
+    {
+      "id": "equipment_materials",
+      "category": "equipment",
+      "keywords": ["equipment", "tools", "materials", "markup", "minergie", "eco", "waste", "disposal", "standards"],
+      "title": "🛠️ Swiss Equipment & Material Markup Guidelines",
+      "summary": "Best practices for sourcing materials, applying markup, and complying with Swiss eco disposal regulations:",
+      "actionPoints": [
+        "📦 **Material Markup Standard**: Standard Swiss trade practice permits a 10% to 20% markup on wholesale materials to cover handling & logistics.",
+        "🌱 **Minergie & Eco Standards**: Using Swiss-certified eco materials increases proposal win rate by 18% in Canton Zurich & Geneva.",
+        "♻️ **Waste Disposal Billing**: Always list disposal fees (VRG / VeVA fees) as a separate line item on client estimates."
+      ]
+    }
+  ]
+}

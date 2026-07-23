@@ -14,7 +14,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { User, MapPin, Phone, Mail, Calendar, ShieldCheck, Globe } from "lucide-react";
+import {
+  User,
+  MapPin,
+  Phone,
+  Mail,
+  Calendar,
+  ShieldCheck,
+  Globe,
+  Camera,
+  Loader2,
+} from "lucide-react";
 
 export function CustomerProfilePage() {
   const { user } = useAuth();
@@ -51,6 +61,53 @@ export function CustomerProfilePage() {
   const [country, setCountry] = useState("Switzerland");
 
   const [isEditing, setIsEditing] = useState(false);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user?.id) return;
+
+    setUploadingAvatar(true);
+    try {
+      const cloudName = "hlzggzyr";
+      const preset = "bluex_ocr_docs";
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", preset);
+
+      let secureUrl = "";
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        secureUrl = data.secure_url;
+      } else {
+        throw new Error("Cloudinary upload failed");
+      }
+
+      const { error } = await supabase
+        .from("profiles")
+        .update({ avatar_url: secureUrl })
+        .eq("id", user.id);
+
+      if (error) throw error;
+
+      queryClient.invalidateQueries({ queryKey: ["customerProfile"] });
+      queryClient.invalidateQueries({ queryKey: ["activeUserProfile"] });
+      queryClient.invalidateQueries({ queryKey: ["opsUsers"] });
+
+      toast.success("🎉 Profile picture updated!");
+    } catch (err: any) {
+      console.error("Avatar upload error:", err);
+      toast.error(err.message || "Failed to upload profile picture.");
+    } finally {
+      setUploadingAvatar(false);
+    }
+  };
 
   // Sync profile data to local state
   useEffect(() => {
@@ -162,14 +219,41 @@ export function CustomerProfilePage() {
       <div className="grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-6 items-start">
         {/* Profile Sidebar Info Card */}
         <div className="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 space-y-6 flex flex-col items-center text-center">
-          <div className="h-24 w-24 rounded-full bg-blue-650 bg-blue-600 text-white flex items-center justify-center text-3xl font-black shadow-inner select-none relative">
-            {getInitials(profile?.full_name)}
-            <div
-              className="absolute -bottom-1.5 -right-1.5 bg-emerald-500 text-white p-1.5 rounded-full border-2 border-white shadow-sm"
-              title="Verified Account"
-            >
-              <ShieldCheck className="h-4 w-4" />
+          <div className="relative group">
+            <div className="h-28 w-28 rounded-full bg-blue-600 text-white flex items-center justify-center text-3xl font-black shadow-inner select-none relative overflow-hidden border-4 border-white shadow-md">
+              {profile?.avatar_url ? (
+                <img
+                  src={profile.avatar_url}
+                  alt={profile.full_name || "Profile"}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                getInitials(profile?.full_name)
+              )}
+
+              {uploadingAvatar && (
+                <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white">
+                  <Loader2 className="w-6 h-6 animate-spin" />
+                </div>
+              )}
             </div>
+
+            {/* Camera Overlay Upload Trigger */}
+            <label
+              htmlFor="avatar-upload-input"
+              className="absolute bottom-0 right-0 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full border-2 border-white shadow-md cursor-pointer transition-transform hover:scale-110"
+              title="Upload Profile Picture (Cloudinary)"
+            >
+              <Camera className="h-4 w-4" />
+              <input
+                id="avatar-upload-input"
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarUpload}
+                disabled={uploadingAvatar}
+                className="hidden"
+              />
+            </label>
           </div>
 
           <div className="space-y-1">

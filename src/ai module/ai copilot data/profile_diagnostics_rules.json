@@ -1,0 +1,25 @@
+{
+  "rules": [
+    {
+      "id": "profile_analysis",
+      "category": "diagnostics",
+      "keywords": ["health", "score", "profile", "performance", "diagnostic", "conversion", "rank", "visibility"],
+      "title": "📊 Real-Time Profile Performance & Health Score Analysis",
+      "summary": "Here is a complete live diagnostic of your BlueX provider profile based on Swiss market benchmarks:",
+      "weightBreakdown": {
+        "avatar": 15,
+        "bio": 10,
+        "hourlyRate": 15,
+        "verifiedBadge": 20,
+        "servicesListed": 15,
+        "reviewsAndRating": 25
+      },
+      "defaultActionPoints": [
+        "📸 **Upload High-Resolution Profile Photo**: Professional avatars yield a 2.1x higher profile view-to-booking ratio.",
+        "📜 **Submit Trade Certification via OCR**: Dynamic document verification instantly grants the green Verified Provider badge (+20% health score boost).",
+        "⭐ **Collect Initial Client Reviews**: Providers with at least 5 reviews receive 2.5x higher search ranking in Canton Zurich.",
+        "⚡ **Activate Instant Availability**: 64% of Swiss customers filter by immediate availability during business hours."
+      ]
+    }
+  ]
+}

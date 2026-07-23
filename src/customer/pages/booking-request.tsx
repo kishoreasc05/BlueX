@@ -12,12 +12,16 @@ import {
   Info,
   ShieldCheck,
   CheckCircle2,
+  Sparkles,
+  User,
+  Building,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MOCK_PROVIDERS } from "@/customer/mockData";
+import { AiJobExpanderModal } from "@/ai module/ai search/components/ai-job-expander-modal";
 
 const TIME_SLOTS = [
   "08:00 AM",
@@ -42,6 +46,7 @@ export function BookingRequestPage() {
   const [timeSlot, setTimeSlot] = useState("09:00 AM");
   const [duration, setDuration] = useState(2);
   const [notes, setNotes] = useState("");
+  const [expanderOpen, setExpanderOpen] = useState(false);
 
   const isMock = id in MOCK_PROVIDERS;
 
@@ -75,7 +80,7 @@ export function BookingRequestPage() {
                 : ("private" as const),
             specialty: dbContractor.specialty || "General Contractor",
             hourlyRate: Number(dbContractor.hourly_rate || 90),
-            avatar: `https://i.pravatar.cc/150?u=${dbContractor.name.replace(/\s+/g, "").toLowerCase()}`,
+            avatar: "",
             organizationId: dbContractor.organization_id,
           }
         : null
@@ -245,9 +250,21 @@ export function BookingRequestPage() {
 
             {/* Notes */}
             <div className="space-y-1.5">
-              <Label htmlFor="notes" className="text-xs font-bold text-slate-700">
-                Instructions / Notes
-              </Label>
+              <div className="flex justify-between items-center">
+                <Label htmlFor="notes" className="text-xs font-bold text-slate-700">
+                  Instructions / Notes
+                </Label>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setExpanderOpen(true)}
+                  className="h-6 text-[11px] font-bold text-indigo-600 hover:bg-indigo-50 px-2 rounded-lg cursor-pointer flex items-center gap-1"
+                >
+                  <Sparkles className="w-3 h-3 text-indigo-600 fill-indigo-600/10" />
+                  <span>Expand with AI</span>
+                </Button>
+              </div>
               <Textarea
                 id="notes"
                 placeholder="Explain the job, any specific requirements, or details about accessibility..."
@@ -257,6 +274,16 @@ export function BookingRequestPage() {
                 className="rounded-xl border-slate-200"
               />
             </div>
+
+            {/* AI Job Expander Modal */}
+            <AiJobExpanderModal
+              open={expanderOpen}
+              onOpenChange={setExpanderOpen}
+              initialPrompt={notes || "Need service for residential house"}
+              onApplyExpandedJob={(expanded) => {
+                setNotes(expanded.notes);
+              }}
+            />
           </div>
         </div>
 
@@ -269,12 +296,24 @@ export function BookingRequestPage() {
 
             {/* Provider Mini Info */}
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl overflow-hidden bg-slate-100 shrink-0">
-                <img
-                  src={provider.avatar}
-                  alt={provider.name}
-                  className="h-full w-full object-cover"
-                />
+              <div className="h-10 w-10 rounded-xl overflow-hidden bg-slate-100 shrink-0 flex items-center justify-center border border-slate-200">
+                {provider.avatar &&
+                !provider.avatar.includes("pravatar") &&
+                !provider.avatar.includes("unsplash") ? (
+                  <img
+                    src={provider.avatar}
+                    alt={provider.name}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="h-full w-full bg-slate-100 text-slate-400 flex items-center justify-center select-none">
+                    {provider.type === "company" ? (
+                      <Building className="h-5 w-5 text-slate-400" />
+                    ) : (
+                      <User className="h-5 w-5 text-slate-400" />
+                    )}
+                  </div>
+                )}
               </div>
               <div>
                 <h3 className="text-xs font-bold text-slate-900">{provider.name}</h3>

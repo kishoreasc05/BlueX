@@ -26,6 +26,8 @@ import {
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { AiCoachCard } from "@/ai module/ai search/components/ai-coach-card";
+import { AiPricingWidget } from "@/ai module/ai search/components/ai-pricing-widget";
 
 function CustomTooltip({ active, payload, label }: any) {
   if (active && payload && payload.length) {
@@ -271,6 +273,22 @@ export function CompanyDashboard({
                 </AreaChart>
               </ResponsiveContainer>
             </div>
+          </div>
+
+          {/* AI Intelligence Suite Widgets: Business Coach & Market Pricing */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <AiCoachCard
+              analytics={{
+                portfolioCount: 1,
+                responseTimeMinutes: 45,
+                hourlyRate: 52,
+                category: "cleaning",
+                viewsCount: 150,
+                bookingsCount: 8,
+                bioWordCount: 22,
+              }}
+            />
+            <AiPricingWidget category="cleaning" currentRate={52} />
           </div>
 
           {/* Pending Booking Requests */}

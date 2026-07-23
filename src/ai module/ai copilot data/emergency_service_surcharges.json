@@ -1,0 +1,38 @@
+{
+  "surcharges": [
+    {
+      "id": "emergency_surcharges",
+      "category": "emergency",
+      "keywords": ["emergency", "surcharge", "night", "weekend", "holiday", "callout", "fee", "urgent", "24/7"],
+      "title": "⚡ Swiss Emergency, Night & Weekend Surcharge Rules",
+      "summary": "Standard Swiss trade rules for emergency callouts and off-hours service pricing:",
+      "surchargeRules": [
+        {
+          "type": "Evening / Night Service",
+          "timeframe": "20:00 - 06:00 (Weekdays)",
+          "surchargeMultiplier": "+25% to +50% on Base Hourly Rate",
+          "minCalloutFeeCHF": 120,
+          "description": "Standard Swiss trade agreement surcharge for emergency night calls."
+        },
+        {
+          "type": "Weekend Service",
+          "timeframe": "Saturday 17:00 - Monday 06:00",
+          "surchargeMultiplier": "+50% on Base Hourly Rate",
+          "minCalloutFeeCHF": 150,
+          "description": "Applies to non-scheduled urgent weekend repair requests."
+        },
+        {
+          "type": "Official Public Holidays",
+          "timeframe": "Federal & Cantonal Holidays",
+          "surchargeMultiplier": "+100% (Double Rate)",
+          "minCalloutFeeCHF": 200,
+          "description": "Applies to 1. August, Christmas, New Year, and cantonal holidays."
+        }
+      ],
+      "actionPoints": [
+        "⚠️ **Notify Client upfront**: Always state the emergency callout fee in chat before dispatching to the job site.",
+        "📱 **Enable 24/7 Urgent Toggle**: Providers with Emergency Mode enabled earn 35% higher net margins."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "communications": [
+    {
+      "id": "client_communication",
+      "category": "communication",
+      "keywords": ["communication", "greeting", "client", "message", "german", "french", "italian", "etiquette", "formal"],
+      "title": "🇨🇭 Swiss Client Etiquette & Messaging Templates",
+      "summary": "Professional greeting and follow-up templates in Swiss national languages:",
+      "communicationTemplate": {
+        "language": "de-CH (Swiss German Standard)",
+        "tone": "Formal & Courteous",
+        "greeting": "Grüezi Frau/Herr [Name], vielen Dank für Ihre Anfrage bezüglich [Project].",
+        "scopeConfirmation": "Ich habe die Details geprüft und stehe am gewünschten Termin gerne zur Verfügung.",
+        "closing": "Freundliche Grüsse,\n[Provider Name]"
+      },
+      "actionPoints": [
+        "🤝 **Use Formal Greetings**: Always start with 'Grüezi' (German) or 'Bonjour' (French) in initial client interactions.",
+        "⏰ **Punctuality Benchmark**: In Switzerland, arriving 5 minutes early is considered standard professional etiquette."
+      ]
+    }
+  ]
+}

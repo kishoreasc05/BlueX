@@ -1,0 +1,45 @@
+{
+  "compliance": [
+    {
+      "id": "swiss_payroll_tax",
+      "category": "compliance",
+      "keywords": ["payroll", "tax", "ahv", "uvg", "social security", "insurance", "vat", "mwst", "withholding", "payout", "compliance", "legal"],
+      "title": "🇨🇭 BlueX Swiss Payroll & Social Security Compliance",
+      "summary": "BlueX automatically manages Swiss tax compliance, VAT invoicing, and social security calculations for all completed bookings:",
+      "complianceItems": [
+        {
+          "code": "AHV/IV/EO",
+          "title": "Old-Age & Disability Social Insurance",
+          "percentageOrRule": "10.6% Contribution Rate",
+          "description": "Calculated automatically for registered freelancers. Split evenly (5.3% provider / 5.3% platform/employer) on taxable payouts.",
+          "mandatory": true
+        },
+        {
+          "code": "ALV",
+          "title": "Unemployment Insurance",
+          "percentageOrRule": "2.2% Contribution Rate",
+          "description": "Applies to earnings up to CHF 148,200 per annum.",
+          "mandatory": true
+        },
+        {
+          "code": "UVG",
+          "title": "SUVA Accident Insurance",
+          "percentageOrRule": "Occupational & Non-Occupational",
+          "description": "Every active booking conducted via BlueX includes mandatory Swiss occupational accident insurance coverage.",
+          "mandatory": true
+        },
+        {
+          "code": "MwSt",
+          "title": "Swiss Value Added Tax (VAT)",
+          "percentageOrRule": "8.1% Standard Rate",
+          "description": "Automated VAT receipts are issued to commercial clients upon payout release.",
+          "mandatory": true
+        }
+      ],
+      "actionPoints": [
+        "🏛️ **Automatic Tax Receipts**: Download your monthly VAT & AHV breakdown directly from the Earnings dashboard.",
+        "💼 **Quellensteuer Integration**: Non-resident contractors in Border Zones (DE/FR/IT) are automatically processed via withholding tax."
+      ]
+    }
+  ]
+}

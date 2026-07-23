@@ -343,7 +343,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("profiles")
-        .select("role, full_name, email")
+        .select("role, full_name, email, avatar_url")
         .eq("id", user!.id)
         .single();
       if (error) throw error;
@@ -463,9 +463,11 @@ export function AppShell({ children }: { children: ReactNode }) {
               className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors text-left focus:outline-none cursor-pointer"
             >
               <Avatar className="h-10 w-10 rounded-full border-2 border-blue-500/50 shrink-0">
-                {isCompany && providerProfile?.company_logo_url && (
+                {userProfile?.avatar_url ? (
+                  <AvatarImage src={userProfile.avatar_url} className="object-cover" />
+                ) : isCompany && providerProfile?.company_logo_url ? (
                   <AvatarImage src={providerProfile.company_logo_url} className="object-cover" />
-                )}
+                ) : null}
                 <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
                   {initials(
                     isCompany && providerProfile?.company_name
@@ -534,14 +536,16 @@ export function AppShell({ children }: { children: ReactNode }) {
               <DropdownMenuTrigger asChild>
                 <button className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors text-left focus:outline-none cursor-pointer">
                   <Avatar className="h-9 w-9 rounded-full border border-slate-700 shrink-0">
-                    {activePortal === "provider" &&
+                    {userProfile?.avatar_url ? (
+                      <AvatarImage src={userProfile.avatar_url} className="object-cover" />
+                    ) : activePortal === "provider" &&
                       isCompany &&
-                      providerProfile?.company_logo_url && (
-                        <AvatarImage
-                          src={providerProfile.company_logo_url}
-                          className="object-cover"
-                        />
-                      )}
+                      providerProfile?.company_logo_url ? (
+                      <AvatarImage
+                        src={providerProfile.company_logo_url}
+                        className="object-cover"
+                      />
+                    ) : null}
                     <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
                       {initials(
                         activePortal === "provider" && isCompany && providerProfile?.company_name
@@ -629,9 +633,12 @@ export function AppShell({ children }: { children: ReactNode }) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="focus:outline-none flex items-center gap-2 group">
-                  <Avatar className="h-8 w-8 rounded-full border-2 border-slate-200 shadow-sm transition-transform group-hover:scale-105">
+                  <Avatar className="h-8 w-8 rounded-full border-2 border-slate-200 shadow-sm transition-transform group-hover:scale-105 overflow-hidden">
+                    {userProfile?.avatar_url && (
+                      <AvatarImage src={userProfile.avatar_url} className="object-cover" />
+                    )}
                     <AvatarFallback className="bg-blue-100 text-blue-700 text-xs font-semibold">
-                      {initials(user?.email || "User")}
+                      {initials(fullName || user?.email || "User")}
                     </AvatarFallback>
                   </Avatar>
                 </button>

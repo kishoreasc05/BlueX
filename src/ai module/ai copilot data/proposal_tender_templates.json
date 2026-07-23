@@ -1,0 +1,22 @@
+{
+  "templates": [
+    {
+      "id": "tender_bidding",
+      "category": "tenders",
+      "keywords": ["tender", "tenders", "bid", "bidding", "proposal", "public tender", "apply", "win tender", "quote", "estimate"],
+      "title": "📝 How to Win Public Tenders on BlueX",
+      "summary": "Here is a professional Swiss tender bid proposal response template customized for your provider profile:",
+      "structure": [
+        "1. Friendly & Professional Grüezi Greeting",
+        "2. Clear Breakdown of Labor Hours + Materials Cost",
+        "3. Guaranteed Completion Schedule & Start Date",
+        "4. Swiss Liability Insurance (CHF 5,000,000) & Warranty Disclaimers"
+      ],
+      "sampleTemplate": "Grüezi!\n\nI would be delighted to undertake your project in Canton {canton}.\n\n📊 Estimated Cost Breakdown:\n- Labor: {estimatedHours} hrs @ CHF {hourlyRate}/hr = CHF {laborTotal}\n- Materials & Equipment: CHF {materialsEstimate}\n- Total Estimated Investment: CHF {grandTotal} (incl. 8.1% Swiss MwSt)\n\n🛡️ Guarantee & Compliance:\n- Verified BlueX Provider with CHF 5,000,000 Swiss General Liability Insurance.\n- 2-year warranty on all executed craftsmanship.\n\n📅 Earliest Available Start Date: Next Monday at 08:00 AM.\n\nBest regards,\n{providerName}\n{tradeCategory} Specialist",
+      "actionPoints": [
+        "⚡ **Submit Proposals Early**: 70% of public tenders in Switzerland are awarded to proposals submitted within 3 hours of posting.",
+        "📋 **Itemize Labor & Material**: Swiss clients strongly prefer transparent cost breakdowns over bulk lump sums."
+      ]
+    }
+  ]
+}

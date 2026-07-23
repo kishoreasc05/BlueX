@@ -30,6 +30,7 @@ import { cn } from "@/lib/utils";
 import { MOCK_PROVIDERS } from "@/customer/mockData";
 import { EmergencyDialog } from "@/customer/components/emergency-dialog";
 import { AiMatchPage } from "./ai-match";
+import { AiSearchBar } from "@/ai module/ai search/components/ai-search-bar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const routeApi = getRouteApi("/_authenticated/client/search");
@@ -525,6 +526,18 @@ export function SearchPage() {
     },
   });
 
+  // Query real user profiles to map Cloudinary avatar_url for contractors
+  const { data: allProfiles } = useQuery({
+    queryKey: ["allProfilesAvatars"],
+    queryFn: async () => {
+      const { data: profs } = await supabase.from("profiles").select("id, full_name, avatar_url");
+      const { data: provs } = await supabase
+        .from("provider_profiles")
+        .select("user_id, company_name, company_logo_url");
+      return { profiles: profs || [], providerProfiles: provs || [] };
+    },
+  });
+
   // Toggle favorite helper
   const toggleFavorite = (id: string) => {
     setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -549,6 +562,22 @@ export function SearchPage() {
     const completionRate =
       bookings.length > 0 ? `${Math.round((jobsCompleted / bookings.length) * 100)}%` : null;
 
+    const matchedProfile = (allProfiles?.profiles || []).find(
+      (prof: any) =>
+        prof.full_name &&
+        p.name &&
+        (prof.full_name.toLowerCase().includes(p.name.toLowerCase()) ||
+          p.name.toLowerCase().includes(prof.full_name.toLowerCase())),
+    );
+    const matchedProvProfile = (allProfiles?.providerProfiles || []).find(
+      (prov: any) =>
+        prov.company_name &&
+        p.name &&
+        (prov.company_name.toLowerCase().includes(p.name.toLowerCase()) ||
+          p.name.toLowerCase().includes(prov.company_name.toLowerCase())),
+    );
+    const avatarUrl = matchedProfile?.avatar_url || matchedProvProfile?.company_logo_url || null;
+
     return {
       id: p.id,
       name: p.name,
@@ -567,7 +596,7 @@ export function SearchPage() {
       completionRate: completionRate,
       jobsCompleted: jobsCompleted,
       languages: "DE, EN",
-      avatar: `https://i.pravatar.cc/150?u=${p.name.replace(/\s+/g, "").toLowerCase()}`,
+      avatar: avatarUrl,
       about: p.notes || "Professional blue-collar service provider registered on BlueX.",
       services: [p.specialty || "General Contractor Services"],
       reviews: reviews,
@@ -833,9 +862,21 @@ export function SearchPage() {
                       key={p.id}
                       className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5 flex flex-col md:flex-row gap-4 relative hover:border-blue-200 transition-colors"
                     >
-                      {/* Photo */}
-                      <div className="h-24 w-24 rounded-2xl overflow-hidden bg-slate-100 shrink-0 relative mx-auto md:mx-0">
-                        <img src={p.avatar} alt={p.name} className="h-full w-full object-cover" />
+                      {/* Photo or Clean Initials Avatar */}
+                      <div className="h-24 w-24 rounded-2xl overflow-hidden bg-slate-100 shrink-0 relative mx-auto md:mx-0 flex items-center justify-center border border-slate-200">
+                        {p.avatar &&
+                        !p.avatar.includes("pravatar") &&
+                        !p.avatar.includes("unsplash") ? (
+                          <img src={p.avatar} alt={p.name} className="h-full w-full object-cover" />
+                        ) : (
+                          <div className="h-full w-full bg-slate-100 text-slate-400 flex items-center justify-center select-none">
+                            {p.type === "company" ? (
+                              <Building className="h-10 w-10 text-slate-400" />
+                            ) : (
+                              <User className="h-10 w-10 text-slate-400" />
+                            )}
+                          </div>
+                        )}
                       </div>
 
                       {/* Main Details */}

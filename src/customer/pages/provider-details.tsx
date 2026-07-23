@@ -160,7 +160,7 @@ export function ProviderDetailsPage() {
           languages: "DE, EN",
           hourlyRate: Number(dbContractor.hourly_rate || 90),
           minBooking: "2 hours",
-          avatar: `https://i.pravatar.cc/400?u=${dbContractor.name.replace(/\s+/g, "").toLowerCase()}`,
+          avatar: "",
           about:
             dbContractor.notes ||
             "Experienced professional dedicated to quality craftsmanship and customer satisfaction in Switzerland.",
@@ -228,12 +228,24 @@ export function ProviderDetailsPage() {
         <div className="space-y-6">
           {/* Header section with photo */}
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col md:flex-row gap-6">
-            <div className="h-36 w-36 md:h-44 md:w-44 rounded-2xl overflow-hidden bg-slate-100 shrink-0 mx-auto md:mx-0">
-              <img
-                src={provider.avatar}
-                alt={provider.name}
-                className="h-full w-full object-cover"
-              />
+            <div className="h-36 w-36 md:h-44 md:w-44 rounded-2xl overflow-hidden bg-slate-100 shrink-0 mx-auto md:mx-0 border border-slate-200 flex items-center justify-center">
+              {provider.avatar &&
+              !provider.avatar.includes("pravatar") &&
+              !provider.avatar.includes("unsplash") ? (
+                <img
+                  src={provider.avatar}
+                  alt={provider.name}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="h-full w-full bg-slate-100 text-slate-400 flex items-center justify-center select-none">
+                  {provider.type === "company" ? (
+                    <Building className="h-16 w-16 text-slate-400" />
+                  ) : (
+                    <User className="h-16 w-16 text-slate-400" />
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="flex-1 space-y-3 text-center md:text-left">

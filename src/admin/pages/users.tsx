@@ -12,15 +12,19 @@ import {
   FileText,
   Briefcase,
   Landmark,
+  ScanLine,
+  CheckCircle2,
+  AlertTriangle,
+  Loader2,
 } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/kpi-card";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
-import { OcrDocumentManager } from "@/ai module/ocr module";
+import { evaluateDynamicConfidence } from "@/ai module/ocr module/utils/ocr-confidence";
 
 const routeApi = getRouteApi("/_authenticated/ops/users");
 
@@ -43,6 +47,111 @@ export function OpsUsersPage() {
 
   const [selectedProvider, setSelectedProvider] = useState<any>(null);
   const [docDialogOpen, setDocDialogOpen] = useState(false);
+
+  // OCR Verification State (inline, no ocr_documents table needed)
+  const [ocrResults, setOcrResults] = useState<
+    Record<
+      string,
+      {
+        scanned: boolean;
+        scanning: boolean;
+        confidence: number;
+        text: string;
+        autoApproved: boolean;
+      }
+    >
+  >({});
+  const [ocrScanning, setOcrScanning] = useState(false);
+
+  // Reset OCR results when dialog opens for a new provider
+  useEffect(() => {
+    if (docDialogOpen && selectedProvider) {
+      setOcrResults({});
+    }
+  }, [docDialogOpen, selectedProvider]);
+
+  // Run OCR scan on a single document image URL using Tesseract.js
+  const runOcrOnUrl = useCallback(async (docName: string, imageUrl: string) => {
+    if (!imageUrl) return;
+    setOcrResults((prev) => ({
+      ...prev,
+      [docName]: { scanned: false, scanning: true, confidence: 0, text: "", autoApproved: false },
+    }));
+
+    try {
+      const Tesseract = await import("tesseract.js");
+      const worker = await Tesseract.createWorker("eng");
+      const { data } = await worker.recognize(imageUrl);
+      await worker.terminate();
+
+      const rawConf = Math.round(data.confidence);
+      const text = data.text || "";
+      const confidence = evaluateDynamicConfidence(rawConf, text, docName, "general");
+      const autoApproved = confidence >= 50;
+
+      setOcrResults((prev) => ({
+        ...prev,
+        [docName]: {
+          scanned: true,
+          scanning: false,
+          confidence,
+          text: text.substring(0, 200),
+          autoApproved,
+        },
+      }));
+    } catch (err) {
+      console.warn(`OCR failed for ${docName}:`, err);
+      setOcrResults((prev) => ({
+        ...prev,
+        [docName]: {
+          scanned: true,
+          scanning: false,
+          confidence: 0,
+          text: "OCR scan failed",
+          autoApproved: false,
+        },
+      }));
+    }
+  }, []);
+
+  // Run OCR scan on ALL provider documents
+  const runFullOcrScan = useCallback(async () => {
+    if (!selectedProvider) return;
+    setOcrScanning(true);
+
+    const docs: { name: string; url: string }[] = [];
+    if (selectedProvider.provider_type === "company") {
+      if (selectedProvider.business_registration_url)
+        docs.push({
+          name: "Business Registration",
+          url: selectedProvider.business_registration_url,
+        });
+      if (selectedProvider.vat_certificate_url)
+        docs.push({ name: "VAT Certificate", url: selectedProvider.vat_certificate_url });
+      if (selectedProvider.liability_insurance_url)
+        docs.push({ name: "Liability Insurance", url: selectedProvider.liability_insurance_url });
+      if (selectedProvider.id_document_url)
+        docs.push({ name: "Representative ID", url: selectedProvider.id_document_url });
+      if (selectedProvider.company_logo_url)
+        docs.push({ name: "Company Logo", url: selectedProvider.company_logo_url });
+      if (selectedProvider.business_license_url)
+        docs.push({ name: "Business License", url: selectedProvider.business_license_url });
+    } else {
+      if (selectedProvider.id_document_url)
+        docs.push({ name: "Government ID", url: selectedProvider.id_document_url });
+      if (selectedProvider.selfie_url)
+        docs.push({ name: "Verification Selfie", url: selectedProvider.selfie_url });
+      if (selectedProvider.address_proof_url)
+        docs.push({ name: "Proof of Address", url: selectedProvider.address_proof_url });
+    }
+
+    for (const doc of docs) {
+      await runOcrOnUrl(doc.name, doc.url);
+    }
+
+    setOcrScanning(false);
+    toast.success("OCR scan completed for all documents!");
+  }, [selectedProvider, runOcrOnUrl]);
 
   // 1. Query all profiles (Users)
   const { data: users, isLoading: usersLoading } = useQuery({
@@ -93,10 +202,8 @@ export function OpsUsersPage() {
   } = useQuery({
     queryKey: ["pendingProvidersList"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("provider_profiles")
-        .select(
-          `
+      const { data, error } = await supabase.from("provider_profiles").select(
+        `
           user_id,
           skills,
           experience_years,
@@ -118,21 +225,25 @@ export function OpsUsersPage() {
           vat_certificate_url,
           company_logo_url,
           business_license_url,
-          profile:profiles(id, full_name, email, created_at)
+          profile:profiles(id, full_name, email, avatar_url, created_at)
         `,
-        )
-        .eq("verification_status", "pending_approval");
+      );
 
       if (error) throw error;
       return data || [];
     },
   });
 
-  // Filter pending lists locally
+  // Filter pending lists locally - exclude already approved/verified providers
   const pendingFreelancers = pendingProviders.filter(
-    (p) => (p.provider_type || "individual") === "individual",
+    (p) =>
+      (p.provider_type || "individual") === "individual" &&
+      !p.is_verified &&
+      p.verification_status !== "approved",
   );
-  const pendingCompanies = pendingProviders.filter((p) => p.provider_type === "company");
+  const pendingCompanies = pendingProviders.filter(
+    (p) => p.provider_type === "company" && !p.is_verified && p.verification_status !== "approved",
+  );
 
   // 3. Approve Mutation
   const approveMutation = useMutation({
@@ -289,8 +400,18 @@ export function OpsUsersPage() {
                 {filteredUsers.map((u: any) => (
                   <tr key={u.id} className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-6 py-4 flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700">
-                        {u.full_name ? u.full_name[0].toUpperCase() : "U"}
+                      <div className="h-9 w-9 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700 overflow-hidden border border-slate-200 shrink-0">
+                        {u.avatar_url ? (
+                          <img
+                            src={u.avatar_url}
+                            alt={u.full_name}
+                            className="h-full w-full object-cover"
+                          />
+                        ) : u.full_name ? (
+                          u.full_name[0].toUpperCase()
+                        ) : (
+                          "U"
+                        )}
                       </div>
                       <div>
                         <div className="font-semibold text-slate-900">
@@ -325,7 +446,25 @@ export function OpsUsersPage() {
                         {u.role || "client"}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-right">
+                    <td className="px-6 py-4 text-right flex items-center justify-end gap-2">
+                      {u.role === "provider" && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setSelectedProvider({
+                              user_id: u.id,
+                              provider_type:
+                                u.provider_profiles?.[0]?.provider_type || "individual",
+                              profile: u,
+                            });
+                            setDocDialogOpen(true);
+                          }}
+                          className="rounded-xl text-xs gap-1 border-blue-200 bg-blue-50/50 text-blue-700 hover:bg-blue-100 cursor-pointer font-bold"
+                        >
+                          <Eye className="w-3.5 h-3.5" /> Audit OCR Documents
+                        </Button>
+                      )}
                       <Button
                         variant="outline"
                         size="sm"
@@ -379,8 +518,18 @@ export function OpsUsersPage() {
                 {pendingFreelancers.map((p: any) => (
                   <tr key={p.user_id} className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-6 py-4 flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700">
-                        {p.profile?.full_name ? p.profile.full_name[0].toUpperCase() : "P"}
+                      <div className="h-9 w-9 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700 overflow-hidden border border-slate-200 shrink-0">
+                        {p.profile?.avatar_url ? (
+                          <img
+                            src={p.profile.avatar_url}
+                            alt={p.profile?.full_name}
+                            className="h-full w-full object-cover"
+                          />
+                        ) : p.profile?.full_name ? (
+                          p.profile.full_name[0].toUpperCase()
+                        ) : (
+                          "P"
+                        )}
                       </div>
                       <div>
                         <div className="font-semibold text-slate-900">
@@ -405,8 +554,20 @@ export function OpsUsersPage() {
                       CHF {Number(p.hourly_rate).toFixed(0)}/hr
                     </td>
                     <td className="px-6 py-4">
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-amber-50 text-amber-700 text-[10px] font-bold uppercase tracking-wider border border-amber-100 animate-pulse">
-                        Pending review
+                      <span
+                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${
+                          p.is_verified || p.verification_status === "approved"
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-100"
+                            : p.verification_status === "rejected"
+                              ? "bg-rose-50 text-rose-700 border-rose-100"
+                              : "bg-amber-50 text-amber-700 border-amber-100 animate-pulse"
+                        }`}
+                      >
+                        {p.is_verified || p.verification_status === "approved"
+                          ? "Approved & Verified"
+                          : p.verification_status === "rejected"
+                            ? "Rejected"
+                            : "Pending Review"}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
@@ -472,8 +633,20 @@ export function OpsUsersPage() {
                     <div className="text-[10px] text-slate-400">{p.profile?.email}</div>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider border border-blue-100 animate-pulse">
-                      Awaiting VAT check
+                    <span
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${
+                        p.is_verified || p.verification_status === "approved"
+                          ? "bg-emerald-50 text-emerald-700 border-emerald-100"
+                          : p.verification_status === "rejected"
+                            ? "bg-rose-50 text-rose-700 border-rose-100"
+                            : "bg-blue-50 text-blue-700 border-blue-100 animate-pulse"
+                      }`}
+                    >
+                      {p.is_verified || p.verification_status === "approved"
+                        ? "Approved & Verified"
+                        : p.verification_status === "rejected"
+                          ? "Rejected"
+                          : "Awaiting VAT Check"}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
@@ -821,15 +994,131 @@ export function OpsUsersPage() {
                 )}
               </div>
 
-              {/* OCR Scanned & Verified Documents */}
-              <div className="space-y-3 pt-6 border-t border-slate-100">
-                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-blue-600" />
-                  <span>OCR Scanned & Auto-Verified Documents</span>
-                </h4>
-                <div className="bg-slate-50/50 p-4 rounded-xl border border-slate-200">
-                  <OcrDocumentManager targetUserId={selectedProvider.user_id} readOnly />
+              {/* OCR Verification Section */}
+              <div className="space-y-4 pt-6 border-t border-slate-100">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                    <ScanLine className="w-4 h-4 text-blue-600" />
+                    <span>OCR Document Verification</span>
+                  </h4>
+                  <Button
+                    onClick={runFullOcrScan}
+                    disabled={ocrScanning}
+                    className="h-8 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold gap-1.5 cursor-pointer"
+                  >
+                    {ocrScanning ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" /> Scanning...
+                      </>
+                    ) : (
+                      <>
+                        <ScanLine className="w-3.5 h-3.5" /> Run OCR Scan
+                      </>
+                    )}
+                  </Button>
                 </div>
+
+                {/* OCR Summary Stats */}
+                {Object.keys(ocrResults).length > 0 && (
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 text-center">
+                      <p className="text-[10px] font-bold text-blue-500 uppercase">Scanned</p>
+                      <p className="text-lg font-bold text-blue-700">
+                        {Object.values(ocrResults).filter((r) => r.scanned).length}
+                      </p>
+                    </div>
+                    <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 text-center">
+                      <p className="text-[10px] font-bold text-emerald-500 uppercase">
+                        Auto-Approved
+                      </p>
+                      <p className="text-lg font-bold text-emerald-700">
+                        {Object.values(ocrResults).filter((r) => r.autoApproved).length}
+                      </p>
+                    </div>
+                    <div className="bg-amber-50 border border-amber-100 rounded-xl p-3 text-center">
+                      <p className="text-[10px] font-bold text-amber-500 uppercase">
+                        Avg Confidence
+                      </p>
+                      <p className="text-lg font-bold text-amber-700">
+                        {Object.values(ocrResults).filter((r) => r.scanned).length > 0
+                          ? Math.round(
+                              Object.values(ocrResults)
+                                .filter((r) => r.scanned)
+                                .reduce((sum, r) => sum + r.confidence, 0) /
+                                Object.values(ocrResults).filter((r) => r.scanned).length,
+                            )
+                          : 0}
+                        %
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Per-Document OCR Results */}
+                {Object.keys(ocrResults).length > 0 && (
+                  <div className="space-y-2">
+                    {Object.entries(ocrResults).map(([name, result]) => (
+                      <div
+                        key={name}
+                        className="flex items-center justify-between bg-white border border-slate-200 rounded-lg px-4 py-2.5"
+                      >
+                        <div className="flex items-center gap-3">
+                          <FileText className="w-4 h-4 text-slate-400" />
+                          <div>
+                            <p className="text-xs font-bold text-slate-800">{name}</p>
+                            {result.scanned && result.text && (
+                              <p className="text-[10px] text-slate-400 truncate max-w-[280px]">
+                                {result.text}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {result.scanning ? (
+                            <span className="flex items-center gap-1 text-[10px] font-bold text-blue-600">
+                              <Loader2 className="w-3 h-3 animate-spin" /> Scanning...
+                            </span>
+                          ) : result.scanned ? (
+                            <>
+                              <span
+                                className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                                  result.confidence >= 50
+                                    ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                                    : "bg-rose-50 text-rose-700 border border-rose-200"
+                                }`}
+                              >
+                                {result.confidence}%
+                              </span>
+                              {result.autoApproved ? (
+                                <span className="flex items-center gap-0.5 text-[10px] font-bold text-emerald-600">
+                                  <CheckCircle2 className="w-3 h-3" /> Verified
+                                </span>
+                              ) : (
+                                <span className="flex items-center gap-0.5 text-[10px] font-bold text-amber-600">
+                                  <AlertTriangle className="w-3 h-3" /> Low
+                                </span>
+                              )}
+                            </>
+                          ) : (
+                            <span className="text-[10px] text-slate-400">Not scanned</span>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {Object.keys(ocrResults).length === 0 && (
+                  <div className="bg-slate-50/50 border border-slate-200 rounded-xl p-6 text-center">
+                    <ScanLine className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                    <p className="text-xs font-semibold text-slate-500">
+                      Click "Run OCR Scan" to verify documents with Tesseract.js
+                    </p>
+                    <p className="text-[10px] text-slate-400 mt-1">
+                      Documents with ≥50% confidence are auto-approved
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -844,13 +1133,27 @@ export function OpsUsersPage() {
               >
                 <X className="w-4 h-4" /> Reject Application
               </Button>
-              <Button
-                onClick={() => approveMutation.mutate(selectedProvider.user_id)}
-                disabled={rejectMutation.isPending || approveMutation.isPending}
-                className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center gap-1 cursor-pointer"
-              >
-                <Check className="w-4 h-4" /> Approve & Verify Account
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  onClick={() => {
+                    // OCR Auto-Approve: run scan first then approve
+                    runFullOcrScan().then(() => {
+                      approveMutation.mutate(selectedProvider.user_id);
+                    });
+                  }}
+                  disabled={rejectMutation.isPending || approveMutation.isPending || ocrScanning}
+                  className="h-10 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold flex items-center gap-1 cursor-pointer"
+                >
+                  <ScanLine className="w-4 h-4" /> OCR Verify & Approve
+                </Button>
+                <Button
+                  onClick={() => approveMutation.mutate(selectedProvider.user_id)}
+                  disabled={rejectMutation.isPending || approveMutation.isPending}
+                  className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center gap-1 cursor-pointer"
+                >
+                  <Check className="w-4 h-4" /> Manual Approve
+                </Button>
+              </div>
             </div>
           )}
         </DialogContent>

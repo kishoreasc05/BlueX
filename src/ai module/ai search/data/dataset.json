@@ -1,0 +1,719 @@
+{
+  "categories": {
+    "plumbing": {
+      "id": "plumbing",
+      "label": "Plumbing & Heating",
+      "slug": "plumber",
+      "icon": "Droplet",
+      "synonyms": [
+        "plumber",
+        "plumbing",
+        "pipe",
+        "leak",
+        "leaking",
+        "drain",
+        "unblock",
+        "faucet",
+        "tap",
+        "sink",
+        "toilet",
+        "shower",
+        "boiler",
+        "heating",
+        "water",
+        "sewer",
+        "clogged",
+        "burst",
+        "pipework",
+        "radiator",
+        "bathroom"
+      ],
+      "urgencyKeywords": [
+        "emergency",
+        "urgent",
+        "flooding",
+        "burst",
+        "leaking",
+        "now",
+        "today",
+        "asap"
+      ],
+      "services": [
+        "Emergency Leak Repair",
+        "Faucets & Toilets Installation",
+        "Drain Unblocking",
+        "Heating Maintenance",
+        "Bathroom Renovation"
+      ]
+    },
+    "painting": {
+      "id": "painting",
+      "label": "Painting & Decorating",
+      "slug": "painter",
+      "icon": "Paintbrush",
+      "synonyms": [
+        "paint",
+        "painter",
+        "painting",
+        "wall",
+        "walls",
+        "ceiling",
+        "interior",
+        "exterior",
+        "colour",
+        "color",
+        "plaster",
+        "plastering",
+        "wallpaper",
+        "decorating",
+        "facade",
+        "primer",
+        "varnish",
+        "coat"
+      ],
+      "urgencyKeywords": ["urgent", "asap", "move-out", "handover"],
+      "services": [
+        "Interior Painting",
+        "Exterior Painting",
+        "Wallpaper Hanging",
+        "Plastering & Repair",
+        "Facade Restoration"
+      ]
+    },
+    "cleaning": {
+      "id": "cleaning",
+      "label": "Cleaning Services",
+      "slug": "cleaner",
+      "icon": "Sparkles",
+      "synonyms": [
+        "clean",
+        "cleaner",
+        "cleaning",
+        "maid",
+        "housekeeping",
+        "housekeeper",
+        "janitor",
+        "housework",
+        "vacuum",
+        "mop",
+        "dust",
+        "window",
+        "carpet",
+        "move-out",
+        "move-in",
+        "deep clean",
+        "disinfect",
+        "sanitise",
+        "laundry",
+        "ironing"
+      ],
+      "urgencyKeywords": ["urgent", "today", "tomorrow", "handover"],
+      "services": [
+        "Regular House Cleaning",
+        "Deep Cleaning",
+        "Move-in / Move-out Cleaning",
+        "Window Cleaning",
+        "Carpet Steam Cleaning"
+      ]
+    },
+    "electrical": {
+      "id": "electrical",
+      "label": "Electrical & Smart Home",
+      "slug": "electrician",
+      "icon": "Zap",
+      "synonyms": [
+        "electric",
+        "electrician",
+        "electrical",
+        "wiring",
+        "socket",
+        "outlet",
+        "switch",
+        "fuse",
+        "fusebox",
+        "lighting",
+        "fixture",
+        "lamp",
+        "power",
+        "circuit",
+        "short-circuit",
+        "smart home",
+        "ev charger",
+        "appliance"
+      ],
+      "urgencyKeywords": [
+        "emergency",
+        "urgent",
+        "no power",
+        "short circuit",
+        "sparking",
+        "blackout"
+      ],
+      "services": [
+        "Electrical Repairs",
+        "Smart Home Installation",
+        "Fuse Box Upgrades",
+        "Lighting Design & Setup",
+        "EV Charger Fitting"
+      ]
+    },
+    "gardening": {
+      "id": "gardening",
+      "label": "Gardening & Landscaping",
+      "slug": "gardener",
+      "icon": "Leaf",
+      "synonyms": [
+        "garden",
+        "gardener",
+        "gardening",
+        "lawn",
+        "mowing",
+        "mower",
+        "hedge",
+        "trimming",
+        "pruning",
+        "weeding",
+        "tree",
+        "plant",
+        "planting",
+        "landscaping",
+        "patio",
+        "green waste",
+        "turf"
+      ],
+      "urgencyKeywords": ["asap", "overgrown", "storm damage"],
+      "services": [
+        "Lawn Mowing & Care",
+        "Hedge Trimming & Pruning",
+        "Weeding & Mulching",
+        "Tree Care",
+        "Garden Design & Planting"
+      ]
+    },
+    "carpentry": {
+      "id": "carpentry",
+      "label": "Carpentry & Handyman",
+      "slug": "carpenter",
+      "icon": "Hammer",
+      "synonyms": [
+        "carpenter",
+        "carpentry",
+        "handyman",
+        "wood",
+        "woodwork",
+        "furniture",
+        "assembly",
+        "ikea",
+        "shelf",
+        "shelving",
+        "cabinet",
+        "door",
+        "window",
+        "repair",
+        "fitting",
+        "hinge",
+        "lock"
+      ],
+      "urgencyKeywords": ["urgent", "broken door", "lockout"],
+      "services": [
+        "Furniture Assembly",
+        "Custom Woodwork",
+        "Door & Window Repairs",
+        "Shelf & TV Mounting",
+        "Cabinet Fitting"
+      ]
+    },
+    "moving": {
+      "id": "moving",
+      "label": "Moving & Relocation",
+      "slug": "movers",
+      "icon": "Truck",
+      "synonyms": [
+        "move",
+        "mover",
+        "movers",
+        "moving",
+        "relocation",
+        "transport",
+        "van",
+        "truck",
+        "packing",
+        "boxes",
+        "furniture transport",
+        "haulage",
+        "disposal",
+        "clearance"
+      ],
+      "urgencyKeywords": ["urgent", "last minute", "this weekend", "handover"],
+      "services": [
+        "Home Relocation",
+        "Office Moving",
+        "Professional Packing",
+        "Heavy Furniture Transport",
+        "Furniture Disposal"
+      ]
+    },
+    "childcare": {
+      "id": "childcare",
+      "label": "Childcare & Babysitting",
+      "slug": "childcare",
+      "icon": "Heart",
+      "synonyms": [
+        "nanny",
+        "babysitter",
+        "childcare",
+        "baby",
+        "children",
+        "kids",
+        "afterschool",
+        "daycare",
+        "infant",
+        "toddler",
+        "tutoring"
+      ],
+      "urgencyKeywords": ["urgent", "tonight", "last minute"],
+      "services": [
+        "Babysitting",
+        "Full-time Nanny",
+        "After-school Care",
+        "Infant Care",
+        "Language Tutoring"
+      ]
+    }
+  },
+  "pricingBenchmarks": {
+    "cleaning": {
+      "category": "cleaning",
+      "avgRate": 42,
+      "minRate": 35,
+      "maxRate": 55,
+      "currency": "CHF",
+      "unit": "hour"
+    },
+    "plumbing": {
+      "category": "plumbing",
+      "avgRate": 95,
+      "minRate": 80,
+      "maxRate": 130,
+      "currency": "CHF",
+      "unit": "hour"
+    },
+    "electrical": {
+      "category": "electrical",
+      "avgRate": 110,
+      "minRate": 90,
+      "maxRate": 140,
+      "currency": "CHF",
+      "unit": "hour"
+    },
+    "painting": {
+      "category": "painting",
+      "avgRate": 65,
+      "minRate": 50,
+      "maxRate": 85,
+      "currency": "CHF",
+      "unit": "hour"
+    },
+    "gardening": {
+      "category": "gardening",
+      "avgRate": 55,
+      "minRate": 40,
+      "maxRate": 70,
+      "currency": "CHF",
+      "unit": "hour"
+    },
+    "carpentry": {
+      "category": "carpentry",
+      "avgRate": 75,
+      "minRate": 60,
+      "maxRate": 95,
+      "currency": "CHF",
+      "unit": "hour"
+    },
+    "moving": {
+      "category": "moving",
+      "avgRate": 85,
+      "minRate": 70,
+      "maxRate": 120,
+      "currency": "CHF",
+      "unit": "hour"
+    },
+    "childcare": {
+      "category": "childcare",
+      "avgRate": 38,
+      "minRate": 28,
+      "maxRate": 50,
+      "currency": "CHF",
+      "unit": "hour"
+    }
+  },
+  "recommendationRules": {
+    "cleaning": {
+      "crossSell": [
+        {
+          "title": "Window Cleaning Service",
+          "category": "cleaning",
+          "reason": "Often booked alongside house cleaning for complete seasonal upkeep."
+        },
+        {
+          "title": "Carpet Steam Deep Clean",
+          "category": "cleaning",
+          "reason": "Removes deep dirt & allergens from high-traffic rugs."
+        }
+      ],
+      "subscription": {
+        "title": "Weekly Recurring Housekeeping",
+        "description": "Schedule regular weekly cleaning and save 15% on hourly rate.",
+        "discountPercentage": 15
+      }
+    },
+    "plumbing": {
+      "crossSell": [
+        {
+          "title": "Annual Heating System Inspection",
+          "category": "plumbing",
+          "reason": "Prevent unexpected winter radiator breakdowns."
+        },
+        {
+          "title": "Bathroom Sanitory Upgrade",
+          "category": "plumbing",
+          "reason": "Eco-friendly low-flow tap and shower head replacements."
+        }
+      ],
+      "subscription": {
+        "title": "Annual Maintenance & Emergency Plan",
+        "description": "Priority 24/7 emergency response with zero dispatch fee.",
+        "discountPercentage": 10
+      }
+    },
+    "gardening": {
+      "crossSell": [
+        {
+          "title": "Hedge Trimming & Pruning",
+          "category": "gardening",
+          "reason": "Keep boundary hedges neat and healthy."
+        },
+        {
+          "title": "Green Waste Removal",
+          "category": "gardening",
+          "reason": "Eco-friendly disposal of cut grass and leaves."
+        }
+      ],
+      "subscription": {
+        "title": "Bi-Weekly Lawn & Garden Maintenance",
+        "description": "Automated regular garden upkeep through summer season.",
+        "discountPercentage": 12
+      }
+    }
+  },
+  "coachingRules": {
+    "portfolioPhotos": {
+      "minTarget": 3,
+      "impact": "Upload 3+ portfolio images to receive 40% more booking inquiries."
+    },
+    "responseTimeMinutes": {
+      "maxTarget": 30,
+      "impact": "Responders answering within 30 mins win 3x more clients."
+    },
+    "priceBenchmark": {
+      "tolerancePercent": 20,
+      "impact": "Your rate is higher than local market average. Adjusting by 10% increases booking rate."
+    },
+    "bioCompleteness": {
+      "minWords": 30,
+      "impact": "Profiles with detailed bios convert 50% more views into confirmed jobs."
+    }
+  },
+  "jobTemplates": {
+    "painting": {
+      "titleTemplate": "{rooms}-Room {propertyType} Interior Painting",
+      "scopeItems": [
+        "Surface sanding & wall priming",
+        "2 coats of premium emulsion paint",
+        "Trim & baseboard detail work",
+        "Protective plastic covering & cleanup"
+      ],
+      "materialsNote": "Paint & materials can be supplied by provider or customer by arrangement.",
+      "hoursPerRoom": 4
+    },
+    "plumbing": {
+      "titleTemplate": "{urgencyLabel} Plumbing Repair — {issue}",
+      "scopeItems": [
+        "Visual diagnosis & pressure testing",
+        "Pipe / seal replacement",
+        "Drain unblocking / descaling",
+        "Sanitation & leak verification"
+      ],
+      "materialsNote": "Standard replacement seals and fittings included.",
+      "defaultHours": 2
+    },
+    "cleaning": {
+      "titleTemplate": "Residential {cleaningType} Cleaning Service",
+      "scopeItems": [
+        "Dusting & surface wiping",
+        "Vacuuming & floor mopping",
+        "Kitchen counter & sink deep sanitisation",
+        "Bathroom toilet & shower scrubbing"
+      ],
+      "materialsNote": "Eco-friendly detergents and microfiber cloths provided.",
+      "defaultHours": 3
+    },
+    "electrical": {
+      "titleTemplate": "Certified Electrical Setup & Repair",
+      "scopeItems": [
+        "Circuit & fuse box safety check",
+        "Wiring / fixture installation",
+        "Voltage testing & grounding verification",
+        "Swiss EFZ compliance documentation"
+      ],
+      "materialsNote": "Certified Swiss electrical components used.",
+      "defaultHours": 2
+    }
+  },
+  "timeframePatterns": [
+    {
+      "regex": "\\b(today|tonight|now|asap|immediately|right away)\\b",
+      "label": "Today (Urgent)",
+      "urgency": "critical"
+    },
+    { "regex": "\\b(tomorrow|next day)\\b", "label": "Tomorrow", "urgency": "high" },
+    {
+      "regex": "\\b(this week|this weekend|saturday|sunday)\\b",
+      "label": "This Week",
+      "urgency": "medium"
+    },
+    { "regex": "\\b(next week|in a week|1 week)\\b", "label": "Next Week", "urgency": "normal" },
+    {
+      "regex": "\\b(next month|in 2 weeks|in 3 weeks|in a month)\\b",
+      "label": "Flexible",
+      "urgency": "low"
+    }
+  ],
+  "budgetPatterns": [
+    { "regex": "(?:CHF|chf|Fr\\.?)\\s*(\\d[\\d,.']*)", "type": "exact" },
+    {
+      "regex": "(?:under|below|max(?:imum)?|up to|within|budget of)\\s*(?:CHF|chf|Fr\\.?)?\\s*(\\d[\\d,.']*)",
+      "type": "max"
+    },
+    {
+      "regex": "(\\d[\\d,.']*)\\s*(?:CHF|chf|Fr\\.?)\\s*(?:per|/)\\s*(?:hr|hour|h|stunde)",
+      "type": "hourly"
+    }
+  ],
+  "aiCoachKnowledgeBase": {
+    "intentRules": [
+      {
+        "id": "profile_analysis",
+        "keywords": [
+          "analyze",
+          "analysis",
+          "health",
+          "score",
+          "performance",
+          "profile",
+          "view",
+          "conversion"
+        ],
+        "title": "📊 Profile Performance & Health Score Analysis",
+        "category": "performance",
+        "responses": [
+          {
+            "summary": "Here is a complete diagnostic of your BlueX provider profile performance based on Swiss market benchmarks:",
+            "metrics": [
+              {
+                "label": "Profile Health Score",
+                "value": "85%",
+                "target": "100%",
+                "status": "good"
+              },
+              {
+                "label": "Booking Conversion",
+                "value": "18.4%",
+                "target": "15%+",
+                "status": "good"
+              },
+              {
+                "label": "Avg Response Time",
+                "value": "18 mins",
+                "target": "< 30 mins",
+                "status": "excellent"
+              },
+              {
+                "label": "OCR Verification",
+                "value": "Verified (Auto-Approved)",
+                "target": "Approved",
+                "status": "excellent"
+              }
+            ],
+            "actionPoints": [
+              "📸 **Add 2 more portfolio photos**: Profiles with 3+ images get 40% more booking inquiries.",
+              "⭐ **Collect 2 client reviews**: Providers with at least 5 reviews receive 2.5x more search visibility.",
+              "⚡ **Enable Instant Booking**: Customers filter by instant availability 60% of the time in Zurich."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "pricing_benchmark",
+        "keywords": [
+          "price",
+          "pricing",
+          "rate",
+          "hourly",
+          "cost",
+          "chf",
+          "expensive",
+          "cheap",
+          "charge",
+          "benchmark"
+        ],
+        "title": "💰 Swiss Market Rate & Pricing Benchmark Advisor",
+        "category": "pricing",
+        "responses": [
+          {
+            "summary": "Comparing your service rates with current Canton Zurich & Swiss market averages:",
+            "benchmarks": [
+              {
+                "trade": "Plumbing & Heating",
+                "marketRange": "CHF 95 - 135 / hr",
+                "recommended": "CHF 110 / hr"
+              },
+              {
+                "trade": "Electrical Setup",
+                "marketRange": "CHF 105 - 145 / hr",
+                "recommended": "CHF 125 / hr"
+              },
+              {
+                "trade": "Cleaning Services",
+                "marketRange": "CHF 45 - 65 / hr",
+                "recommended": "CHF 52 / hr"
+              },
+              {
+                "trade": "Painting & Decorating",
+                "marketRange": "CHF 70 - 95 / hr",
+                "recommended": "CHF 85 / hr"
+              },
+              {
+                "trade": "Gardening & Landscape",
+                "marketRange": "CHF 55 - 80 / hr",
+                "recommended": "CHF 65 / hr"
+              },
+              {
+                "trade": "Carpentry & Handyman",
+                "marketRange": "CHF 75 - 105 / hr",
+                "recommended": "CHF 90 / hr"
+              }
+            ],
+            "actionPoints": [
+              "💡 **Sweet Spot Strategy**: Setting your rate within 5% of the recommended median maximizes win rate without sacrificing margin.",
+              "📈 **Peak Demand Surcharge**: You can increase your rate by +15% for urgent weekend or same-day bookings."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "more_bookings",
+        "keywords": [
+          "more bookings",
+          "increase bookings",
+          "get clients",
+          "boost",
+          "grow",
+          "clients",
+          "orders",
+          "jobs",
+          "growth"
+        ],
+        "title": "🚀 4-Step Strategy to Increase Client Bookings by 40%",
+        "category": "growth",
+        "responses": [
+          {
+            "summary": "Follow this proven 4-step BlueX provider growth blueprint:",
+            "actionPoints": [
+              "1. ⚡ **Keep Response Time Under 20 Mins**: 75% of Swiss customers hire the first qualified provider who responds.",
+              "2. 📜 **Verify Documents via OCR**: Verified badges increase customer trust and listing priority by 3x.",
+              "3. 📸 **Showcase Before/After Photos**: Real Swiss project photos increase profile conversion from 8% to 22%.",
+              "4. 💬 **Respond Promptly to Public Tenders**: Submit clear cost estimates within 2 hours of a tender posting."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "tender_bidding",
+        "keywords": [
+          "tender",
+          "tenders",
+          "bid",
+          "bidding",
+          "proposal",
+          "public tender",
+          "apply",
+          "win tender"
+        ],
+        "title": "📝 How to Win Public Tenders on BlueX",
+        "category": "tenders",
+        "responses": [
+          {
+            "summary": "Use this structured Swiss proposal template when responding to customer tender posts:",
+            "actionPoints": [
+              "📋 **Structure**: 1) Friendly introduction, 2) Clear breakdown of labor + materials, 3) Estimated completion timeframe, 4) Mention insurance & warranty.",
+              "💼 **Sample Bid Response**:\n\n*\"Grüezi! I can handle your project next week. Total estimate is CHF {total} ({hours} hours @ CHF {rate}/hr + CHF {materials} materials). Includes 2-year warranty & full CHF 5,000,000 Swiss liability insurance. Available on Monday at 08:00 AM.\"*"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "swiss_payroll_tax",
+        "keywords": [
+          "payroll",
+          "tax",
+          "ahv",
+          "uvg",
+          "social security",
+          "private",
+          "legal",
+          "insurance",
+          "withholding"
+        ],
+        "title": "🇨🇭 BlueX Swiss Payroll & Social Security Compliance",
+        "category": "compliance",
+        "responses": [
+          {
+            "summary": "BlueX automatically handles legal compliance for private contractors and registered companies in Switzerland:",
+            "actionPoints": [
+              "🏛️ **AHV / IV / EO Contributions**: For private freelancers, BlueX calculates and deducts mandatory social contributions automatically.",
+              "🛡️ **UVG Accident Insurance**: Every booking conducted through BlueX includes occupational accident insurance coverage.",
+              "📄 **Automatic Receipts**: VAT-compliant invoices (8.1% Swiss VAT for companies) are issued instantly to clients upon task completion."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ocr_verification",
+        "keywords": [
+          "ocr",
+          "verification",
+          "verify",
+          "document",
+          "auto approve",
+          "identity",
+          "id",
+          "passport",
+          "confidence"
+        ],
+        "title": "🛡️ BlueX Dynamic OCR Multi-Factor Document Verification",
+        "category": "verification",
+        "responses": [
+          {
+            "summary": "How BlueX automatically verifies provider documents with zero admin wait time:",
+            "actionPoints": [
+              "🔍 **Multi-Factor Confidence Scoring**: Evaluates Tesseract raw text (40%), official keyword density (25%), word entropy (20%), and image quality (15%).",
+              "✅ **Auto-Approval Threshold**: Documents scoring 50%+ automatically grant verified provider status immediately upon upload.",
+              "🚀 **Instant Badge**: Once verified, a green 'Verified Provider' badge is added to your profile across search and AI match cards."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

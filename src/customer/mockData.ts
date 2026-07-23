@@ -14,7 +14,7 @@ export interface MockProvider {
   completionRate: string | null;
   jobsCompleted: number;
   languages: string;
-  avatar: string;
+  avatar?: string;
   about: string;
   services: string[];
   reviews: { id: number; author: string; rating: number; date: string; text: string }[];
@@ -49,8 +49,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     jobsCompleted: 0,
     languages: "DE, EN",
     hourlyRate: 52,
-    avatar:
-      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=400&q=80",
+    avatar: "",
     about:
       "Clean & Shine AG is a registered Swiss facility services company. We provide professional cleaning services for homes, apartments, and offices. Our staff is fully employed, insured, and trained to meet strict Swiss hygiene standards.",
     services: [
@@ -91,8 +90,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     jobsCompleted: 0,
     languages: "DE, EN, FR",
     hourlyRate: 48,
-    avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80",
+    avatar: "",
     about:
       "Sparkle Home Services provides top-tier home care throughout the Zurich region. We handle the recruitment, social security, and insurance of our cleaning team, allowing you to enjoy a sparkling clean home hassle-free.",
     services: ["General Cleaning", "Kitchen Deep Clean", "Ironing & Laundry"],
@@ -124,8 +122,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     jobsCompleted: 0,
     languages: "DE, EN, IT",
     hourlyRate: 55,
-    avatar:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
+    avatar: "",
     about:
       "Zuri Cleaning Experts specializes in premium home upkeep. We cater to high-end residential properties and commercial offices looking for Swiss-quality results. Our services are fully customisable.",
     services: [
@@ -162,8 +159,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     jobsCompleted: 0,
     languages: "DE, FR",
     hourlyRate: 36,
-    avatar:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
+    avatar: "",
     about:
       "Hi! I am Sarah, an experienced cleaner offering private cleaning services in Zurich. I am passionate about creating clean, peaceful living spaces. Hiring me is simple and legally compliant through BlueX's automated payroll and social contribution system.",
     services: ["Regular Housework", "Laundry & Ironing", "Window Cleaning"],
@@ -194,8 +190,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     jobsCompleted: 0,
     languages: "DE, EN, IT",
     hourlyRate: 115,
-    avatar:
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=80",
+    avatar: "",
     about:
       "Zuri Plumbing GmbH is your go-to provider for all residential plumbing needs, heating, and emergency leak repairs. We offer rapid response times and certified Swiss master plumbers.",
     services: [
@@ -232,8 +227,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     jobsCompleted: 0,
     languages: "DE, EN, FR",
     hourlyRate: 125,
-    avatar:
-      "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80",
+    avatar: "",
     about:
       "Swiss Electricians AG provides licensed electrical services including smart home integrations, lighting design, wiring repairs, and appliance setup. Safety and precision are our core values.",
     services: [
@@ -270,8 +264,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     jobsCompleted: 0,
     languages: "DE",
     hourlyRate: 68,
-    avatar:
-      "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=400&q=80",
+    avatar: "",
     about:
       "I am Hans, a retired carpenter offering carpentry, furniture assembly, and general handyman services. I bring my own professional woodworking tools and 30+ years of craft experience. Book me directly via BlueX.",
     services: [
@@ -307,8 +300,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     jobsCompleted: 0,
     languages: "FR, DE, EN",
     hourlyRate: 58,
-    avatar:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80",
+    avatar: "",
     about:
       "Hello! I am Marc. I offer professional garden maintenance, lawn mowing, hedge trimming, and planting services in Zurich. I love bringing gardens to life and keeping them beautiful.",
     services: [
@@ -344,8 +336,7 @@ export const MOCK_PROVIDERS: Record<string, MockProvider> = {
     jobsCompleted: 0,
     languages: "IT, DE, EN",
     hourlyRate: 42,
-    avatar:
-      "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=400&q=80",
+    avatar: "",
     about:
       "Hi families! I am Elena, a qualified nanny with a certificate in early childhood education. I have over 6 years of experience caring for children from babies to school age. I am CPR/First Aid certified.",
     services: ["Babysitting", "After-school Care", "Language Tutoring (Italian)"],

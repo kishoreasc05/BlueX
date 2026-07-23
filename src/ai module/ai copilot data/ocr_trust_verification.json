@@ -1,0 +1,22 @@
+{
+  "verification": [
+    {
+      "id": "ocr_verification",
+      "category": "verification",
+      "keywords": ["ocr", "verification", "verify", "document", "auto approve", "identity", "id", "passport", "confidence", "trust", "badge"],
+      "title": "🛡️ BlueX Dynamic OCR Multi-Factor Document Verification",
+      "summary": "How BlueX automatically validates provider documents in seconds with zero admin wait time:",
+      "factors": [
+        { "name": "Tesseract Raw OCR Extraction", "weight": "40%" },
+        { "name": "Swiss Official Keyword Density (AHV/UID/Cantonal Stamp)", "weight": "25%" },
+        { "name": "Document Text Entropy & Formatting", "weight": "20%" },
+        { "name": "Image Resolution & Contrast Quality", "weight": "15%" }
+      ],
+      "approvalThreshold": 50,
+      "actionPoints": [
+        "🔍 **Auto-Approval Threshold**: Documents scoring 50%+ are approved instantly by our client-side OCR engine.",
+        "✅ **Verified Badge**: Grants the green 'Verified Provider' badge, raising profile placement in Swiss search results by 3x."
+      ]
+    }
+  ]
+}

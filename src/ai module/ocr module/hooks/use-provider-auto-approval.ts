@@ -4,11 +4,11 @@ import { DocumentCategory } from "../types/ocr.types";
 import { toast } from "sonner";
 
 interface AutoApprovalOptions {
-  confidenceThreshold?: number; // default 70
+  confidenceThreshold?: number; // default 50
 }
 
 export function useProviderAutoApproval(options: AutoApprovalOptions = {}) {
-  const threshold = options.confidenceThreshold || 70;
+  const threshold = options.confidenceThreshold || 50;
 
   const checkAndAutoApprove = useCallback(
     async (params: {

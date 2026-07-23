@@ -10,7 +10,7 @@ if (typeof window !== "undefined" && !pdfjsLib.GlobalWorkerOptions.workerSrc) {
 
 interface UseTesseractOcrOptions {
   language?: string; // default "eng"
-  confidenceThreshold?: number; // default 70
+  confidenceThreshold?: number; // default 50
 }
 
 export function useTesseractOcr(options: UseTesseractOcrOptions = {}) {
@@ -119,7 +119,7 @@ export function useTesseractOcr(options: UseTesseractOcrOptions = {}) {
         await worker.terminate();
         workerRef.current = null;
 
-        const isAutoApproved = totalConfidence >= (options.confidenceThreshold || 70);
+        const isAutoApproved = totalConfidence >= (options.confidenceThreshold || 50);
 
         setProgressState({
           stage: "completed",

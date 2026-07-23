@@ -1,7 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Mail, Trash2, Copy, UserPlus, Bell, Globe, MapPin, Key, User } from "lucide-react";
+import {
+  Mail,
+  Trash2,
+  Copy,
+  UserPlus,
+  Bell,
+  Globe,
+  MapPin,
+  Key,
+  User,
+  Camera,
+  Loader2,
+} from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useActiveOrg } from "@/hooks/use-orgs";
@@ -101,6 +113,21 @@ function SettingsPage() {
   const [newServicePrice, setNewServicePrice] = useState("");
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
 
+  // Fetch user profile
+  const { data: userProfile, refetch: refetchUserProfile } = useQuery({
+    queryKey: ["settingsUserProfile", user?.id],
+    enabled: !!user?.id,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user!.id)
+        .single();
+      if (error) throw error;
+      return data;
+    },
+  });
+
   // Fetch provider profiles
   const { data: providerProfile, refetch: refetchProviderProfile } = useQuery({
     queryKey: ["settingsProviderProfile", user?.id],
@@ -115,6 +142,64 @@ function SettingsPage() {
       return data;
     },
   });
+
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user?.id) return;
+
+    setUploadingAvatar(true);
+    try {
+      const cloudName = "hlzggzyr";
+      const preset = "bluex_ocr_docs";
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", preset);
+
+      let secureUrl = "";
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        secureUrl = data.secure_url;
+      } else {
+        throw new Error("Cloudinary upload failed");
+      }
+
+      const { error: profErr } = await supabase
+        .from("profiles")
+        .update({ avatar_url: secureUrl })
+        .eq("id", user.id);
+
+      if (profErr) throw profErr;
+
+      if (portalRole === "provider") {
+        await supabase
+          .from("provider_profiles")
+          .update({ company_logo_url: secureUrl })
+          .eq("user_id", user.id);
+      }
+
+      refetchUserProfile();
+      refetchProviderProfile();
+      qc.invalidateQueries({ queryKey: ["activeUserProfile"] });
+      qc.invalidateQueries({ queryKey: ["providerProfileStatusCard"] });
+      qc.invalidateQueries({ queryKey: ["customerProfile"] });
+      qc.invalidateQueries({ queryKey: ["opsUsers"] });
+
+      toast.success("🎉 Profile photo updated!");
+    } catch (err: any) {
+      console.error("Avatar upload error:", err);
+      toast.error(err.message || "Failed to upload photo.");
+    } finally {
+      setUploadingAvatar(false);
+    }
+  };
 
   // Query service categories
   const categories = useQuery({
@@ -432,14 +517,60 @@ function SettingsPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 pb-6 border-b border-slate-100">
-              <div className="h-20 w-20 rounded-full bg-blue-600 text-white flex items-center justify-center text-2xl font-black shadow-inner shrink-0 select-none">
-                {initials(profileName)}
+              <div className="relative group shrink-0">
+                <div className="h-24 w-24 rounded-full bg-blue-600 text-white flex items-center justify-center text-2xl font-black shadow-inner select-none relative overflow-hidden border-4 border-white shadow-md">
+                  {userProfile?.avatar_url || providerProfile?.company_logo_url ? (
+                    <img
+                      src={userProfile?.avatar_url || providerProfile?.company_logo_url}
+                      alt={profileName || "Avatar"}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    initials(profileName)
+                  )}
+
+                  {uploadingAvatar && (
+                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white">
+                      <Loader2 className="w-6 h-6 animate-spin" />
+                    </div>
+                  )}
+                </div>
+
+                <label
+                  htmlFor="settings-avatar-upload"
+                  className="absolute bottom-0 right-0 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full border-2 border-white shadow-md cursor-pointer transition-transform hover:scale-110"
+                  title="Upload Profile Photo (Cloudinary)"
+                >
+                  <Camera className="h-4 w-4" />
+                  <input
+                    id="settings-avatar-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAvatarUpload}
+                    disabled={uploadingAvatar}
+                    className="hidden"
+                  />
+                </label>
               </div>
+
               <div className="text-center sm:text-left space-y-1">
                 <h4 className="text-lg font-bold text-slate-800">{profileName || "User"}</h4>
-                <p className="text-xs text-slate-400">
-                  Profile photo removed. Initial avatar used as fallback.
+                <p className="text-xs text-slate-500 font-medium">
+                  {userProfile?.avatar_url || providerProfile?.company_logo_url
+                    ? "Custom profile photo active. Click camera icon to update."
+                    : "Upload a profile photo to personalize your account across BlueX."}
                 </p>
+                <label
+                  htmlFor="settings-avatar-upload"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 cursor-pointer pt-1"
+                >
+                  <Camera className="h-3.5 w-3.5" />
+                  <span>
+                    {userProfile?.avatar_url || providerProfile?.company_logo_url
+                      ? "Change Photo"
+                      : "Upload Photo"}
+                  </span>
+                </label>
               </div>
             </div>
 
