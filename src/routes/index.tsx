@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import Navbar from "@/landingpage ui/Navbar";
 import HeroSection from "@/landingpage ui/HeroSection";
 import CategoriesAndProcess from "@/landingpage ui/CategoriesAndProcess";
+import VideoSection from "@/landingpage ui/VideoSection";
 import AppShowcaseAndFooter from "@/landingpage ui/AppShowcaseAndFooter";
 import PricingPreview from "../landingpage ui/PricingPreview";
 import FinalCTA from "../landingpage ui/FinalCTA";
@@ -19,6 +20,7 @@ function LandingPage() {
         <Navbar />
         <HeroSection />
         <CategoriesAndProcess />
+        <VideoSection />
         <AppShowcaseAndFooter />
         <PricingPreview />
         <FinalCTA />

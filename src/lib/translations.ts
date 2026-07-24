@@ -386,6 +386,21 @@ export const translations: Record<string, any> = {
         btnText: "Get Started — It's Free",
         joinText: "Join 8,000+ customers who trust BlueX.ch",
       },
+      videoSection: {
+        title: "What success on BlueX looks like",
+        subtitle: "Watch how clients and trade professionals get work done across Switzerland.",
+        watchIn: "Watch in {lang}",
+        langLabels: {
+          en: "English",
+          de: "German",
+          fr: "French",
+          it: "Italian",
+          pt: "Portuguese",
+          es: "Spanish",
+          sq: "Albanian",
+          sr: "Serbian",
+        },
+      },
     },
   },
   de: {
@@ -796,6 +811,22 @@ export const translations: Record<string, any> = {
         btnText: "Loslegen",
         joinText: "Schliessen Sie sich über 8'000 Kunden an, die BlueX.ch vertrauen",
       },
+      videoSection: {
+        title: "So sieht Erfolg auf BlueX aus",
+        subtitle:
+          "Erfahren Sie, wie Kunden und Handwerker in der Schweiz Aufträge erfolgreich abwickeln.",
+        watchIn: "Auf {lang} ansehen",
+        langLabels: {
+          en: "Englisch",
+          de: "Deutsch",
+          fr: "Französisch",
+          it: "Italienisch",
+          pt: "Portugiesisch",
+          es: "Spanisch",
+          sq: "Albanisch",
+          sr: "Serbisch",
+        },
+      },
     },
   },
   fr: {
@@ -1205,6 +1236,22 @@ export const translations: Record<string, any> = {
         placeholder: "Saisissez votre adresse e-mail",
         btnText: "Démarrer",
         joinText: "Rejoignez plus de 8'000 clients qui font confiance à BlueX.ch",
+      },
+      videoSection: {
+        title: "À quoi ressemble le succès sur BlueX",
+        subtitle:
+          "Découvrez comment les clients et les professionnels du bâtiment collaborent en Suisse.",
+        watchIn: "Regarder en {lang}",
+        langLabels: {
+          en: "Anglais",
+          de: "Allemand",
+          fr: "Français",
+          it: "Italienien",
+          pt: "Portugais",
+          es: "Espagnol",
+          sq: "Albanais",
+          sr: "Serbe",
+        },
       },
     },
   },
@@ -1618,6 +1665,21 @@ export const translations: Record<string, any> = {
         btnText: "Inizia",
         joinText: "Unisciti a oltre 8'000 clienti che si fidano di BlueX.ch",
       },
+      videoSection: {
+        title: "Come appare il successo su BlueX",
+        subtitle: "Guarda come clienti e professionisti in Svizzera portano a termine il lavoro.",
+        watchIn: "Guarda in {lang}",
+        langLabels: {
+          en: "Inglese",
+          de: "Tedesco",
+          fr: "Francese",
+          it: "Italiano",
+          pt: "Portoghese",
+          es: "Spagnolo",
+          sq: "Albanese",
+          sr: "Serbo",
+        },
+      },
     },
   },
 };
@@ -1684,6 +1746,24 @@ translations.pt = {
     legal: "Jurídico",
     security: "Segurança",
   },
+  landingNew: {
+    ...translations.en.landingNew,
+    videoSection: {
+      title: "Como é o sucesso na BlueX",
+      subtitle: "Assista a como clientes e profissionais na Suíça realizam seus trabalhos.",
+      watchIn: "Assistir em {lang}",
+      langLabels: {
+        en: "Inglês",
+        de: "Alemão",
+        fr: "Francês",
+        it: "Italiano",
+        pt: "Português",
+        es: "Espanhol",
+        sq: "Albanês",
+        sr: "Sérvio",
+      },
+    },
+  },
 };
 
 // Add translation overrides for Spanish (es)
@@ -1747,6 +1827,24 @@ translations.es = {
     company: "Compañía",
     legal: "Avisos Legales",
     security: "Seguridad",
+  },
+  landingNew: {
+    ...translations.en.landingNew,
+    videoSection: {
+      title: "Cómo se ve el éxito en BlueX",
+      subtitle: "Vea cómo clientes y profesionales en Suiza completan sus trabajos.",
+      watchIn: "Ver en {lang}",
+      langLabels: {
+        en: "Inglés",
+        de: "Alemán",
+        fr: "Francés",
+        it: "Italiano",
+        pt: "Português",
+        es: "Español",
+        sq: "Albanés",
+        sr: "Servio",
+      },
+    },
   },
 };
 
@@ -1812,6 +1910,24 @@ translations.sq = {
     legal: "Ligjore",
     security: "Siguria",
   },
+  landingNew: {
+    ...translations.en.landingNew,
+    videoSection: {
+      title: "Si duket suksesi në BlueX",
+      subtitle: "Shikoni se si klientët dhe profesionistët në Zvicër kryejnë punët e tyre.",
+      watchIn: "Shiko në {lang}",
+      langLabels: {
+        en: "Anglisht",
+        de: "Gjermanisht",
+        fr: "Frëngjisht",
+        it: "Italisht",
+        pt: "Portugalisht",
+        es: "Spanjisht",
+        sq: "Shqip",
+        sr: "Serbisht",
+      },
+    },
+  },
 };
 
 // Add translation overrides for Serbian (sr)
@@ -1875,5 +1991,23 @@ translations.sr = {
     company: "Kompanija",
     legal: "Pravni Aspekti",
     security: "Bezbednost",
+  },
+  landingNew: {
+    ...translations.en.landingNew,
+    videoSection: {
+      title: "Kako uspeh izgleda na BlueX-u",
+      subtitle: "Pogledajte kako klijenti i zanatlije u Švajcarskoj uspešno završavaju poslove.",
+      watchIn: "Gledaj na {lang}",
+      langLabels: {
+        en: "Engleski",
+        de: "Nemački",
+        fr: "Francuski",
+        it: "Italijanski",
+        pt: "Portugalski",
+        es: "Španski",
+        sq: "Albanski",
+        sr: "Srpski",
+      },
+    },
   },
 };

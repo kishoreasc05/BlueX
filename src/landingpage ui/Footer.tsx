@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Linkedin, Youtube, ShieldCheck } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 export default function Footer() {
   return (
@@ -8,13 +9,13 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-4 flex flex-col items-start text-left">
             {/* Logo */}
-            <a
-              href="#"
+            <Link
+              to="/"
               className="flex items-center gap-2 text-white font-extrabold text-2xl tracking-tight mb-4"
             >
               <span className="text-[#2563eb] font-black">X</span> BlueX
               <span className="text-zinc-500">.ch</span>
-            </a>
+            </Link>
 
             <p className="text-zinc-400 text-xs font-semibold leading-relaxed max-w-[280px] mb-6">
               Switzerland's leading on-demand marketplace for local trades and home services.
@@ -46,24 +47,40 @@ export default function Footer() {
               </h4>
               <ul className="space-y-2 text-[11px] font-semibold text-zinc-400">
                 <li>
-                  <a href="#how" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "how-it-works" }}
+                    className="hover:text-white transition-colors"
+                  >
                     How it Works
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#services" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "browse-services" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Browse Services
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#trust" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "trust-security" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Trust & Security
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#help" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "help-center" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Help Center
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -75,24 +92,40 @@ export default function Footer() {
               </h4>
               <ul className="space-y-2 text-[11px] font-semibold text-zinc-400">
                 <li>
-                  <a href="/signin?role=provider" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "become-provider" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Become a Provider
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#resources" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "provider-resources" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Provider Resources
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#success" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "success-stories" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Success Stories
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#community" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "community" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Community
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -104,24 +137,40 @@ export default function Footer() {
               </h4>
               <ul className="space-y-2 text-[11px] font-semibold text-zinc-400">
                 <li>
-                  <a href="#about" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "about-us" }}
+                    className="hover:text-white transition-colors"
+                  >
                     About Us
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#careers" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "careers" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Careers
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#blog" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "blog" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Blog
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#contact" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "contact-us" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Contact Us
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -136,24 +185,40 @@ export default function Footer() {
               </h4>
               <ul className="space-y-2 text-[11px] font-semibold text-zinc-400">
                 <li>
-                  <a href="#terms" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "terms-of-service" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Terms of Service
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#privacy" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "privacy-policy" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#cookie" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "cookie-policy" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Cookie Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#imprint" className="hover:text-white transition-colors">
+                  <Link
+                    to="/$pageId"
+                    params={{ pageId: "imprint" }}
+                    className="hover:text-white transition-colors"
+                  >
                     Imprint
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

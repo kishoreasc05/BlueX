@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SigninRouteImport } from './routes/signin'
+import { Route as PageIdRouteImport } from './routes/$pageId'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as InviteTokenRouteImport } from './routes/invite.$token'
@@ -54,6 +55,11 @@ import { Route as AuthenticatedClientBookIdRouteImport } from './routes/_authent
 const SigninRoute = SigninRouteImport.update({
   id: '/signin',
   path: '/signin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PageIdRoute = PageIdRouteImport.update({
+  id: '/$pageId',
+  path: '/$pageId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -280,6 +286,7 @@ const AuthenticatedClientBookIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$pageId': typeof PageIdRoute
   '/signin': typeof SigninRoute
   '/activity-logs': typeof AuthenticatedActivityLogsRoute
   '/ai-assistant': typeof AuthenticatedAiAssistantRoute
@@ -322,6 +329,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$pageId': typeof PageIdRoute
   '/signin': typeof SigninRoute
   '/activity-logs': typeof AuthenticatedActivityLogsRoute
   '/ai-assistant': typeof AuthenticatedAiAssistantRoute
@@ -366,6 +374,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/$pageId': typeof PageIdRoute
   '/signin': typeof SigninRoute
   '/_authenticated/activity-logs': typeof AuthenticatedActivityLogsRoute
   '/_authenticated/ai-assistant': typeof AuthenticatedAiAssistantRoute
@@ -410,6 +419,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$pageId'
     | '/signin'
     | '/activity-logs'
     | '/ai-assistant'
@@ -452,6 +462,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/$pageId'
     | '/signin'
     | '/activity-logs'
     | '/ai-assistant'
@@ -495,6 +506,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/$pageId'
     | '/signin'
     | '/_authenticated/activity-logs'
     | '/_authenticated/ai-assistant'
@@ -539,6 +551,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  PageIdRoute: typeof PageIdRoute
   SigninRoute: typeof SigninRoute
   InviteTokenRoute: typeof InviteTokenRoute
 }
@@ -550,6 +563,13 @@ declare module '@tanstack/react-router' {
       path: '/signin'
       fullPath: '/signin'
       preLoaderRoute: typeof SigninRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$pageId': {
+      id: '/$pageId'
+      path: '/$pageId'
+      fullPath: '/$pageId'
+      preLoaderRoute: typeof PageIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -924,6 +944,7 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  PageIdRoute: PageIdRoute,
   SigninRoute: SigninRoute,
   InviteTokenRoute: InviteTokenRoute,
 }
