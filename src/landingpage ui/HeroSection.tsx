@@ -15,9 +15,20 @@ import {
   Search,
 } from "lucide-react";
 import { useLanguage } from "../hooks/use-language";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+
+const VIDEO_MAP: Record<string, string> = {
+  en: "https://www.youtube.com/embed/2DgEPv2O4_w",
+  de: "https://www.youtube.com/embed/zvedPbv5mcQ",
+  fr: "https://www.youtube.com/embed/231sEYyFYOA",
+  it: "https://www.youtube.com/embed/y0iE7WcPWOY",
+  pt: "https://www.youtube.com/embed/i2dlmFCZtEs",
+  sq: "https://www.youtube.com/embed/xQi8pZnPipw",
+  sr: "https://www.youtube.com/embed/KOeDG1zprXc",
+};
 
 export default function HeroSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const navigate = useNavigate();
   const [serviceQuery, setServiceQuery] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
@@ -105,13 +116,27 @@ export default function HeroSection() {
                 <span>{t("hero.bookBtn")}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <a
-                href="#trust-and-process"
-                className="h-12 px-7 rounded-full border border-white/30 bg-white/5 hover:bg-white/15 text-white text-sm font-bold flex items-center gap-2.5 transition-colors font-sans"
-              >
-                <Play className="w-3.5 h-3.5 fill-white text-white" />
-                <span>{t("howItWorks.badge")}</span>
-              </a>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button
+                    type="button"
+                    className="h-12 px-7 rounded-full border border-white/30 bg-white/5 hover:bg-white/15 text-white text-sm font-bold flex items-center gap-2.5 transition-colors font-sans cursor-pointer"
+                  >
+                    <Play className="w-3.5 h-3.5 fill-white text-white" />
+                    <span>{t("howItWorks.badge")}</span>
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[800px] w-[95vw] p-0 bg-black border-none overflow-hidden aspect-video rounded-2xl shadow-2xl [&>button]:opacity-100 [&>button]:bg-black/60 [&>button]:hover:bg-black/80 [&>button]:border [&>button]:border-white/20 [&>button]:text-white [&>button]:rounded-full [&>button]:p-1.5 [&>button]:right-3 [&>button]:top-3">
+                  <iframe
+                    key={language}
+                    src={`${VIDEO_MAP[VIDEO_MAP[language] ? language : "en"]}?autoplay=1&rel=0&modestbranding=1`}
+                    title="BlueX Customer Success Story"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="w-full h-full border-none"
+                  />
+                </DialogContent>
+              </Dialog>
             </motion.div>
           </div>
 
